@@ -12,7 +12,7 @@ export class StorageService {
 
     async uploadImage(image){
         try {
-            return await this.storage.createFile(conf.appwriteBucketId, ID.unique, image);
+            return await this.storage.createFile(conf.appwriteBucketId, ID.unique(), image);
         } catch (error) {
             console.log('--- Appwrite StorageService uploadImage ' + error);
             return null;

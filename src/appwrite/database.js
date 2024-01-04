@@ -19,7 +19,19 @@ export class DatabaseService {
         }
     }
 
+    async getAllMeasures(){
+        try {
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteCollectionId, [])            
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getMeasuresInTimeInterval ' + error);
+            return null;
+        }
+    }
+
     async getMeasuresInTimeInterval(from, to){
+
+        console.log('GetMeasuresInTimeInterval --> from: ' + from + ' to: ' + to)
+
         try {
             return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteCollectionId, [ Query.between('datetime', from, to)])            
         } catch (error) {
@@ -37,18 +49,18 @@ export class DatabaseService {
         }
     }
 
-    async addMeasure({ userId, latitude, longitude, placeDescription, datetime, imageUrl, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
+    async addMeasure({ userId, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
         try {
-            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, ID.unique, { userId, latitude, longitude, placeDescription, datetime, imageUrl, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });                  
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, ID.unique(), { userId, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });                  
         } catch (error) {
             console.log('--- Appwrite DatabaseService addMeasure ' + error);
             return null;
         }
     }
 
-    async updateMeasure(measureId, { latitude, longitude, placeDescription, datetime, imageUrl, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
+    async updateMeasure(measureId, { latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
         try {
-            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, measureId, { latitude, longitude, placeDescription, datetime, imageUrl, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });                  
+            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteCollectionId, measureId, { latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });                  
         } catch (error) {
             console.log('--- Appwrite DatabaseService updateMeasure ' + error);
             return null;
