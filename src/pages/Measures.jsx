@@ -35,7 +35,7 @@ function Measures() {
 
   useEffect(() => {
     databaseService.getAllMeasures().then((returnedMeasures) => {
-      console.log('Passing by Measures.useEffect...')
+      
       const currentUserId = userData.$id;
 
       if (returnedMeasures) {
