@@ -6,7 +6,7 @@ import databaseService from '../appwrite/database'
 import Container from '../components/Container';
 import MeasureCard from '../components/MeasureCard';
 import { APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
-import MarkerWithInfowindow from '../components/MarkerWithInfoWindow.jsx';
+import MarkerWithInfowindow from '../components/MarkerWithInfowindow';
 import { useSelector } from "react-redux";
 import Input from '../components/Input.jsx';
 
