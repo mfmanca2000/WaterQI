@@ -51,6 +51,7 @@ function Measures() {
         //setMeasures(returnedMeasures.documents);
         measures.current = filtered;
         setMeasureNumber(filtered.length);
+        console.log('Passing by Measures.useEffect...' + measureNumber)
       }
     })
 
@@ -75,8 +76,7 @@ function Measures() {
 
         <div className='flex'>
           <div className='felx w-1/2'>
-            <input type="checkbox" id='onlyYourMeasures' label="Only your measures" className="mb-4 mr-4" onChange={(e) => {
-              e.preventDefault();
+            <input type="checkbox" id='onlyYourMeasures' label="Only your measures" className="mb-4 mr-4" onChange={(e) => {              
               setOnlyUserMeasures((prev) => !prev)
             }}
             />
@@ -92,19 +92,16 @@ function Measures() {
 
         <div className='flex'>
           <div className='flex w-2/3'>
-            <Input className="m-4 w-1/2" label="From" type="datetime-local" onChange={(e) => {
-              e.preventDefault();
+            <Input className="m-4 w-1/2" label="From" type="datetime-local" onChange={(e) => {              
               setDateFrom(e.target.value);
             }} />
-            <Input className="m-4 w-1/2" label="To" type="datetime-local" onChange={(e) => {
-              e.preventDefault();
+            <Input className="m-4 w-1/2" label="To" type="datetime-local" onChange={(e) => {              
               setDateTo(e.target.value);
             }} />
           </div>
 
           <div className='flex w-1/3'>
-            <Input className="m-4 w-1/2" label="Search" onChange={(e) => {
-              e.preventDefault();
+            <Input className="m-4 w-1/2" label="Search" onChange={(e) => {              
               setSearchText(e.target.value);
             }} />
           </div>
