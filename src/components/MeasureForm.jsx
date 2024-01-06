@@ -105,25 +105,25 @@ export default function MeasureForm({ measure }) {
     return (
         <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
             <div className="w-1/3 px-2">
-                <Input label="Place Description"
+                <Input label="Place Description *"
                     placeholder="insert a place description"
                     className="mb-4"
-                    {...register("placeDescription", { required: true })}
+                    {...register("placeDescription", { required: true, maxLength: 255 })}
                 />
 
-                <Input label="Latitude"
+                <Input label="Latitude *"
                     placeholder="insert a latitude (i.e. 45.4637979"
                     className="mb-4"
                     {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
                 />
 
-                <Input label="Longitude"
+                <Input label="Longitude *"
                     placeholder="insert a longitude (i.e. 7.87375)"
                     className="mb-4"
                     {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
                 />
 
-                <Input type="datetime-local" label="Date"
+                <Input type="datetime-local" label="Date *"
                     className="mb-4"
                     {...register("datetime", { required: true, valueAsDate: true })}
                 />
@@ -153,7 +153,7 @@ export default function MeasureForm({ measure }) {
                     {...register("salinity")}
                 />
 
-                <Input label="Location image"
+                <Input label={measure ? "Location image" : "Location image *"}
                     type="file"
                     className="mb-4"
                     accept="image/png, image/jpg, image/jpeg"

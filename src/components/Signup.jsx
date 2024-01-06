@@ -10,23 +10,33 @@ import { login } from '../store/authSlice'
 
 function Signup() {
     const navigate = useNavigate();
-    const [ error, setError] = useState("");
+    const [error, setError] = useState("");
     const dispatch = useDispatch();
     const { register, handleSubmit } = useForm()
-    
+
+    const googleLogin = (e) => {
+        e.preventDefault();
+        authService.googleLogin();
+    }
+
+    const facebookLogin = (e) => {
+        e.preventDefault();
+        authService.facebookLogin();
+    }
+
     const createUser = async (data) => {
-        
+
         setError("");
         try {
             const userData = await authService.createAccount(data);
-            if (userData){
+            if (userData) {
                 const userData = await authService.getCurrentUser();
                 if (userData) {
-                    dispatch(login({userData}));
+                    dispatch(login({ userData }));
                 }
                 navigate("/");
             }
-        } catch (error) {            
+        } catch (error) {
             setError(error.message);
         }
     }
@@ -57,7 +67,7 @@ function Signup() {
                         <Input
                             {...register("email", {
                                 required: true,
-                                
+
                             })}
                             label="Email"
                             placeholder="Email Address"
@@ -74,6 +84,19 @@ function Signup() {
                         </Button>
                     </div>
                 </form>
+
+                <div className="mt-6 text-center text-base text-black/60">
+                    Or login with...&nbsp;
+                    <div>
+                        <button onClick={(e) => googleLogin(e)} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
+                            <img src='google.png' className='w-8' />
+                        </button>
+                        <button onClick={(e) => facebookLogin(e)} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
+                            <img src='facebook.webp' className='w-8' />
+                        </button>
+                    </div>
+                </div>
+
             </div>
         </div>
     );

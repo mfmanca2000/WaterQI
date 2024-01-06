@@ -13,6 +13,16 @@ function Login() {
     const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
     const [error, setError] = useState("");
+
+
+    const googleLogin = () => {
+        authService.googleLogin();
+    }
+
+    const facebookLogin = () => {
+        authService.facebookLogin();
+    }
+
     
     const login = async (data) => {
         setError("");
@@ -71,6 +81,18 @@ function Login() {
                         </Button>
                     </div>
                 </form>
+
+                <div className="mt-6 text-center text-base text-black/60">
+                    Or use...&nbsp;
+                    <div>
+                        <button onClick={() => googleLogin()} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
+                            <img src='google.png' className='w-8' />
+                        </button>
+                        <button onClick={() => facebookLogin()} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm disabled:'>
+                            <img src='facebook.webp' className='w-8' />
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

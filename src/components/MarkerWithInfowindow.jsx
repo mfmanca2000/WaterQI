@@ -17,7 +17,7 @@ const MarkerWithInfowindow = ({ measure }) => {
                 ref={markerRef}
                 onClick={() => setInfowindowOpen(true)}
                 position={{ lat: measure.latitude, lng: measure.longitude }}
-                title={'AdvancedMarker that opens an Infowindow when clicked.'}
+                title={measure.placeDescription}
             />
             {infowindowOpen && (
                 <InfoWindow

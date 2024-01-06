@@ -35,6 +35,22 @@ export class AuthService {
         return null;
     }
 
+    async googleLogin() {
+        try {            
+            this.account.createOAuth2Session('google', window.location.origin + '/', window.location.origin + '/login')
+        } catch (error) {
+            console.log('--- Appwrite AuthService googleLogin : ' + error);         
+        }
+    }
+
+    async facebookLogin() {
+        try {
+            await this.account.createOAuth2Session('facebook', window.location.origin + '/', window.location.origin + '/login')
+        } catch (error) {
+            console.log('--- Appwrite AuthService facebookLogin : ' + error);         
+        }
+    }
+
     async getCurrentUser(){
         try {
             return await this.account.get();

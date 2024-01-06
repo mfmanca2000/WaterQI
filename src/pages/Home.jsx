@@ -25,16 +25,16 @@ function Home() {
       if (measures) {
         setMeasures(measures.documents);
       }
-    })
-  }, []);
+    });
 
-  useEffect(() => {
     authService.getCurrentUser().then((user) => {
       if (user) {
         setUserData(user);
       }
-    })
+    });
   }, []);
+
+  
 
 
   console.log('Measures : ' + measures.length)
