@@ -1,7 +1,6 @@
 import React from 'react'
 import conf from "../conf/conf.js";
-import { useEffect } from 'react';
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react';
 import databaseService from '../appwrite/database'
 import Container from '../components/Container';
 import MeasureCard from '../components/MeasureCard';
@@ -15,13 +14,16 @@ const defaultLongitude = 7.852158015084898;
 
 
 function Measures() {
-  const [measures, setMeasures] = useState([]);
+  //const [measures, setMeasures] = useState([]);
+  const measures = useRef([]);
   const [onlyUserMeasures, setOnlyUserMeasures] = useState(false);
   const [dateFrom, setDateFrom] = useState(null);
   const [dateTo, setDateTo] = useState(null);
   const [measureNumber, setMeasureNumber] = useState();
   const [searchText, setSearchText] = useState();
   const userData = useSelector((state) => state.auth.userData);
+
+  
 
   // useEffect(() => {
   //   databaseService.getMeasuresInTimeInterval(new Date('1900-01-01T00:00:00.000Z'), new Date(Date.now())).then((measures) => {
@@ -33,19 +35,38 @@ function Measures() {
 
   useEffect(() => {
     databaseService.getAllMeasures().then((returnedMeasures) => {
+      console.log('Passing by Measures.useEffect...')
       const currentUserId = userData.$id;
 
       if (returnedMeasures) {
-        setMeasures(returnedMeasures.documents.filter((m) => {
+        const filtered = returnedMeasures.documents.filter((m) => {
           var dt = new Date(m.datetime).getTime();
           //console.log(m.placeDescription + ': ' + m.datetime + ' -- DateFrom:' + dateFrom + ' --> ' + ((!onlyUserMeasures || m.userId === currentUserId) && (!dateFrom || new Date(m.datetime).getTime > new Date(dateFrom))))         
-          return (!onlyUserMeasures || m.userId === currentUserId) && (!dateFrom || dt >= new Date(dateFrom).getTime()) && (!dateTo || dt <= new Date(dateTo).getTime()) && (!searchText || m.placeDescription.toLowerCase().includes(searchText.toLowerCase()));
-        }));
+          return (!onlyUserMeasures || m.userId === currentUserId) &&
+            (!dateFrom || dt >= new Date(dateFrom).getTime()) &&
+            (!dateTo || dt <= new Date(dateTo).getTime()) &&
+            (!searchText || m.placeDescription.toLowerCase().includes(searchText.toLowerCase()));
+        });
 
-        setMeasureNumber(measures.length);
+        //setMeasures(returnedMeasures.documents);
+        measures.current = filtered;
+        setMeasureNumber(filtered.length);
       }
     })
-  }, [onlyUserMeasures, userData, dateFrom, dateTo, measures, searchText]);
+
+
+    // databaseService.getAllMeasures().then((returnedMeasures) => {
+    //   if (returnedMeasures) {
+        
+    //     //setMeasures(measures.documents);
+    //     measures.current = returnedMeasures.documents;
+    //     setMeasureNumber(returnedMeasures.documents.length);
+    //     console.log('Passing by Measures.useEffect...' + measures.current)
+    //   }
+    // })
+
+  }, [onlyUserMeasures, userData, dateFrom, dateTo, measures, searchText, measureNumber]);
+
 
   return (
     <div className='w-full py-8'>
@@ -54,7 +75,8 @@ function Measures() {
 
         <div className='flex'>
           <div className='felx w-1/2'>
-            <input type="checkbox" id='onlyYourMeasures' label="Only your measures" className="mb-4 mr-4" onChange={() => {
+            <input type="checkbox" id='onlyYourMeasures' label="Only your measures" className="mb-4 mr-4" onChange={(e) => {
+              e.preventDefault();
               setOnlyUserMeasures((prev) => !prev)
             }}
             />
@@ -71,15 +93,18 @@ function Measures() {
         <div className='flex'>
           <div className='flex w-2/3'>
             <Input className="m-4 w-1/2" label="From" type="datetime-local" onChange={(e) => {
+              e.preventDefault();
               setDateFrom(e.target.value);
             }} />
             <Input className="m-4 w-1/2" label="To" type="datetime-local" onChange={(e) => {
+              e.preventDefault();
               setDateTo(e.target.value);
             }} />
           </div>
 
           <div className='flex w-1/3'>
             <Input className="m-4 w-1/2" label="Search" onChange={(e) => {
+              e.preventDefault();
               setSearchText(e.target.value);
             }} />
           </div>
@@ -95,7 +120,7 @@ function Measures() {
             gestureHandling={'greedy'}
             disableDefaultUI={true}
           >
-            {measures.map((measure) => (
+            {measures.current?.map((measure) => (
               <div className='p-2 w-1/4' key={measure.$id}>
                 <MarkerWithInfowindow measure={measure} clickable={true} />
               </div>
@@ -107,7 +132,7 @@ function Measures() {
 
       <Container>
         <div className='flex flex-wrap'>
-          {measures.map((measure) => (
+          {measures.current?.map((measure) => (
             <div className='p-2 w-1/4' key={measure.$id}>
               <MeasureCard {...measure} />
             </div>
