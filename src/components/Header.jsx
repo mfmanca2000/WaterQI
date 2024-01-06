@@ -30,7 +30,7 @@ function Header() {
             active: loggedIn
         },
         {
-            name: "AddMeasure",
+            name: "Add Measure",
             slug: "/addMeasure",
             active: loggedIn
         }

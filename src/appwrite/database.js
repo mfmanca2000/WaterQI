@@ -23,7 +23,7 @@ export class DatabaseService {
         try {
             return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteCollectionId, [])            
         } catch (error) {
-            console.log('--- Appwrite DatabaseService getMeasuresInTimeInterval ' + error);
+            console.log('--- Appwrite DatabaseService getAllMeasures ' + error);
             return null;
         }
     }

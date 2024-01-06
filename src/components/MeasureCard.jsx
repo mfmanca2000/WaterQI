@@ -1,6 +1,9 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import StorageService from '../appwrite/storage.js'
+import { formatDateTime } from '../utils/date.js'
+
+
 
 function MeasureCard({$id, placeDescription, datetime, imageId}) {
   return (
@@ -10,7 +13,7 @@ function MeasureCard({$id, placeDescription, datetime, imageId}) {
                 <img src={StorageService.getPreviewImageUrl(imageId)} alt={placeDescription} className='rounded-xl'/>
             </div>
             <h3 className='text-xl font-bold'>{placeDescription}</h3>
-            <h4 className='text-sm font-light'>{datetime}</h4>
+            <h4 className='text-sm font-light'>{formatDateTime(new Date(datetime))}</h4>            
         </div>
     </Link>
   )
