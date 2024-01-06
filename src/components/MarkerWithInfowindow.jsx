@@ -29,7 +29,7 @@ const MarkerWithInfowindow = ({ measure }) => {
                     EC: {measure.electricalConductivity ? measure.electricalConductivity : '-'}<br />
                     TDS: {measure.totalDissolvedSolids ? measure.totalDissolvedSolids : '-'}<br />
                     pH: {measure.pH ? measure.pH : '-'}<br />
-                    Temerature: {measure.temperature ? measure.temperature : '-'}<br />
+                    Temperature (°C): {measure.temperature ? measure.temperature : '-'}<br />
                     Salinity: {measure.salinity ? measure.salinity : '-'}<br />
                 </InfoWindow>
             )}

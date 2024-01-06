@@ -52,7 +52,9 @@ export default function MeasureForm({ measure }) {
             salinity: measure?.salinity || null
         });
 
-        setMarkerPosition({ lat: getValues("latitude"), lng: getValues("longitude") });
+        if (!isNaN(getValues("latitude")) && !isNaN(getValues("longitude"))) {
+            setMarkerPosition({ lat: getValues("latitude"), lng: getValues("longitude") });
+        }
 
     }, [reset, measure, getValues]);
 
@@ -72,8 +74,8 @@ export default function MeasureForm({ measure }) {
     }
 
     const [markerPosition, setMarkerPosition] = useState({
-        lat: getValues("latitude"),
-        lng: getValues("longitude")
+        lat: Number(getValues("latitude")),
+        lng: Number(getValues("longitude"))
     });
 
     const submit = async (data) => {
@@ -141,7 +143,7 @@ export default function MeasureForm({ measure }) {
                     {...register("pH")}
                 />
 
-                <Input label="Temperature"
+                <Input label="Temperature (°C)"
                     className="mb-4"
                     {...register("temperature")}
                 />
@@ -173,7 +175,7 @@ export default function MeasureForm({ measure }) {
                 <APIProvider apiKey={conf.googleMapsAPIKey}>
                     <Map
                         zoom={8}
-                        center={{ lat: getValues("latitude"), lng: getValues("longitude") }}
+                        center={{ lat: Number(getValues("latitude")), lng: Number(getValues("longitude")) }}
                         gestureHandling={'greedy'}
                         disableDefaultUI={true}
                         onClick={(ev) => {
