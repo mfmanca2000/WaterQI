@@ -103,37 +103,13 @@ function Home() {
               ))}
             </div>
           </Container>
-
-
-          {/* <ul>
-            <li>
-              <button onClick={() => navigate('/addMeasureGroup')} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
-                Add a new group of measure
-              </button>
-            </li>
-            <li>
-              <button onClick={() => navigate('/addMeasure')} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
-                Add a new measure
-              </button>
-            </li>
-            <li>
-              <button onClick={() => navigate('/measures')} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
-                See all measures
-              </button>
-            </li>
-            <li>
-              <button onClick={() => navigate("/measureGroups")} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
-                See all measure groups
-              </button>
-            </li>
-          </ul> */}
         </div>
-        
-        <div className='text-gray-300 text-xs text-right'>
-          <a href="https://www.flaticon.com/free-icons/measuring-cup" title="measuring cup icons">Measuring cup icons created by DinosoftLabs</a>{' '} 
-          <a href="https://www.flaticon.com/free-icons/3" title="3 icons">3 icons created by Freepik</a>{' '} 
-          <a href="https://www.flaticon.com/free-icons/location" title="location icons">Location icons created by Freepik</a>{' '} 
-          <a href="https://www.flaticon.com/free-icons/history" title="history icons">History icons created by Freepik</a>{' '} 
+
+        <div className='text-gray-300 text-xs text-center w-full'>
+          <a href="https://www.flaticon.com/free-icons/measuring-cup" title="measuring cup icons">Measuring cup icons created by DinosoftLabs</a>{' '}
+          <a href="https://www.flaticon.com/free-icons/3" title="3 icons">3 icons created by Freepik</a>{' '}
+          <a href="https://www.flaticon.com/free-icons/location" title="location icons">Location icons created by Freepik</a>{' '}
+          <a href="https://www.flaticon.com/free-icons/history" title="history icons">History icons created by Freepik</a>{' '}
         </div>
       </div>
     )
