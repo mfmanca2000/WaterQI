@@ -5,12 +5,12 @@ import databaseService from '../appwrite/database'
 import Container from '../components/Container';
 import MeasureCard from '../components/MeasureCard';
 import { APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
-import MarkerWithInfowindow from '../components/MarkerWithInfowindow';
+import MeasureMarker from '../components/MeasureMarker';
 import { useSelector } from "react-redux";
 import Input from '../components/Input.jsx';
 
-const defaultLatitude = 45.3820004786078;
-const defaultLongitude = 7.852158015084898;
+const defaultLatitude = conf.defaultLatitude;
+const defaultLongitude = conf.defaultLongitude;
 
 
 function Measures() {
@@ -23,7 +23,7 @@ function Measures() {
   const [searchText, setSearchText] = useState();
   const userData = useSelector((state) => state.auth.userData);
 
-  
+
 
   // useEffect(() => {
   //   databaseService.getMeasuresInTimeInterval(new Date('1900-01-01T00:00:00.000Z'), new Date(Date.now())).then((measures) => {
@@ -35,7 +35,7 @@ function Measures() {
 
   useEffect(() => {
     databaseService.getAllMeasures().then((returnedMeasures) => {
-      
+
       const currentUserId = userData.$id;
 
       if (returnedMeasures) {
@@ -51,14 +51,14 @@ function Measures() {
         //setMeasures(returnedMeasures.documents);
         measures.current = filtered;
         setMeasureNumber(filtered.length);
-        console.log('Passing by Measures.useEffect...' + measureNumber)
+        //console.log('Passing by Measures.useEffect...' + measureNumber)
       }
     })
 
 
     // databaseService.getAllMeasures().then((returnedMeasures) => {
     //   if (returnedMeasures) {
-        
+
     //     //setMeasures(measures.documents);
     //     measures.current = returnedMeasures.documents;
     //     setMeasureNumber(returnedMeasures.documents.length);
@@ -76,7 +76,7 @@ function Measures() {
 
         <div className='flex'>
           <div className='felx w-1/2'>
-            <input type="checkbox" id='onlyYourMeasures' label="Only your measures" className="mb-4 mr-4" onChange={(e) => {              
+            <input type="checkbox" id='onlyYourMeasures' label="Only your measures" className="mb-4 mr-4" onChange={(e) => {
               setOnlyUserMeasures((prev) => !prev)
             }}
             />
@@ -91,17 +91,21 @@ function Measures() {
         </div>
 
         <div className='flex'>
-          <div className='flex w-2/3'>
-            <Input className="m-4 w-1/2" label="From" type="datetime-local" onChange={(e) => {              
+          <div className='flex w-1/3 m-2'>
+            <Input className="w-1/2" label="From" type="datetime-local" onChange={(e) => {
               setDateFrom(e.target.value);
             }} />
-            <Input className="m-4 w-1/2" label="To" type="datetime-local" onChange={(e) => {              
+          </div>
+
+          <div className='flex w-1/3 m-2'>
+            <Input className="w-1/2" label="To" type="datetime-local" onChange={(e) => {
               setDateTo(e.target.value);
             }} />
           </div>
 
-          <div className='flex w-1/3'>
-            <Input className="m-4 w-1/2" label="Search" onChange={(e) => {              
+
+          <div className='flex w-1/3 m-2'>
+            <Input className="w-1/2" label="Search" onChange={(e) => {
               setSearchText(e.target.value);
             }} />
           </div>
@@ -119,7 +123,7 @@ function Measures() {
           >
             {measures.current?.map((measure) => (
               <div className='p-2 w-1/4' key={measure.$id}>
-                <MarkerWithInfowindow measure={measure} clickable={true} />
+                <MeasureMarker measure={measure} clickable={true} />
               </div>
             ))}
           </Map>
@@ -128,7 +132,7 @@ function Measures() {
 
 
       <Container>
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap mt-4'>
           {measures.current?.map((measure) => (
             <div className='p-2 w-1/4' key={measure.$id}>
               <MeasureCard {...measure} />

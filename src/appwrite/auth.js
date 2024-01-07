@@ -33,7 +33,7 @@ export class AuthService {
             console.log('--- Appwrite AuthService login : ' + error);            
         }
         return null;
-    }
+    }    
 
     async googleLogin() {
         try {            

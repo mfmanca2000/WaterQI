@@ -9,10 +9,10 @@ import { useNavigate } from "react-router-dom";
 import { APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import conf from "../conf/conf.js";
 import { removeTimeZone } from "../utils/date.js";
+import { Link } from "react-router-dom";
 
-
-const defaultLatitude = 45.3820004786078;
-const defaultLongitude = 7.852158015084898;
+const defaultLatitude = conf.defaultLatitude;
+const defaultLongitude = conf.defaultLongitude;
 
 export default function MeasureForm({ measure }) {
 
@@ -31,11 +31,19 @@ export default function MeasureForm({ measure }) {
         }
     })
 
-
-
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData)
     const [markerRef, marker] = useMarkerRef();
+
+    const [markerPosition, setMarkerPosition] = useState({
+        lat: Number(measure?.latitude || defaultLatitude),
+        lng: Number(measure?.longitude || defaultLongitude)
+    });
+
+    const [centerPosition, setCenterPosition] = useState({
+        lat: Number(measure?.latitude || defaultLatitude),
+        lng: Number(measure?.longitude || defaultLongitude)
+    });
 
     useEffect(() => {
 
@@ -54,7 +62,10 @@ export default function MeasureForm({ measure }) {
 
         if (!isNaN(getValues("latitude")) && !isNaN(getValues("longitude"))) {
             setMarkerPosition({ lat: getValues("latitude"), lng: getValues("longitude") });
+            setCenterPosition({ lat: getValues("latitude"), lng: getValues("longitude") });
         }
+
+
 
     }, [reset, measure, getValues]);
 
@@ -73,10 +84,7 @@ export default function MeasureForm({ measure }) {
         }
     }
 
-    const [markerPosition, setMarkerPosition] = useState({
-        lat: Number(getValues("latitude")),
-        lng: Number(getValues("longitude"))
-    });
+
 
     const submit = async (data) => {
 
@@ -103,95 +111,140 @@ export default function MeasureForm({ measure }) {
     }
 
     return (
-        <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-            <div className="w-1/3 px-2">
-                <Input label="Place Description *"
-                    placeholder="insert a place description"
-                    className="mb-4"
-                    {...register("placeDescription", { required: true, maxLength: 255 })}
-                />
+        <>
+            <div className="w-full">
+                <div className="w-full h-48 px-2" >
+                    <APIProvider apiKey={conf.googleMapsAPIKey}>
+                        <Map 
+                            zoom={8}
+                            center={centerPosition}
+                            gestureHandling={'greedy'}
+                            disableDefaultUI={true}
+                            onClick={(ev) => {
+                                if (!measure || !measure.measureGroup) {
+                                    //console.log("latitide = ", ev.detail.latLng.lat);
+                                    setValue("latitude", ev.detail.latLng.lat)
+                                    //console.log("longitude = ", ev.detail.latLng.lng);
+                                    setValue("longitude", ev.detail.latLng.lng);
+                                    setMarkerPosition({ lat: ev.detail.latLng.lat, lng: ev.detail.latLng.lng })
+                                    //console.log(marker.position.lat)
+                                }
+                            }}
+                        >
+                            <Marker ref={markerRef} clickable={true} position={markerPosition} />
+                        </Map>
+                    </APIProvider>
+                </div>
+                <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
+                    <div className="w-1/2 px-8">
+                        <Input label="Place Description *"
+                            placeholder="insert a place description"
+                            className="mb-4"
+                            {...register("placeDescription", { required: true, maxLength: 255 })}
+                        />
 
-                <Input label="Latitude *"
-                    placeholder="insert a latitude (i.e. 45.4637979"
-                    className="mb-4"
-                    {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
-                />
+                        {measure && measure.measureGroup &&
+                            <>
+                                <label className='font-thin mb-6'>This measure is part of a group. To change its location, please change the location of the </label>
+                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >measure group</Link>
+                                <Input
+                                    disabled
+                                    label="Latitude *"
+                                    placeholder="insert a latitude (i.e. 45.4637979"
+                                    className="mb-4 bg-gray-200"
+                                    {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
+                                />
 
-                <Input label="Longitude *"
-                    placeholder="insert a longitude (i.e. 7.87375)"
-                    className="mb-4"
-                    {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
-                />
+                                <Input
+                                    disabled
+                                    label="Longitude *"
+                                    placeholder="insert a longitude (i.e. 7.87375)"
+                                    className="mb-4 bg-gray-200"
+                                    {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
+                                />
+                            </>
+                        }
 
-                <Input type="datetime-local" label="Date *"
-                    className="mb-4"
-                    {...register("datetime", { required: true, valueAsDate: true })}
-                />
+                        {(!measure || !measure.measureGroup) && (
+                            <>
+                                <Input label="Latitude *"
+                                    placeholder="insert a latitude (i.e. 45.4637979"
+                                    className="mb-4"
+                                    {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
+                                />
 
-                <Input label="Electrical Conductivity"
-                    className="mb-4"
-                    {...register("electricalConductivity")}
-                />
+                                <Input label="Longitude *"
+                                    placeholder="insert a longitude (i.e. 7.87375)"
+                                    className="mb-4"
+                                    {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
+                                />
+                            </>
+                        )
 
-                <Input label="Total Dissolved Solids"
-                    className="mb-4"
-                    {...register("totalDissolvedSolids")}
-                />
+                        }
 
-                <Input label="pH"
-                    className="mb-4"
-                    {...register("pH")}
-                />
 
-                <Input label="Temperature (°C)"
-                    className="mb-4"
-                    {...register("temperature")}
-                />
 
-                <Input label="Salinity"
-                    className="mb-4"
-                    {...register("salinity")}
-                />
 
-                <Input label={measure ? "Location image" : "Location image *"}
-                    type="file"
-                    className="mb-4"
-                    accept="image/png, image/jpg, image/jpeg"
-                    {...register("image", { required: !measure })}
-                />
-                {measure && (
-                    <div className="w-full mb-4">
-                        <img src={storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg" />
+                        <Input type="datetime-local" label="Date *"
+                            className="mb-4"
+                            {...register("datetime", { required: true, valueAsDate: true })}
+                        />
+
+
+
+                        <Input label={measure ? "Location image" : "Location image *"}
+                            type="file"
+                            className="mb-4"
+                            accept="image/png, image/jpg, image/jpeg"
+                            {...register("image", { required: !measure })}
+                        />
+                        {measure && (
+                            <div className="w-full mb-4">
+                                <img src={storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg" />
+                            </div>
+                        )}
+
+
+                        <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full">
+                            {measure ? "Update" : "Insert"}
+                        </Button>
                     </div>
-                )}
+
+                    <div className="w-1/2 h-1/2 px-8 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10">
+                        <Input label="Electrical Conductivity"
+                            className="mb-2"
+                            {...register("electricalConductivity")}
+                        />
+
+                        <Input label="Total Dissolved Solids"
+                            className="mb-2"
+                            {...register("totalDissolvedSolids")}
+                        />
+
+                        <Input label="pH"
+                            className="mb-2"
+                            {...register("pH")}
+                        />
+
+                        <Input label="Temperature (°C)"
+                            className="mb-2"
+                            {...register("temperature")}
+                        />
+
+                        <Input label="Salinity"
+                            className="mb-2"
+                            {...register("salinity")}
+                        />
+                    </div>
 
 
-                <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full">
-                    {measure ? "Update" : "Insert"}
-                </Button>
+                </form>
             </div>
 
-            <div className="w-2/3 px-2">
-                <APIProvider apiKey={conf.googleMapsAPIKey}>
-                    <Map
-                        zoom={8}
-                        center={{ lat: Number(getValues("latitude")), lng: Number(getValues("longitude")) }}
-                        gestureHandling={'greedy'}
-                        disableDefaultUI={true}
-                        onClick={(ev) => {
-                            //console.log("latitide = ", ev.detail.latLng.lat);
-                            setValue("latitude", ev.detail.latLng.lat)
-                            //console.log("longitude = ", ev.detail.latLng.lng);
-                            setValue("longitude", ev.detail.latLng.lng);
-                            setMarkerPosition({ lat: ev.detail.latLng.lat, lng: ev.detail.latLng.lng })
-                            console.log(marker.position.lat)
-                        }}
-                    >
-                        <Marker ref={markerRef} clickable={true} position={markerPosition} />
-                    </Map>
-                </APIProvider>
-            </div>
 
-        </form>
+
+
+        </>
     )
 }

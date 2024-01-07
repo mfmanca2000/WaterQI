@@ -5,6 +5,7 @@ import databaseService from '../appwrite/database'
 import authService from '../appwrite/auth';
 import Container from '../components/Container';
 import { Link, useNavigate } from 'react-router-dom'
+import HomeMenuItem from '../components/HomeMenuItem';
 
 function Home() {
   const [measures, setMeasures] = useState([]);
@@ -34,10 +35,33 @@ function Home() {
     });
   }, []);
 
-  
 
-
-  console.log('Measures : ' + measures.length)
+  const menuItems = [
+    {
+      title: 'Add a new group of measures',
+      description: 'If you want to collect several measures for the same location, choose this option. You will be able to follow how the measures change through the years.',
+      path: '/addMeasureGroup',
+      image: 'multiple-measurements.png'
+    },
+    {
+      title: "Add a new measure",
+      description: 'If you want to collect just one measure at a specific location and you already know you will not need historical data for this location, choose this option.',
+      path: '/addMeasure',
+      image: 'measuring-cup.png'
+    },
+    {
+      title: "See all measure groups",
+      description: 'See all the locations where people have collected multiple data through the years',
+      path: '/measureGroups',
+      image: 'eco.png'
+    },
+    {
+      title: "See all measures",
+      description: 'See all measures collected through the years and look for a place near you to know the calculated Water Quality Index at a specific point in time',
+      path: '/measures',
+      image: 'map.png'
+    }
+  ]
 
   if (measures.length === 0) {
     return (
@@ -51,44 +75,66 @@ function Home() {
           <div className='flex flex-wrap'>
             <p>This service permits to show all the water quality measures collected by the community.</p>
             <h1>Login to see all the measures or sign up to create an account and start collecting water quality measures.</h1>
-            <br/>
+            <br />
             <p>Data is provided as is and Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur delectus similique quis magni ea blanditiis vitae, ratione magnam, odit doloremque sed quae deserunt hic iure optio facilis in quam placeat..</p>
-            <br/>
+            <br />
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, id ipsa doloribus architecto, fugit nesciunt iste molestias vero blanditiis distinctio veritatis voluptate rem itaque et odit fuga minima magnam doloremque?</p>
-            <br/>
+            <br />
             <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A non placeat quas dolores delectus consectetur. Necessitatibus dolor sint culpa asperiores assumenda nihil aperiam veniam, voluptatem delectus, modi soluta pariatur labore.</p>
           </div>
-        </div>        
+        </div>
       </div>
     )
   } else {
 
 
     return (
-      <div className='flex flex-wrap text-lg justify-center'>
-
-       
-
-        <div className='pt-10 pl-10' >
+      <div className="flex flex-wrap text-lg justify-center">
+        <div className="pt-10 pl-10"  >
           Welcome back <span className='font-extrabold'>{userData?.name}.<br /></span>
           <p>This is what you can do...</p>
-          <ul>
+
+          <Container>
+            <div className='flex flex-wrap mt-4'>
+              {menuItems.map((m) => (
+                <div className='p-2 w-1/4' key={m.title}>
+                  <HomeMenuItem menuItem={m} />
+                </div>
+              ))}
+            </div>
+          </Container>
+
+
+          {/* <ul>
             <li>
-              <button onClick={() => navigate('/addMeasure')} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
-                Add a measure
+              <button onClick={() => navigate('/addMeasureGroup')} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
+                Add a new group of measure
               </button>
             </li>
             <li>
-              <button onClick={() => navigate("/measures")} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
+              <button onClick={() => navigate('/addMeasure')} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
+                Add a new measure
+              </button>
+            </li>
+            <li>
+              <button onClick={() => navigate('/measures')} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
                 See all measures
               </button>
             </li>
-          </ul>
+            <li>
+              <button onClick={() => navigate("/measureGroups")} className='inline-block ml-0 mt-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-full'>
+                See all measure groups
+              </button>
+            </li>
+          </ul> */}
         </div>
-        <div className='w-full'>
-          <img className='w-full' src='water.avif' alt="drop" />
+        
+        <div className='text-gray-300 text-xs text-right'>
+          <a href="https://www.flaticon.com/free-icons/measuring-cup" title="measuring cup icons">Measuring cup icons created by DinosoftLabs</a>{' '} 
+          <a href="https://www.flaticon.com/free-icons/3" title="3 icons">3 icons created by Freepik</a>{' '} 
+          <a href="https://www.flaticon.com/free-icons/location" title="location icons">Location icons created by Freepik</a>{' '} 
+          <a href="https://www.flaticon.com/free-icons/history" title="history icons">History icons created by Freepik</a>{' '} 
         </div>
-
       </div>
     )
   }

@@ -6,7 +6,7 @@ import {
 } from '@vis.gl/react-google-maps';
 import { formatDateTime } from '../utils/date';
 
-const MarkerWithInfowindow = ({ measure }) => {
+const MeasureMarker = ({ measure }) => {
 
     const [infowindowOpen, setInfowindowOpen] = useState(false);
     const [markerRef, marker] = useAdvancedMarkerRef();
@@ -37,4 +37,4 @@ const MarkerWithInfowindow = ({ measure }) => {
     );
 };
 
-export default MarkerWithInfowindow
+export default MeasureMarker

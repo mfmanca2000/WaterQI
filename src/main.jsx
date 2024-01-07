@@ -10,9 +10,12 @@ import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Measures from './pages/Measures.jsx'
+import MeasureGroups from './pages/MeasureGroups.jsx'
 import EditMeasure from './pages/EditMeasure.jsx'
 import MeasureDetail from './pages/MeasureDetail.jsx'
 import AddMeasure from './pages/AddMeasure.jsx'
+import AddMeasureGroup from './pages/AddMeasureGroup.jsx'
+import MeasureGroupDetail from './pages/MeasureGroupDetail.jsx'
 
 const router = createBrowserRouter([
   {
@@ -48,6 +51,14 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: '/measureGroups',
+        element: (
+          <Protected authenticationRequired={true}>
+            <MeasureGroups/>
+          </Protected>
+        )
+      },
+      {
         path: '/addMeasure',
         element: (
           <Protected authenticationRequired={true}>
@@ -56,10 +67,26 @@ const router = createBrowserRouter([
         )
       },
       {
+        path: '/addMeasureGroup',
+        element: (
+          <Protected authenticationRequired={true}>
+            <AddMeasureGroup/>
+          </Protected>
+        )
+      },
+      {
         path: '/measure/:measureId',
         element: (
           <Protected authenticationRequired={true}>
             <MeasureDetail/>
+          </Protected>
+        )
+      },
+      {
+        path: '/measureGroup/:measureGroupId',
+        element: (
+          <Protected authenticationRequired={true}>
+            <MeasureGroupDetail/>
           </Protected>
         )
       },
