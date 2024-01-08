@@ -191,7 +191,7 @@ function MeasureGroupForm({ measureGroup }) {
         />
         {measureGroup && (
           <div className="w-full mb-4">
-            <img src={storageService.getPreviewImageUrl(measureGroup.imageId)} alt={measureGroup.description} className="rounded-lg" />
+            <img src={storageService.getPreviewImageUrl(measureGroup.imageId)} alt={measureGroup.description} className="rounded-lg w-48" />
           </div>
         )}
 
@@ -244,7 +244,7 @@ function MeasureGroupForm({ measureGroup }) {
                     <tbody>
                       {measureGroup.measures.map((measure) => (
                         <tr key={measure.$id}>
-                          <td><img src={StorageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className='rounded-xl mt-2' width={40} /></td>
+                          <td><img src={StorageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className='rounded-xl mt-2 w-10' /></td>
                           <td className='border-separate'>{measure.placeDescription}</td>
                           <td>{formatDateTime(new Date(measure.datetime))}</td>
                           <td><Link to={`/measure/${measure.$id}`}>Open</Link> </td>
