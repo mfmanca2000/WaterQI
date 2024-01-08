@@ -4,6 +4,7 @@ import {
     InfoWindow,
     useAdvancedMarkerRef
 } from '@vis.gl/react-google-maps';
+import { Link } from 'react-router-dom';
 
 function MeasureGroupMarker({ measureGroup }) {
     const [infowindowOpen, setInfowindowOpen] = useState(false);
@@ -26,7 +27,8 @@ function MeasureGroupMarker({ measureGroup }) {
 
                     <b style={{ whiteSpace: 'nowrap' }}> {measureGroup.description} </b><br />
                     # measures: {measureGroup.measures.length}
-
+                    <br /><br/>
+                    <Link className='font-bold underline' to={`/measureGroup/${measureGroup.$id}`}>Open</Link>
                 </InfoWindow>
             )}
         </>

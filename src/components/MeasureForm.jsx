@@ -16,7 +16,7 @@ const defaultLongitude = conf.defaultLongitude;
 
 export default function MeasureForm({ measure }) {
 
-    const { register, handleSubmit, reset, setValue, control, getValues } = useForm({
+    const { register, handleSubmit, reset, setValue, control, getValues, watch } = useForm({
         defaultValues: {
             latitude: measure?.latitude || defaultLatitude,
             longitude: measure?.longitude || defaultLongitude,
@@ -30,6 +30,8 @@ export default function MeasureForm({ measure }) {
             salinity: measure?.salinity || null
         }
     })
+
+
 
     const navigate = useNavigate();
     const userData = useSelector((state) => state.auth.userData)
@@ -115,7 +117,7 @@ export default function MeasureForm({ measure }) {
             <div className="w-full">
                 <div className="w-full h-48 px-2" >
                     <APIProvider apiKey={conf.googleMapsAPIKey}>
-                        <Map 
+                        <Map
                             zoom={8}
                             center={centerPosition}
                             gestureHandling={'greedy'}
@@ -184,26 +186,33 @@ export default function MeasureForm({ measure }) {
                         }
 
 
-
-
                         <Input type="datetime-local" label="Date *"
                             className="mb-4"
                             {...register("datetime", { required: true, valueAsDate: true })}
                         />
 
+                        {measure && measure.measureGroup && (
+                            <>
+                                <label className='font-thin mb-6'>This measure is part of a group. To change its image, please change the image of the </label>
+                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >measure group</Link>
+                            </>
+                        )}
 
-
-                        <Input label={measure ? "Location image" : "Location image *"}
-                            type="file"
-                            className="mb-4"
-                            accept="image/png, image/jpg, image/jpeg"
-                            {...register("image", { required: !measure })}
-                        />
+                        {(!measure || !measure.measureGroup) && (
+                            < Input
+                                label={measure ? "Location image" : "Location image *"}
+                                type="file"
+                                className="mb-4"
+                                accept="image/png, image/jpg, image/jpeg"
+                                {...register("image", { required: !measure })}
+                            />)
+                        }
                         {measure && (
-                            <div className="w-full mb-4">
-                                <img src={storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg" />
+                            <div className="w-full my-4">
+                                <img src={storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg w-48" />
                             </div>
                         )}
+
 
 
                         <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full">

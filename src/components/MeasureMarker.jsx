@@ -5,6 +5,7 @@ import {
     useAdvancedMarkerRef
 } from '@vis.gl/react-google-maps';
 import { formatDateTime } from '../utils/date';
+import { Link } from 'react-router-dom';
 
 const MeasureMarker = ({ measure }) => {
 
@@ -30,7 +31,8 @@ const MeasureMarker = ({ measure }) => {
                     TDS: {measure.totalDissolvedSolids ? measure.totalDissolvedSolids : '-'}<br />
                     pH: {measure.pH ? measure.pH : '-'}<br />
                     Temperature (°C): {measure.temperature ? measure.temperature : '-'}<br />
-                    Salinity: {measure.salinity ? measure.salinity : '-'}<br />
+                    Salinity: {measure.salinity ? measure.salinity : '-'}<br /><br/>
+                    <Link className='font-bold underline' to={`/measure/${measure.$id}`}>Open</Link>
                 </InfoWindow>
             )}
         </>

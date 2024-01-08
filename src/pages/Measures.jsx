@@ -23,7 +23,7 @@ function Measures() {
   const [searchText, setSearchText] = useState();
   const userData = useSelector((state) => state.auth.userData);
 
-
+  
 
   // useEffect(() => {
   //   databaseService.getMeasuresInTimeInterval(new Date('1900-01-01T00:00:00.000Z'), new Date(Date.now())).then((measures) => {
@@ -35,7 +35,7 @@ function Measures() {
 
   useEffect(() => {
     databaseService.getAllMeasures().then((returnedMeasures) => {
-
+      console.log('Passing by useEffect');
       const currentUserId = userData.$id;
 
       if (returnedMeasures) {
@@ -54,20 +54,17 @@ function Measures() {
         //console.log('Passing by Measures.useEffect...' + measureNumber)
       }
     })
-
-
-    // databaseService.getAllMeasures().then((returnedMeasures) => {
-    //   if (returnedMeasures) {
-
-    //     //setMeasures(measures.documents);
-    //     measures.current = returnedMeasures.documents;
-    //     setMeasureNumber(returnedMeasures.documents.length);
-    //     console.log('Passing by Measures.useEffect...' + measures.current)
-    //   }
-    // })
+    
 
   }, [onlyUserMeasures, userData, dateFrom, dateTo, measures, searchText, measureNumber]);
 
+  const onDelete = (e, $id) => {
+    e.preventDefault();
+    console.log('HERE');
+
+    databaseService.deleteMeasure($id);
+    setMeasureNumber(measureNumber-1)
+  }
 
   return (
     <div className='w-full py-8'>
@@ -135,7 +132,7 @@ function Measures() {
         <div className='flex flex-wrap mt-4'>
           {measures.current?.map((measure) => (
             <div className='p-2 w-1/4' key={measure.$id}>
-              <MeasureCard {...measure} />
+              <MeasureCard measure={measure} onDelete={onDelete}/>
             </div>
           ))}
         </div>
