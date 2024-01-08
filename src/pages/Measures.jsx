@@ -82,12 +82,19 @@ function Measures() {
 
   }, [onlyUserData, userData, dateFrom, dateTo, standaloneMeasures, searchText, measureNumber, showMeasures, showMeasuresGroups]);
 
-  const onDelete = (e, $id) => {
+  const onDeleteMeasure = (e, $id) => {
     e.preventDefault();
     console.log('HERE');
 
     databaseService.deleteMeasure($id);
-    setMeasureNumber(measureNumber - 1)
+    setMeasureNumber(measureNumber - 1);
+  }
+
+  const onDeleteMeasureGroup = (e, $id) => {
+    e.preventDefault();
+
+    databaseService.deleteMeasureGroup($id);
+    setMeasureNumber(measureNumber - 1);
   }
 
   return (
@@ -171,17 +178,17 @@ function Measures() {
         <div className='flex flex-wrap mt-4'>
           {standaloneMeasures.current?.map((measure) => (
             <div className='p-2 w-1/4' key={measure.$id}>
-              <MeasureCard measure={measure} onDelete={onDelete} />
+              <MeasureCard measure={measure} onDelete={onDeleteMeasure} />
             </div>
           ))}
         </div>
       </Container>
 
       <Container>
-        <div className='flex flex-wrap'>
+        <div className='flex flex-wrap mt-4'>
           {measureGroups.current?.map((measureGroup) => (
             <div className='p-2 w-1/4' key={measureGroup.$id}>
-              <MeasureGroupCard {...measureGroup} />
+              <MeasureGroupCard measureGroup = {measureGroup} onDelete={onDeleteMeasureGroup} />
             </div>
           ))}
         </div>

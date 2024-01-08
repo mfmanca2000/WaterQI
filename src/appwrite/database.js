@@ -112,6 +112,16 @@ export class DatabaseService {
             return null;
         }
     }
+
+    async deleteMeasureGroup(measureGroupId) {
+        try {
+            await this.databases.deleteDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, measureGroupId);
+            return true; 
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService deleteMeasureGroup ' + error);
+            return false;
+        }
+    }
 }
 
 const databaseService = new DatabaseService()
