@@ -34,7 +34,6 @@ function MeasureCard({ measure, onDelete }) {
             <div className=''>
               <img src={getMarkerColor(measure)} />
             </div>
-
           </div>
 
         </Link>
