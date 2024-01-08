@@ -77,9 +77,9 @@ function MeasureGroups() {
             gestureHandling={'greedy'}
             disableDefaultUI={true}
           >
-            {measureGroups.current?.map((measure) => (
-              <div className='p-2 w-1/4' key={measure.$id}>
-                <MeasureGroupMarker measureGroup={measure} clickable={true} />
+            {measureGroups.current?.map((measureGroup) => (
+              <div className='p-2 w-1/4' key={measureGroup.$id}>
+                <MeasureGroupMarker measureGroup={measureGroup} clickable={true} />
               </div>
             ))}
           </Map>

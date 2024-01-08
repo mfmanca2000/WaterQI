@@ -49,12 +49,12 @@ function Home() {
       path: '/addMeasure',
       image: 'measuring-cup.png'
     },
-    {
-      title: "See all measure groups",
-      description: 'See all the locations where people have collected multiple data through the years',
-      path: '/measureGroups',
-      image: 'eco.png'
-    },
+    // {
+    //   title: "See all measure groups",
+    //   description: 'See all the locations where people have collected multiple data through the years',
+    //   path: '/measureGroups',
+    //   image: 'eco.png'
+    // },
     {
       title: "See all measures",
       description: 'See all measures collected through the years and look for a place near you to know the calculated Water Quality Index at a specific point in time',
