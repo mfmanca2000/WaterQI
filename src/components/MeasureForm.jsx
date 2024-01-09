@@ -141,7 +141,7 @@ export default function MeasureForm({ measure }) {
                             {/* <Marker ref={markerRef} clickable={true} position={markerPosition}>
                                 <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
                             </Marker> */}
-                            <AdvancedMarker position={markerPosition}>
+                            <AdvancedMarker position={markerPosition} clickable='true'>
                                 <img src={imageName} className="w-10" title={wqiText} />
                             </AdvancedMarker>
                         </Map>

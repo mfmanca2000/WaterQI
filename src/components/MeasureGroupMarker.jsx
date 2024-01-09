@@ -13,7 +13,7 @@ function MeasureGroupMarker({ measureGroup }) {
                 onClick={() => setInfowindowOpen(true)}
                 position={{ lat: measureGroup.latitude, lng: measureGroup.longitude }}
                 title={measureGroup.description}>
-                <img src={"multiplemarker.png"} className="w-8" />
+                <img src={window.location.origin + '/multiplemarker.png'} className="w-8" />
             </AdvancedMarker>
 
             {infowindowOpen && (

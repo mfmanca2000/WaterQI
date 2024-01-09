@@ -6,7 +6,7 @@ import Button from "./Button.jsx";
 import Input from "./Input.jsx";
 import storageService from "../appwrite/storage.js"
 import databaseService from "../appwrite/database.js"
-import { APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
+import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import conf from "../conf/conf.js";
 import Container from './Container.jsx';
 import { formatDateTime } from '../utils/date.js'
@@ -101,7 +101,7 @@ function MeasureGroupForm({ measureGroup }) {
   }
 
   const handleAddMeasureToGroup = async (e) => {
-    e.preventDefault();    
+    e.preventDefault();
 
     if (measureGroup) {
       const desc = String(getValues("description")) + ' - ' + (measureGroup.measures.length + 1);
@@ -118,16 +118,16 @@ function MeasureGroupForm({ measureGroup }) {
 
   const onDelete = (e, measure) => {
     e.preventDefault();
-    
-    if (databaseService.deleteMeasure(measure.$id)) {    
-      const found = measureGroup.measures.indexOf(measure);  
-      if (found !== -1){
-        measureGroup.measures.splice(found, 1);        
-      } 
+
+    if (databaseService.deleteMeasure(measure.$id)) {
+      const found = measureGroup.measures.indexOf(measure);
+      if (found !== -1) {
+        measureGroup.measures.splice(found, 1);
+      }
       setMeasureNumber(measureGroup.measures.length);
     }
-      
-    
+
+
   }
 
   const submit = async (data) => {
@@ -159,7 +159,7 @@ function MeasureGroupForm({ measureGroup }) {
     }
   }
 
-  
+
 
 
   return (
@@ -205,7 +205,7 @@ function MeasureGroupForm({ measureGroup }) {
       <div className='w-2/3'>
         <div className={measureGroup ? "h-1/3 pl-8" : "h-full pl-8"}>
           <APIProvider apiKey={conf.googleMapsAPIKey}>
-            <Map
+            <Map mapId={'bf51a910020fa25c'}
               zoom={8}
               center={centerPosition}
               gestureHandling={'greedy'}
@@ -217,7 +217,9 @@ function MeasureGroupForm({ measureGroup }) {
                 setValue("longitude", ev.detail.latLng.lng);
                 setMarkerPosition({ lat: ev.detail.latLng.lat, lng: ev.detail.latLng.lng })
               }}>
-              <Marker ref={markerRef} clickable={true} position={markerPosition} />
+              <AdvancedMarker ref={markerRef} clickable={true} position={markerPosition}>
+                <img src={window.location.origin + '/multiplemarker.png'} className="w-8" />
+              </AdvancedMarker>
             </Map>
           </APIProvider>
         </div>
