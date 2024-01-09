@@ -32,7 +32,7 @@ function MeasureCard({ measure, onDelete }) {
               <label className='text-sm font-light'>By {measure.userId}</label> <br />
             </div>
             <div className=''>
-              <img src={getMarkerColor(measure)} title={wqiText} />
+              <img src={window.location.origin + '/' +getMarkerColor(measure)} title={wqiText} />
             </div>
           </div>
 

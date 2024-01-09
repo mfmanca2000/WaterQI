@@ -18,7 +18,7 @@ const MeasureMarker = ({ measure }) => {
                 onClick={() => setInfowindowOpen(true)}
                 position={{ lat: measure.latitude, lng: measure.longitude }}
                 title={measure.placeDescription}>
-                    <img src={ getMarkerColor(measure)} className="w-10" title={wqiText} />
+                    <img src={ window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
             </AdvancedMarker>
             {infowindowOpen && (
                 <InfoWindow

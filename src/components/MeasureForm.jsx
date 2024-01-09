@@ -116,7 +116,7 @@ export default function MeasureForm({ measure }) {
     }
 
     const [wqi, wqiText] = calculateWQI(measure);
-    const imageName = '../../public/' + getMarkerColor(measure);
+    const imageName = window.location.origin + '/' + getMarkerColor(measure);
 
     return (
         <>
@@ -139,7 +139,7 @@ export default function MeasureForm({ measure }) {
                                 }
                             }}>
                             {/* <Marker ref={markerRef} clickable={true} position={markerPosition}>
-                                <img src={getMarkerColor(measure)} className="w-10" title={wqiText} />
+                                <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
                             </Marker> */}
                             <AdvancedMarker position={markerPosition}>
                                 <img src={imageName} className="w-10" title={wqiText} />
