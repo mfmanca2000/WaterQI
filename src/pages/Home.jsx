@@ -41,13 +41,13 @@ function Home() {
       title: 'Add a new group of measures',
       description: 'If you want to collect several measures for the same location, choose this option. You will be able to follow how the measures change through the years.',
       path: '/addMeasureGroup',
-      image: 'multiple-measurements.png'
+      image: '/multiple-measurements.png'
     },
     {
       title: "Add a new measure",
       description: 'If you want to collect just one measure at a specific location and you already know you will not need historical data for this location, choose this option.',
       path: '/addMeasure',
-      image: 'measuring-cup.png'
+      image: '/measuring-cup.png'
     },
     // {
     //   title: "See all measure groups",
@@ -57,9 +57,15 @@ function Home() {
     // },
     {
       title: "See all measures",
-      description: 'See all measures collected through the years and look for a place near you to know the calculated Water Quality Index at a specific point in time',
+      description: 'See all measures collected through the years and look for a place near you to know the calculated Water Quality Index at a specific point in time.',
       path: '/measures',
-      image: 'map.png'
+      image: '/map.png'
+    },
+    {
+      title: "Find a sensor",
+      description: 'Check what are some of the sensors available on the market. Buy one and start measuring the quality of the water near you.',
+      path: '',
+      image: '/sensors.png'
     }
   ]
 
