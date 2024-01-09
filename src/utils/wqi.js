@@ -49,7 +49,7 @@ function calculateWQI(measure) {
 
 function getMarkerColor(measure) {
     const [wqi, wqiText] = calculateWQI(measure);
-    console.log('Calculated WQI: ' + wqi)
+    //console.log('Calculated WQI: ' + wqi)
     switch (wqi) {
         case 0:
             return 'markerGray.png';

@@ -25,7 +25,7 @@ function MeasureGroupForm({ measureGroup }) {
       description: measureGroup?.description || "",
       latitude: measureGroup?.latitude || defaultLatitude,
       longitude: measureGroup?.longitude || defaultLongitude,
-      imageId: measureGroup?.imageId || "",
+      imageId: measureGroup?.imageId || ""
     }
   })
 
@@ -34,6 +34,7 @@ function MeasureGroupForm({ measureGroup }) {
   const [markerRef, marker] = useMarkerRef();
   const measures = useRef([]);
   const [measureNumber, setMeasureNumber] = useState(0);
+  const [lastUpdatedAt, setLastUpdatedAt] = useState(null);
 
   const [markerPosition, setMarkerPosition] = useState({
     lat: Number(measureGroup?.latitude || defaultLatitude),
@@ -64,26 +65,8 @@ function MeasureGroupForm({ measureGroup }) {
 
 
   useEffect(() => {
-    console.log('Passing by...')
-    //console.log('Measures: ' + JSON.stringify(measureGroup?.measures))
-
-    /*
-    databaseService.getAllMeasures().then((returnedMeasures) => {
-
-      if (returnedMeasures) {
-        const filtered = returnedMeasures.documents.filter((m) => {
-          return m.measureGroup == measureGroup.$id;
-        });
-
-        //setMeasures(returnedMeasures.documents);
-        measures.current = filtered;
-        //setMeasureNumber(filtered.length);
-        //console.log('Passing by Measures.useEffect...' + measureNumber)
-      }
-    })
-
-    */
-  }, [measureGroup, measureNumber])
+    //console.log('Passing by...')    
+  }, [measureGroup, measureNumber, setLastUpdatedAt])
 
 
   function latitudeChangedHandler(event) {
@@ -108,26 +91,45 @@ function MeasureGroupForm({ measureGroup }) {
       const dbMeasure = await databaseService.addMeasure({ userId: userData.$id, latitude: getValues("latitude"), longitude: getValues("longitude"), placeDescription: desc, datetime: new Date(Date.now()), imageId: getValues("imageId") });
       if (dbMeasure) {
         measureGroup.measures.push(dbMeasure);
-        await databaseService.updateMeasureGroup(measureGroup.$id, { ...measureGroup });
-        measures.current = [...measures.current, dbMeasure];
-        //navigate(`/measure/${dbMeasure.$id}`)          
-        setMeasureNumber(measures.current.length)
+        //measures.current = measureGroup.measures;
+
+        const newMg = await databaseService.updateMeasureGroup(measureGroup.$id, { ...measureGroup, lastOperationTime: new Date(Date.now()) });
+
+        setLastUpdatedAt(newMg.$updatedAt)
+        setMeasureNumber(newMg.measures.length)
+
+        //navigate(`/measure/${dbMeasure.$id}`)  
       }
     }
   }
 
-  const onDelete = (e, measure) => {
+  const handleDeleteMeasure = async (e, measure) => {
     e.preventDefault();
 
     if (databaseService.deleteMeasure(measure.$id)) {
       const found = measureGroup.measures.indexOf(measure);
       if (found !== -1) {
-        measureGroup.measures.splice(found, 1);
+        console.log('Found at index ' + found + ' out of ' + measureGroup.measures.length);
+        const deleted = measureGroup.measures.splice(found, 1);
+        measures.current.splice(found, 1);
+        // console.log('After splice: ' + measures.current.length)
+        // console.log('Before databaseService.updateMeasureGroup updatedAt is ' + measureGroup.$updatedAt)
+        const newMg = await databaseService.updateMeasureGroup(measureGroup.$id, { ...measureGroup, lastOperationTime: new Date(Date.now()) });
+        if (newMg) {
+          // console.log('After databaseService.updateMeasureGroup updatedAt is ' + newMg.$updatedAt)
+          // console.log('After databaseService.updateMeasureGroup lastOperationTime is ' + newMg.lastOperationTime)
+          // console.log('After removal ' + measures.current.length + ' are left')
+          setLastUpdatedAt(newMg.$updatedAt)
+          setMeasureNumber(newMg.measures.length);
+        } else {
+          console.log('Unable to update Measure Group')
+          window.location.reload(false);
+        }
+      } else {
+        console.log('What is going on here??')
       }
-      setMeasureNumber(measureGroup.measures.length);
+
     }
-
-
   }
 
   const submit = async (data) => {
@@ -183,6 +185,8 @@ function MeasureGroupForm({ measureGroup }) {
           {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
         />
 
+        <label className='mb-4 pl-1'>Last updated at {formatDateTime(new Date(lastUpdatedAt))}</label>
+
         <Input label={measureGroup ? "Location image" : "Location image *"}
           type="file"
           className="mb-4"
@@ -206,7 +210,7 @@ function MeasureGroupForm({ measureGroup }) {
         <div className={measureGroup ? "h-1/3 pl-8" : "h-full pl-8"}>
           <APIProvider apiKey={conf.googleMapsAPIKey}>
             <Map mapId={'bf51a910020fa25c'}
-              zoom={8}
+              zoom={conf.defaultZoomLevel}
               center={centerPosition}
               gestureHandling={'greedy'}
               disableDefaultUI={true}
@@ -250,7 +254,7 @@ function MeasureGroupForm({ measureGroup }) {
                           <td className='border-separate'>{measure.placeDescription}</td>
                           <td>{formatDateTime(new Date(measure.datetime))}</td>
                           <td><Link to={`/measure/${measure.$id}`}>Open</Link> </td>
-                          <td><Link onClick={(e) => onDelete(e, measure)}>Delete</Link></td>
+                          <td><Link onClick={(e) => handleDeleteMeasure(e, measure)}>Delete</Link></td>
                         </tr>
                       ))}
                     </tbody>

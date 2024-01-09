@@ -17,8 +17,10 @@ const defaultLongitude = conf.defaultLongitude;
 
 function Measures() {
   //const [measures, setMeasures] = useState([]);
-  const standaloneMeasures = useRef([]);
-  const measureGroups = useRef([]);
+  const filteredStandaloneMeasures = useRef([]);
+  const sortedStandaloneMeasures = useRef([]);
+  const filteredMeasureGroups = useRef([]);
+  const sortedMeasureGroups = useRef([]);
   const [onlyUserData, setOnlyUserData] = useState(false);
   const [showMeasures, setShowMeasures] = useState(true);
   const [showMeasuresGroups, setShowMeasuresGroups] = useState(true);
@@ -28,24 +30,15 @@ function Measures() {
   const [searchText, setSearchText] = useState();
   const userData = useSelector((state) => state.auth.userData);
 
-
-
-  // useEffect(() => {
-  //   databaseService.getMeasuresInTimeInterval(new Date('1900-01-01T00:00:00.000Z'), new Date(Date.now())).then((measures) => {
-  //     if (measures) {
-  //       setMeasures(measures.documents);
-  //     }
-  //   })
-  // }, []);
-
   useEffect(() => {
-    console.log('Passing by');
-    databaseService.getAllMeasures().then((returnedMeasures) => {
-      //console.log('Passing by useEffect');
+    //console.log('Passing by');
+    databaseService.getAllMeasures().then((returnedMeasures) => {      
       const currentUserId = userData.$id;
 
       if (returnedMeasures) {
-        const filtered = returnedMeasures.documents.filter((m) => {
+        sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, conf.lastInsertedMeasuresNumber);
+
+        filteredStandaloneMeasures.current = returnedMeasures.documents.filter((m) => {
           var dt = new Date(m.datetime).getTime();
           //console.log(m.placeDescription + ': ' + m.datetime + ' -- DateFrom:' + dateFrom + ' --> ' + ((!onlyUserMeasures || m.userId === currentUserId) && (!dateFrom || new Date(m.datetime).getTime > new Date(dateFrom))))   
 
@@ -55,37 +48,28 @@ function Measures() {
             (!dateFrom || dt >= new Date(dateFrom).getTime()) &&
             (!dateTo || dt <= new Date(dateTo).getTime()) &&
             (!searchText || m.placeDescription.toLowerCase().includes(searchText.toLowerCase()));
-        });
-
-        //setMeasures(returnedMeasures.documents);
-        standaloneMeasures.current = filtered;
-
+        });       
+        
         databaseService.getAllMeasureGroups().then((returnedMeasureGroups) => {
-          const measureGroupsFiltered = returnedMeasureGroups.documents.filter((mg) => {
+          sortedMeasureGroups.current = returnedMeasureGroups.documents.slice(0, conf.lastModifiedMeasureGroupsNumber);
+
+          filteredMeasureGroups.current =  returnedMeasureGroups.documents.filter((mg) => {
             return showMeasuresGroups &&
               (!onlyUserData || mg.userId === currentUserId) &&
               (!searchText || mg.gescription.toLowerCase().includes(searchText.toLowerCase()));
-          });
-
-          measureGroups.current = measureGroupsFiltered;
-
-          setMeasureNumber(filtered.length + measureGroupsFiltered.length);
-        });
-
-
-
-
-        //console.log('Passing by Measures.useEffect...' + measureNumber)
+          });         
+      
+          setMeasureNumber(filteredStandaloneMeasures.current.length + filteredMeasureGroups.current.length);
+        });        
       }
     })
 
 
-  }, [onlyUserData, userData, dateFrom, dateTo, standaloneMeasures, searchText, measureNumber, showMeasures, showMeasuresGroups]);
+  }, [onlyUserData, userData, dateFrom, dateTo, filteredStandaloneMeasures, searchText, measureNumber, showMeasures, showMeasuresGroups]);
 
   const onDeleteMeasure = (e, $id) => {
     e.preventDefault();
-    console.log('HERE');
-
+    
     databaseService.deleteMeasure($id);
     setMeasureNumber(measureNumber - 1);
   }
@@ -151,19 +135,19 @@ function Measures() {
 
       <Container>
         <APIProvider apiKey={conf.googleMapsAPIKey}>
-          <Map className='h-96'
+          <Map className='h-96 mt-6'
             mapId={'bf51a910020fa25a'}
-            zoom={8}
+            zoom={conf.defaultZoomLevel}
             center={{ lat: defaultLatitude, lng: defaultLongitude }}
             gestureHandling={'greedy'}
             disableDefaultUI={true}>
-            {standaloneMeasures.current?.map((measure) => (
+            {filteredStandaloneMeasures.current?.map((measure) => (
               <div className='p-2 w-1/4' key={measure.$id}>
                 <MeasureMarker measure={measure} clickable={true} />
               </div>
             ))}
 
-            {measureGroups.current?.map((measureGroup) => (
+            {filteredMeasureGroups.current?.map((measureGroup) => (
               <div className='p-2 w-1/4' key={measureGroup.$id}>
                 <MeasureGroupMarker measureGroup={measureGroup} clickable={true} />
               </div>
@@ -174,8 +158,14 @@ function Measures() {
 
 
       <Container>
+        <div className='text-3xl mt-4 p-4 font-bold'>
+          LAST INSERTED STANDALONE MEASURES
+        </div>
+      </Container>
+
+      <Container>
         <div className='flex flex-wrap mt-4'>
-          {standaloneMeasures.current?.map((measure) => (
+          {sortedStandaloneMeasures.current?.map((measure) => (
             <div className='p-2 w-1/4' key={measure.$id}>
               <MeasureCard measure={measure} onDelete={onDeleteMeasure} />
             </div>
@@ -184,10 +174,16 @@ function Measures() {
       </Container>
 
       <Container>
+        <div className='text-3xl mt-4 p-4 font-bold'>
+          LAST MODIFIED MEASURE GROUPS
+        </div>
+      </Container>
+
+      <Container>
         <div className='flex flex-wrap mt-4'>
-          {measureGroups.current?.map((measureGroup) => (
+          {sortedMeasureGroups.current?.map((measureGroup) => (
             <div className='p-2 w-1/4' key={measureGroup.$id}>
-              <MeasureGroupCard measureGroup = {measureGroup} onDelete={onDeleteMeasureGroup} />
+              <MeasureGroupCard measureGroup={measureGroup} onDelete={onDeleteMeasureGroup} />
             </div>
           ))}
         </div>

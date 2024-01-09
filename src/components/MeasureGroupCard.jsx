@@ -2,6 +2,7 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import { useSelector } from "react-redux"
 import StorageService from '../appwrite/storage.js'
+import { formatDateTime } from '../utils/date.js'
 
 function MeasureGroupCard({ measureGroup, onDelete }) {
     const userData = useSelector((state) => state.auth.userData)
@@ -22,10 +23,14 @@ function MeasureGroupCard({ measureGroup, onDelete }) {
                         <label className='text-xl font-bold'>{measureGroup?.description}</label><br />
                     </div>
                     <div className='min-h-14 grid grid-cols-5'>
-                        <label className='text-4xl font-bold col-span-4 text-right'>{measureGroup?.measures.length}</label>
+                        <span className='text-sm font-light col-span-3'>
+                            <div>{formatDateTime(new Date(measureGroup.$updatedAt))}</div>
+                            <div><label className='text-sm font-light'>By {measureGroup.userId}</label></div>
+                        </span>
+                        <label className='text-4xl font-bold text-right'>{measureGroup?.measures.length}</label>
                         <div className=''>
                             <img src='multiplemarker.png' />
-                        </div>                        
+                        </div>
                     </div>
                 </Link>
                 {userData.$id === measureGroup?.userId && (

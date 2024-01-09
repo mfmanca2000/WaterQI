@@ -121,10 +121,10 @@ export default function MeasureForm({ measure }) {
     return (
         <>
             <div className="w-full">
-                <div className="w-full h-48 px-2" >
+                <div className="w-full h-96 px-2" >
                     <APIProvider apiKey={conf.googleMapsAPIKey}>
                         <Map mapId={'bf51a910020fa25b'}
-                            zoom={8}
+                            zoom={conf.defaultZoomLevel}
                             center={centerPosition}
                             gestureHandling={'greedy'}
                             disableDefaultUI={true}
@@ -142,7 +142,7 @@ export default function MeasureForm({ measure }) {
                                 <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
                             </Marker> */}
                             <AdvancedMarker position={markerPosition} clickable='true'>
-                                <img src={imageName} className="w-10" title={wqiText} />
+                                <img src={imageName} className="w-16" title={wqiText} />
                             </AdvancedMarker>
                         </Map>
                     </APIProvider>

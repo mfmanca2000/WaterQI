@@ -30,7 +30,7 @@ export class DatabaseService {
 
     async getAllMeasures() {
         try {
-            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [])
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [ Query.orderDesc('datetime') ])
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllMeasures ' + error);
             return null;
@@ -39,7 +39,7 @@ export class DatabaseService {
 
     async getAllMeasureGroups() {
         try {
-            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, [])
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, [Query.orderDesc('$updatedAt')])
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllMeasureGroups ' + error);
             return null;
@@ -104,9 +104,9 @@ export class DatabaseService {
         }
     }
 
-    async updateMeasureGroup(measureGroupId, { description, latitude, longitude, imageId, measures }) {
+    async updateMeasureGroup(measureGroupId, { description, latitude, longitude, imageId, measures, lastOperationTime }) {
         try {
-            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, measureGroupId, { description, latitude, longitude, imageId, measures })
+            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, measureGroupId, { description, latitude, longitude, imageId, measures, lastOperationTime })
         } catch (error) {
             console.log('--- Appwrite DatabaseService updateMeasureGroup ' + error);
             return null;

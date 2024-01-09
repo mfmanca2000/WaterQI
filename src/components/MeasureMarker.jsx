@@ -3,6 +3,7 @@ import { AdvancedMarker, InfoWindow, useAdvancedMarkerRef } from '@vis.gl/react-
 import { formatDateTime } from '../utils/date';
 import { Link } from 'react-router-dom';
 import { calculateWQI, getMarkerColor } from '../utils/wqi'
+import storageService from '../appwrite/storage';
 
 const MeasureMarker = ({ measure }) => {
 
@@ -18,21 +19,42 @@ const MeasureMarker = ({ measure }) => {
                 onClick={() => setInfowindowOpen(true)}
                 position={{ lat: measure.latitude, lng: measure.longitude }}
                 title={measure.placeDescription}>
-                    <img src={ window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
+                <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
             </AdvancedMarker>
             {infowindowOpen && (
                 <InfoWindow
                     anchor={marker}
-                    maxWidth={200}
+                    maxWidth={450}
                     onCloseClick={() => setInfowindowOpen(false)}>
-                    {formatDateTime(new Date(measure.datetime))}{' '}<br />
-                    <b style={{ whiteSpace: 'nowrap' }}> {measure.placeDescription} </b><br />
-                    EC: {measure.electricalConductivity ? measure.electricalConductivity : '-'}<br />
-                    TDS: {measure.totalDissolvedSolids ? measure.totalDissolvedSolids : '-'}<br />
-                    pH: {measure.pH ? measure.pH : '-'}<br />
-                    Temperature (°C): {measure.temperature ? measure.temperature : '-'}<br />
-                    Salinity: {measure.salinity ? measure.salinity : '-'}<br /><br/>
-                    <Link className='font-bold underline' to={`/measure/${measure.$id}`}>Open</Link>
+                    <div className='grid grid-cols-2'>
+                        <div>
+                            <Link className='font-bold underline text-right col-span-2' to={`/measure/${measure.$id}`}>
+                                <label className='font-extrabold text-lg' style={{ whiteSpace: 'nowrap' }}> {measure.placeDescription} </label><br />
+                            </Link>
+                            <label className='italic'> {formatDateTime(new Date(measure.datetime))}</label><br />
+                            <div className='grid grid-cols-2 text-base w-56'>
+                                <label className='text-base'>EC</label>
+                                <label>{measure.electricalConductivity ? measure.electricalConductivity : '-'}</label>
+
+                                <label className='text-base'>TDS</label>
+                                <label>{measure.totalDissolvedSolids ? measure.totalDissolvedSolids : '-'}</label>
+
+                                <label className='text-base'>pH</label>
+                                <label>{measure.pH ? measure.pH : '-'}</label>
+
+                                <label className='text-base'>Temperature</label>
+                                <label>{measure.temperature ? measure.temperature : '-'}</label>
+
+                                <label className='text-base'>Salinity</label>
+                                <label>{measure.salinity ? measure.salinity : '-'}</label>
+                            </div>
+                        </div>
+                        <div className='text-center pt-6'>
+                            <img src={storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className='rounded-lg w-48 object-fill' />
+                        </div>
+                    </div>
+
+
                 </InfoWindow>
             )}
         </>
