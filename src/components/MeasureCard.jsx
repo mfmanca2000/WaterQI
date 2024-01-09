@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import StorageService from '../appwrite/storage.js'
 import { formatDateTime } from '../utils/date.js'
 import { useSelector } from "react-redux";
-import { calculateWQI, cleanWQIThreshold, getMarkerColor } from '../utils/wqi.js';
+import { calculateWQI, getMarkerColor } from '../utils/wqi.js';
 
 function MeasureCard({ measure, onDelete }) {
 
@@ -13,7 +13,7 @@ function MeasureCard({ measure, onDelete }) {
 
   const userData = useSelector((state) => state.auth.userData)
 
-  const wqi = calculateWQI(measure);
+  const [wqi, wqiText] = calculateWQI(measure);
 
   return (
     <>
@@ -32,7 +32,7 @@ function MeasureCard({ measure, onDelete }) {
               <label className='text-sm font-light'>By {measure.userId}</label> <br />
             </div>
             <div className=''>
-              <img src={getMarkerColor(measure)} />
+              <img src={getMarkerColor(measure)} title={wqiText} />
             </div>
           </div>
 

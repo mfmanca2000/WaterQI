@@ -6,10 +6,11 @@ import storageService from "../appwrite/storage.js"
 import databaseService from "../appwrite/database.js"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
+import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import conf from "../conf/conf.js";
 import { removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
+import { calculateWQI, getMarkerColor } from "../utils/wqi.js";
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -89,13 +90,15 @@ export default function MeasureForm({ measure }) {
 
 
     const submit = async (data) => {
-
+        let file = null;
         if (measure) {
-            const file = data.image[0] ? await storageService.uploadImage(data.image[0]) : null;
-            if (file) {
-                storageService.deleteImage(measure.imageId);
+            if (data.image) {
+                file = data.image[0] ? await storageService.uploadImage(data.image[0]) : null;
+                if (file) {
+                    storageService.deleteImage(measure.imageId);
+                }
             }
-            const dbMeasure = await databaseService.updateMeasure(measure.$id, { ...data, imageId: file ? file.$id : undefined });
+            const dbMeasure = await databaseService.updateMeasure(measure.$id, { ...data, imageId: file ? file.$id : measure.imageId });
             if (dbMeasure) {
                 navigate(`/measures`)
             }
@@ -112,12 +115,15 @@ export default function MeasureForm({ measure }) {
 
     }
 
+    const [wqi, wqiText] = calculateWQI(measure);
+    const imageName = '../../public/' + getMarkerColor(measure);
+
     return (
         <>
             <div className="w-full">
                 <div className="w-full h-48 px-2" >
                     <APIProvider apiKey={conf.googleMapsAPIKey}>
-                        <Map
+                        <Map mapId={'bf51a910020fa25b'}
                             zoom={8}
                             center={centerPosition}
                             gestureHandling={'greedy'}
@@ -131,9 +137,13 @@ export default function MeasureForm({ measure }) {
                                     setMarkerPosition({ lat: ev.detail.latLng.lat, lng: ev.detail.latLng.lng })
                                     //console.log(marker.position.lat)
                                 }
-                            }}
-                        >
-                            <Marker ref={markerRef} clickable={true} position={markerPosition} />
+                            }}>
+                            {/* <Marker ref={markerRef} clickable={true} position={markerPosition}>
+                                <img src={getMarkerColor(measure)} className="w-10" title={wqiText} />
+                            </Marker> */}
+                            <AdvancedMarker position={markerPosition}>
+                                <img src={imageName} className="w-10" title={wqiText} />
+                            </AdvancedMarker>
                         </Map>
                     </APIProvider>
                 </div>

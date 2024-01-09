@@ -145,7 +145,7 @@ function MeasureGroupForm({ measureGroup }) {
           await databaseService.updateMeasure(m.$id, { ...m, imageId: dbMeasureGroup.imageId, latitude: dbMeasureGroup.latitude, longitude: dbMeasureGroup.longitude })
         });
 
-        navigate(`/measureGroups`)
+        navigate(`/measures`)
       }
     } else {
       const file = await storageService.uploadImage(data.image[0]);

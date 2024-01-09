@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { AdvancedMarker, InfoWindow, useAdvancedMarkerRef } from '@vis.gl/react-google-maps';
 import { formatDateTime } from '../utils/date';
 import { Link } from 'react-router-dom';
-import { calculateWQI, cleanWQIThreshold } from '../utils/wqi'
+import { calculateWQI, getMarkerColor } from '../utils/wqi'
 
 const MeasureMarker = ({ measure }) => {
 
     const [infowindowOpen, setInfowindowOpen] = useState(false);
     const [markerRef, marker] = useAdvancedMarkerRef();
 
-    const wqi = calculateWQI(measure);
+    const [wqi, wqiText] = calculateWQI(measure);
 
     return (
         <>
@@ -18,7 +18,7 @@ const MeasureMarker = ({ measure }) => {
                 onClick={() => setInfowindowOpen(true)}
                 position={{ lat: measure.latitude, lng: measure.longitude }}
                 title={measure.placeDescription}>
-                    <img src={ wqi > cleanWQIThreshold ? 'markerBlue.png' : (wqi >= 0 ? 'markerBrown.png' : 'markerGray.png')} className="w-10" />
+                    <img src={ getMarkerColor(measure)} className="w-10" title={wqiText} />
             </AdvancedMarker>
             {infowindowOpen && (
                 <InfoWindow

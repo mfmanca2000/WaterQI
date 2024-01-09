@@ -156,8 +156,7 @@ function Measures() {
             zoom={8}
             center={{ lat: defaultLatitude, lng: defaultLongitude }}
             gestureHandling={'greedy'}
-            disableDefaultUI={true}
-          >
+            disableDefaultUI={true}>
             {standaloneMeasures.current?.map((measure) => (
               <div className='p-2 w-1/4' key={measure.$id}>
                 <MeasureMarker measure={measure} clickable={true} />
