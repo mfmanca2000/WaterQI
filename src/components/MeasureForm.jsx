@@ -231,12 +231,12 @@ export default function MeasureForm({ measure }) {
                     </div>
 
                     <div className="w-1/2 h-1/2 px-8 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10">
-                        <Input label="Electrical Conductivity"
+                        <Input label="Electrical Conductivity (μS/cm)"
                             className="mb-2"
                             {...register("electricalConductivity")}
                         />
 
-                        <Input label="Total Dissolved Solids"
+                        <Input label="Total Dissolved Solids (ppm)"
                             className="mb-2"
                             {...register("totalDissolvedSolids")}
                         />
