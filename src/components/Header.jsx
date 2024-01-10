@@ -1,15 +1,20 @@
 import React from 'react'
-import Container from './Container.jsx'
-import Logo from './Logo.jsx'
-import { Link, useNavigate } from 'react-router-dom'
-import { useSelector } from 'react-redux'
-import LogoutBtn from './LogoutBtn.jsx'
-import { useTranslation, Trans } from 'react-i18next'
+import { useNavigate, useLocation } from 'react-router-dom'
+import { useSelector, useDispatch } from 'react-redux'
+import { useTranslation } from 'react-i18next'
+import { Avatar, Dropdown, Navbar } from 'flowbite-react';
+import "/node_modules/flag-icons/css/flag-icons.min.css";
+import { LanguageSelector } from './LanguageSelector.jsx'
+import authService from '../appwrite/auth.js'
+import { logout } from '../store/authSlice'
+
 
 function Header() {
-    const { t, i18n } = useTranslation();
+    const dispatch = useDispatch();
+    const { t } = useTranslation();
     const loggedIn = useSelector((state) => state.auth.loggedIn);
     const navigate = useNavigate();
+    const location = useLocation();
     const navItems = [
         {
             name: `${t('headerHome')}`,
@@ -40,47 +45,78 @@ function Header() {
             name: `${t('headerAddMeasure')}`,
             slug: "/addMeasure",
             active: loggedIn
-        }
+        },
     ]
 
-    const lngs = {
-        it: { nativeName: 'Italiano' },
-        en: { nativeName: 'English' },
-        fr: { nativeName: 'Français'},
-    };
+    // const lngs = {
+    //     it: { nativeName: 'Italiano' },
+    //     en: { nativeName: 'English' },
+    //     fr: { nativeName: 'Français' },
+    // };
+
+    const userData = useSelector((state) => state.auth.userData)
+
+    const logoutHandler = () => {
+        authService.logout().then(() => {
+            dispatch(logout());
+            if (location.pathname === '/') {
+                console.log('HERE');
+                navigate('/login');
+            } else {
+                console.log('THERE')
+                navigate('/');
+            }
+        });
+
+    }
 
     return (
-        <header className='py-3 shadow bg-casaleggio-rgba'>
-            <Container>
-                <nav className='flex'>
-                    <div className='mr-4'>
-                        <Link to="/">
-                            <Logo width='70%' />
-                        </Link>
+        <header className='py-2 shadow bg-casaleggio-rgba'>
+
+            <Navbar rounded className='bg-transparent mx-16'>
+                <Navbar.Brand href="/">
+                    <img src="/Logo.png" className="mr-3 h-20 sm:h-9" alt="WaterQI Logo" />
+                    <span className="self-center whitespace-nowrap text-3xl font-semibold dark:text-white">WaterQI</span>
+                </Navbar.Brand>
+
+                <Navbar.Collapse className='md:mt-4'>
+                    {
+                        navItems.map((item) => item.active ? (
+                            <Navbar.Link className='text-lg' key={item.name} href={item.slug}>
+                                {item.name}
+                            </Navbar.Link>
+                        ) : null)
+                    }
+                </Navbar.Collapse>
+
+                <div className="flex md:order-2 mr-8 md:mt-4">
+                    <div className='mr-6'>
+                        <LanguageSelector />
                     </div>
-                    <div>
-                        {Object.keys(lngs).map((lng) => (
-                            <button className='py-6 px-2' key={lng} style={{ fontWeight: i18n.resolvedLanguage === lng ? 'bold' : 'normal' }} type="submit" onClick={() => i18n.changeLanguage(lng)}>
-                                {lngs[lng].nativeName}
-                            </button>
-                        ))}
-                    </div>
-                    <ul className='flex ml-auto pt-4'>
-                        {
-                            navItems.map((item) => item.active ? (
-                                <li key={item.name}>
-                                    <button onClick={() => navigate(item.slug)} className='inline-block mx-2 px-6 py-2 duration-200 bg-green-500 hover:bg-casaleggio-btn-rgba rounded-full'>
-                                        {item.name}
-                                    </button>
-                                </li>
-                            ) : null)
-                        }
-                        {loggedIn && (<li>
-                            <LogoutBtn />
-                        </li>)}
-                    </ul>
-                </nav>
-            </Container>
+
+                    {loggedIn ? (
+                    <Dropdown arrowIcon={false} size="lg" inline label={<Avatar alt="Your avatar" rounded bordered placeholderInitials={Array.from(userData?.name)[0]} size="md"/>}>
+                        <Dropdown.Header>
+                            <span className="block text-base">{userData.name}</span>
+                            <span className="block truncate text-base font-medium">{userData.email}</span>
+                        </Dropdown.Header>
+
+                        <Dropdown.Item>{t('headerSettings')}</Dropdown.Item>
+                        <Dropdown.Item>{t('headerHelp')}</Dropdown.Item>                    
+
+                        <Dropdown.Divider />
+                        <Dropdown.Item onClick={logoutHandler}>
+                            {/* <LogoutBtn /> */}
+                            {t('logout')}
+                        </Dropdown.Item>
+                    </Dropdown>
+                    ) : null}
+
+                    <Navbar.Toggle className='mx-2' />
+                </div>
+
+
+            </Navbar>
         </header>
     )
 }

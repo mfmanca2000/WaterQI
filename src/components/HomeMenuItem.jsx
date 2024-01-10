@@ -5,10 +5,10 @@ function HomeMenuItem({ menuItem }) {
     return (
         <Link to={menuItem.path}>
             <div className='w-full bg-gray-100 rounded-xl p-4'>
-                <div className='p-4'>
-                    <img src={menuItem.image} alt={menuItem.title} className='rounded-xl object-fill' />
+                <div className='p-4  justify-center'>
+                    <img src={menuItem.image} alt={menuItem.title} className='rounded-xl object-cover object-center h-48' />
                 </div>
-                <div className=' text-left'>
+                <div className=' text-left h-16'>
                     <label className='text-xl font-bold'>{menuItem.title}</label>
                 </div>
                 <div className=''>

@@ -1,18 +1,16 @@
-import React from 'react'
-import { useEffect } from 'react';
-import { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import databaseService from '../appwrite/database'
 import authService from '../appwrite/auth';
 import Container from '../components/Container';
-import { Link, useNavigate } from 'react-router-dom'
 import HomeMenuItem from '../components/HomeMenuItem';
+import { useTranslation } from 'react-i18next'
+
 
 function Home() {
   const [measures, setMeasures] = useState([]);
   const [userData, setUserData] = useState(null);
-  const navigate = useNavigate();
 
-
+  const { t, i18n } = useTranslation();
   // useEffect(() => {
   //   databaseService.getMeasuresInTimeInterval(new Date('1900-01-01T00:00:00.000Z'), new Date(Date.now())).then((measures) => {
   //     if (measures) {
@@ -38,14 +36,14 @@ function Home() {
 
   const menuItems = [
     {
-      title: 'Add a new group of measures',
-      description: 'If you want to collect several measures for the same location, choose this option. You will be able to follow how the measures change through the years.',
+      title: `${t('menuItemAddMeasureGroupTitle')}`,
+      description: `${t('menuItemAddMeasureGroupDescription')}`,
       path: '/addMeasureGroup',
       image: '/multiple-measurements.png'
     },
     {
-      title: "Add a new measure",
-      description: 'If you want to collect just one measure at a specific location and you already know you will not need historical data for this location, choose this option.',
+      title: `${t('menuItemAddMeasureTitle')}`,
+      description: `${t('menuItemAddMeasureDescription')}`,
       path: '/addMeasure',
       image: '/measuring-cup.png'
     },
@@ -56,14 +54,14 @@ function Home() {
     //   image: 'eco.png'
     // },
     {
-      title: "See all measures",
-      description: 'See all measures collected through the years and look for a place near you to know the calculated Water Quality Index at a specific point in time.',
+      title: `${t('menuItemAllMeasuresTitle')}`,
+      description: `${t('menuItemAllMeasuresDescription')}`,
       path: '/measures',
       image: '/map.png'
     },
     {
-      title: "Find a sensor",
-      description: 'Check what are some of the sensors available on the market. Buy one and start measuring the quality of the water near you.',
+      title: `${t('menuItemFindSensorTitle')}`,
+      description: `${t('menuItemFindSensorDescription')}`,
       path: '',
       image: '/sensors.png'
     }
@@ -78,18 +76,12 @@ function Home() {
         </div>
 
         <div className='w-1/2 px-10 ' >
-          <div className='flex flex-wrap'>
-            <p>This service permits to show all the water quality measures collected by the community.</p>
-            <h1>Login to see all the measures or sign up to create an account and start collecting water quality measures.</h1>
-            <br />
-            <p>Data is provided as is and Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur delectus similique quis magni ea blanditiis vitae, ratione magnam, odit doloremque sed quae deserunt hic iure optio facilis in quam placeat..</p>
-            <br />
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, id ipsa doloribus architecto, fugit nesciunt iste molestias vero blanditiis distinctio veritatis voluptate rem itaque et odit fuga minima magnam doloremque?</p>
-            <br />
-            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A non placeat quas dolores delectus consectetur. Necessitatibus dolor sint culpa asperiores assumenda nihil aperiam veniam, voluptatem delectus, modi soluta pariatur labore.</p>
-          </div>
+          <div className='flex flex-wrap' dangerouslySetInnerHTML={
+            { __html: t('homePageIntro', { interpolation: { escapeValue: false } }) }
+          } />
+
         </div>
-      </div>
+      </div >
     )
   } else {
 
@@ -97,13 +89,13 @@ function Home() {
     return (
       <div className="flex flex-wrap text-lg justify-center">
         <div className="pt-10 pl-10"  >
-          Welcome back <span className='font-extrabold'>{userData?.name}.<br /></span>
-          <p>This is what you can do...</p>
+          {t('homeWelcome')} <span className='font-extrabold'>{userData?.name}.<br /></span>
+          <p>{t('homeIntroText')}</p>
 
           <Container>
             <div className='flex flex-wrap mt-4'>
               {menuItems.map((m) => (
-                <div className='p-2 w-1/4' key={m.title}>
+                <div className='p-2 lg:w-1/4 sm:w-1/2' key={m.title}>
                   <HomeMenuItem menuItem={m} />
                 </div>
               ))}

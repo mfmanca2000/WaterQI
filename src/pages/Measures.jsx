@@ -1,16 +1,16 @@
-import React from 'react'
+import React,{ useEffect, useRef, useState } from 'react'
 import conf from "../conf/conf.js"
-import { useEffect, useRef, useState } from 'react'
 import databaseService from '../appwrite/database'
 import Container from '../components/Container'
 import MeasureCard from '../components/MeasureCard'
-import { APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps'
+import { APIProvider, Map } from '@vis.gl/react-google-maps'
 import MeasureMarker from '../components/MeasureMarker'
 import MeasureGroupMarker from '../components/MeasureGroupMarker'
 import { useSelector } from "react-redux"
 import Input from '../components/Input.jsx'
 import MeasureGroupCard from '../components/MeasureGroupCard.jsx'
 import authService from '../appwrite/auth.js'
+import { useTranslation } from 'react-i18next'
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -21,6 +21,10 @@ function Measures() {
   const sortedStandaloneMeasures = useRef([]);
   const filteredMeasureGroups = useRef([]);
   const sortedMeasureGroups = useRef([]);
+  const { t } = useTranslation();
+  const [showYourDataOnly, setShowYourDataOnly] = useState(false);
+  const [showMeasures, setShowMeasures] = useState(true);
+  const [showMeasureGroups, setShowMeasureGroups] = useState(true);
 
   useEffect(() => {
     async function load() {
@@ -28,11 +32,11 @@ function Measures() {
       if (prefs) {
         //console.log('USE EFFECT prefs: ' + JSON.stringify(prefs));
         //console.log('---> showYourDataOnly: ' + prefs.showYourDataOnly);
-        setOnlyUserData(prefs.showYourDataOnly);    
+        setShowYourDataOnly(prefs.showYourDataOnly);    
         //console.log('---> showStandaloneMeasures: ' + prefs.showStandaloneMeasures);
         setShowMeasures(prefs.showStandaloneMeasures);
         //console.log('---> showMeasureGroups: ' + prefs.showMeasureGroups);
-        setShowMeasuresGroups(prefs.showMeasureGroups);
+        setShowMeasureGroups(prefs.showMeasureGroups);
       } else {
         console.log('Empty prefs')
       }
@@ -41,9 +45,7 @@ function Measures() {
 
   }, [])
 
-  const [showYourDataOnly, setOnlyUserData] = useState(false);
-  const [showMeasures, setShowMeasures] = useState(true);
-  const [showMeasureGroups, setShowMeasuresGroups] = useState(true);
+  
 
   const [dateFrom, setDateFrom] = useState(null);
   const [dateTo, setDateTo] = useState(null);
@@ -123,45 +125,45 @@ function Measures() {
 
         <div className='flex'>
           <div className='flex w-full'>
-            <input type="checkbox" checked={showYourDataOnly} id='onlyYourMeasures' label="Show your data only" className="mb-4 mr-4" onChange={(e) => {
-              setOnlyUserData((prev) => !prev)
+            <input type="checkbox" checked={showYourDataOnly} id='onlyYourMeasures' label={t('measuresShowYourDataOnly')} className="mt-1 mr-4" onChange={(e) => {
+              setShowYourDataOnly((prev) => !prev)
             }} />
-            <label className="mb-4 mr-4" htmlFor='onlyYourMeasures'>Show your data only</label>
+            <label className="mb-4 mr-4" htmlFor='onlyYourMeasures'>{t('measuresShowYourDataOnly')}</label>
 
-            <input type="checkbox" checked={showMeasures} id='showMeasures' label="Show standalone measures" className="mb-4 mr-4" onChange={(e) => {
+            <input type="checkbox" checked={showMeasures} id='showMeasures' label={t('measuresShowStandaloneMeasures')} className="mt-1 mr-4" onChange={(e) => {
               setShowMeasures((prev) => !prev)
             }} />
-            <label className="mb-4 mr-4" htmlFor='showMeasures'>Show standalone measures</label>
+            <label className="mb-4 mr-4" htmlFor='showMeasures'>{t('measuresShowStandaloneMeasures')}</label>
 
-            <input type="checkbox" checked={showMeasureGroups} id='showMeasureGroups' label="Show measure groups" className="mb-4 mr-4" onChange={(e) => {
-              setShowMeasuresGroups((prev) => !prev)
+            <input type="checkbox" checked={showMeasureGroups} id='showMeasureGroups' label={t('measuresShowMeasureGroups')} className="mt-1 mr-4" onChange={(e) => {
+              setShowMeasureGroups((prev) => !prev)
             }} />
-            <label className="mb-4 mr-4" htmlFor='showMeasureGroups'>Show measure groups</label>
+            <label className="mb-4 mr-4" htmlFor='showMeasureGroups'>{t('measuresShowMeasureGroups')}</label>
           </div>
 
 
 
           <div className='w-1/2 text-right'>
-            <label className="mb-4 mr-4 font-extrabold">Results {measureNumber}</label>
+            <label className="mb-4 mr-4 font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
           </div>
         </div>
 
         <div className='flex'>
           <div className='flex w-1/3 m-2'>
-            <Input className="w-1/2" label="From" type="datetime-local" onChange={(e) => {
+            <Input className="w-1/2" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
               setDateFrom(e.target.value);
             }} />
           </div>
 
           <div className='flex w-1/3 m-2'>
-            <Input className="w-1/2" label="To" type="datetime-local" onChange={(e) => {
+            <Input className="w-1/2" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
               setDateTo(e.target.value);
             }} />
           </div>
 
 
           <div className='flex w-1/3 m-2'>
-            <Input className="w-1/2" label="Search" onChange={(e) => {
+            <Input className="w-1/2" label={t('measuresSearch')} onChange={(e) => {
               setSearchText(e.target.value);
             }} />
           </div>
@@ -194,14 +196,14 @@ function Measures() {
 
       <Container>
         <div className='text-3xl mt-4 p-4 font-bold'>
-          LAST INSERTED STANDALONE MEASURES
+          {t('measuresLastInsertedMeasures')}
         </div>
       </Container>
 
       <Container>
         <div className='flex flex-wrap mt-4'>
           {sortedStandaloneMeasures.current?.map((measure) => (
-            <div className='p-2 w-1/4' key={measure.$id}>
+            <div className='p-2 lg:w-1/4 sm:w-1/2' key={measure.$id}>
               <MeasureCard measure={measure} onDelete={onDeleteStandaloneMeasure} />
             </div>
           ))}
@@ -210,14 +212,14 @@ function Measures() {
 
       <Container>
         <div className='text-3xl mt-4 p-4 font-bold'>
-          LAST MODIFIED MEASURE GROUPS
+        {t('measuresLastModifiedMeasureGroups')}
         </div>
       </Container>
 
       <Container>
         <div className='flex flex-wrap mt-4'>
           {sortedMeasureGroups.current?.map((measureGroup) => (
-            <div className='p-2 w-1/4' key={measureGroup.$id}>
+            <div className='p-2 lg:w-1/4 sm:w-1/2' key={measureGroup.$id}>
               <MeasureGroupCard measureGroup={measureGroup} onDelete={onDeleteMeasureGroup} />
             </div>
           ))}
