@@ -7,11 +7,10 @@ import { useDispatch } from "react-redux";
 import { login, logout } from "./store/authSlice";
 import authService from './appwrite/auth'
 
-function App() {
- 
-
-  const [loading, setLoading] = useState(true);
-  const dispatch = useDispatch();
+function App() {    
+    
+    const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         authService
@@ -24,18 +23,18 @@ function App() {
     }, [dispatch]);
 
     return !loading ? (
-      <div className="min-h-screen flex flex-wrap content-between bg-white" >
-          <div className="w-full block">
-              <Header />
-              <main>
-                  <Outlet />
-              </main>
-          </div>
-          <div className="w-full block">
-              <Footer />
-          </div>
-      </div>
-  ) : null;
+        <div className="min-h-screen flex flex-wrap content-between bg-white" >
+            <div className="w-full block">
+                <Header />
+                <main>
+                    <Outlet />
+                </main>
+            </div>
+            <div className="w-full block">
+                <Footer />
+            </div>
+        </div>
+    ) : null;
 }
 
 export default App

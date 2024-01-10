@@ -16,6 +16,7 @@ import MeasureDetail from './pages/MeasureDetail.jsx'
 import AddMeasure from './pages/AddMeasure.jsx'
 import AddMeasureGroup from './pages/AddMeasureGroup.jsx'
 import MeasureGroupDetail from './pages/MeasureGroupDetail.jsx'
+import './i18n';
 
 const router = createBrowserRouter([
   {

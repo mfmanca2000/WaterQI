@@ -1,0 +1,21 @@
+{
+    "translation": {
+        "headerHome": "Home",
+        "headerAllMeasures": "All measures",
+        "headerAddMeasureGroup": "Add measure group",
+        "headerAddMeasure": "Add measure",
+        "login": "Login",
+        "headerSignup": "Signup",
+        "signupTitle": "Sign up to create an account",
+        "signupSubtitle": "Already have an account?",
+        "signupSignIn": "Sign in",
+        "loginTitle": "Sign in to your account",
+        "loginSubtitle": "Don't have an account?",
+        "loginSignup": "Sign up",
+        "emailPlaceholder": "Email Address",
+        "passwordPlaceholder": "Password",
+        "forgotPassword": "Forgot password?",
+        "recoverPassword": "Recover it",
+        "otherLogin": "or use..."    
+    }
+}

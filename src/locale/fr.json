@@ -1,0 +1,21 @@
+{
+    "translation": {
+        "headerHome": "Home",
+        "headerAllMeasures": "Les données",
+        "headerAddMeasureGroup": "Ajoute un groupe",
+        "headerAddMeasure": "Ajoute une mésure",
+        "login": "Se connecter",
+        "headerSignup": "S'inscrire",
+        "signupTitle": "S'inscrire pour créer un compte",
+        "signupSubtitle": "Déjà inscrit ?",
+        "signupSignIn": "Connecte-toi",
+        "loginTitle": "Connecte-toi à ton compte",
+        "loginSubtitle": "Pas encore inscrit ?",
+        "loginSignup": "Crée ton compte",
+        "emailPlaceholder": "Adresse email",
+        "passwordPlaceholder": "Mot-de-passe",
+        "forgotPassword": "Mot-de-passe oublié ?",
+        "recoverPassword": "Récupère-le",
+        "otherLogin": "ou utilise..."      
+    }
+}

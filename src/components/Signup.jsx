@@ -7,8 +7,10 @@ import Logo from './Logo'
 import { useForm } from "react-hook-form"
 import { useDispatch } from 'react-redux'
 import { login } from '../store/authSlice'
+import { useTranslation, Trans } from 'react-i18next'
 
 function Signup() {
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const dispatch = useDispatch();
@@ -49,11 +51,11 @@ function Signup() {
                         <Logo width="100%" />
                     </span>
                 </div>
-                <h2 className="text-center text-2xl font-bold leading-tight">Sign up to create an account</h2>
+                <h2 className="text-center text-2xl font-bold leading-tight">{t('signupTitle')}</h2>
                 <p className="mt-2 text-center text-base text-black/60">
-                    Already have an account?&nbsp;
+                    {t('signupSubtitle')}&nbsp;
                     <Link to="/login" className="font-medium text-primary transition-all duration-200 hover:underline">
-                        Sign In
+                        {t('signupSignIn')}
                     </Link>
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}

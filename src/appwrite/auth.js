@@ -60,6 +60,27 @@ export class AuthService {
         return null;
     }
 
+    async savePreferences({ showYourDataOnly, showStandaloneMeasures, showMeasureGroups}) {
+        try {
+            await this.account.updatePrefs( {showYourDataOnly, showStandaloneMeasures, showMeasureGroups});
+            return true;
+        } catch (error) {
+            console.log('--- Appwrite AuthService savePreferences : ' + error);     
+            return false;
+        }
+    }
+
+    async loadPreferences(){
+        try {
+            const prefs = await this.account.getPrefs();
+            //console.log('The prefs... ' + JSON.stringify(prefs));
+            return prefs;
+        } catch (error) {
+            console.log('--- Appwrite AuthService loadPreferences : ' + error);     
+            return null;
+        }
+    }
+
     async logout() {
         try {
             await this.account.deleteSessions();

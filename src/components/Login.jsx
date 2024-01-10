@@ -7,8 +7,10 @@ import Logo from './Logo'
 import { useForm } from "react-hook-form"
 import { useDispatch } from 'react-redux'
 import { login as authLogin } from '../store/authSlice'
+import { useTranslation, Trans } from 'react-i18next'
 
 function Login() {
+    const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { register, handleSubmit } = useForm();
@@ -48,14 +50,11 @@ function Login() {
                         <img width="100%" src='Logo.png'/>
                     </span>
                 </div>
-                <h2 className="text-center text-2xl font-bold leading-tight mt-4">Sign in to your account</h2>
+                <h2 className="text-center text-2xl font-bold leading-tight mt-4">{t('loginTitle')}</h2>
                 <p className="mt-2 text-center text-base text-black/60">
-                    Don&apos;t have an account?&nbsp;
-                    <Link
-                        to="/signup"
-                        className="font-medium text-primary transition-all duration-200 hover:underline"
-                    >
-                        Sign Up
+                    {t('loginSubtitle')}&nbsp;
+                    <Link to="/signup" className="font-medium text-primary transition-all duration-200 hover:underline">
+                        {t('loginSignup')}
                     </Link>
                 </p>
                 {error && <p className="text-red-600 mt-8 text-center">{error}</p>}
@@ -63,7 +62,7 @@ function Login() {
                     <div className="space-y-5">
                         <Input
                             label="Email"
-                            placeholder="Email Address"
+                            placeholder={t('emailPlaceholder')}
                             type="email"
                             {...register("email", {
                                 required: true,
@@ -73,32 +72,32 @@ function Login() {
                         <Input
                             label="Password"
                             type="password"
-                            placeholder="Password"
+                            placeholder={t('passwordPlaceholder')}
                             {...register("password", { required: true })}
                         />
                         <Button type="submit" className="w-full bg-casaleggio-rgba">
-                            Sign in{" "}
+                            {t('login')}
                         </Button>
 
                         <div className='mt-2'>
-                            <label>Forgot password? </label>
+                            <label>{t('forgotPassword')} </label>
                             <Link className='font-bold underline' onClick={() => {
                                 //TODO: implement the Appwrite flow for recovery
                             }}>
-                                Recover it
+                                {t('recoverPassword')}
                             </Link>
                         </div>
                     </div>
                 </form>
 
                 <div className="mt-6 text-center text-base text-black/60">
-                    Or use...&nbsp;
+                    {t('otherLogin')}&nbsp;
                     <div>
-                        <button onClick={() => googleLogin()} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
-                            <img src='google.png' className='w-8' />
+                        <button onClick={() => googleLogin()} className='inline-block m-8 px-6 py-2 max-h-16 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
+                            <img src='google.png' className='w-12' />
                         </button>
-                        <button onClick={() => facebookLogin()} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm disabled:'>
-                            <img src='facebook.webp' className='w-8' />
+                        <button onClick={() => facebookLogin()} className='inline-block m-8 px-6 py-2 max-h-16 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm disabled: '>
+                            <img src='facebook.webp' className='w-12 ' />
                         </button>
                     </div>
                 </div>
