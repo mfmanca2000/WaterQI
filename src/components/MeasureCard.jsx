@@ -30,7 +30,7 @@ function MeasureCard({ measure, onDelete }) {
           <div className='w-full grid grid-cols-5'>
             <div className='col-span-4'>
               <label className='text-sm font-light'>{formatDateTime(new Date(measure.datetime))}</label><br />
-              <label className='text-sm font-light'>By {measure.userId}</label> <br />
+              <label className='text-sm font-light'>{t('by')} {measure.username ?? measure.userId}</label> <br />
             </div>
             <div className='w-16'>
               <img src={window.location.origin + '/' + getMarkerColor(measure)} title={wqiText} alt="Pin" />
