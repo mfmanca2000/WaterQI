@@ -40,6 +40,11 @@
         "measuresSearch": "Recherche",
         "measuresDelete": "Supprimer",
         "homeWelcome": "Bienvenu(e)",
-        "homeIntroText": "Voici ce que tu peux faire..."
+        "homeIntroText": "Voici ce que tu peux faire...",
+        "footerAbout": "À Propos",
+        "footerPrivacyPolicy": "Confidentialité",
+        "footerLicensing": "License",
+        "footerContact": "Contacts",
+        "by": "De"
     }
 }

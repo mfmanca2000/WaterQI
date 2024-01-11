@@ -101,8 +101,8 @@ function Header() {
                             <span className="block truncate text-base font-medium">{userData.email}</span>
                         </Dropdown.Header>
 
-                        <Dropdown.Item>{t('headerSettings')}</Dropdown.Item>
-                        <Dropdown.Item>{t('headerHelp')}</Dropdown.Item>                    
+                        <Dropdown.Item href='/settings'>{t('headerSettings')}</Dropdown.Item>
+                        <Dropdown.Item href='/help'>{t('headerHelp')}</Dropdown.Item>                    
 
                         <Dropdown.Divider />
                         <Dropdown.Item onClick={logoutHandler}>

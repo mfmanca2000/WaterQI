@@ -40,7 +40,12 @@
         "measuresSearch": "Ricerca",
         "measuresDelete": "Cancella",
         "homeWelcome": "Bentornato",
-        "homeIntroText": "Questo è quello che puoi fare..."
+        "homeIntroText": "Questo è quello che puoi fare...",
+        "footerAbout": "Info",
+        "footerPrivacyPolicy": "Privacy",
+        "footerLicensing": "Licenza",
+        "footerContact": "Contatti",
+        "by": "Di"
         
     }
 }

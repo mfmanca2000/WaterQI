@@ -1,4 +1,4 @@
-import React,{ useEffect, useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import conf from "../conf/conf.js"
 import databaseService from '../appwrite/database'
 import Container from '../components/Container'
@@ -32,7 +32,7 @@ function Measures() {
       if (prefs) {
         //console.log('USE EFFECT prefs: ' + JSON.stringify(prefs));
         //console.log('---> showYourDataOnly: ' + prefs.showYourDataOnly);
-        setShowYourDataOnly(prefs.showYourDataOnly);    
+        setShowYourDataOnly(prefs.showYourDataOnly);
         //console.log('---> showStandaloneMeasures: ' + prefs.showStandaloneMeasures);
         setShowMeasures(prefs.showStandaloneMeasures);
         //console.log('---> showMeasureGroups: ' + prefs.showMeasureGroups);
@@ -41,11 +41,11 @@ function Measures() {
         console.log('Empty prefs')
       }
     }
-    load();    
+    load();
 
   }, [])
 
-  
+
 
   const [dateFrom, setDateFrom] = useState(null);
   const [dateTo, setDateTo] = useState(null);
@@ -65,7 +65,7 @@ function Measures() {
   }, [showYourDataOnly, showMeasures, showMeasureGroups])
 
   useEffect(() => {
-    //console.log('Passing by');
+    console.log('SearchTxt:' + searchText);
     databaseService.getAllMeasures().then((returnedMeasures) => {
       const currentUserId = userData.$id;
 
@@ -90,7 +90,7 @@ function Measures() {
           filteredMeasureGroups.current = returnedMeasureGroups.documents.filter((mg) => {
             return showMeasureGroups &&
               (!showYourDataOnly || mg.userId === currentUserId) &&
-              (!searchText || mg.gescription.toLowerCase().includes(searchText.toLowerCase()));
+              (!searchText || mg.description.toLowerCase().includes(searchText.toLowerCase()));
           });
 
           setMeasureNumber(filteredStandaloneMeasures.current.length + filteredMeasureGroups.current.length);
@@ -125,27 +125,32 @@ function Measures() {
 
         <div className='flex'>
           <div className='flex w-full'>
-            <input type="checkbox" checked={showYourDataOnly} id='onlyYourMeasures' label={t('measuresShowYourDataOnly')} className="mt-1 mr-4" onChange={(e) => {
-              setShowYourDataOnly((prev) => !prev)
-            }} />
-            <label className="mb-4 mr-4" htmlFor='onlyYourMeasures'>{t('measuresShowYourDataOnly')}</label>
+            <div className='lg:w-1/4 md:w-1/2'>
+              <input type="checkbox" checked={showYourDataOnly} id='onlyYourMeasures' label={t('measuresShowYourDataOnly')} className="-mt-1 mx-3" onChange={(e) => {
+                setShowYourDataOnly((prev) => !prev)
+              }} />
+              <label className="mb-4 mr-4" htmlFor='onlyYourMeasures'>{t('measuresShowYourDataOnly')}</label>
+            </div>
 
-            <input type="checkbox" checked={showMeasures} id='showMeasures' label={t('measuresShowStandaloneMeasures')} className="mt-1 mr-4" onChange={(e) => {
-              setShowMeasures((prev) => !prev)
-            }} />
-            <label className="mb-4 mr-4" htmlFor='showMeasures'>{t('measuresShowStandaloneMeasures')}</label>
-
-            <input type="checkbox" checked={showMeasureGroups} id='showMeasureGroups' label={t('measuresShowMeasureGroups')} className="mt-1 mr-4" onChange={(e) => {
-              setShowMeasureGroups((prev) => !prev)
-            }} />
-            <label className="mb-4 mr-4" htmlFor='showMeasureGroups'>{t('measuresShowMeasureGroups')}</label>
+            <div className='lg:w-1/4 md:w-1/2'>
+              <input type="checkbox" checked={showMeasures} id='showMeasures' label={t('measuresShowStandaloneMeasures')} className="-mt-1 mx-3" onChange={(e) => {
+                setShowMeasures((prev) => !prev)
+              }} />
+              <label className="mb-4 mr-4" htmlFor='showMeasures'>{t('measuresShowStandaloneMeasures')}</label>
+            </div>
+            <div className='lg:w-1/4 sm:w-1/2'>
+              <input type="checkbox" checked={showMeasureGroups} id='showMeasureGroups' label={t('measuresShowMeasureGroups')} className="-mt-1 mx-3" onChange={(e) => {
+                setShowMeasureGroups((prev) => !prev)
+              }} />
+              <label className="mb-4 mr-4" htmlFor='showMeasureGroups'>{t('measuresShowMeasureGroups')}</label>
+            </div>
+            <div className='lg:w-1/4 md:w-1/2 text-right'>
+              <label className="mb-4 mr-4 font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
+            </div>
           </div>
 
 
 
-          <div className='w-1/2 text-right'>
-            <label className="mb-4 mr-4 font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
-          </div>
         </div>
 
         <div className='flex'>
@@ -168,7 +173,7 @@ function Measures() {
             }} />
           </div>
         </div>
-      </Container>
+      </Container >
 
       <Container>
         <APIProvider apiKey={conf.googleMapsAPIKey}>
@@ -212,7 +217,7 @@ function Measures() {
 
       <Container>
         <div className='text-3xl mt-4 p-4 font-bold'>
-        {t('measuresLastModifiedMeasureGroups')}
+          {t('measuresLastModifiedMeasureGroups')}
         </div>
       </Container>
 
@@ -229,7 +234,7 @@ function Measures() {
       <div className='text-gray-300 text-xs text-center w-full'>
         Map Markers by Hea Poh Lin from<a href="https://thenounproject.com/browse/icons/term/map-markers/" title="Map Markers Icons">Noun Project</a>
       </div>
-    </div>
+    </div >
 
 
 

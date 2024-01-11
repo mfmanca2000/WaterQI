@@ -40,6 +40,11 @@
     "measuresSearch": "Search",
     "measuresDelete": "Delete",
     "homeWelcome": "Welcome back",
-    "homeIntroText": "This is what you can do..."
+    "homeIntroText": "This is what you can do...",
+    "footerAbout": "About",
+    "footerPrivacyPolicy": "Privacy Policy",
+    "footerLicensing": "Licensing",
+    "footerContact": "Contact",
+    "by": "By"
   }
 }
