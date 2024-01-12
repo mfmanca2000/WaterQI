@@ -60,9 +60,9 @@ export class AuthService {
         return null;
     }
 
-    async savePreferences({ showYourDataOnly, showStandaloneMeasures, showMeasureGroups}) {
+    async savePreferences({ showYourDataOnly, showStandaloneMeasures, showMeasureGroups, username}) {
         try {
-            await this.account.updatePrefs( {showYourDataOnly, showStandaloneMeasures, showMeasureGroups});
+            await this.account.updatePrefs( {showYourDataOnly, showStandaloneMeasures, showMeasureGroups, username});
             return true;
         } catch (error) {
             console.log('--- Appwrite AuthService savePreferences : ' + error);     

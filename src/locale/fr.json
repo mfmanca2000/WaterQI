@@ -45,6 +45,10 @@
         "footerPrivacyPolicy": "Confidentialité",
         "footerLicensing": "License",
         "footerContact": "Contacts",
-        "by": "De"
+        "by": "De",
+        "settingsUserId": "UserId*",
+        "settingsUsername": "Nom utilisateur (max 20 chars, c'est public mais optionnel)",
+        "settingsName": "Nom* (max 50 chars, c'est privé mais obligatoire)",
+        "settingsEmail": "Adresse Email"
     }
 }

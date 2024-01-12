@@ -45,6 +45,10 @@
     "footerPrivacyPolicy": "Privacy Policy",
     "footerLicensing": "Licensing",
     "footerContact": "Contact",
-    "by": "By"
+    "by": "By",
+    "settingsUserId": "UserId*",
+    "settingsUsername": "Username (max 20 chars, this is public and it's optional)",
+    "settingsName": "Name* (max 50 chars, this is private and it's mandatory)",
+    "settingsEmail": "Email"
   }
 }

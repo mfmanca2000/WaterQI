@@ -45,7 +45,11 @@
         "footerPrivacyPolicy": "Privacy",
         "footerLicensing": "Licenza",
         "footerContact": "Contatti",
-        "by": "Di"
+        "by": "Di",
+        "settingsUserId": "UserId*",
+        "settingsUsername": "Username (max 20 caratteri, è pubblico ma opzionale)",
+        "settingsName": "Nome* (max 50 chars, è privato ma obbligatorio)",
+        "settingsEmail": "Email"
         
     }
 }

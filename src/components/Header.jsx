@@ -75,10 +75,10 @@ function Header() {
 
             <Navbar rounded className='bg-transparent mx-8'>
                 <Navbar.Brand className='flex w-full sm:w-auto text-right sm:text-left' href="/">
-                    
-                        <img src="/Logo.png" className="mr-3 h-20 sm:h-9" alt="WaterQI Logo" />
-                        <span className="w-full self-center whitespace-nowrap text-3xl font-semibold dark:text-white">WaterQI</span>
-                    
+
+                    <img src="/Logo.png" className="mr-3 h-20 sm:h-9" alt="WaterQI Logo" />
+                    <span className="w-full self-center whitespace-nowrap text-3xl font-semibold dark:text-white">WaterQI</span>
+
                 </Navbar.Brand>
 
                 <Navbar.Collapse className=''>
@@ -99,7 +99,11 @@ function Header() {
                         {loggedIn ? (
                             <Dropdown arrowIcon={false} size="lg" inline label={<Avatar alt="Your avatar" rounded bordered placeholderInitials={Array.from(userData?.name)[0]} />}>
                                 <Dropdown.Header>
-                                    <span className="block text-base">{userData.name}</span>
+                                    <div className='flex text-base' >
+                                        <label className=''>{userData.name}</label>
+                                        <label className='ml-2 italic'>({userData.prefs.username})</label>
+                                    </div>
+
                                     <span className="block truncate text-base font-medium">{userData.email}</span>
                                 </Dropdown.Header>
 

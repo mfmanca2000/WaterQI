@@ -99,7 +99,7 @@ export default function MeasureForm({ measure }) {
                     storageService.deleteImage(measure.imageId);
                 }
             }
-            const dbMeasure = await databaseService.updateMeasure(measure.$id, { ...data, imageId: file ? file.$id : measure.imageId });
+            const dbMeasure = await databaseService.updateMeasure(measure.$id, { ...data, imageId: file ? file.$id : measure.imageId, username: userData.prefs.username });
             if (dbMeasure) {
                 navigate(`/measures`)
             }
@@ -108,7 +108,7 @@ export default function MeasureForm({ measure }) {
             if (file) {
                 console.log('Immagine salvata')
                 data.imageId = file.$id;
-                const dbMeasure = await databaseService.addMeasure({ ...data, userId: userData.$id });
+                const dbMeasure = await databaseService.addMeasure({ ...data, userId: userData.$id, username: userData.prefs.username });
                 if (dbMeasure) {
                     navigate(`/measures`);
                 }
