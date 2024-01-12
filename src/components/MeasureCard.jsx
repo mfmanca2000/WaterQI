@@ -22,7 +22,7 @@ function MeasureCard({ measure, onDelete }) {
         <Link to={`/measure/${measure.$id}`}>
 
           <div className='w-full justify-center mb-4 h-36'>
-            <img src={StorageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className='rounded-xl h-36 object-cover object-center w-full' />
+            <img src={measure.imageId ? StorageService.getPreviewImageUrl(measure.imageId) : '/noimage.png'} alt={measure.placeDescription} className='rounded-xl h-36 object-cover object-center w-full' />
           </div>
           <div className='min-h-14'>
             <label className='text-xl font-bold'>{measure.placeDescription}</label><br />

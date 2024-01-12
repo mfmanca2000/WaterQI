@@ -1,5 +1,5 @@
 import React from 'react'
-import conf from "../conf/conf.js";
+import {conf} from "../conf/conf.js";
 import { useEffect, useRef, useState } from 'react';
 import databaseService from '../appwrite/database'
 import Container from '../components/Container';

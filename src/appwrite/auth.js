@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-catch */
 import { Client, Account, ID } from "appwrite";
-import conf from "../conf/conf.js";
+import {conf } from "../conf/conf";
 
 export class AuthService {
     client = new Client();
@@ -60,9 +60,9 @@ export class AuthService {
         return null;
     }
 
-    async savePreferences({ showYourDataOnly, showStandaloneMeasures, showMeasureGroups, username}) {
+    async savePreferences({ showYourDataOnly, showStandaloneMeasures, showMeasureGroups, username, language}) {
         try {
-            await this.account.updatePrefs( {showYourDataOnly, showStandaloneMeasures, showMeasureGroups, username});
+            await this.account.updatePrefs( {showYourDataOnly, showStandaloneMeasures, showMeasureGroups, username, language});
             return true;
         } catch (error) {
             console.log('--- Appwrite AuthService savePreferences : ' + error);     

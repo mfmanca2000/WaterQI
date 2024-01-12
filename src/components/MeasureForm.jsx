@@ -7,7 +7,7 @@ import databaseService from "../appwrite/database.js"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
-import conf from "../conf/conf.js";
+import {conf} from "../conf/conf.js";
 import { removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
 import { calculateWQI, getMarkerColor } from "../utils/wqi.js";

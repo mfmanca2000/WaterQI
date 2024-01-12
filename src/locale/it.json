@@ -4,7 +4,7 @@
         "headerAllMeasures": "Le misurazioni",
         "headerAddMeasureGroup": "Aggiungi gruppo di misure",
         "headerAddMeasure": "Aggiungi misura",
-        "headerSettings": "Configurazione",
+        "headerSettings": "Impostazioni",
         "headerHelp": "Aiuto",
         "login": "Accedi",
         "logout": "Logout",
@@ -49,7 +49,24 @@
         "settingsUserId": "UserId*",
         "settingsUsername": "Username (max 20 caratteri, è pubblico ma opzionale)",
         "settingsName": "Nome* (max 50 chars, è privato ma obbligatorio)",
-        "settingsEmail": "Email"
+        "settingsEmail": "Email",
+        "settingsLanguage": "Lingua di default",
+        "settingsSave": "Salvare",
+        "settingsPersonalInfo": "Informazioni personali",
+        "settingsMapDefaults": "Impostazioni di default",
+        "measureGroupTitle": "Nuovo gruppo",
+        "measureGroupDescription": "Descrizione",
+        "measureGroupLatitude": "Latitudine",
+        "measureGroupLongitude": "Longitudine",
+        "measureGroupLastUpdate": "Ultima modifica",
+        "measureGroupLocationImage": "Immagine luogo",
+        "measureGroupCreate": "Inserisci",
+        "measureGroupUpdate": "Aggiorna",
+        "measureGroupAddMeasure": "Aggiungi misura al gruppo",
+        "measureGroupExplaination": "Tutte le misure di questo gruppo avranno la stessa posizione e la stessa immagine del gruppo",
+        "measureDescription": "Descrizione",
+        "measureActions": "Azioni",
+        "measureDate": "Data"
         
     }
 }

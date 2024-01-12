@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
-import { useForm } from "react-hook-form";
+import { IoOpenOutline, IoTrash } from "react-icons/io5";
+import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import Button from "./Button.jsx";
@@ -7,12 +8,12 @@ import Input from "./Input.jsx";
 import storageService from "../appwrite/storage.js"
 import databaseService from "../appwrite/database.js"
 import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
-import conf from "../conf/conf.js";
+import { conf } from "../conf/conf.js";
 import Container from './Container.jsx';
 import { formatDateTime } from '../utils/date.js'
 import { Link } from 'react-router-dom';
 import StorageService from '../appwrite/storage.js'
-import MeasureGroupMarker from './MeasureGroupMarker.jsx';
+import { t } from 'i18next';
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -20,7 +21,7 @@ const defaultLongitude = conf.defaultLongitude;
 function MeasureGroupForm({ measureGroup }) {
 
 
-  const { register, handleSubmit, reset, setValue, getValues } = useForm({
+  const { register, handleSubmit, reset, setValue, control, getValues } = useForm({
     defaultValues: {
       description: measureGroup?.description || "",
       latitude: measureGroup?.latitude || defaultLatitude,
@@ -35,6 +36,8 @@ function MeasureGroupForm({ measureGroup }) {
   const measures = useRef([]);
   const [measureNumber, setMeasureNumber] = useState(0);
   const [lastUpdatedAt, setLastUpdatedAt] = useState(null);
+  const [previewImageUrl, setPreviewImageUrl] = useState(null)
+  const [previewImage, setPreviewImage] = useState(null)
 
   const [markerPosition, setMarkerPosition] = useState({
     lat: Number(measureGroup?.latitude || defaultLatitude),
@@ -65,7 +68,7 @@ function MeasureGroupForm({ measureGroup }) {
 
 
   useEffect(() => {
-    //console.log('Passing by...')    
+    //console.log('2nd useEffect')   
   }, [measureGroup, measureNumber, setLastUpdatedAt])
 
 
@@ -84,6 +87,7 @@ function MeasureGroupForm({ measureGroup }) {
   }
 
   const handleAddMeasureToGroup = async (e) => {
+    console.log('HandleAdd');
     e.preventDefault();
 
     if (measureGroup) {
@@ -134,15 +138,23 @@ function MeasureGroupForm({ measureGroup }) {
 
   const submit = async (data) => {
 
+    let file = null;
+
     if (measureGroup) {
-      const file = data.image[0] ? await storageService.uploadImage(data.image[0]) : null;
-      if (file) {
-        storageService.deleteImage(measureGroup.imageId);
+
+      if (previewImage) {
+        console.log('We have a previewImage...' + previewImage)
+        file = await storageService.uploadImage(previewImage);
+        if (file && measureGroup.imageId) {
+          console.log('Have to delete previous image')
+          storageService.deleteImage(measureGroup.imageId);
+        }
       }
 
-      const dbMeasureGroup = await databaseService.updateMeasureGroup(measureGroup.$id, { ...data, imageId: file ? file.$id : undefined });
+      const dbMeasureGroup = await databaseService.updateMeasureGroup(measureGroup.$id, { ...data, imageId: file?.$id });
       if (dbMeasureGroup) {
-        //modify the lat and lng of all related measures
+        console.log('Added measureGroup with imageId: ' + dbMeasureGroup.imageId)
+        //modify the image, lat and lng of all related measures
         dbMeasureGroup.measures.forEach(async (m) => {
           await databaseService.updateMeasure(m.$id, { ...m, imageId: dbMeasureGroup.imageId, latitude: dbMeasureGroup.latitude, longitude: dbMeasureGroup.longitude })
         });
@@ -150,14 +162,19 @@ function MeasureGroupForm({ measureGroup }) {
         navigate(`/measures`)
       }
     } else {
-      const file = await storageService.uploadImage(data.image[0]);
-      if (file) {
-        data.imageId = file.$id;
-        const dbMeasureGroup = await databaseService.addMeasureGroup({ ...data, userId: userData.$id });
-        if (dbMeasureGroup) {
-          navigate(`/measureGroup/${dbMeasureGroup.$id}`);
+
+      if (previewImage) {
+        const file = await storageService.uploadImage(previewImage);
+        if (file) {
+          data.imageId = file.$id;
         }
       }
+
+      const dbMeasureGroup = await databaseService.addMeasureGroup({ ...data, userId: userData.$id });
+      if (dbMeasureGroup) {
+        navigate(`/measureGroup/${dbMeasureGroup.$id}`);
+      }
+
     }
   }
 
@@ -165,49 +182,13 @@ function MeasureGroupForm({ measureGroup }) {
 
 
   return (
-    <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
-      <div className="w-1/3 px-2">
-        <Input label="Description *"
-          placeholder="insert a description"
-          className="mb-4"
-          {...register("description", { required: true, maxLength: 255 })}
-        />
-
-        <Input label="Latitude *"
-          placeholder="insert a latitude (i.e. 45.4637979"
-          className="mb-4"
-          {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
-        />
-
-        <Input label="Longitude *"
-          placeholder="insert a longitude (i.e. 7.87375)"
-          className="mb-4"
-          {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
-        />
-
-        <label className='mb-4 pl-1'>Last updated at {formatDateTime(new Date(lastUpdatedAt))}</label>
-
-        <Input label={measureGroup ? "Location image" : "Location image *"}
-          type="file"
-          className="mb-4"
-          accept="image/png, image/jpg, image/jpeg"
-          {...register("image", { required: !measureGroup })}
-        />
-        {measureGroup && (
-          <div className="w-full mb-4">
-            <img src={storageService.getPreviewImageUrl(measureGroup.imageId)} alt={measureGroup.description} className="rounded-lg w-48" />
-          </div>
-        )}
-
-
-        <Button type="submit" bgColor={measureGroup ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full">
-          {measureGroup ? "Update" : "Insert"}
-        </Button>
-        <label className='font-thin'>All related measures will have the same location and image of the measure group</label>
+    <>
+      <div className='mb-4'>
+        <label className='text-4xl pb-4'>{!measureGroup ? t('measureGroupTitle') : getValues('description')}</label>
       </div>
 
-      <div className='w-2/3'>
-        <div className={measureGroup ? "h-1/3 pl-8" : "h-full pl-8"}>
+      <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
+        <div className='w-full h-72'>
           <APIProvider apiKey={conf.googleMapsAPIKey}>
             <Map mapId={'bf51a910020fa25c'}
               zoom={conf.defaultZoomLevel}
@@ -228,50 +209,108 @@ function MeasureGroupForm({ measureGroup }) {
           </APIProvider>
         </div>
 
-        {measureGroup && (
-          <div className='mt-8 ml-4'>
-            <Container>
-              <button onClick={handleAddMeasureToGroup} className='inline-block mx-2 px-6 py-2 duration-200 bg-green-500 hover:bg-casaleggio-btn-rgba rounded-full'>
-                Add measure to group
-              </button>
+
+
+        <div className="w-full">
+          <Input label={t('measureGroupDescription') + ' *'}
+            className="mb-4"
+            {...register("description", { required: true, maxLength: 255 })}
+          />
+
+          <Input label={t('measureGroupLatitude') + ' *'}
+            placeholder="(i.e. 45.4637979)"
+            className="mb-4"
+            {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
+          />
+
+          <Input label={t('measureGroupLongitude') + ' *'}
+            placeholder="(i.e. 7.87375)"
+            className="mb-4"
+            {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
+          />
+
+          {measureGroup && lastUpdatedAt && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(lastUpdatedAt))}</label>)}
+
+          <Controller
+            control={control}
+            name={"image"}
+
+            render={({ field: { value, onChange, ...field } }) => {
+              return (
+                <Input {...field} name='image' label={measureGroup ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                  type="file" className="mb-4"
+                  accept="image/png, image/jpg, image/jpeg"
+
+                  onChange={(event) => {
+
+                    if (event.target.files && event.target.files[0]) {
+                      setPreviewImage(event.target.files[0]);
+                      setPreviewImageUrl(URL.createObjectURL(event.target.files[0]));
+                    }
+                  }}
+                />);
+            }}
+          />
+
+          <div className='md:w-1/4'>
+            {measureGroup && (previewImageUrl || measureGroup.imageId) && (
+              <div className="w-full mb-4">
+                <img src={previewImageUrl ? previewImageUrl : storageService.getPreviewImageUrl(measureGroup.imageId)} alt={measureGroup.description} className="rounded-lg w-full object-cover" />
+              </div>
+            )}
+            {!measureGroup && (
+              <div className="w-full mb-4">
+                <img src={previewImageUrl} alt={getValues('description')} className="rounded-lg w-full object-cover" />
+              </div>
+            )
+            }
+
+            <Button type="submit" bgColor={measureGroup ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:mt-8">
+              {measureGroup ? t('measureGroupUpdate') : t('measureGroupCreate')}
+            </Button>
+            {measureGroup && (<label className='font-thin'>{t('measureGroupExplaination')}</label>)}
+          </div>
+        </div>
+
+        <div className='w-full'>
+
+          {measureGroup && (
+            <div className='mt-8'>
+
+              <Button onClick={handleAddMeasureToGroup} className='duration-200 bg-green-500 hover:bg-casaleggio-btn-rgba w-full md:w-1/4'>
+                {t('measureGroupAddMeasure')}
+              </Button>
 
               {measureGroup.measures?.length > 0 && (
                 <div className='flex flex-wrap mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10'>
                   <table className='table-auto mt-4 w-full'>
                     <thead>
                       <tr>
-                        <th></th>
-                        <th className='text-left'>Description</th>
-                        <th className='text-left'>Date</th>
-                        <th className='text-left'>Actions</th>
+                        <th className='text-left'>{t('measureDescription')}</th>
+                        <th className='text-left px-6'>{t('measureDate')}</th>
+                        <th className='text-left'>{t('measureActions')}</th>
                       </tr>
                     </thead>
 
                     <tbody>
                       {measureGroup.measures.map((measure) => (
                         <tr key={measure.$id}>
-                          <td><img src={StorageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className='rounded-xl mt-2 w-10' /></td>
                           <td className='border-separate'>{measure.placeDescription}</td>
-                          <td>{formatDateTime(new Date(measure.datetime))}</td>
-                          <td><Link to={`/measure/${measure.$id}`}>Open</Link> </td>
-                          <td><Link onClick={(e) => handleDeleteMeasure(e, measure)}>Delete</Link></td>
+                          <td className='px-6 py-4'>{formatDateTime(new Date(measure.datetime))}</td>
+                          <td><Link to={`/measure/${measure.$id}`}><IoOpenOutline className='size-6 md:size-8' /></Link> </td>
+                          <td><Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6 md:size-8'/></Link></td>
                         </tr>
                       ))}
                     </tbody>
                   </table>
                 </div>
               )}
-            </Container>
-          </div>
-        )}
-      </div>
 
-
-
-
-
-
-    </form >
+            </div>
+          )}
+        </div>
+      </form >
+    </>
   )
 }
 

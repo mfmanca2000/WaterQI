@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react'
-import conf from "../conf/conf.js"
+import { conf } from "../conf/conf.js"
 import databaseService from '../appwrite/database'
 import Container from '../components/Container'
 import MeasureCard from '../components/MeasureCard'
@@ -32,54 +32,29 @@ function Measures() {
   const userData = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
-    // async function load() {
-    //   const prefs = await authService.loadPreferences();
-    //   if (prefs) {
-    //     //console.log('USE EFFECT prefs: ' + JSON.stringify(prefs));
-    //     //console.log('---> showYourDataOnly: ' + prefs.showYourDataOnly);
-    //     setShowYourDataOnly(prefs.showYourDataOnly);
-    //     //console.log('---> showStandaloneMeasures: ' + prefs.showStandaloneMeasures);
-    //     setShowMeasures(prefs.showStandaloneMeasures);
-    //     //console.log('---> showMeasureGroups: ' + prefs.showMeasureGroups);
-    //     setShowMeasureGroups(prefs.showMeasureGroups);
-    //   } else {
-    //     console.log('Empty prefs')
-    //   }
-    // }
-    // load();
 
-    if (userData && userData.prefs){
-      console.log('Loading data from userdata.prefs' + JSON.stringify(userData.prefs));
+    if (userData && userData.prefs) {
+      //console.log('Loading data from userdata.prefs' + JSON.stringify(userData.prefs));
       setShowYourDataOnly(userData.prefs.showYourDataOnly);
       setShowMeasures(userData.prefs.showStandaloneMeasures);
       setShowMeasureGroups(userData.prefs.showMeasureGroups);
     }
 
-  }, [])
+  }, [userData])
 
-
-  // useEffect(() => {
-  //   async function save() {
-  //     //const prefs = { showYourDataOnly: showYourDataOnly, showStandaloneMeasures: showMeasures, showMeasureGroups: showMeasureGroups }
-  //     const prefs = { ...(userData.prefs), showYourDataOnly: showYourDataOnly, showStandaloneMeasures: showMeasures, showMeasureGroups: showMeasureGroups }
-  //     console.log('Saving prefs: ' + JSON.stringify(prefs))
-  //     const res = await authService.savePreferences(prefs);
-  //     console.log('Saved: ' + res);
-  //   }
-  //   save();
-  // }, [showYourDataOnly, showMeasures, showMeasureGroups])
 
   useEffect(() => {
-    console.log('DateFrom: ' + dateFrom);
-    console.log('DateTo: ' + dateTo);
-    console.log('SearchTxt:' + searchText);
+
+    
+
     databaseService.getAllMeasures().then((returnedMeasures) => {
       const currentUserId = userData.$id;
 
       if (returnedMeasures) {
+        
         sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, conf.lastInsertedMeasuresNumber);
 
-        filteredStandaloneMeasures.current = returnedMeasures.documents.filter((m) => {
+        filteredStandaloneMeasures.current = returnedMeasures.documents.filter((m) => {          
           var dt = new Date(m.datetime).getTime();
           //console.log(m.placeDescription + ': ' + m.datetime + ' -- DateFrom:' + dateFrom + ' --> ' + ((!onlyUserMeasures || m.userId === currentUserId) && (!dateFrom || new Date(m.datetime).getTime > new Date(dateFrom))))   
 
@@ -91,6 +66,7 @@ function Measures() {
             (!searchText || m.placeDescription.toLowerCase().includes(searchText.toLowerCase()));
         });
 
+        
         databaseService.getAllMeasureGroups().then((returnedMeasureGroups) => {
           sortedMeasureGroups.current = returnedMeasureGroups.documents.slice(0, conf.lastModifiedMeasureGroupsNumber);
 
@@ -100,6 +76,7 @@ function Measures() {
               (!searchText || mg.description.toLowerCase().includes(searchText.toLowerCase()));
           });
 
+          console.log('How many are left? ' + (filteredStandaloneMeasures.current.length + filteredMeasureGroups.current.length));
           setMeasureNumber(filteredStandaloneMeasures.current.length + filteredMeasureGroups.current.length);
         });
       }
@@ -113,15 +90,19 @@ function Measures() {
   const onDeleteStandaloneMeasure = (e, $id) => {
     e.preventDefault();
 
-    databaseService.deleteMeasure($id);
-    setMeasureNumber(measureNumber - 1);
+    if (databaseService.deleteMeasure($id)) {
+      setMeasureNumber(measureNumber - 1);
+    }
+
   }
 
   const onDeleteMeasureGroup = (e, $id) => {
     e.preventDefault();
 
-    databaseService.deleteMeasureGroup($id);
-    setMeasureNumber(measureNumber - 1);
+    if (databaseService.deleteMeasureGroup($id)) {
+      console.log('MeasureGroup deleted')
+      setMeasureNumber(measureNumber - 1);
+    }
   }
 
   return (

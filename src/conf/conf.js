@@ -14,4 +14,10 @@ const conf = {
     lastModifiedMeasureGroupsNumber: Number(process.env.LAST_MODIFIED_MEASURE_GROUPS_NUMBER),
 }
 
-export default conf
+const languages = {
+    it: { nativeName: 'Italiano' },
+    en: { nativeName: 'English' },
+    fr: { nativeName: 'Français' },
+};
+
+export { conf, languages }

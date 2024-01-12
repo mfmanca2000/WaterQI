@@ -18,7 +18,7 @@ function MeasureGroupCard({ measureGroup, onDelete }) {
             <Link to={`/measureGroup/${measureGroup?.$id}`}>
 
                 <div className='w-full justify-center mb-2 '>
-                    <img src={StorageService.getPreviewImageUrl(measureGroup?.imageId)} alt={measureGroup?.description} className='rounded-xl h-36 object-cover object-center w-full' />
+                    <img src={measureGroup?.imageId ? StorageService.getPreviewImageUrl(measureGroup?.imageId) : '/noimage.png'} alt={measureGroup?.description} className={measureGroup.imageId ? 'rounded-xl h-36 object-cover object-center w-full' : 'rounded-xl h-36 object-fill ' } />
                 </div>
                 <div className='min-h-14'>
                     <label className='text-xl font-bold'>{measureGroup?.description}</label><br />

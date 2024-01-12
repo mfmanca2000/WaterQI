@@ -3,13 +3,9 @@ import { useTranslation } from "react-i18next";
 import FlagIcon from "./FlagIcon";
 import styles from "./LanguageSelector.module.scss";
 //import {cdnBaseUrl, environment, projectToken} from "../../i18n";
+import {languages} from "../conf/conf"
 
 
-const lngs = {
-    it: { nativeName: 'Italiano' },
-    en: { nativeName: 'English' },
-    fr: { nativeName: 'Français' },
-};
 
 // interface Language {
 //     key: string;
@@ -22,7 +18,7 @@ export const LanguageSelector = () => {
     const { i18n } = useTranslation();
     // const [languages, setLanguages] = useState([]);
     const [isOpen, setIsOpen] = useState(false);
-    let selectedLanguage = Object.keys(lngs).find(language => language === i18n.language);
+    let selectedLanguage = Object.keys(languages).find(language => language === i18n.language);
 
     if (!selectedLanguage) {
         selectedLanguage = 'it';
@@ -56,7 +52,7 @@ export const LanguageSelector = () => {
                     <button
                         onClick={() => setIsOpen(!isOpen)}
                         type="button"
-                        className="inline-flex items-center justify-center w-full rounded-md border border-gray-100 shadow-sm px-4 py-2 bg-casaleggio-rgba text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                        className="inline-flex items-center justify-center w-full rounded-md border border-gray-100 shadow-sm px-4 py-2  text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
                         id={LANGUAGE_SELECTOR_ID}
                         aria-haspopup="true"
                         aria-expanded={isOpen}
@@ -79,13 +75,13 @@ export const LanguageSelector = () => {
                     </button>
                 </div>
                 {isOpen && <div
-                    className="origin-top-right absolute right-0 mt-2 w-36 rounded-md shadow-lg bg-casaleggio-rgba ring-1 ring-black ring-opacity-5"
+                    className="origin-top-right absolute left-0 mt-2 w-36 rounded-md shadow-lg bg-casaleggio-rgba ring-1 ring-black ring-opacity-5"
                     role="menu"
                     aria-orientation="vertical"
                     aria-labelledby="language-selector"
                 >
                     <div className="py-1 grid grid-cols-1 gap-2" role="none">
-                        {Object.keys(lngs).map((language, index) => {
+                        {Object.keys(languages).map((language, index) => {
                             return (
                                 <button
                                     key={language}
@@ -97,7 +93,7 @@ export const LanguageSelector = () => {
                                     role="menuitem"
                                 >
                                     <FlagIcon countryCode={language} />
-                                    <span className="truncate">{lngs[language].nativeName}</span>
+                                    <span className="truncate">{languages[language].nativeName}</span>
                                 </button>
                             );
                         })}

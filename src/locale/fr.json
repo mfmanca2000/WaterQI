@@ -49,6 +49,23 @@
         "settingsUserId": "UserId*",
         "settingsUsername": "Nom utilisateur (max 20 chars, c'est public mais optionnel)",
         "settingsName": "Nom* (max 50 chars, c'est privé mais obligatoire)",
-        "settingsEmail": "Adresse Email"
+        "settingsEmail": "Adresse Email",
+        "settingsLanguage": "Language de défaut",
+        "settingsSave": "Sauvegarder",
+        "settingsPersonalInfo": "Informazioni personali",
+        "settingsMapDefaults": "Paramètres par défaut",
+        "measureGroupTitle": "Nouveau Groupe",
+        "measureGroupDescription": "Description",
+        "measureGroupLatitude": "Latitude",
+        "measureGroupLongitude": "Longitude",
+        "measureGroupLastUpdate": "Dernière mise à jour",
+        "measureGroupLocationImage": "Image du lieu",
+        "measureGroupCreate": "Ajoute",
+        "measureGroupUpdate": "Mettre à jour",
+        "measureGroupAddMeasure": "Ajoute une mesure",
+        "measureGroupExplaination": "All related measures will have the same location and image of the measure group",
+        "measureDescription": "Description",
+        "measureActions": "Actions",
+        "measureDate": "Date"
     }
 }
