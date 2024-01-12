@@ -25,28 +25,6 @@ function Measures() {
   const [showYourDataOnly, setShowYourDataOnly] = useState(false);
   const [showMeasures, setShowMeasures] = useState(true);
   const [showMeasureGroups, setShowMeasureGroups] = useState(true);
-
-  useEffect(() => {
-    async function load() {
-      const prefs = await authService.loadPreferences();
-      if (prefs) {
-        //console.log('USE EFFECT prefs: ' + JSON.stringify(prefs));
-        //console.log('---> showYourDataOnly: ' + prefs.showYourDataOnly);
-        setShowYourDataOnly(prefs.showYourDataOnly);
-        //console.log('---> showStandaloneMeasures: ' + prefs.showStandaloneMeasures);
-        setShowMeasures(prefs.showStandaloneMeasures);
-        //console.log('---> showMeasureGroups: ' + prefs.showMeasureGroups);
-        setShowMeasureGroups(prefs.showMeasureGroups);
-      } else {
-        console.log('Empty prefs')
-      }
-    }
-    load();
-
-  }, [])
-
-
-
   const [dateFrom, setDateFrom] = useState(null);
   const [dateTo, setDateTo] = useState(null);
   const [measureNumber, setMeasureNumber] = useState();
@@ -54,17 +32,46 @@ function Measures() {
   const userData = useSelector((state) => state.auth.userData);
 
   useEffect(() => {
-    async function save() {
-      //const prefs = { showYourDataOnly: showYourDataOnly, showStandaloneMeasures: showMeasures, showMeasureGroups: showMeasureGroups }
-      const prefs = { showYourDataOnly: showYourDataOnly, showStandaloneMeasures: showMeasures, showMeasureGroups: showMeasureGroups }
-      console.log('Saving prefs: ' + JSON.stringify(prefs))
-      const res = await authService.savePreferences(prefs);
-      console.log('Saved: ' + res);
+    // async function load() {
+    //   const prefs = await authService.loadPreferences();
+    //   if (prefs) {
+    //     //console.log('USE EFFECT prefs: ' + JSON.stringify(prefs));
+    //     //console.log('---> showYourDataOnly: ' + prefs.showYourDataOnly);
+    //     setShowYourDataOnly(prefs.showYourDataOnly);
+    //     //console.log('---> showStandaloneMeasures: ' + prefs.showStandaloneMeasures);
+    //     setShowMeasures(prefs.showStandaloneMeasures);
+    //     //console.log('---> showMeasureGroups: ' + prefs.showMeasureGroups);
+    //     setShowMeasureGroups(prefs.showMeasureGroups);
+    //   } else {
+    //     console.log('Empty prefs')
+    //   }
+    // }
+    // load();
+
+    if (userData && userData.prefs){
+      console.log('Loading data from userdata.prefs' + JSON.stringify(userData.prefs));
+      setShowYourDataOnly(userData.prefs.showYourDataOnly);
+      setShowMeasures(userData.prefs.showStandaloneMeasures);
+      setShowMeasureGroups(userData.prefs.showMeasureGroups);
     }
-    save();
-  }, [showYourDataOnly, showMeasures, showMeasureGroups])
+
+  }, [])
+
+
+  // useEffect(() => {
+  //   async function save() {
+  //     //const prefs = { showYourDataOnly: showYourDataOnly, showStandaloneMeasures: showMeasures, showMeasureGroups: showMeasureGroups }
+  //     const prefs = { ...(userData.prefs), showYourDataOnly: showYourDataOnly, showStandaloneMeasures: showMeasures, showMeasureGroups: showMeasureGroups }
+  //     console.log('Saving prefs: ' + JSON.stringify(prefs))
+  //     const res = await authService.savePreferences(prefs);
+  //     console.log('Saved: ' + res);
+  //   }
+  //   save();
+  // }, [showYourDataOnly, showMeasures, showMeasureGroups])
 
   useEffect(() => {
+    console.log('DateFrom: ' + dateFrom);
+    console.log('DateTo: ' + dateTo);
     console.log('SearchTxt:' + searchText);
     databaseService.getAllMeasures().then((returnedMeasures) => {
       const currentUserId = userData.$id;
@@ -98,7 +105,6 @@ function Measures() {
       }
     })
 
-
   }, [showYourDataOnly, userData, dateFrom, dateTo, filteredStandaloneMeasures, searchText, measureNumber, showMeasures, showMeasureGroups]);
 
 
@@ -124,27 +130,27 @@ function Measures() {
       <Container>
 
         <div className='flex'>
-          <div className='flex w-full'>
-            <div className='lg:w-1/4 md:w-1/2'>
-              <input type="checkbox" checked={showYourDataOnly} id='onlyYourMeasures' label={t('measuresShowYourDataOnly')} className="-mt-1 mx-3" onChange={(e) => {
+          <div className='flex flex-wrap w-full'>
+            <div className='sm:w-1/4 mt-2'>
+              <input type="checkbox" checked={showYourDataOnly} id='onlyYourMeasures' label={t('measuresShowYourDataOnly')} className="-mt-1 mr-2" onChange={(e) => {
                 setShowYourDataOnly((prev) => !prev)
               }} />
               <label className="mb-4 mr-4" htmlFor='onlyYourMeasures'>{t('measuresShowYourDataOnly')}</label>
             </div>
 
-            <div className='lg:w-1/4 md:w-1/2'>
-              <input type="checkbox" checked={showMeasures} id='showMeasures' label={t('measuresShowStandaloneMeasures')} className="-mt-1 mx-3" onChange={(e) => {
+            <div className='sm:w-1/4 mt-2'>
+              <input type="checkbox" checked={showMeasures} id='showMeasures' label={t('measuresShowStandaloneMeasures')} className="-mt-1 mr-2" onChange={(e) => {
                 setShowMeasures((prev) => !prev)
               }} />
               <label className="mb-4 mr-4" htmlFor='showMeasures'>{t('measuresShowStandaloneMeasures')}</label>
             </div>
-            <div className='lg:w-1/4 sm:w-1/2'>
-              <input type="checkbox" checked={showMeasureGroups} id='showMeasureGroups' label={t('measuresShowMeasureGroups')} className="-mt-1 mx-3" onChange={(e) => {
+            <div className='sm:w-1/4 mt-2'>
+              <input type="checkbox" checked={showMeasureGroups} id='showMeasureGroups' label={t('measuresShowMeasureGroups')} className="-mt-1 mr-2" onChange={(e) => {
                 setShowMeasureGroups((prev) => !prev)
               }} />
               <label className="mb-4 mr-4" htmlFor='showMeasureGroups'>{t('measuresShowMeasureGroups')}</label>
             </div>
-            <div className='lg:w-1/4 md:w-1/2 text-right'>
+            <div className='sm:w-1/4 mt-2 text-right'>
               <label className="mb-4 mr-4 font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
             </div>
           </div>
@@ -153,22 +159,22 @@ function Measures() {
 
         </div>
 
-        <div className='flex'>
-          <div className='flex w-1/3 m-2'>
-            <Input className="w-1/2" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
+        <div className='flex flex-wrap'>
+          <div className='sm:w-1/4 pr-2'>
+            <Input className="" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
               setDateFrom(e.target.value);
             }} />
           </div>
 
-          <div className='flex w-1/3 m-2'>
-            <Input className="w-1/2" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
+          <div className='sm:w-1/4 pr-2'>
+            <Input className="" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
               setDateTo(e.target.value);
             }} />
           </div>
 
 
-          <div className='flex w-1/3 m-2'>
-            <Input className="w-1/2" label={t('measuresSearch')} onChange={(e) => {
+          <div className='sm:w-1/4 pr-2' >
+            <Input className="mr-2" label={t('measuresSearch')} onChange={(e) => {
               setSearchText(e.target.value);
             }} />
           </div>

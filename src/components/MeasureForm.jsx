@@ -11,6 +11,7 @@ import conf from "../conf/conf.js";
 import { removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
 import { calculateWQI, getMarkerColor } from "../utils/wqi.js";
+import { FileInput } from "flowbite-react";
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -54,7 +55,7 @@ export default function MeasureForm({ measure }) {
             latitude: measure?.latitude || defaultLatitude,
             longitude: measure?.longitude || defaultLongitude,
             placeDescription: measure?.placeDescription || "",
-            datetime: removeTimeZone(new Date(measure?.datetime)) || removeTimeZone(new Date(Date.now())),
+            datetime: measure ? removeTimeZone(new Date(measure.datetime)) : removeTimeZone(new Date(Date.now())),
             imageId: measure?.imageId || "",
             electricalConductivity: measure?.electricalConductivity || null,
             totalDissolvedSolids: measure?.totalDissolvedSolids || null,
@@ -105,6 +106,7 @@ export default function MeasureForm({ measure }) {
         } else {
             const file = await storageService.uploadImage(data.image[0]);
             if (file) {
+                console.log('Immagine salvata')
                 data.imageId = file.$id;
                 const dbMeasure = await databaseService.addMeasure({ ...data, userId: userData.$id });
                 if (dbMeasure) {
@@ -209,14 +211,18 @@ export default function MeasureForm({ measure }) {
                         )}
 
                         {(!measure || !measure.measureGroup) && (
-                            < Input
-                                label={measure ? "Location image" : "Location image *"}
-                                type="file"
-                                className="mb-4"
-                                accept="image/png, image/jpg, image/jpeg"
-                                {...register("image", { required: !measure })}
-                            />)
-                        }
+                            // < Input
+                            //     label={measure ? "Location image" : "Location image *"}
+                            //     type="file"
+                            //     className="mb-4"
+                            //     accept="image/png, image/jpg, image/jpeg"
+                            //     {...register("image", { required: !measure })}
+                            // />
+                            <>
+                                <label>{measure ? "Location image" : "Location image *"}</label>
+                                <FileInput id='file-upload-helper-text' helperText='PNG, JPG or JPEG.' sizing='sm' {...register("image", { required: !measure })} className='my-4' />
+                            </>
+                        )}
                         {measure && (
                             <div className="w-full my-4">
                                 <img src={storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg w-48" />

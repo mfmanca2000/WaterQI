@@ -73,13 +73,15 @@ function Header() {
     return (
         <header className='py-2 shadow bg-casaleggio-rgba'>
 
-            <Navbar rounded className='bg-transparent mx-16'>
-                <Navbar.Brand href="/">
-                    <img src="/Logo.png" className="mr-3 h-20 sm:h-9" alt="WaterQI Logo" />
-                    <span className="self-center whitespace-nowrap text-3xl font-semibold dark:text-white">WaterQI</span>
+            <Navbar rounded className='bg-transparent mx-8'>
+                <Navbar.Brand className='flex w-full sm:w-auto text-right sm:text-left' href="/">
+                    
+                        <img src="/Logo.png" className="mr-3 h-20 sm:h-9" alt="WaterQI Logo" />
+                        <span className="w-full self-center whitespace-nowrap text-3xl font-semibold dark:text-white">WaterQI</span>
+                    
                 </Navbar.Brand>
 
-                <Navbar.Collapse className='md:mt-4'>
+                <Navbar.Collapse className=''>
                     {
                         navItems.map((item) => item.active ? (
                             <Navbar.Link className='text-lg' key={item.name} href={item.slug}>
@@ -89,30 +91,31 @@ function Header() {
                     }
                 </Navbar.Collapse>
 
-                <div className="flex md:order-2 mr-8 md:mt-4">
-                    <div className='mr-6'>
+                <div className="flex md:order-2 w-full sm:w-auto justify-between sm:justify-normal">
+                    <div className='mr-6 mt-1'>
                         <LanguageSelector />
                     </div>
+                    <div className='flex'>
+                        {loggedIn ? (
+                            <Dropdown arrowIcon={false} size="lg" inline label={<Avatar alt="Your avatar" rounded bordered placeholderInitials={Array.from(userData?.name)[0]} />}>
+                                <Dropdown.Header>
+                                    <span className="block text-base">{userData.name}</span>
+                                    <span className="block truncate text-base font-medium">{userData.email}</span>
+                                </Dropdown.Header>
 
-                    {loggedIn ? (
-                    <Dropdown arrowIcon={false} size="lg" inline label={<Avatar alt="Your avatar" rounded bordered placeholderInitials={Array.from(userData?.name)[0]} size="md"/>}>
-                        <Dropdown.Header>
-                            <span className="block text-base">{userData.name}</span>
-                            <span className="block truncate text-base font-medium">{userData.email}</span>
-                        </Dropdown.Header>
+                                <Dropdown.Item href='/settings'>{t('headerSettings')}</Dropdown.Item>
+                                <Dropdown.Item href='/help'>{t('headerHelp')}</Dropdown.Item>
 
-                        <Dropdown.Item href='/settings'>{t('headerSettings')}</Dropdown.Item>
-                        <Dropdown.Item href='/help'>{t('headerHelp')}</Dropdown.Item>                    
+                                <Dropdown.Divider />
+                                <Dropdown.Item onClick={logoutHandler}>
+                                    {/* <LogoutBtn /> */}
+                                    {t('logout')}
+                                </Dropdown.Item>
+                            </Dropdown>
+                        ) : null}
 
-                        <Dropdown.Divider />
-                        <Dropdown.Item onClick={logoutHandler}>
-                            {/* <LogoutBtn /> */}
-                            {t('logout')}
-                        </Dropdown.Item>
-                    </Dropdown>
-                    ) : null}
-
-                    <Navbar.Toggle className='mx-2' />
+                        <Navbar.Toggle className='mx-2' />
+                    </div>
                 </div>
 
 

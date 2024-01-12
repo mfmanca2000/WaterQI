@@ -32,6 +32,7 @@ function Login() {
             const session = await authService.login(data);
             if (session) {
                 const userData = await authService.getCurrentUser();
+                console.log(JSON.stringify(userData.prefs));
                 if (userData) {
                     dispatch(authLogin({ userData }));
                 }

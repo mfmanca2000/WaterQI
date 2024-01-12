@@ -1,7 +1,11 @@
 import React, { useEffect } from 'react'
+import { useSelector } from 'react-redux';
 import Container from '../components/Container'
+import Input from '../components/Input';
 
 function Settings() {
+
+    const userData = useSelector((state) => state.auth.userData);
 
     // useEffect(() => {
     //     async function load() {
@@ -23,10 +27,11 @@ function Settings() {
     //   }, [])
 
     return (
-        <div className='w-full py-8'>
+        <div className='w-full p-8'>
 
             <Container>
                 <label className='text-4xl'>Settings</label>
+                <Input label='Username' disabled></Input>
             </Container>
         </div>
     )
