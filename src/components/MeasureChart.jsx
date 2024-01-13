@@ -50,11 +50,11 @@ const MeasureChart = ({ values }) => {
             return (
                 <div className="custom-tooltip bg-white border p-2">
                     <p className="font-bold">{`${formatDateTime(new Date(payload[0].payload.datetime))}`}</p>
-                    <p className="font-thin">{`EC: ${payload[0].payload.electricalConductivity ?? '-'}`}</p>
-                    <p className="font-thin">{`TDS: ${payload[0].payload.totalDissolvedSolids ?? '-'}`}</p>
-                    <p className="font-thin">{`pH: ${payload[0].payload.pH ?? '-'}`}</p>
-                    <p className="font-thin">{`Temp: ${payload[0].payload.temperature ?? '-'}`}</p>
-                    <p className="font-thin">{`Salinity: ${payload[0].payload.salinity ?? '-'}`}</p>
+                    <p className="font-thin">EC: {payload[0].payload.electricalConductivity ?? '-'} μS/cm</p>
+                    <p className="font-thin">TDS: {payload[0].payload.totalDissolvedSolids ?? '-'} ppm</p>
+                    <p className="font-thin">pH: {payload[0].payload.pH ?? '-'}</p>
+                    <p className="font-thin">Temp: {payload[0].payload.temperature ?? '-'} °C</p>
+                    <p className="font-thin">Salinity: {payload[0].payload.salinity ?? '-'}</p>
                 </div>
             );
         }

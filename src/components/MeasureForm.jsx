@@ -114,7 +114,7 @@ export default function MeasureForm({ measure }) {
                     navigate('/measureGroup/' + measure.measureGroup.$id)
                 } else {
                     navigate('/measures')
-                }                
+                }
             }
         } else {
 
@@ -179,8 +179,8 @@ export default function MeasureForm({ measure }) {
 
                         {measure && measure.measureGroup &&
                             <>
-                                <label className='font-thin mb-6'>This measure is part of a group. To change its location, please change the location of the </label>
-                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >measure group</Link>
+                                <label className='font-thin mb-6'>{t('measureExplaination')} </label>
+                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >{t('measureGroup')}</Link>
                                 <Input
                                     disabled
                                     label={t('measureGroupLatitude') + ' *'}
@@ -223,12 +223,6 @@ export default function MeasureForm({ measure }) {
                             {...register("datetime", { required: true, valueAsDate: true })}
                         />
 
-                        {measure && measure.measureGroup && (
-                            <>
-                                <label className='font-thin mb-6'>{t('measureExplaination')}</label>
-                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`}>{t('measureGroup')}</Link>
-                            </>
-                        )}
 
                         {(!measure || !measure.measureGroup) && (
                             <>
@@ -255,27 +249,24 @@ export default function MeasureForm({ measure }) {
                                 />
                             </>
                         )}
-                        
+
 
 
                         {measure && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(measure.$updatedAt))}</label>)}
 
 
-
-                        {measure && (previewImageUrl || measure.imageId) && (
-                            <div className="w-full mb-4">
-                                <img src={previewImageUrl ? previewImageUrl : storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg w-full object-cover" />
-                            </div>
-                        )}
-                        {!measure && (
-                            <div className="w-full mb-4">
-                                <img src={previewImageUrl} alt={getValues('description')} className="rounded-lg w-full object-cover" />
-                            </div>
-                        )}
-
-
-
-
+                        <div className='md:w-1/4'>
+                            {measure && (previewImageUrl || measure.imageId) && (
+                                <div className="w-full mb-4">
+                                    <img src={previewImageUrl ? previewImageUrl : storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg w-full object-cover" />
+                                </div>
+                            )}
+                            {!measure && (
+                                <div className="w-full mb-4">
+                                    <img src={previewImageUrl} alt={getValues('description')} className="rounded-lg w-full object-cover" />
+                                </div>
+                            )}
+                        </div>
                     </div>
 
                     <div className="w-full">
