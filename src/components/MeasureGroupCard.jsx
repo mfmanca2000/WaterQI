@@ -28,7 +28,7 @@ function MeasureGroupCard({ measureGroup, onDelete }) {
                         <div>{formatDateTime(new Date(measureGroup.$updatedAt))}</div>
                         <div><label className='text-sm font-light'>{t('by')} {measureGroup.username ?? measureGroup.userId}</label></div>
                     </span>
-                    <label className='text-4xl font-bold text-right -m-1 text-white'>{measureGroup?.measures.length}</label>
+                    <label className='text-4xl font-bold text-right text-white'>{measureGroup?.measures.length}</label>
                     <div className='w-16'>
                         <img src='multiplemarker.png' alt='Measure Group'/>
                     </div>

@@ -2,7 +2,7 @@ function padTo2Digits(num) {
     return num.toString().padStart(2, '0');
 }
 
-function formatDateTime(date) {
+function formatDateTime(date) {    
     if (date && typeof(date) === 'object') {
         return [
             padTo2Digits(date.getDate()),

@@ -68,8 +68,9 @@ function MeasureGroupForm({ measureGroup }) {
 
 
   useEffect(() => {
-    //console.log('2nd useEffect')   
-  }, [measureGroup, measureNumber, setLastUpdatedAt])
+    //console.log('2nd useEffect')  
+    //console.log('MeasureGroup: ' + JSON.stringify(measureGroup))    
+  }, [measureGroup, measureNumber, lastUpdatedAt])
 
 
   function latitudeChangedHandler(event) {
@@ -152,8 +153,7 @@ function MeasureGroupForm({ measureGroup }) {
       }
 
       const dbMeasureGroup = await databaseService.updateMeasureGroup(measureGroup.$id, { ...data, imageId: file?.$id });
-      if (dbMeasureGroup) {
-        console.log('Added measureGroup with imageId: ' + dbMeasureGroup.imageId)
+      if (dbMeasureGroup) {        
         //modify the image, lat and lng of all related measures
         dbMeasureGroup.measures.forEach(async (m) => {
           await databaseService.updateMeasure(m.$id, { ...m, imageId: dbMeasureGroup.imageId, latitude: dbMeasureGroup.latitude, longitude: dbMeasureGroup.longitude })
@@ -229,7 +229,7 @@ function MeasureGroupForm({ measureGroup }) {
             {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
           />
 
-          {measureGroup && lastUpdatedAt && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(lastUpdatedAt))}</label>)}
+          {measureGroup && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(lastUpdatedAt ? new Date(lastUpdatedAt) : new Date(measureGroup.$updatedAt))}</label>)}
 
           <Controller
             control={control}
