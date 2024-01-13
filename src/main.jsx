@@ -18,6 +18,7 @@ import MeasureGroupDetail from './pages/MeasureGroupDetail.jsx'
 import './i18n';
 import Settings from './pages/Settings.jsx'
 import Help from './pages/Help.jsx'
+import Profile from './pages/Profile.jsx'
 
 const router = createBrowserRouter([
   {
@@ -105,6 +106,14 @@ const router = createBrowserRouter([
         element: (
           
             <Help/>
+          
+        )
+      },
+      {
+        path: '/profile',
+        element: (
+          
+            <Profile/>
           
         )
       }

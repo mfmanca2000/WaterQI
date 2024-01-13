@@ -2,7 +2,7 @@ import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { useTranslation } from 'react-i18next'
-import { Avatar, Dropdown, Navbar } from 'flowbite-react';
+import { Avatar, Dropdown, DropdownItem, Navbar } from 'flowbite-react';
 import "/node_modules/flag-icons/css/flag-icons.min.css";
 import { LanguageSelector } from './LanguageSelector.jsx'
 import authService from '../appwrite/auth.js'
@@ -59,9 +59,9 @@ function Header() {
     const logoutHandler = () => {
         authService.logout().then(() => {
             dispatch(logout());
-            if (location.pathname === '/') {                
+            if (location.pathname === '/') {
                 navigate('/login');
-            } else {                
+            } else {
                 navigate('/');
             }
         });
@@ -71,13 +71,47 @@ function Header() {
     return (
         <header className='py-2 shadow bg-casaleggio-rgba'>
 
-            <Navbar rounded className='bg-transparent mx-8'>
-                <Navbar.Brand className='flex w-full sm:w-auto text-right sm:text-left' href="/">
-
-                    <img src="/Logo.png" className="mr-3 h-20 sm:h-9" alt="WaterQI Logo" />
-                    <span className="w-full self-center whitespace-nowrap text-3xl font-semibold dark:text-white">WaterQI</span>
-
+            <Navbar fluid rounded className='bg-transparent mx-8'>
+                <Navbar.Brand className='' href="/">
+                    <div className='sm:w-48 sm:flex'>
+                        <img src="/Logo.png" className="mr-3 h-8 sm:h-14" alt="WaterQI Logo" />
+                        <span className="w-full self-center whitespace-nowrap text-3xl font-semibold dark:text-white">WaterQI</span>
+                    </div>
                 </Navbar.Brand>
+
+                {loggedIn ? (
+                    <div className='flex lg:order-2'>
+                        <Dropdown arrowIcon={false} size="lg" inline label={<Avatar alt="Your avatar" rounded bordered placeholderInitials={Array.from(userData?.name)[0]} />}>
+                            <Dropdown.Header>
+                                <div className='flex text-base' >
+                                    <label className=''>{userData.name}</label>
+                                    <label className='ml-2 italic'>({userData.prefs.username})</label>
+                                </div>
+
+                                <span className="block truncate text-base font-medium">{userData.email}</span>
+                            </Dropdown.Header>
+
+                            <Dropdown.Item href='/profile'>{t('headerProfile')}</Dropdown.Item>
+                            <Dropdown.Item href='/settings'>{t('headerSettings')}</Dropdown.Item>
+                            <Dropdown.Item href='/help'>{t('headerHelp')}</Dropdown.Item>
+
+                            <div className='mr-6 mt-1'>
+                                <LanguageSelector />
+                            </div>
+
+                            <Dropdown.Divider />
+                            <Dropdown.Item onClick={logoutHandler}>
+                                {t('logout')}
+                            </Dropdown.Item>
+
+
+
+
+                        </Dropdown>
+                        <Navbar.Toggle className='mx-2' />
+                    </div>
+                ) : null}
+
 
                 <Navbar.Collapse className=''>
                     {
@@ -89,7 +123,10 @@ function Header() {
                     }
                 </Navbar.Collapse>
 
-                <div className="flex md:order-2 w-full sm:w-auto justify-between sm:justify-normal">
+
+
+
+                {/* <div className="flex md:order-2 w-full sm:w-auto justify-between sm:justify-normal">
                     <div className='mr-6 mt-1'>
                         <LanguageSelector />
                     </div>
@@ -105,12 +142,12 @@ function Header() {
                                     <span className="block truncate text-base font-medium">{userData.email}</span>
                                 </Dropdown.Header>
 
+                                <Dropdown.Item href='/profile'>{t('headerProfile')}</Dropdown.Item>
                                 <Dropdown.Item href='/settings'>{t('headerSettings')}</Dropdown.Item>
                                 <Dropdown.Item href='/help'>{t('headerHelp')}</Dropdown.Item>
 
                                 <Dropdown.Divider />
-                                <Dropdown.Item onClick={logoutHandler}>
-                                    {/* <LogoutBtn /> */}
+                                <Dropdown.Item onClick={logoutHandler}>                                    
                                     {t('logout')}
                                 </Dropdown.Item>
                             </Dropdown>
@@ -118,7 +155,7 @@ function Header() {
 
                         <Navbar.Toggle className='mx-2' />
                     </div>
-                </div>
+                </div> */}
 
 
             </Navbar>
