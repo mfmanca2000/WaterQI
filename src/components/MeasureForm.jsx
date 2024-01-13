@@ -7,11 +7,12 @@ import databaseService from "../appwrite/database.js"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
-import {conf} from "../conf/conf.js";
+import { conf } from "../conf/conf.js";
 import { removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
 import { calculateWQI, getMarkerColor } from "../utils/wqi.js";
-import { FileInput } from "flowbite-react";
+import { Datepicker, FileInput } from "flowbite-react";
+import { useTranslation } from 'react-i18next'
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -36,6 +37,7 @@ export default function MeasureForm({ measure }) {
 
 
     const navigate = useNavigate();
+    const { t } = useTranslation();
     const userData = useSelector((state) => state.auth.userData)
     const [markerRef, marker] = useMarkerRef();
 
@@ -122,8 +124,12 @@ export default function MeasureForm({ measure }) {
 
     return (
         <>
+            <div className='mb-4'>
+                <label className='text-4xl pb-4'>{!measure ? t('measureTitleNew') : getValues('placeDescription')}</label>
+            </div>
+
             <div className="w-full">
-                <div className="w-full h-96 px-2" >
+                <div className="w-full h-72 " >
                     <APIProvider apiKey={conf.googleMapsAPIKey}>
                         <Map mapId={'bf51a910020fa25b'}
                             zoom={conf.defaultZoomLevel}
@@ -150,9 +156,8 @@ export default function MeasureForm({ measure }) {
                     </APIProvider>
                 </div>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
-                    <div className="w-1/2 px-8">
-                        <Input label="Place Description *"
-                            placeholder="insert a place description"
+                    <div className="w-full">
+                        <Input label={t('measurePlaceDescription') + ' *'}                            
                             className="mb-4"
                             {...register("placeDescription", { required: true, maxLength: 255 })}
                         />
@@ -163,16 +168,16 @@ export default function MeasureForm({ measure }) {
                                 <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >measure group</Link>
                                 <Input
                                     disabled
-                                    label="Latitude *"
-                                    placeholder="insert a latitude (i.e. 45.4637979"
+                                    label={t('measureGroupLatitude') + ' *'}
+                                    placeholder="(i.e. 45.4637979)"
                                     className="mb-4 bg-gray-200"
                                     {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
                                 />
 
                                 <Input
                                     disabled
-                                    label="Longitude *"
-                                    placeholder="insert a longitude (i.e. 7.87375)"
+                                    label={t('measureGroupLongitude') + ' *'}
+                                    placeholder="(i.e. 7.87375)"
                                     className="mb-4 bg-gray-200"
                                     {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
                                 />
@@ -181,13 +186,13 @@ export default function MeasureForm({ measure }) {
 
                         {(!measure || !measure.measureGroup) && (
                             <>
-                                <Input label="Latitude *"
+                                <Input label={t('measureGroupLatitude') + ' *'}
                                     placeholder="insert a latitude (i.e. 45.4637979"
                                     className="mb-4"
                                     {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
                                 />
 
-                                <Input label="Longitude *"
+                                <Input label={t('measureGroupLongitude') + ' *'}
                                     placeholder="insert a longitude (i.e. 7.87375)"
                                     className="mb-4"
                                     {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
@@ -198,15 +203,15 @@ export default function MeasureForm({ measure }) {
                         }
 
 
-                        <Input type="datetime-local" label="Date *"
-                            className="mb-4"
+                        <Input type="datetime-local" label={t('measureDate') + ' *'}
+                            className="mb-4 lg:w-1/5"
                             {...register("datetime", { required: true, valueAsDate: true })}
                         />
 
                         {measure && measure.measureGroup && (
                             <>
-                                <label className='font-thin mb-6'>This measure is part of a group. To change its image, please change the image of the </label>
-                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >measure group</Link>
+                                <label className='font-thin mb-6'>{t('measureExplaination')}</label>
+                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >{t('measureGroup')}</Link>
                             </>
                         )}
 
@@ -219,7 +224,7 @@ export default function MeasureForm({ measure }) {
                             //     {...register("image", { required: !measure })}
                             // />
                             <>
-                                <label>{measure ? "Location image" : "Location image *"}</label>
+                                <label>{measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}</label>
                                 <FileInput id='file-upload-helper-text' helperText='PNG, JPG or JPEG.' sizing='sm' {...register("image", { required: !measure })} className='my-4' />
                             </>
                         )}
@@ -228,42 +233,40 @@ export default function MeasureForm({ measure }) {
                                 <img src={storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg w-48" />
                             </div>
                         )}
+                    </div>
 
+                    <div className="w-full">
+                        <div className="w-full md:w-1/4 mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10">
+                            <Input label="Electrical Conductivity (μS/cm)"
+                                className="mb-2"
+                                {...register("electricalConductivity")}
+                            />
 
+                            <Input label="Total Dissolved Solids (ppm)"
+                                className="mb-2"
+                                {...register("totalDissolvedSolids")}
+                            />
 
-                        <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full">
+                            <Input label="pH"
+                                className="mb-2"
+                                {...register("pH")}
+                            />
+
+                            <Input label="Temperature (°C)"
+                                className="mb-2"
+                                {...register("temperature")}
+                            />
+
+                            <Input label="Salinity"
+                                className="mb-2"
+                                {...register("salinity")}
+                            />
+                        </div>
+
+                        <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:w-1/4 mt-8">
                             {measure ? "Update" : "Insert"}
                         </Button>
                     </div>
-
-                    <div className="w-1/2 h-1/2 px-8 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10">
-                        <Input label="Electrical Conductivity (μS/cm)"
-                            className="mb-2"
-                            {...register("electricalConductivity")}
-                        />
-
-                        <Input label="Total Dissolved Solids (ppm)"
-                            className="mb-2"
-                            {...register("totalDissolvedSolids")}
-                        />
-
-                        <Input label="pH"
-                            className="mb-2"
-                            {...register("pH")}
-                        />
-
-                        <Input label="Temperature (°C)"
-                            className="mb-2"
-                            {...register("temperature")}
-                        />
-
-                        <Input label="Salinity"
-                            className="mb-2"
-                            {...register("salinity")}
-                        />
-                    </div>
-
-
                 </form>
             </div>
 

@@ -13,7 +13,7 @@ import Container from './Container.jsx';
 import { formatDateTime } from '../utils/date.js'
 import { Link } from 'react-router-dom';
 import StorageService from '../appwrite/storage.js'
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next'
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -31,6 +31,7 @@ function MeasureGroupForm({ measureGroup }) {
   })
 
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const userData = useSelector((state) => state.auth.userData)
   const [markerRef, marker] = useMarkerRef();
   const measures = useRef([]);
@@ -184,7 +185,7 @@ function MeasureGroupForm({ measureGroup }) {
   return (
     <>
       <div className='mb-4'>
-        <label className='text-4xl pb-4'>{!measureGroup ? t('measureGroupTitle') : getValues('description')}</label>
+        <label className='text-4xl pb-4'>{!measureGroup ? t('measureGroupTitleNew') : getValues('description')}</label>
       </div>
 
       <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
@@ -295,7 +296,7 @@ function MeasureGroupForm({ measureGroup }) {
                     <tbody>
                       {measureGroup.measures.map((measure) => (
                         <tr key={measure.$id}>
-                          <td className='border-separate'>{measure.placeDescription}</td>
+                          <td className='border-separate'>{measure.placeDescription?.slice(0,50) + (measure.placeDescription?.length > 50 ? '...' : '')}</td>
                           <td className='px-6 py-4'>{formatDateTime(new Date(measure.datetime))}</td>
                           <td><Link to={`/measure/${measure.$id}`}><IoOpenOutline className='size-6 md:size-8' /></Link> </td>
                           <td><Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6 md:size-8'/></Link></td>

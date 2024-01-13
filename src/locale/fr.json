@@ -22,7 +22,7 @@
         "otherLogin": "ou utilise...",
         "homePageIntro": "Ce service permet de montrer les mesures de qualité de l'eau recoltées par la communauté.</p><h1>Connectez-vous pour voir toutes les mesures recoltés jusqu'à maintenant ou inscrivez-vous pour créer un compte et commencer à recolter vous même des données sur la qualité de l'eau avec vos senseurs.</h1><br /><p>Data is provided as is and Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur delectus similique quis magni ea blanditiis vitae, ratione magnam, odit doloremque sed quae deserunt hic iure optio facilis in quam placeat..</p><br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, id ipsa doloribus architecto, fugit nesciunt iste molestias vero blanditiis distinctio veritatis voluptate rem itaque et odit fuga minima magnam doloremque?</p><br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A non placeat quas dolores delectus consectetur. Necessitatibus dolor sint culpa asperiores assumenda nihil aperiam veniam, voluptatem delectus, modi soluta pariatur labore.</p>",
         "menuItemAddMeasureTitle": "Ajouter une nouvelle mésure",
-        "menuItemAddMeasureGroupTitle": "Ajouter un nouveau groupe de mesures",
+        "menuItemAddmeasureGroupTitleNew": "Ajouter un nouveau groupe de mesures",
         "menuItemAddMeasureGroupDescription": "Si vous envisagez de recolter plusieurs mesures pour le même lieu, choisissez cette option. Vous pourrez suivre le développement des valeurs dans le temps.",
         "menuItemAddMeasureDescription": "Si vous souhaitez collecter une seule mesure dans un emplacement spécifique sans avoir besoin d'avoir l'historique de cet emplacement, choisissez cette option.",
         "menuItemAllMeasuresTitle": "Analyser toutes les mesures",
@@ -54,7 +54,8 @@
         "settingsSave": "Sauvegarder",
         "settingsPersonalInfo": "Informazioni personali",
         "settingsMapDefaults": "Paramètres par défaut",
-        "measureGroupTitle": "Nouveau Groupe",
+        "measureGroup": "groupe de mésure",
+        "measureGroupTitleNew": "Nouveau Groupe",
         "measureGroupDescription": "Description",
         "measureGroupLatitude": "Latitude",
         "measureGroupLongitude": "Longitude",
@@ -63,9 +64,12 @@
         "measureGroupCreate": "Ajoute",
         "measureGroupUpdate": "Mettre à jour",
         "measureGroupAddMeasure": "Ajoute une mesure",
-        "measureGroupExplaination": "All related measures will have the same location and image of the measure group",
+        "measureGroupExplaination": "Toute les mésures liées à ce groupe auront la même position et la même image du groupe",
+        "measureTitleNew": "Nouvelle Mésure",
         "measureDescription": "Description",
+        "measurePlaceDescription": "Description du lieu",
         "measureActions": "Actions",
-        "measureDate": "Date"
+        "measureDate": "Date",
+        "measureExplaination": "Cette mésure fait partie d'un groupe. Pour changer son image, svp cangez l'image du "
     }
 }

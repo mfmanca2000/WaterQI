@@ -22,7 +22,7 @@
     "otherLogin": "or use...",
     "homePageIntro": "<p>This service permits to show all the water quality measures collected by the community.</p><h1>Login to see all the measures or sign up to create an account and start collecting water quality measures.</h1><br /><p>Data is provided as is and Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur delectus similique quis magni ea blanditiis vitae, ratione magnam, odit doloremque sed quae deserunt hic iure optio facilis in quam placeat..</p><br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, id ipsa doloribus architecto, fugit nesciunt iste molestias vero blanditiis distinctio veritatis voluptate rem itaque et odit fuga minima magnam doloremque?</p><br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A non placeat quas dolores delectus consectetur. Necessitatibus dolor sint culpa asperiores assumenda nihil aperiam veniam, voluptatem delectus, modi soluta pariatur labore.</p>",
     "menuItemAddMeasureTitle": "Add a new measure",
-    "menuItemAddMeasureGroupTitle": "Add a new group of measures",
+    "menuItemAddmeasureGroupTitleNew": "Add a new group of measures",
     "menuItemAddMeasureGroupDescription": "If you want to collect several measures for the same location, choose this option. You will be able to follow how the measures change through the years.",
     "menuItemAddMeasureDescription": "If you want to collect just one measure at a specific location and you already know you will not need historical data for this location, choose this option.",
     "menuItemAllMeasuresTitle": "See all measures",
@@ -54,7 +54,8 @@
     "settingsSave": "Save",
     "settingsPersonalInfo": "Personal information",
     "settingsMapDefaults": "Default settings for displaying measures",
-    "measureGroupTitle": "New Group",
+    "measureGroup": "measure group",
+    "measureGroupTitleNew": "New Group",
     "measureGroupDescription": "Description",
     "measureGroupLatitude": "Latitude",
     "measureGroupLongitude": "Longitude",
@@ -64,9 +65,12 @@
     "measureGroupUpdate": "Update",
     "measureGroupAddMeasure": "Add measure to group",
     "measureGroupExplaination": "All related measures will have the same location and image of the measure group",
+    "measureTitleNew": "New Measure",
     "measureDescription": "Description",
+    "measurePlaceDescription": "Place description",
     "measureActions": "Actions",
-    "measureDate": "Date"
+    "measureDate": "Date",
+    "measureExplaination": "This measure is part of a group. To change its image, please change the image of the "  
 
   }
 }

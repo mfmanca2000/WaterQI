@@ -36,7 +36,7 @@ function Home() {
 
   const menuItems = [
     {
-      title: `${t('menuItemAddMeasureGroupTitle')}`,
+      title: `${t('menuItemAddmeasureGroupTitleNew')}`,
       description: `${t('menuItemAddMeasureGroupDescription')}`,
       path: '/addMeasureGroup',
       image: '/multiple-measurements.png'
