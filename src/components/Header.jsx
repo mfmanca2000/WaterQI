@@ -84,8 +84,9 @@ function Header() {
                     </div>
                 </Navbar.Brand>
 
-                {loggedIn ? (
-                    <div className='flex lg:order-2'>
+
+                <div className='flex lg:order-2'>
+                    {loggedIn ? (
                         <Dropdown arrowIcon={false} size="lg" inline label={<Avatar alt="Your avatar" rounded bordered placeholderInitials={Array.from(userData?.name)[0]} />}>
                             <Dropdown.Header>
                                 <div className='flex text-base' >
@@ -112,10 +113,10 @@ function Header() {
 
 
 
-                        </Dropdown>
-                        <Navbar.Toggle className='mx-2' />
-                    </div>
-                ) : null}
+                        </Dropdown>) : null}
+                    <Navbar.Toggle className='mx-2' />
+                </div>
+
 
 
                 <Navbar.Collapse className=''>
