@@ -19,21 +19,22 @@ import './i18n';
 import Settings from './pages/Settings.jsx'
 import Help from './pages/Help.jsx'
 import Profile from './pages/Profile.jsx'
+import AddReport from './pages/AddReport.jsx'
 
 const router = createBrowserRouter([
   {
     path: '/',
-    element: <App/>,
+    element: <App />,
     children: [
       {
         path: '/',
-        element: <Home/>
+        element: <Home />
       },
       {
         path: '/login',
         element: (
           <Protected authenticationRequired={false}>
-            <Login/>
+            <Login />
           </Protected>
         )
       },
@@ -41,7 +42,7 @@ const router = createBrowserRouter([
         path: '/signup',
         element: (
           <Protected authenticationRequired={false}>
-            <Signup/>
+            <Signup />
           </Protected>
         )
       },
@@ -49,7 +50,7 @@ const router = createBrowserRouter([
         path: '/measures',
         element: (
           <Protected authenticationRequired={true}>
-            <Measures/>
+            <Measures />
           </Protected>
         )
       },
@@ -65,7 +66,7 @@ const router = createBrowserRouter([
         path: '/addMeasure',
         element: (
           <Protected authenticationRequired={true}>
-            <AddMeasure/>
+            <AddMeasure />
           </Protected>
         )
       },
@@ -73,7 +74,15 @@ const router = createBrowserRouter([
         path: '/addMeasureGroup',
         element: (
           <Protected authenticationRequired={true}>
-            <AddMeasureGroup/>
+            <AddMeasureGroup />
+          </Protected>
+        )
+      },
+      {
+        path: '/addReport',
+        element: (
+          <Protected authenticationRequired={true}>
+            <AddReport />
           </Protected>
         )
       },
@@ -81,7 +90,7 @@ const router = createBrowserRouter([
         path: '/measure/:measureId',
         element: (
           <Protected authenticationRequired={true}>
-            <MeasureDetail/>
+            <MeasureDetail />
           </Protected>
         )
       },
@@ -89,7 +98,7 @@ const router = createBrowserRouter([
         path: '/measureGroup/:measureGroupId',
         element: (
           <Protected authenticationRequired={true}>
-            <MeasureGroupDetail/>
+            <MeasureGroupDetail />
           </Protected>
         )
       },
@@ -97,24 +106,26 @@ const router = createBrowserRouter([
         path: '/settings',
         element: (
           <Protected authenticationRequired={true}>
-            <Settings/>
+            <Settings />
           </Protected>
         )
       },
       {
         path: '/help',
         element: (
-          
-            <Help/>
-          
+
+          <Help />
+
         )
       },
       {
         path: '/profile',
         element: (
-          
-            <Profile/>
-          
+
+          <Protected authenticationRequired={true}>
+            <Profile />
+          </Protected>
+
         )
       }
     ]
@@ -124,7 +135,7 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Provider store={store}>
-      <RouterProvider router={router}/>
-    </Provider>    
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>,
 )

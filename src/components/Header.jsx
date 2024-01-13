@@ -46,6 +46,11 @@ function Header() {
             slug: "/addMeasure",
             active: loggedIn
         },
+        {
+            name: `${t('headerAddReport')}`,
+            slug: "/addReport",
+            active: loggedIn
+        },
     ]
 
     // const lngs = {

@@ -28,6 +28,15 @@ export class DatabaseService {
         }
     }
 
+    async getReport(reportId){
+        try {
+            return await this.databases.getDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, reportId);
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getReport ' + error);
+            return null;
+        }
+    }
+
     async getAllMeasures() {
         try {
             return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [ Query.orderDesc('datetime') ])
@@ -46,23 +55,33 @@ export class DatabaseService {
         }
     }
 
-    async getMeasuresInTimeInterval(from, to) {
-
-        console.log('GetMeasuresInTimeInterval --> from: ' + from + ' to: ' + to)
-
+    async getAllReports() {
         try {
-            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [Query.between('datetime', from, to)])
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, [Query.orderDesc('$updatedAt')])
         } catch (error) {
-            console.log('--- Appwrite DatabaseService getMeasuresInTimeInterval ' + error);
+            console.log('--- Appwrite DatabaseService getAllMeasureGroups ' + error);
             return null;
         }
     }
+
+    //TODO: it's not working
+    // async getMeasuresInTimeInterval(from, to) {
+
+    //     console.log('GetMeasuresInTimeInterval --> from: ' + from + ' to: ' + to)
+
+    //     try {
+    //         return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [Query.between('datetime', from, to)])
+    //     } catch (error) {
+    //         console.log('--- Appwrite DatabaseService getMeasuresInTimeInterval ' + error);
+    //         return null;
+    //     }
+    // }
 
     async getMeasuresByUserId(userId) {
         try {
             return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [Query.equal('userId', userId)])
         } catch (error) {
-            console.log('--- Appwrite DatabaseService getMeasuresInTimeInterval ' + error);
+            console.log('--- Appwrite DatabaseService getMeasuresByUserId ' + error);
             return null;
         }
     }
@@ -95,6 +114,15 @@ export class DatabaseService {
         }
     }
 
+    async getMeasureGroupsByUserId(userId) {
+        try {
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, [Query.equal('userId', userId)])
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getMeasureGroupsByUserId ' + error);
+            return null;
+        }
+    }
+
     async addMeasureGroup({ userId, description, latitude, longitude, imageId, measures }) {
         try {
             return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, ID.unique(), { userId, description, latitude, longitude, imageId, measures });
@@ -119,6 +147,47 @@ export class DatabaseService {
             return true; 
         } catch (error) {
             console.log('--- Appwrite DatabaseService deleteMeasureGroup ' + error);
+            return false;
+        }
+    }
+
+
+    ////
+
+
+    async getReportssByUserId(userId) {
+        try {
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, [Query.equal('userId', userId)])
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getReportssByUserId ' + error);
+            return null;
+        }
+    }
+
+    async addReport({ userId, latitude, longitude, title, description, datetime, imageId }) {
+        try {
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, ID.unique(), { userId, latitude, longitude, title, description, datetime, imageId});
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService addReport ' + error);
+            return null;
+        }
+    }
+
+    async updateReport(measureId, { latitude, longitude, title, description, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
+        try {            
+            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, measureId, { latitude, longitude, title, description, datetime, imageId });
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService updateReport ' + error);
+            return null;
+        }
+    }
+
+    async deleteReport(reportId) {
+        try {
+            await this.databases.deleteDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, reportId);
+            return true;
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService deleteReport ' + error);
             return false;
         }
     }
