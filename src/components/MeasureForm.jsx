@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+import { Controller, useForm } from "react-hook-form";
 import Button from "./Button.jsx";
 import Input from "./Input.jsx";
 import storageService from "../appwrite/storage.js"
@@ -8,7 +8,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import { conf } from "../conf/conf.js";
-import { removeTimeZone } from "../utils/date.js";
+import { formatDateTime, removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
 import { calculateWQI, getMarkerColor } from "../utils/wqi.js";
 import { Datepicker, FileInput } from "flowbite-react";
@@ -39,6 +39,8 @@ export default function MeasureForm({ measure }) {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const userData = useSelector((state) => state.auth.userData)
+    const [previewImageUrl, setPreviewImageUrl] = useState(null)
+    const [previewImage, setPreviewImage] = useState(null)
     const [markerRef, marker] = useMarkerRef();
 
     const [markerPosition, setMarkerPosition] = useState({
@@ -65,6 +67,7 @@ export default function MeasureForm({ measure }) {
             temperature: measure?.temperature || null,
             salinity: measure?.salinity || null
         });
+
 
         if (!isNaN(getValues("latitude")) && !isNaN(getValues("longitude"))) {
             setMarkerPosition({ lat: getValues("latitude"), lng: getValues("longitude") });
@@ -95,26 +98,34 @@ export default function MeasureForm({ measure }) {
     const submit = async (data) => {
         let file = null;
         if (measure) {
-            if (data.image) {
-                file = data.image[0] ? await storageService.uploadImage(data.image[0]) : null;
-                if (file) {
+
+            if (previewImage) {
+                console.log('We have a previewImage...' + previewImage)
+                file = await storageService.uploadImage(previewImage);
+                if (file && measure.imageId) {
+                    console.log('Have to delete previous image')
                     storageService.deleteImage(measure.imageId);
                 }
             }
+
             const dbMeasure = await databaseService.updateMeasure(measure.$id, { ...data, imageId: file ? file.$id : measure.imageId, username: userData.prefs.username });
             if (dbMeasure) {
                 navigate(`/measures`)
             }
         } else {
-            const file = await storageService.uploadImage(data.image[0]);
-            if (file) {
-                console.log('Immagine salvata')
-                data.imageId = file.$id;
-                const dbMeasure = await databaseService.addMeasure({ ...data, userId: userData.$id, username: userData.prefs.username });
-                if (dbMeasure) {
-                    navigate(`/measures`);
+
+            if (previewImage) {
+                file = await storageService.uploadImage(previewImage);
+                if (file) {
+                    data.imageId = file.$id;
                 }
             }
+
+            const dbMeasure = await databaseService.addMeasure({ ...data, userId: userData.$id, username: userData.prefs.username });
+            if (dbMeasure) {
+                navigate(`/measures`);
+            }
+
         }
 
     }
@@ -157,7 +168,7 @@ export default function MeasureForm({ measure }) {
                 </div>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
                     <div className="w-full">
-                        <Input label={t('measurePlaceDescription') + ' *'}                            
+                        <Input label={t('measurePlaceDescription') + ' *'}
                             className="mb-4"
                             {...register("placeDescription", { required: true, maxLength: 255 })}
                         />
@@ -211,28 +222,56 @@ export default function MeasureForm({ measure }) {
                         {measure && measure.measureGroup && (
                             <>
                                 <label className='font-thin mb-6'>{t('measureExplaination')}</label>
-                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >{t('measureGroup')}</Link>
+                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`}>{t('measureGroup')}</Link>
                             </>
                         )}
 
                         {(!measure || !measure.measureGroup) && (
-                            // < Input
-                            //     label={measure ? "Location image" : "Location image *"}
-                            //     type="file"
-                            //     className="mb-4"
-                            //     accept="image/png, image/jpg, image/jpeg"
-                            //     {...register("image", { required: !measure })}
-                            // />
                             <>
-                                <label>{measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}</label>
-                                <FileInput id='file-upload-helper-text' helperText='PNG, JPG or JPEG.' sizing='sm' {...register("image", { required: !measure })} className='my-4' />
+                                <Controller
+                                    control={control}
+                                    name={"image"}
+
+                                    render={({ field: { value, onChange, ...field } }) => {
+                                        return (
+                                            <Input {...field} name='image' label={measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                                type="file" className="mb-4"
+                                                accept="image/png, image/jpg, image/jpeg"
+
+                                                onChange={(event) => {
+
+                                                    if (event.target.files && event.target.files[0]) {
+                                                        setPreviewImage(event.target.files[0]);
+                                                        setPreviewImageUrl(URL.createObjectURL(event.target.files[0]));
+                                                    }
+                                                }}
+                                            />
+                                        );
+                                    }}
+                                />
                             </>
                         )}
-                        {measure && (
-                            <div className="w-full my-4">
-                                <img src={storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg w-48" />
+                        
+
+
+                        {measure && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(measure.$updatedAt))}</label>)}
+
+
+
+                        {measure && (previewImageUrl || measure.imageId) && (
+                            <div className="w-full mb-4">
+                                <img src={previewImageUrl ? previewImageUrl : storageService.getPreviewImageUrl(measure.imageId)} alt={measure.placeDescription} className="rounded-lg w-full object-cover" />
                             </div>
                         )}
+                        {!measure && (
+                            <div className="w-full mb-4">
+                                <img src={previewImageUrl} alt={getValues('description')} className="rounded-lg w-full object-cover" />
+                            </div>
+                        )}
+
+
+
+
                     </div>
 
                     <div className="w-full">

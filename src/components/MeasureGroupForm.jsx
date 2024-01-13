@@ -154,7 +154,7 @@ function MeasureGroupForm({ measureGroup }) {
       }
 
       const dbMeasureGroup = await databaseService.updateMeasureGroup(measureGroup.$id, { ...data, imageId: file?.$id });
-      if (dbMeasureGroup) {        
+      if (dbMeasureGroup) {
         //modify the image, lat and lng of all related measures
         dbMeasureGroup.measures.forEach(async (m) => {
           await databaseService.updateMeasure(m.$id, { ...m, imageId: dbMeasureGroup.imageId, latitude: dbMeasureGroup.latitude, longitude: dbMeasureGroup.longitude })
@@ -165,7 +165,7 @@ function MeasureGroupForm({ measureGroup }) {
     } else {
 
       if (previewImage) {
-        const file = await storageService.uploadImage(previewImage);
+        file = await storageService.uploadImage(previewImage);
         if (file) {
           data.imageId = file.$id;
         }
@@ -263,8 +263,7 @@ function MeasureGroupForm({ measureGroup }) {
               <div className="w-full mb-4">
                 <img src={previewImageUrl} alt={getValues('description')} className="rounded-lg w-full object-cover" />
               </div>
-            )
-            }
+            )}
 
             <Button type="submit" bgColor={measureGroup ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:mt-8">
               {measureGroup ? t('measureGroupUpdate') : t('measureGroupCreate')}
@@ -296,10 +295,10 @@ function MeasureGroupForm({ measureGroup }) {
                     <tbody>
                       {measureGroup.measures.map((measure) => (
                         <tr key={measure.$id}>
-                          <td className='border-separate'>{measure.placeDescription?.slice(0,50) + (measure.placeDescription?.length > 50 ? '...' : '')}</td>
+                          <td className='border-separate'>{measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}</td>
                           <td className='px-6 py-4'>{formatDateTime(new Date(measure.datetime))}</td>
                           <td><Link to={`/measure/${measure.$id}`}><IoOpenOutline className='size-6 md:size-8' /></Link> </td>
-                          <td><Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6 md:size-8'/></Link></td>
+                          <td><Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6 md:size-8' /></Link></td>
                         </tr>
                       ))}
                     </tbody>
