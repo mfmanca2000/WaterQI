@@ -42,7 +42,12 @@ function ReportForm() {
     }
 
     return (
+        <>
         <div>AddReport</div>
+        Latitude: {latitude}
+        Longitude: {longitude}
+        </>
+        
     )
 }
 
