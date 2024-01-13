@@ -1,4 +1,5 @@
 import React, { useCallback, useEffect, useState, useRef } from 'react'
+import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { IoOpenOutline, IoTrash } from "react-icons/io5";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,8 @@ import { formatDateTime } from '../utils/date.js'
 import { Link } from 'react-router-dom';
 import StorageService from '../appwrite/storage.js'
 import { useTranslation } from 'react-i18next'
+import MeasureChart from './MeasureChart.jsx';
+
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -179,7 +182,26 @@ function MeasureGroupForm({ measureGroup }) {
     }
   }
 
+  const dateFormatter = date => {
+    return formatDateTime(new Date(date)).slice(0, 10);
+  };
 
+  function CustomTooltip({ payload, label, active }) {
+    if (active) {
+      return (
+        <div className="custom-tooltip bg-white border p-2">
+          <p className="font-bold">{`${formatDateTime(new Date(payload[0].payload.datetime))}`}</p>
+          <p className="font-thin">{`EC: ${payload[0].payload.electricalConductivity ?? '-'}`}</p>
+          <p className="font-thin">{`TDS: ${payload[0].payload.totalDissolvedSolids ?? '-'}`}</p>
+          <p className="font-thin">{`pH: ${payload[0].payload.pH ?? '-'}'`}</p>
+          <p className="font-thin">{`Temp: ${payload[0].payload.temperature ?? '-'}`}</p>
+          <p className="font-thin">{`Salinity: ${payload[0].payload.salinity ?? '-'}`}</p>
+        </div>
+      );
+    }
+
+    return null;
+  }
 
 
   return (
@@ -281,8 +303,8 @@ function MeasureGroupForm({ measureGroup }) {
                 {t('measureGroupAddMeasure')}
               </Button>
 
-              {measureGroup.measures?.length > 0 && (
-                <div className='flex flex-wrap mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10'>
+              {measureGroup.measures?.length > 0 && (<>
+                <div className='flex flex-wrap max-h-64 mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10 overflow-x-hidden overflow-y-scroll'>
                   <table className='table-auto mt-4 w-full'>
                     <thead>
                       <tr>
@@ -293,7 +315,9 @@ function MeasureGroupForm({ measureGroup }) {
                     </thead>
 
                     <tbody>
-                      {measureGroup.measures.map((measure) => (
+                      {measureGroup.measures.sort(function (a, b) {
+                        return new Date(a.datetime) - new Date(b.datetime);
+                      }).map((measure) => (
                         <tr key={measure.$id}>
                           <td className='border-separate'>{measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}</td>
                           <td className='px-6 py-4'>{formatDateTime(new Date(measure.datetime))}</td>
@@ -304,6 +328,13 @@ function MeasureGroupForm({ measureGroup }) {
                     </tbody>
                   </table>
                 </div>
+
+
+                <MeasureChart values={measureGroup.measures.sort(function (a, b) {
+                  return new Date(a.datetime) - new Date(b.datetime);
+                })} />
+
+              </>
               )}
 
             </div>

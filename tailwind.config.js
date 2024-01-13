@@ -12,7 +12,7 @@ export default {
   theme: {
     extend: {
       colors: {
-        'casaleggio-rgba': 'rgba(150, 181, 102, 0.9)',
+        'casaleggio-rgba': 'rgba(150, 181, 102, 1)',
         'casaleggio-btn-rgba': '#FF675B'
       }
     },

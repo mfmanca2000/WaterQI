@@ -110,7 +110,11 @@ export default function MeasureForm({ measure }) {
 
             const dbMeasure = await databaseService.updateMeasure(measure.$id, { ...data, imageId: file ? file.$id : measure.imageId, username: userData.prefs.username });
             if (dbMeasure) {
-                navigate(`/measures`)
+                if (measure.measureGroup) {
+                    navigate('/measureGroup/' + measure.measureGroup.$id)
+                } else {
+                    navigate('/measures')
+                }                
             }
         } else {
 

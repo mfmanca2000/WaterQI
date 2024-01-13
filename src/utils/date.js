@@ -3,6 +3,7 @@ function padTo2Digits(num) {
 }
 
 function formatDateTime(date) {
+    //console.log(date)
     if (date && typeof (date) === 'object') {
         return [
             padTo2Digits(date.getDate()),
@@ -28,7 +29,7 @@ function removeTimeZone(date) {
             padTo2Digits(date.getMinutes()),
                 //padTo2Digits(date.getSeconds())
             ].join(':');
-        console.log('Datetime is: ' + ret);
+        //console.log('Datetime is: ' + ret);
         return ret;
     }    
 }
