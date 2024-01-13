@@ -12,11 +12,9 @@ function LogoutBtn() {
     const logoutHandler = () => {
         authService.logout().then(() => { 
             dispatch(logout());
-            if (location.pathname === '/') {
-              console.log('HERE');
+            if (location.pathname === '/') {              
               navigate('/login');
-            } else {
-              console.log('THERE')
+            } else {              
               navigate('/');
             } 
         });

@@ -32,8 +32,12 @@ function Login() {
             const session = await authService.login(data);
             if (session) {
                 const userData = await authService.getCurrentUser();
-                console.log(JSON.stringify(userData.prefs));
+                //console.log(JSON.stringify(userData.prefs));
                 if (userData) {
+                    if (userData.prefs?.language)
+                    {
+                        await i18n.changeLanguage(userData.prefs?.language);
+                    }   
                     dispatch(authLogin({ userData }));
                 }
                 navigate("/");

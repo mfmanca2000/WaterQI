@@ -48,14 +48,14 @@ function Settings() {
     const submit = async (data) => {
         console.log('UserData prefs: ' + JSON.stringify(userData.prefs))
         console.log('New username:' + getValues('username'))
-        console.log('SelectedLanguage: ' + i18n.selectedLanguage)
+        console.log('SelectedLanguage: ' + JSON.stringify(i18n))
         const saved = await authService.savePreferences({
             ...(userData.prefs),
             showYourDataOnly: getValues('showYourDataOnly'),
             showStandaloneMeasures: getValues('showMeasures'),
             showMeasureGroups: getValues('showMeasureGroups'),
             username: getValues('username'),
-            language: i18n.selectedLanguage
+            language: i18n.language
         });
         if (saved) {
             navigate('/');

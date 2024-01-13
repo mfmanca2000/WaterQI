@@ -30,9 +30,7 @@ function removeTimeZone(date) {
             ].join(':');
         console.log('Datetime is: ' + ret);
         return ret;
-    }
-
-    console.log('HERE');
+    }    
 }
 
 
