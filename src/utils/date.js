@@ -25,7 +25,7 @@ function removeTimeZone(date) {
         ].join('-') + 'T' +
             [padTo2Digits(date.getHours()),
             padTo2Digits(date.getMinutes()),
-            padTo2Digits(date.getSeconds())
+            //padTo2Digits(date.getSeconds())
             ].join(':');
     }
 }
