@@ -298,13 +298,13 @@ function MeasureGroupForm({ measureGroup }) {
 
           {measureGroup && (
             <div className='mt-8'>
-
-              <Button onClick={handleAddMeasureToGroup} className='duration-200 bg-green-500 hover:bg-casaleggio-btn-rgba w-full md:w-1/4'>
-                {t('measureGroupAddMeasure')}
-              </Button>
-
+              <div className='text-right'>
+                <Button onClick={handleAddMeasureToGroup} className='duration-200 bg-green-500 hover:bg-casaleggio-btn-rgba w-full md:w-1/4'>
+                  {t('measureGroupAddMeasure')}
+                </Button>
+              </div>
               {measureGroup.measures?.length > 0 && (<>
-                <div className='flex flex-wrap max-h-64 mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10 overflow-x-hidden overflow-y-scroll'>
+                <div className='flex flex-wrap max-h-64 mt-4 px-4 pb-4 bg-casaleggio-rgba  border border-black/10 overflow-x-hidden overflow-y-scroll'>
                   <table className='table-auto mt-4 w-full'>
                     <thead>
                       <tr>
@@ -329,11 +329,11 @@ function MeasureGroupForm({ measureGroup }) {
                   </table>
                 </div>
 
-
-                <MeasureChart values={measureGroup.measures.sort(function (a, b) {
-                  return new Date(a.datetime) - new Date(b.datetime);
-                })} />
-
+                <div className='my-16'>
+                  <MeasureChart values={measureGroup.measures.sort(function (a, b) {
+                    return new Date(a.datetime) - new Date(b.datetime);
+                  })} />
+                </div>
               </>
               )}
 

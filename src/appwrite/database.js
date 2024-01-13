@@ -77,7 +77,7 @@ export class DatabaseService {
     }
 
     async updateMeasure(measureId, { latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
-        try {
+        try {            
             return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, measureId, { latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });
         } catch (error) {
             console.log('--- Appwrite DatabaseService updateMeasure ' + error);

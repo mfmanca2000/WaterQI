@@ -13,7 +13,8 @@
 }
 
 ::-webkit-scrollbar-thumb{
-    background: rgb(150, 181, 102);    
+    /* background: rgb(150, 181, 102); */
+    background: rgb(125,150, 85);
 }
 
 ::-webkit-scrollbar-thumb:hover{
