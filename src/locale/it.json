@@ -72,7 +72,10 @@
         "measurePlaceDescription": "Descrizione del luogo",
         "measureActions": "Azioni",
         "measureDate": "Data",
-        "measureExplaination": "Questa misura fa parte di un gruppo. Per cambiare la sua immagine o posizione, per favore modifica il "
+        "measureExplaination": "Questa misura fa parte di un gruppo. Per cambiare la sua immagine o posizione, per favore modifica il ",
+        "reportTitleNew": "Nuova segnalazione" ,
+        "reportTitle": "Titolo",
+        "reportDescription": "Descrizione" 
         
     }
 }

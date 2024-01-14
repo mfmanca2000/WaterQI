@@ -298,7 +298,7 @@ export default function MeasureForm({ measure }) {
                         </div>
 
                         <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:w-1/4 mt-8">
-                            {measure ? "Update" : "Insert"}
+                            {measure ? t('measureGroupUpdate') : t('measureGroupCreate')}
                         </Button>
                     </div>
                 </form>

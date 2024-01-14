@@ -72,6 +72,9 @@
         "measurePlaceDescription": "Description du lieu",
         "measureActions": "Actions",
         "measureDate": "Date",
-        "measureExplaination": "Cette mésure fait partie d'un groupe. Pour changer son image, svp cangez l'image du "
+        "measureExplaination": "Cette mésure fait partie d'un groupe. Pour changer son image, svp cangez l'image du ",
+        "reportTitleNew": "Nouveau Rapport",
+        "reportTitle": "Titre",
+        "reportDescription": "Description"  
     }
 }
