@@ -3,7 +3,7 @@
         "headerHome": "Home",
         "headerAllMeasures": "Le misurazioni",
         "headerAddMeasureGroup": "Aggiungi gruppo di misure",
-        "headerAddMeasure": "Aggiungi misura",
+        "headerAddMeasure": "Aggiungi misurazione",
         "headerAddReport": "Aggiungi segnalazione",
         "headerSettings": "Impostazioni",
         "headerHelp": "Aiuto",
@@ -23,7 +23,7 @@
         "recoverPassword": "Resettala",
         "otherLogin": "o utilizza...",
         "homePageIntro": "Questo servizio permette alla comunità dei suoi utilizzatori di tenere traccia di misure della qualità dell'acqua.</p><h1>Accedi ou crea un nuovo account per iniziare a raccogliere le misure con i tuoi sensori.</h1><br /><p>Data is provided as is and Lorem, ipsum dolor sit amet consectetur adipisicing elit. Tenetur delectus similique quis magni ea blanditiis vitae, ratione magnam, odit doloremque sed quae deserunt hic iure optio facilis in quam placeat..</p><br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus, id ipsa doloribus architecto, fugit nesciunt iste molestias vero blanditiis distinctio veritatis voluptate rem itaque et odit fuga minima magnam doloremque?</p><br /><p>Lorem ipsum dolor sit amet consectetur adipisicing elit. A non placeat quas dolores delectus consectetur. Necessitatibus dolor sint culpa asperiores assumenda nihil aperiam veniam, voluptatem delectus, modi soluta pariatur labore.</p>",
-        "menuItemAddMeasureTitle": "Aggiungi una nuova misura",
+        "menuItemAddMeasureTitle": "Aggiungi una nuova misurazione",
         "menuItemAddmeasureGroupTitleNew": "Aggiungi un nuovo gruppo di misure",
         "menuItemAddMeasureGroupDescription": "Se vuoi raccogliere più misure per lo stesso luogo, scegli questa opzione così potrai seguire l'andamento delle misure nel tempo.",
         "menuItemAddMeasureDescription": "Se vuoi raccogliere una singola misura in un luogo specifico senza bisogno di avere lo storico per questo luogo, scegli questa opzione.",
@@ -73,9 +73,11 @@
         "measureActions": "Azioni",
         "measureDate": "Data",
         "measureExplaination": "Questa misura fa parte di un gruppo. Per cambiare la sua immagine o posizione, per favore modifica il ",
-        "reportTitleNew": "Nuova segnalazione" ,
+        "reportTitleNew": "Nuova segnalazione",
         "reportTitle": "Titolo",
-        "reportDescription": "Descrizione" 
-        
+        "reportDescription": "Descrizione",
+        "myMeasures": "Le mie misurazioni",
+        "myMeasureGroups": "I miei gruppi di misure",
+        "myReports": "Le mie segnalazioni"
     }
 }

@@ -75,7 +75,10 @@
     "measureExplaination": "This measure is part of a group. To change its image or location, please change those of the ",
     "reportTitleNew": "New Report",
     "reportTitle": "Title",
-    "reportDescription": "Description"
+    "reportDescription": "Description",
+    "myMeasures": "My measures",
+    "myMeasureGroups": "My measure groups",
+    "myReports": "My reports"
 
   }
 }

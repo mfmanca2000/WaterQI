@@ -75,6 +75,9 @@
         "measureExplaination": "Cette mésure fait partie d'un groupe. Pour changer son image, svp cangez l'image du ",
         "reportTitleNew": "Nouveau Rapport",
         "reportTitle": "Titre",
-        "reportDescription": "Description"  
+        "reportDescription": "Description" ,
+        "myMeasures": "Mes mesures",
+        "myMeasureGroups": "Mes groupes de mesures",
+        "myReports": "Mes rapports" 
     }
 }
