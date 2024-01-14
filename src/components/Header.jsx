@@ -87,7 +87,7 @@ function Header() {
 
                 <div className='flex lg:order-2'>
                     {loggedIn ? (
-                        <Dropdown arrowIcon={false} size="lg" inline label={<Avatar alt="Your avatar" rounded bordered placeholderInitials={Array.from(userData?.name)[0]} />}>
+                        <Dropdown arrowIcon={true} size="lg" inline label={<Avatar alt="Your avatar"  rounded bordered placeholderInitials={Array.from(userData?.name)[0]} />}>
                             <Dropdown.Header>
                                 <div className='flex text-base' >
                                     <label className=''>{userData.name}</label>

@@ -45,19 +45,19 @@ function Counters() {
 
         <div className='p-4 flex flex-wrap gap-2'>
             <IconContext.Provider value={{ color: 'white', size: '20px' }}>
-                <Tooltip content={t('myMeasures')}>
-                    <Badge className='bg-casaleggio-rgba text-white' color='success' href='/mymeasures' size='sm'>
-                        <div className='text-center'>
-                            <IoBeaker />
-                            {myMeasuresNumber}
-                        </div>
-                    </Badge>
-                </Tooltip>
                 <Tooltip content={t('myMeasureGroups')}>
-                    <Badge className='bg-casaleggio-rgba text-white' color='failure' href='/mymeasuregroups' size='sm'>
+                    <Badge className='bg-casaleggio-rgba text-white' color='warning' href='/mymeasuregroups' size='sm'>
                         <div className='text-center'>
                             <IoStatsChart />
                             {myMeasureGroupsNumber}
+                        </div>
+                    </Badge>
+                </Tooltip>
+                <Tooltip content={t('myMeasures')}>
+                    <Badge className='bg-casaleggio-rgba text-white' color='warning' href='/mymeasures' size='sm'>
+                        <div className='text-center'>
+                            <IoBeaker />
+                            {myMeasuresNumber}
                         </div>
                     </Badge>
                 </Tooltip>

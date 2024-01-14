@@ -25,6 +25,7 @@ function Settings() {
             showYourDataOnly: userData?.prefs.showYourDataOnly,
             showMeasures: userData?.prefs.showStandaloneMeasures,
             showMeasureGroups: userData?.prefs.showMeasureGroups,
+            showReports: userData?.prefs.showReports,
             language: i18n.selectedLanguage
         }
     })
@@ -39,6 +40,7 @@ function Settings() {
             showYourDataOnly: userData?.prefs.showYourDataOnly,
             showMeasures: userData?.prefs.showStandaloneMeasures,
             showMeasureGroups: userData?.prefs.showMeasureGroups,
+            showReports: userData?.prefs.showReports,
             language: userData.prefs?.language
         });
 
@@ -49,11 +51,13 @@ function Settings() {
         console.log('UserData prefs: ' + JSON.stringify(userData.prefs))
         console.log('New username:' + getValues('username'))
         console.log('SelectedLanguage: ' + JSON.stringify(i18n))
+        console.log('ShowReports: ' + getValues('showReports'))
         const saved = await authService.savePreferences({
             ...(userData.prefs),
             showYourDataOnly: getValues('showYourDataOnly'),
             showStandaloneMeasures: getValues('showMeasures'),
             showMeasureGroups: getValues('showMeasureGroups'),
+            showReports: getValues('showReports'),
             username: getValues('username'),
             language: i18n.language
         });
@@ -107,6 +111,10 @@ function Settings() {
                             <div className='pl-4 p-2'>
                                 <input className='mr-2' type='checkbox' id='showMeasureGroups' label={t('measuresShowMeasureGroups')} {...register('showMeasureGroups')}></input>
                                 <label htmlFor='showMeasureGroups'>{t('measuresShowMeasureGroups')}</label>
+                            </div>
+                            <div className='pl-4 p-2'>
+                                <input className='mr-2' type='checkbox' id='showReports' label={t('measuresShowReports')} {...register('showReports')}></input>
+                                <label htmlFor='showReports'>{t('measuresShowReports')}</label>
                             </div>
                         </div>
                     </div>

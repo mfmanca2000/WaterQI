@@ -4,11 +4,13 @@ import { formatDateTime } from '../utils/date';
 import { Link } from 'react-router-dom';
 import { calculateWQI, getMarkerColor } from '../utils/wqi'
 import storageService from '../appwrite/storage';
+import { useTranslation } from 'react-i18next';
 
 const MeasureMarker = ({ measure }) => {
 
     const [infowindowOpen, setInfowindowOpen] = useState(false);
     const [markerRef, marker] = useAdvancedMarkerRef();
+    const { t } = useTranslation();
 
     const [wqi, wqiText] = calculateWQI(measure);
 
@@ -19,7 +21,7 @@ const MeasureMarker = ({ measure }) => {
                 onClick={() => setInfowindowOpen(true)}
                 position={{ lat: measure.latitude, lng: measure.longitude }}
                 title={measure.placeDescription}>
-                <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
+                <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={t(wqiText)} />
             </AdvancedMarker>
             {infowindowOpen && (
                 <InfoWindow

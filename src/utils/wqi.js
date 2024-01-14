@@ -3,31 +3,31 @@ const TDS_levels = [
         min: 0,
         max: 9,
         level: 5,
-        description: 'Pure water'
+        description: 'tdsLevel0'
     },
     {
         min: 10,
         max: 60,
         level: 4,
-        description: 'Mountain spring'
+        description: 'tdsLevel1'
     },
     {
         min: 61,
         max: 100,
         level: 3,
-        description: 'Purified'
+        description: 'tdsLevel2'
     },
     {
         min: 101,
         max: 300,
         level: 2,
-        description: 'Tap'
+        description: 'tdsLevel3'
     },
     {
         min: 300,
         max: 9999,
         level: 1,
-        description: 'Super polluted'
+        description: 'tdsLevel4'
     }
 ]
 
@@ -48,7 +48,7 @@ function calculateWQI(measure) {
 }
 
 function getMarkerColor(measure) {
-    const [wqi, wqiText] = calculateWQI(measure);
+    const [wqi, _] = calculateWQI(measure);
     //console.log('Calculated WQI: ' + wqi)
     switch (wqi) {
         case 0:

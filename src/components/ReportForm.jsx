@@ -145,10 +145,7 @@ function ReportForm({ report }) {
             <div className='mb-4'>
                 <label className='text-4xl pb-4'>{!report ? t('reportTitleNew') : getValues('title')}</label>
             </div>
-            Latitude: {latitudeDevice}
-            Longitude: {longitudeDevice}
-
-
+            
             <div className="w-full">
                 <div className="w-full h-72 " >
                     <APIProvider apiKey={conf.googleMapsAPIKey}>
@@ -171,7 +168,7 @@ function ReportForm({ report }) {
                                 <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
                             </Marker> */}
                             <AdvancedMarker position={markerPosition} clickable='true'>
-                                <img src='/warning.png' className="w-16" />
+                                <img src='/warning.png' className="w-12" />
                             </AdvancedMarker>
                         </Map>
                     </APIProvider>

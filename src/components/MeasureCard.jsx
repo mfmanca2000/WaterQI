@@ -4,7 +4,7 @@ import StorageService from '../appwrite/storage.js'
 import { formatDateTime } from '../utils/date.js'
 import { useSelector } from "react-redux";
 import { calculateWQI, getMarkerColor } from '../utils/wqi.js';
-import { t } from 'i18next';
+import { useTranslation } from 'react-i18next'
 
 function MeasureCard({ measure, onDelete }) {
 
@@ -12,9 +12,12 @@ function MeasureCard({ measure, onDelete }) {
     onDelete(e, measure.$id);
   }
 
-  const userData = useSelector((state) => state.auth.userData)
+  const userData = useSelector((state) => state.auth.userData);
+  const { t } = useTranslation();
 
   const [wqi, wqiText] = calculateWQI(measure);
+
+  console.log('Measure: ' + JSON.stringify(measure));
 
   return (
     
@@ -33,7 +36,7 @@ function MeasureCard({ measure, onDelete }) {
               <label className='text-sm font-light'>{t('by')} {measure.username ?? measure.userId}</label> <br />
             </div>
             <div className='w-16'>
-              <img src={window.location.origin + '/' + getMarkerColor(measure)} title={wqiText} alt="Pin" />
+              <img src={window.location.origin + '/' + getMarkerColor(measure)} title={t(wqiText)} alt="Pin" />
             </div>
           </div>
 

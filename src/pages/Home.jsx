@@ -59,6 +59,12 @@ function Home() {
       path: '/addMeasure',
       image: '/measuring-cup.png'
     },
+    {
+      title: `${t('menuItemAddReportTitle')}`,
+      description: `${t('menuItemAddReportDescription')}`,
+      path: '/addReport',
+      image: '/warningBig.png'
+    },
     // {
     //   title: "See all measure groups",
     //   description: 'See all the locations where people have collected multiple data through the years',
@@ -97,12 +103,9 @@ function Home() {
       </div >
     )
   } else {
-
-
     return (
-
       <>
-        <div className='flex justify-end'>
+        <div className='flex justify-center'>
           <Counters />
         </div>
         <div className="flex flex-wrap text-lg justify-center">
@@ -126,6 +129,7 @@ function Home() {
             <a href="https://www.flaticon.com/free-icons/3" title="3 icons">3 icons created by Freepik</a>{' '}
             <a href="https://www.flaticon.com/free-icons/location" title="location icons">Location icons created by Freepik</a>{' '}
             <a href="https://www.flaticon.com/free-icons/history" title="history icons">History icons created by Freepik</a>{' '}
+            <a href="https://www.flaticon.com/free-icons/alert" title="alert icons">Alert icons created by Freepik - Flaticon</a>
           </div>
         </div>
       </>

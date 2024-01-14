@@ -63,6 +63,31 @@ const router = createBrowserRouter([
       //   )
       // },
       {
+        path: '/mymeasures',
+        element: (
+          <Protected authenticationRequired={true}>
+            <Measures type='mymeasures'/>
+          </Protected>
+        )
+      },
+      {
+        path: '/mymeasuregroups',
+        element: (
+          <Protected authenticationRequired={true}>
+            <Measures type='mymeasuregroups'/>
+          </Protected>
+        )
+      },
+      {
+        path: '/myreports',
+        element: (
+          <Protected authenticationRequired={true}>
+            <Measures type='myreports'/>
+          </Protected>
+        )
+      },
+      
+      {
         path: '/addMeasure',
         element: (
           <Protected authenticationRequired={true}>

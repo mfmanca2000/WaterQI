@@ -16,6 +16,7 @@ import { Link } from 'react-router-dom';
 import StorageService from '../appwrite/storage.js'
 import { useTranslation } from 'react-i18next'
 import MeasureChart from './MeasureChart.jsx';
+import { calculateWQI, getMarkerColor } from '../utils/wqi.js';
 
 
 const defaultLatitude = conf.defaultLatitude;
@@ -174,7 +175,7 @@ function MeasureGroupForm({ measureGroup }) {
         }
       }
 
-      const dbMeasureGroup = await databaseService.addMeasureGroup({ ...data, userId: userData.$id });
+      const dbMeasureGroup = await databaseService.addMeasureGroup({ ...data, userId: userData.$id, username: userData.prefs.username });
       if (dbMeasureGroup) {
         navigate(`/measureGroup/${dbMeasureGroup.$id}`);
       }
@@ -308,6 +309,7 @@ function MeasureGroupForm({ measureGroup }) {
                   <table className='table-auto mt-4 w-full'>
                     <thead>
                       <tr>
+                        <th></th>
                         <th className='text-left'>{t('measureDescription')}</th>
                         <th className='text-left px-6'>{t('measureDate')}</th>
                         <th className='text-left'>{t('measureActions')}</th>
@@ -317,14 +319,20 @@ function MeasureGroupForm({ measureGroup }) {
                     <tbody>
                       {measureGroup.measures.sort(function (a, b) {
                         return new Date(a.datetime) - new Date(b.datetime);
-                      }).map((measure) => (
-                        <tr key={measure.$id}>
-                          <td className='border-separate'>{measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}</td>
-                          <td className='px-6 py-4'>{formatDateTime(new Date(measure.datetime))}</td>
-                          <td><Link to={`/measure/${measure.$id}`}><IoOpenOutline className='size-6 md:size-8' /></Link> </td>
-                          <td><Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6 md:size-8' /></Link></td>
-                        </tr>
-                      ))}
+                      }).map(
+                        (measure) => {
+                          const [wqi, wqiText] = calculateWQI(measure);                          
+                          return (
+                            <tr key={measure.$id}>
+                              <td className='w-10'><img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={t(wqiText)} /></td>
+                              <td className='border-separate'>{measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}</td>
+                              <td className='px-6 py-4'>{formatDateTime(new Date(measure.datetime))}</td>
+                              <td><Link to={`/measure/${measure.$id}`}><IoOpenOutline className='size-6' /></Link> </td>
+                              <td><Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6' /></Link></td>
+                            </tr>
+                          )
+                        }
+                      )}
                     </tbody>
                   </table>
                 </div>

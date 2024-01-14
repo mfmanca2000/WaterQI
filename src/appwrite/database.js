@@ -57,7 +57,9 @@ export class DatabaseService {
 
     async getAllReports() {
         try {
-            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, [Query.orderDesc('$updatedAt')])
+            const reports = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, [Query.orderDesc('$updatedAt')]);
+            console.log('LIST OF REPORTS: ' + JSON.stringify(reports));
+            return reports;
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllMeasureGroups ' + error);
             return null;
@@ -123,9 +125,9 @@ export class DatabaseService {
         }
     }
 
-    async addMeasureGroup({ userId, description, latitude, longitude, imageId, measures }) {
+    async addMeasureGroup({ userId, username, description, latitude, longitude, imageId, measures }) {
         try {
-            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, ID.unique(), { userId, description, latitude, longitude, imageId, measures });
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, ID.unique(), { userId, username, description, latitude, longitude, imageId, measures });
         } catch (error) {
             console.log('--- Appwrite DatabaseService addMeasureGroup ' + error);
             return null;
@@ -164,9 +166,9 @@ export class DatabaseService {
         }
     }
 
-    async addReport({ userId, latitude, longitude, title, description, datetime, imageId }) {
+    async addReport({ userId, username, latitude, longitude, title, description, datetime, imageId }) {
         try {
-            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, ID.unique(), { userId, latitude, longitude, title, description, datetime, imageId});
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, ID.unique(), { userId, username, latitude, longitude, title, description, datetime, imageId});
         } catch (error) {
             console.log('--- Appwrite DatabaseService addReport ' + error);
             return null;
