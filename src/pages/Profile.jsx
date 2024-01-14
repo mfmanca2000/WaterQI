@@ -9,6 +9,8 @@ import { Card } from 'flowbite-react';
 import Container from '../components/Container';
 import { useEffect } from 'react';
 import { useState } from 'react';
+import { IoBeaker, IoStatsChart, IoWarning } from 'react-icons/io5';
+import { IconContext } from 'react-icons';
 
 
 
@@ -47,43 +49,53 @@ function Profile() {
     return (
         <div className='w-full p-8'>
             <label className='text-4xl'>{t('headerProfile')}</label>
+            <IconContext.Provider value={{ color: 'rgba(150, 181, 102, 1)', size: '64px' }}>
+                <Container>
+                    <div className='flex flex-wrap mt-4'>
+                        <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                            <Card className='' href='/mymeasures'>
+                                <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                    {t('myMeasures')}
+                                </div>
+                                <div className='flex w-full justify-center gap-2'>
+                                    <IoBeaker />
+                                    <p className="text-6xl text-gray-700 dark:text-gray-400 text-casaleggio-rgba">
+                                        {myMeasuresNumber}
+                                    </p>
+                                </div>
 
-            <Container>
-                <div className='flex flex-wrap mt-4'>
-                    <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
-                        <Card className='' href='/mymeasures'>
-                            <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
-                                My measures
-                            </div>
-                            <p className="text-6xl text-gray-700 dark:text-gray-400 text-center">
-                                {myMeasuresNumber}
-                            </p>
-                        </Card>
-                    </div>
-                    <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
-                        <Card className="" href='/mygroups'>
-                            <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
-                                My measure groups
-                            </div>
-                            <p className="text-6xl text-gray-700 dark:text-gray-400 text-center">
-                                {myMeasureGroupsNumber}
-                            </p>
-                        </Card>
-                    </div>
-                    <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
-                        <Card className="" href='/myreports'>
-                            <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
-                                My reports
-                            </div>
-                            <p className="text-6xl text-gray-700 dark:text-gray-400 text-center">
-                                {myReportsNumber}
-                            </p>
-                        </Card>
-                    </div>
+                            </Card>
+                        </div>
+                        <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                            <Card className="" href='/mygroups'>
+                                <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                    {t('myMeasureGroups')}
+                                </div>
+                                <div className='flex w-full justify-center gap-2'>
+                                    <IoStatsChart />
+                                    <p className="text-6xl text-gray-700 dark:text-gray-400 text-casaleggio-rgba">
+                                        {myMeasureGroupsNumber}
+                                    </p>
+                                </div>
+                            </Card>
+                        </div>
+                        <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                            <Card className="" href='/myreports'>
+                                <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                    {t('myReports')}
+                                </div>
+                                <div className='flex w-full justify-center gap-2'>
+                                    <IoWarning />
+                                    <p className="text-6xl text-gray-700 dark:text-gray-400 text-casaleggio-rgba">
+                                        {myReportsNumber}
+                                    </p>
+                                </div>
+                            </Card>
+                        </div>
 
-                </div>
-            </Container>
-
+                    </div>
+                </Container>
+            </IconContext.Provider>
 
         </div>
     )
