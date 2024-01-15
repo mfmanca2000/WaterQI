@@ -53,7 +53,7 @@ function ReportForm({ report }) {
             longitude: report?.longitude || longitudeDevice || defaultLongitude,
             title: report?.title || '',
             description: report?.description || '',
-            datetime: removeTimeZone(new Date(report?.datetime)) || removeTimeZone(new Date(Date.now())),
+            datetime: report ? removeTimeZone(new Date(report.datetime)) : removeTimeZone(new Date(Date.now())),      
             imageId: report?.imageId || ''
         }
     })
@@ -71,14 +71,14 @@ function ReportForm({ report }) {
 
     useEffect(() => {
 
-        console.log(JSON.stringify(report));
+        console.log('Report:' + JSON.stringify(report));
 
         reset({
             latitude: report?.latitude || latitudeDevice || defaultLatitude,
             longitude: report?.longitude || longitudeDevice || defaultLongitude,
             title: report?.title || '',
             description: report?.description || '',
-            datetime: removeTimeZone(new Date(report?.datetime)) || removeTimeZone(new Date(Date.now())),
+            datetime: report ? removeTimeZone(new Date(report.datetime)) : removeTimeZone(new Date(Date.now())),
             imageId: report?.imageId || ''
         });
 
@@ -245,15 +245,21 @@ function ReportForm({ report }) {
 
                                     render={({ field: { value, onChange, ...field } }) => {
                                         return (
-                                            <Input {...field} name='image' label={report ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                            <Input required={conf.reportImageRequired === 'true'} {...field} name='image' label={report ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
                                                 type="file" className="mb-4"
                                                 accept="image/png, image/jpg, image/jpeg"
 
                                                 onChange={(event) => {
 
-                                                    if (event.target.files && event.target.files[0]) {
+                                                    if (event.target.files && event.target.files[0] && event.target.files[0].size < conf.maxUploadFileSizeKB) {
                                                         setPreviewImage(event.target.files[0]);
                                                         setPreviewImageUrl(URL.createObjectURL(event.target.files[0]));
+                                                    } else {
+                                                        alert('File size too big');
+                                                        setPreviewImage(null);
+                                                        setPreviewImageUrl(null);
+                                                        event.target.value = null;
+                                                        return false;
                                                     }
                                                 }}
                                             />

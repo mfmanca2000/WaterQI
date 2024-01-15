@@ -29,7 +29,7 @@ function removeTimeZone(date) {
             padTo2Digits(date.getMinutes()),
                 //padTo2Digits(date.getSeconds())
             ].join(':');
-        //console.log('Datetime is: ' + ret);
+        console.log('Datetime is: ' + ret);
         return ret;
     }    
 }

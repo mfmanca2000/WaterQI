@@ -277,7 +277,7 @@ function MeasureGroupForm({ measureGroup }) {
 
                             render={({ field: { value, onChange, ...field } }) => {
                                 return (
-                                    <Input required={conf.measureGroupImageRequired == 'true'} {...field} name='image' label={measureGroup ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                    <Input required={conf.measureGroupImageRequired === 'true'} {...field} name='image' label={measureGroup ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
                                         type="file" className="mb-4"
                                         accept="image/png, image/jpg, image/jpeg"
 

@@ -16,7 +16,9 @@ const conf = {
     lastInsertedReportsNumber: Number(process.env.LAST_INSERTED_REPORTS_NUMBER),
     maxUploadFileSizeKB: Number(process.env.MAX_UPLOAD_FILE_SIZE_KB),
     measureImageRequired: String(process.env.MEASURE_IMAGE_REQUIRED),
-    measureGroupImageRequired: String(process.env.MEASURE_GROUP_IMAGE_REQUIRED)
+    measureGroupImageRequired: String(process.env.MEASURE_GROUP_IMAGE_REQUIRED),
+    reportImageRequired: String(process.env.REPORT_IMAGE_REQUIRED)
+
 }
 
 const languages = {
