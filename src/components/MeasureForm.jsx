@@ -25,7 +25,7 @@ export default function MeasureForm({ measure }) {
             latitude: measure?.latitude || defaultLatitude,
             longitude: measure?.longitude || defaultLongitude,
             placeDescription: measure?.placeDescription || "",
-            datetime: removeTimeZone(new Date(measure?.datetime)) || removeTimeZone(new Date(Date.now())),
+            datetime: measure ? removeTimeZone(new Date(measure.datetime)) : removeTimeZone(new Date(Date.now())),
             imageId: measure?.imageId || "",
             electricalConductivity: measure?.electricalConductivity || null,
             totalDissolvedSolids: measure?.totalDissolvedSolids || null,
@@ -228,7 +228,7 @@ export default function MeasureForm({ measure }) {
 
                                     render={({ field: { value, onChange, ...field } }) => {
                                         return (
-                                            <Input required={conf.measureImageRequired == 'true'} {...field} name='image' label={measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                            <Input required={conf.measureImageRequired === 'true'} {...field} name='image' label={measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
                                                 type="file" className="mb-2"
                                                 accept="image/png, image/jpg, image/jpeg"
 
