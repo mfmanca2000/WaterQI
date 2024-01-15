@@ -15,7 +15,7 @@ function ReportCard({report, onDelete}) {
     const userData = useSelector((state) => state.auth.userData);
     const { t } = useTranslation();
 
-    console.log('Report: ' + JSON.stringify(report))
+    //console.log('Report: ' + JSON.stringify(report))
 
 
     return (
@@ -39,7 +39,7 @@ function ReportCard({report, onDelete}) {
           </div>
 
         </Link>
-        {userData.$id === report.userId && (
+        {(userData.$id === report.userId || userData.labels.includes('admin')) && (
           <div className='text-left'>
             <Link className='font-bold underline' onClick={handleDelete}>{t('measuresDelete')}</Link>
           </div>

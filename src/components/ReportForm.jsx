@@ -5,7 +5,7 @@ import Input from "./Input.jsx";
 import storageService from "../appwrite/storage.js"
 import databaseService from "../appwrite/database.js"
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import { conf } from "../conf/conf.js";
 import { formatDateTime, removeTimeZone } from "../utils/date.js";
@@ -53,7 +53,7 @@ function ReportForm({ report }) {
             longitude: report?.longitude || longitudeDevice || defaultLongitude,
             title: report?.title || '',
             description: report?.description || '',
-            datetime: removeTimeZone(report?.datetime) || removeTimeZone(new Date(Date.now())),
+            datetime: removeTimeZone(new Date(report?.datetime)) || removeTimeZone(new Date(Date.now())),
             imageId: report?.imageId || ''
         }
     })
@@ -71,12 +71,14 @@ function ReportForm({ report }) {
 
     useEffect(() => {
 
+        console.log(JSON.stringify(report));
+
         reset({
             latitude: report?.latitude || latitudeDevice || defaultLatitude,
             longitude: report?.longitude || longitudeDevice || defaultLongitude,
             title: report?.title || '',
             description: report?.description || '',
-            datetime: removeTimeZone(report?.datetime) || removeTimeZone(new Date(Date.now())),
+            datetime: removeTimeZone(new Date(report?.datetime)) || removeTimeZone(new Date(Date.now())),
             imageId: report?.imageId || ''
         });
 
@@ -140,12 +142,24 @@ function ReportForm({ report }) {
 
     }
 
+    function canModify() {
+        //it's a new measure, or this user is an admin, or the measure was created by this user
+        return !report || userData.labels.includes('admin') || userData.$id === report.userId;
+    }
+
     return (
         <>
+            <Link className='underline font-bold ' to={'/measures'}>
+                {t('returnToMeasures')}
+            </Link>
+
             <div className='mb-4'>
                 <label className='text-4xl pb-4'>{!report ? t('reportTitleNew') : getValues('title')}</label>
+                {report && <div>
+                    <label className='text-sm'> {t('by') + ' ' + (report.username ? report.username : report.userId)}</label>
+                </div>}
             </div>
-            
+
             <div className="w-full">
                 <div className="w-full h-72 " >
                     <APIProvider apiKey={conf.googleMapsAPIKey}>
@@ -155,7 +169,7 @@ function ReportForm({ report }) {
                             gestureHandling={'greedy'}
                             disableDefaultUI={true}
                             onClick={(ev) => {
-                                if (!report) {
+                                if (canModify()) {
                                     //console.log("latitide = ", ev.detail.latLng.lat);
                                     setValue("latitude", ev.detail.latLng.lat)
                                     //console.log("longitude = ", ev.detail.latLng.lng);
@@ -176,7 +190,8 @@ function ReportForm({ report }) {
                 <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
                     <div className="w-full">
                         <Input label={t('reportTitle') + ' *'}
-                            className="mb-4"
+                            disabled={!canModify()}
+                            className={`mb-4 ${!canModify() ? 'bg-gray-200' : ''}`}
                             {...register("title", { required: true, maxLength: 255 })}
                         />
 
@@ -186,60 +201,43 @@ function ReportForm({ report }) {
                             </label>
 
                             <ResponsiveContainer>
-                                <textarea id='descriptionTxt' className='px-3 py-2 rounded-lg w-full text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200'
+                                <textarea id='descriptionTxt'
+                                    disabled={!canModify()}
+                                    className={`px-3 py-2 rounded-lg w-full text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 ${!canModify() ? 'bg-gray-200' : ''}`}
                                     rows={5}
                                     cols={45}
-                                    wrap="true"                                    
+                                    wrap="true"
                                     {...register("description", { required: true, maxLength: 255 })}
                                 />
                             </ResponsiveContainer>
                         </div>
-                        {report &&
-                            <>
-                                <Input
-                                    disabled
-                                    label={t('measureGroupLatitude') + ' *'}
-                                    placeholder="(i.e. 45.4637979)"
-                                    className="mb-4 bg-gray-200"
-                                    {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
-                                />
 
-                                <Input
-                                    disabled
-                                    label={t('measureGroupLongitude') + ' *'}
-                                    placeholder="(i.e. 7.87375)"
-                                    className="mb-4 bg-gray-200"
-                                    {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
-                                />
-                            </>
-                        }
 
-                        {!report && (
-                            <>
-                                <Input label={t('measureGroupLatitude') + ' *'}
-                                    placeholder="insert a latitude (i.e. 45.4637979"
-                                    className="mb-4"
-                                    {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
-                                />
+                        <Input
+                            disabled={!canModify()}
+                            label={t('measureGroupLatitude') + ' *'}
+                            placeholder="(i.e. 45.4637979)"
+                            className={`mb-4 ${!canModify() ? 'bg-gray-200' : ''}`}
+                            {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
+                        />
 
-                                <Input label={t('measureGroupLongitude') + ' *'}
-                                    placeholder="insert a longitude (i.e. 7.87375)"
-                                    className="mb-4"
-                                    {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
-                                />
-                            </>
-                        )
-
-                        }
+                        <Input
+                            disabled={!canModify()}
+                            label={t('measureGroupLongitude') + ' *'}
+                            placeholder="(i.e. 7.87375)"
+                            className={`mb-4 ${!canModify() ? 'bg-gray-200' : ''}`}
+                            {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
+                        />
 
 
                         <Input type="datetime-local" label={t('measureDate') + ' *'}
-                            className="mb-4 lg:w-1/5"
+                            disabled={!canModify()}
+                            className={`mb-4 lg:w-1/5 ${!canModify() ? 'bg-gray-200' : ''}`}
                             {...register("datetime", { required: true, valueAsDate: true })}
                         />
 
 
-                        {!report && (
+                        {canModify() && (
                             <>
                                 <Controller
                                     control={control}
@@ -267,7 +265,7 @@ function ReportForm({ report }) {
 
 
 
-                        {report && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(report.$updatedAt))}</label>)}
+
 
 
                         <div className='md:w-1/4'>
@@ -285,15 +283,16 @@ function ReportForm({ report }) {
                     </div>
 
                     <div className="w-full">
-                        <Button type="submit" bgColor={report ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:w-1/4 mt-8">
-                            {report ? t('measureGroupUpdate') : t('measureGroupCreate')}
-                        </Button>
+                        {canModify() &&
+                            <Button type="submit" bgColor={report ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:w-1/4 mt-8">
+                                {report ? t('measureGroupUpdate') : t('measureGroupCreate')}
+                            </Button>
+                        }
+
+                        {report && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(report.$updatedAt))}</label>)}
                     </div>
                 </form>
             </div>
-
-
-
         </>
 
     )

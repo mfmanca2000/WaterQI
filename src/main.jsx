@@ -20,6 +20,7 @@ import Settings from './pages/Settings.jsx'
 import Help from './pages/Help.jsx'
 import Profile from './pages/Profile.jsx'
 import AddReport from './pages/AddReport.jsx'
+import ReportDetail from './pages/ReportDetail.jsx'
 
 const router = createBrowserRouter([
   {
@@ -124,6 +125,14 @@ const router = createBrowserRouter([
         element: (
           <Protected authenticationRequired={true}>
             <MeasureGroupDetail />
+          </Protected>
+        )
+      },
+      {
+        path: '/report/:reportId',
+        element: (
+          <Protected authenticationRequired={true}>
+            <ReportDetail />
           </Protected>
         )
       },

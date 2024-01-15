@@ -90,6 +90,9 @@
     "tdsLevel1": "Mountain spring",
     "tdsLevel2": "Purified",
     "tdsLevel3": "Tap",
-    "tdsLevel4": "Super polluted"
+    "tdsLevel4": "Super polluted",
+    "returnToMeasures": "Back to all measures",
+    "returnToMeasureGroup": "Back to measure group",
+    "uploadExplaination": "JPG, JPEG, PNG, max 150.000 bytes"
   }
 }

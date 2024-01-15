@@ -39,7 +39,9 @@ export class DatabaseService {
 
     async getAllMeasures() {
         try {
-            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [ Query.orderDesc('datetime') ])
+            const measures = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [ Query.orderDesc('datetime') ])
+            //console.log('Measures: ' + JSON.stringify(measures.documents))
+            return measures;
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllMeasures ' + error);
             return null;
@@ -58,7 +60,7 @@ export class DatabaseService {
     async getAllReports() {
         try {
             const reports = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, [Query.orderDesc('$updatedAt')]);
-            console.log('LIST OF REPORTS: ' + JSON.stringify(reports));
+            //console.log('LIST OF REPORTS: ' + JSON.stringify(reports));
             return reports;
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllMeasureGroups ' + error);

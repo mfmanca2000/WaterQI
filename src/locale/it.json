@@ -90,6 +90,9 @@
         "tdsLevel1": "Acqua da fonte di montagna",
         "tdsLevel2": "Acqua purificata",
         "tdsLevel3": "Acqua di rubinetto",
-        "tdsLevel4": "Acqua inquinata"
+        "tdsLevel4": "Acqua inquinata",
+        "returnToMeasures": "Ritorna alle misure",
+        "returnToMeasureGroup": "Ritorna al gruppo di misure",
+        "uploadExplaination": "JPG, JPEG, PNG, max 150.000 bytes"
     }
 }

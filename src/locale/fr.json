@@ -90,6 +90,9 @@
         "tdsLevel1": "Eau de source montagne",
         "tdsLevel2": "Eau purifiée",
         "tdsLevel3": "Eau du robinet",
-        "tdsLevel4": "Eau"
+        "tdsLevel4": "Eau",
+        "returnToMeasures": "Retourner aux mesures",
+        "returnToMeasureGroup": "Retourner au groupe de mesures",
+        "uploadExplaination": "JPG, JPEG, PNG, max 150.000 bytes"
     }
 }

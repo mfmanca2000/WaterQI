@@ -87,12 +87,16 @@ function Header() {
 
                 <div className='flex lg:order-2'>
                     {loggedIn ? (
-                        <Dropdown arrowIcon={true} size="lg" inline label={<Avatar alt="Your avatar"  rounded bordered placeholderInitials={Array.from(userData?.name)[0]} />}>
+                        <Dropdown arrowIcon={true} size="lg" inline label={<Avatar alt="Your avatar" rounded bordered status={userData.labels.includes('admin') ? "online" : ''} statusPosition="top-right" placeholderInitials={Array.from(userData?.name)[0]} />}>
                             <Dropdown.Header>
                                 <div className='flex text-base' >
                                     <label className=''>{userData.name}</label>
                                     <label className='ml-2 italic'>({userData.prefs.username})</label>
                                 </div>
+
+                                {userData.labels.includes('admin') && (
+                                    <label className='text-casaleggio-rgba'>Admin</label>
+                                )}
 
                                 <span className="block truncate text-base font-medium">{userData.email}</span>
                             </Dropdown.Header>
@@ -101,7 +105,7 @@ function Header() {
                             <Dropdown.Item href='/settings'>{t('headerSettings')}</Dropdown.Item>
                             <Dropdown.Item href='/help'>{t('headerHelp')}</Dropdown.Item>
 
-                            <div className='mr-6 mt-1'>
+                            <div className='m-3 mt-1'>
                                 <LanguageSelector />
                             </div>
 
@@ -110,14 +114,9 @@ function Header() {
                                 {t('logout')}
                             </Dropdown.Item>
 
-
-
-
                         </Dropdown>) : null}
                     <Navbar.Toggle className='mx-2' />
                 </div>
-
-
 
                 <Navbar.Collapse className=''>
                     {
@@ -128,41 +127,6 @@ function Header() {
                         ) : null)
                     }
                 </Navbar.Collapse>
-
-
-
-
-                {/* <div className="flex md:order-2 w-full sm:w-auto justify-between sm:justify-normal">
-                    <div className='mr-6 mt-1'>
-                        <LanguageSelector />
-                    </div>
-                    <div className='flex'>
-                        {loggedIn ? (
-                            <Dropdown arrowIcon={false} size="lg" inline label={<Avatar alt="Your avatar" rounded bordered placeholderInitials={Array.from(userData?.name)[0]} />}>
-                                <Dropdown.Header>
-                                    <div className='flex text-base' >
-                                        <label className=''>{userData.name}</label>
-                                        <label className='ml-2 italic'>({userData.prefs.username})</label>
-                                    </div>
-
-                                    <span className="block truncate text-base font-medium">{userData.email}</span>
-                                </Dropdown.Header>
-
-                                <Dropdown.Item href='/profile'>{t('headerProfile')}</Dropdown.Item>
-                                <Dropdown.Item href='/settings'>{t('headerSettings')}</Dropdown.Item>
-                                <Dropdown.Item href='/help'>{t('headerHelp')}</Dropdown.Item>
-
-                                <Dropdown.Divider />
-                                <Dropdown.Item onClick={logoutHandler}>                                    
-                                    {t('logout')}
-                                </Dropdown.Item>
-                            </Dropdown>
-                        ) : null}
-
-                        <Navbar.Toggle className='mx-2' />
-                    </div>
-                </div> */}
-
 
             </Navbar>
         </header>

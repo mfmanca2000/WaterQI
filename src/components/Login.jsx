@@ -38,6 +38,7 @@ function Login() {
                     {
                         await i18n.changeLanguage(userData.prefs?.language);
                     }   
+                    console.log('UserData: ' + JSON.stringify(userData));
                     dispatch(authLogin({ userData }));
                 }
                 navigate("/");

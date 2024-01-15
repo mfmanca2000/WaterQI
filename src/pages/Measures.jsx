@@ -9,9 +9,8 @@ import MeasureGroupMarker from '../components/MeasureGroupMarker'
 import { useSelector } from "react-redux"
 import Input from '../components/Input.jsx'
 import MeasureGroupCard from '../components/MeasureGroupCard.jsx'
-import authService from '../appwrite/auth.js'
 import { useTranslation } from 'react-i18next'
-import ReportMarker from '../components/reportMarker.jsx'
+import ReportMarker from '../components/ReportMarker.jsx'
 import ReportCard from '../components/ReportCard.jsx'
 
 const defaultLatitude = conf.defaultLatitude;
@@ -51,12 +50,12 @@ function Measures({ type = '' }) {
 
     useEffect(() => {
 
-        console.log('Type: ' + type)
+        //console.log('Type: ' + type)
 
         const currentUserId = userData.$id;
 
         if (type === '') {
-            console.log('ALL');
+            //console.log('ALL');
 
             databaseService.getAllMeasures().then((returnedMeasures) => {
                 if (returnedMeasures) {
@@ -90,18 +89,18 @@ function Measures({ type = '' }) {
 
                         databaseService.getAllReports().then((returnedReports) => {
                             sortedReports.current = returnedReports.documents.slice(0, conf.lastInsertedReportsNumber);
-    
+
                             filteredReports.current = returnedReports.documents.filter((r) => {
-                                return showReports && 
+                                return showReports &&
                                     (!showYourDataOnly || r.userId === currentUserId) &&
                                     (!searchText || r.title.toLowerCase().includes(searchText.toLowerCase()) || r.description.toLowerCase().includes(searchText.toLowerCase()));
                             });
-    
+
                             setMeasureNumber(filteredStandaloneMeasures.current.length + filteredMeasureGroups.current.length + filteredReports.current.length);
                         })
                     });
 
-                    
+
                 }
             })
         } else if (type == 'mymeasures') {
@@ -270,6 +269,13 @@ function Measures({ type = '' }) {
                         center={{ lat: defaultLatitude, lng: defaultLongitude }}
                         gestureHandling={'greedy'}
                         disableDefaultUI={true}>
+
+                        {filteredReports.current?.map((report) => (
+                            <div className='p-2 w-1/4' key={report.$id}>
+                                <ReportMarker report={report} clickable={true} />
+                            </div>
+                        ))}
+                        
                         {filteredStandaloneMeasures.current?.map((measure) => (
                             <div className='p-2 w-1/4' key={measure.$id}>
                                 <MeasureMarker measure={measure} clickable={true} />
@@ -282,16 +288,12 @@ function Measures({ type = '' }) {
                             </div>
                         ))}
 
-                        {filteredReports.current?.map((report) => (
-                            <div className='p-2 w-1/4' key={report.$id}>
-                                <ReportMarker report={report} clickable={true} />
-                            </div>
-                        ))}
+
                     </Map>
                 </APIProvider>
             </Container>
 
-            
+
 
             {(type === '' || type === 'mymeasuregroups') && (<> <Container>
                 <div className='text-3xl mt-4 p-4 font-bold'>

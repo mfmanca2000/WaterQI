@@ -13,7 +13,10 @@ const conf = {
     defaultZoomLevel: Number(process.env.DEFAULT_ZOOM_LEVEL),
     lastInsertedMeasuresNumber: Number(process.env.LAST_INSERTED_MEASURES_NUMBER),
     lastModifiedMeasureGroupsNumber: Number(process.env.LAST_MODIFIED_MEASURE_GROUPS_NUMBER),
-    lastInsertedReportsNumber: Number(process.env.LAST_INSERTED_REPORTS_NUMBER)
+    lastInsertedReportsNumber: Number(process.env.LAST_INSERTED_REPORTS_NUMBER),
+    maxUploadFileSizeKB: Number(process.env.MAX_UPLOAD_FILE_SIZE_KB),
+    measureImageRequired: String(process.env.MEASURE_IMAGE_REQUIRED),
+    measureGroupImageRequired: String(process.env.MEASURE_GROUP_IMAGE_REQUIRED)
 }
 
 const languages = {

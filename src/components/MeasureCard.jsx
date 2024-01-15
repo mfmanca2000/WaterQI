@@ -17,7 +17,7 @@ function MeasureCard({ measure, onDelete }) {
 
   const [wqi, wqiText] = calculateWQI(measure);
 
-  console.log('Measure: ' + JSON.stringify(measure));
+  //console.log('Measure: ' + JSON.stringify(measure));
 
   return (
     
@@ -41,7 +41,7 @@ function MeasureCard({ measure, onDelete }) {
           </div>
 
         </Link>
-        {userData.$id === measure.userId && (
+        {(userData.$id === measure.userId || userData.labels.includes('admin')) && (
           <div className='text-left'>
             <Link className='font-bold underline' onClick={handleDelete}>{t('measuresDelete')}</Link>
           </div>

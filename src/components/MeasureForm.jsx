@@ -13,6 +13,7 @@ import { Link } from "react-router-dom";
 import { calculateWQI, getMarkerColor } from "../utils/wqi.js";
 import { Datepicker, FileInput } from "flowbite-react";
 import { useTranslation } from 'react-i18next'
+import Container from "./Container.jsx";
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -134,13 +135,25 @@ export default function MeasureForm({ measure }) {
 
     }
 
+    function canModify() {
+        //it's a new measure, or this user is an admin, or the measure was created by this user
+        return !measure || userData.labels.includes('admin') || userData.$id === measure.userId;
+    }
+
     const [wqi, wqiText] = calculateWQI(measure);
     const imageName = window.location.origin + '/' + getMarkerColor(measure);
 
     return (
         <>
+            <Link className='underline font-bold ' to={measure?.measureGroup ? '/measuregroup/' + measure.measureGroup.$id : '/measures'}>
+                {measure?.measureGroup ? t('returnToMeasureGroup') : t('returnToMeasures')}
+            </Link>
+
             <div className='mb-4'>
                 <label className='text-4xl pb-4'>{!measure ? t('measureTitleNew') : getValues('placeDescription')}</label>
+                {measure && <div>
+                    <label className='text-sm'> {t('by') + ' ' + (measure.username ? measure.username : measure.userId)}</label>
+                </div>}
             </div>
 
             <div className="w-full">
@@ -152,7 +165,7 @@ export default function MeasureForm({ measure }) {
                             gestureHandling={'greedy'}
                             disableDefaultUI={true}
                             onClick={(ev) => {
-                                if (!measure || !measure.measureGroup) {
+                                if (canModify() && !(measure?.measureGroup)) {
                                     //console.log("latitide = ", ev.detail.latLng.lat);
                                     setValue("latitude", ev.detail.latLng.lat)
                                     //console.log("longitude = ", ev.detail.latLng.lng);
@@ -173,87 +186,73 @@ export default function MeasureForm({ measure }) {
                 <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
                     <div className="w-full">
                         <Input label={t('measurePlaceDescription') + ' *'}
-                            className="mb-4"
+                            disabled={!canModify()}
+                            className={`mb-4 ${!canModify() ? 'bg-gray-200' : ''}`}
                             {...register("placeDescription", { required: true, maxLength: 255 })}
                         />
 
-                        {measure && measure.measureGroup &&
-                            <>
-                                <label className='font-thin mb-6'>{t('measureExplaination')} </label>
-                                <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >{t('measureGroup')}</Link>
-                                <Input
-                                    disabled
-                                    label={t('measureGroupLatitude') + ' *'}
-                                    placeholder="(i.e. 45.4637979)"
-                                    className="mb-4 bg-gray-200"
-                                    {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
-                                />
+                        {(measure && measure.measureGroup) && (<>
+                            <label className='font-thin mb-6'>{t('measureExplaination')} </label>
+                            <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >{t('measureGroup')}</Link>
+                        </>)}
+                        <Input label={t('measureGroupLatitude') + ' *'}
+                            placeholder="insert a latitude (i.e. 45.4637979)"
+                            disabled={!canModify() || measure?.measureGroup}
+                            className={`mb-4 ${(!canModify() || measure?.measureGroup) ? 'bg-gray-200' : ''}`}
+                            {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
+                        />
 
-                                <Input
-                                    disabled
-                                    label={t('measureGroupLongitude') + ' *'}
-                                    placeholder="(i.e. 7.87375)"
-                                    className="mb-4 bg-gray-200"
-                                    {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
-                                />
-                            </>
-                        }
-
-                        {(!measure || !measure.measureGroup) && (
-                            <>
-                                <Input label={t('measureGroupLatitude') + ' *'}
-                                    placeholder="insert a latitude (i.e. 45.4637979"
-                                    className="mb-4"
-                                    {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
-                                />
-
-                                <Input label={t('measureGroupLongitude') + ' *'}
-                                    placeholder="insert a longitude (i.e. 7.87375)"
-                                    className="mb-4"
-                                    {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
-                                />
-                            </>
-                        )
-
-                        }
-
-
-                        <Input type="datetime-local" label={t('measureDate') + ' *'}
-                            className="mb-4 lg:w-1/5"
-                            {...register("datetime", { required: true, valueAsDate: true })}
+                        <Input label={t('measureGroupLongitude') + ' *'}
+                            placeholder="insert a longitude (i.e. 7.87375)"
+                            disabled={!canModify() || measure?.measureGroup}
+                            className={`mb-4 ${(!canModify() || measure?.measureGroup) ? 'bg-gray-200' : ''}`}
+                            {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
                         />
 
 
-                        {(!measure || !measure.measureGroup) && (
+                        <Input type="datetime-local" label={t('measureDate') + ' *'}
+                            disabled={!canModify()}
+                            className={`mb-4 lg:w-1/5 ${!canModify() ? 'bg-gray-200' : ''}`}
+
+                            {...register("datetime", { required: true, valueAsDate: true })}
+                        />
+
+{console.log('Required:' + (conf.measureImageRequired === 'true'))}
+                        {(canModify() && !(measure?.measureGroup)) && (
                             <>
                                 <Controller
                                     control={control}
                                     name={"image"}
 
+
+
                                     render={({ field: { value, onChange, ...field } }) => {
                                         return (
-                                            <Input {...field} name='image' label={measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
-                                                type="file" className="mb-4"
+                                            <Input required={conf.measureImageRequired == 'true'} {...field} name='image' label={measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                                type="file" className="mb-2"
                                                 accept="image/png, image/jpg, image/jpeg"
 
                                                 onChange={(event) => {
 
-                                                    if (event.target.files && event.target.files[0]) {
+                                                    if (event.target.files && event.target.files[0] && event.target.files[0].size < conf.maxUploadFileSizeKB) {
                                                         setPreviewImage(event.target.files[0]);
                                                         setPreviewImageUrl(URL.createObjectURL(event.target.files[0]));
+                                                    } else {
+                                                        alert('File size too big');
+                                                        setPreviewImage(null);
+                                                        setPreviewImageUrl(null);
+                                                        event.target.value = null;
+                                                        return false;
                                                     }
                                                 }}
                                             />
+                                            
                                         );
                                     }}
                                 />
+                                <label>{t('uploadExplaination')}</label>
                             </>
                         )}
-
-
-
-                        {measure && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(measure.$updatedAt))}</label>)}
-
 
                         <div className='md:w-1/4'>
                             {measure && (previewImageUrl || measure.imageId) && (
@@ -272,34 +271,43 @@ export default function MeasureForm({ measure }) {
                     <div className="w-full">
                         <div className="w-full md:w-1/4 mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10">
                             <Input label="Electrical Conductivity (μS/cm)"
-                                className="mb-2"
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("electricalConductivity")}
                             />
 
                             <Input label="Total Dissolved Solids (ppm)"
-                                className="mb-2"
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("totalDissolvedSolids")}
                             />
 
                             <Input label="pH"
-                                className="mb-2"
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("pH")}
                             />
 
                             <Input label="Temperature (°C)"
-                                className="mb-2"
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("temperature")}
                             />
 
                             <Input label="Salinity"
-                                className="mb-2"
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("salinity")}
                             />
                         </div>
 
-                        <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:w-1/4 mt-8">
-                            {measure ? t('measureGroupUpdate') : t('measureGroupCreate')}
-                        </Button>
+                        {canModify() &&
+                            <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:w-1/4 mt-8">
+                                {measure ? t('measureGroupUpdate') : t('measureGroupCreate')}
+                            </Button>
+                        }
+
+                        {measure && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(measure.$updatedAt))}</label>)}
                     </div>
                 </form>
             </div>

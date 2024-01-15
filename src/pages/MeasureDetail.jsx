@@ -24,16 +24,7 @@ function MeasureDetail() {
   }, [measureId, navigate])
 
   return (
-    <>
-      <Container>
-        <Link className='underline font-bold m-2' to={'..'} onClick={(e) => {
-          e.preventDefault();
-          navigate(-1);
-        }}
-        >
-          Return to measures
-        </Link>
-      </Container>
+    <>      
       <div className='py-6'>
         <Container>
           <MeasureForm measure={measure} />

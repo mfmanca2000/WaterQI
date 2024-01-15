@@ -48,10 +48,10 @@ function Settings() {
 
 
     const submit = async (data) => {
-        console.log('UserData prefs: ' + JSON.stringify(userData.prefs))
-        console.log('New username:' + getValues('username'))
-        console.log('SelectedLanguage: ' + JSON.stringify(i18n))
-        console.log('ShowReports: ' + getValues('showReports'))
+        // console.log('UserData prefs: ' + JSON.stringify(userData.prefs))
+        // console.log('New username:' + getValues('username'))
+        // console.log('SelectedLanguage: ' + JSON.stringify(i18n))
+        // console.log('ShowReports: ' + getValues('showReports'))
         const saved = await authService.savePreferences({
             ...(userData.prefs),
             showYourDataOnly: getValues('showYourDataOnly'),

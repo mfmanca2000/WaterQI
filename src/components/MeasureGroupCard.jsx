@@ -34,7 +34,7 @@ function MeasureGroupCard({ measureGroup, onDelete }) {
                     </div>
                 </div>
             </Link>
-            {userData.$id === measureGroup?.userId && (
+            {(userData.$id === measureGroup.userId || userData.labels.includes('admin')) && (
                 <div className='text-left'>
                     <Link className='font-bold underline' onClick={handleDelete}>{t('measuresDelete')}</Link>
                 </div>
