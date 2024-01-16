@@ -28,7 +28,7 @@
     "menuItemAddMeasureGroupDescription": "If you want to collect several measures for the same location, choose this option. You will be able to follow how the measures change through the years.",
     "menuItemAddMeasureDescription": "If you want to collect just one measure at a specific location and you already know you will not need historical data for this location, choose this option.",
     "menuItemAddReportTitle": "Add a new report",
-    "menuItemAddReportDescription": "",
+    "menuItemAddReportDescription": "If you find illegal dumping or witness an environmental crime near a river or lake, add a report with a photo and the location",
     "menuItemAllMeasuresTitle": "See all measures",
     "menuItemAllMeasuresDescription": "See all measures collected through the years and look for a place near you to know the calculated Water Quality Index at a specific point in time.",
     "menuItemFindSensorTitle": "Find a sensor",
