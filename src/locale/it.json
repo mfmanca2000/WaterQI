@@ -81,8 +81,11 @@
         "reportTitle": "Titolo",
         "reportDescription": "Descrizione",
         "myMeasures": "Le mie misurazioni",
+        "myMeasuresNumber": "Numero di misure da mostrare",
         "myMeasureGroups": "I miei gruppi di misure",
+        "myMeasureGroupsNumber": "Numero di gruppi di misure da mostrare",
         "myReports": "Le mie segnalazioni",
+        "myReportsNumber": "Numero di segnalazioni da mostrare",
         "myLastInsertedMeasures": "LE MIE ULTIME MISURE",
         "myLastModifiedMeasureGroups": "I MIEI ULTIMI GRUPPI DI MISURE",
         "myLastInsertedReports": "LE MIE ULTIME SEGNALAZIONE",
@@ -91,8 +94,20 @@
         "tdsLevel2": "Acqua purificata",
         "tdsLevel3": "Acqua di rubinetto",
         "tdsLevel4": "Acqua inquinata",
+        "notAvailable": "Non disponibile",
         "returnToMeasures": "Ritorna alle misure",
         "returnToMeasureGroup": "Ritorna al gruppo di misure",
-        "uploadExplaination": "JPG, JPEG, PNG, max 150.000 bytes"
+        "uploadExplaination": "JPG, JPEG, PNG, max 150.000 bytes",
+        "deleteMeasureGroupModalTitle": "Cancellazione del gruppo di misure",
+        "deleteMeasureGroupModalDescription1": "Potete scegliere di cancellare il gruppo e le misure collegate oppure soltanto il gruppo",
+        "deleteMeasureGroupModalDescription2": "Se cancellate solamente il gruppo, tutte le misure collegate resteranno nel database ma non potrete più seguire l'andamento dei loro valori nel tempo tramite il grafico",
+        "deleteMeasureGroupModalDeleteOnlyMeasureGroup": "Mantieni le misure",
+        "deleteMeasureGroupModalDeleteAll": "Cancella anche le misure",
+        "deleteMeasureModalDescription": "Vuoi cancellare la misurazione?",
+        "deleteMeasureModalDelete": "Cancella la misura",
+        "deleteReportModalDescription": "Vuoi cancellare questa segnalazione?",
+        "deleteReportModalDelete": "Cancella la segnalazione",
+        "deleteModalCancel": "Annulla",
+        "uploadImageDisclaimer": "Caricando una foto garantisci e dichiari di possedere o altrimenti controllare tutti i diritti sull'immagine, inclusi tutti i diritti necessari per fornire, pubblicare, caricare, inserire o inviare l'immagine"
     }
 }

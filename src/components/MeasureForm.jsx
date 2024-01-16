@@ -75,8 +75,6 @@ export default function MeasureForm({ measure }) {
             setCenterPosition({ lat: getValues("latitude"), lng: getValues("longitude") });
         }
 
-
-
     }, [reset, measure, getValues]);
 
     function latitudeChangedHandler(event) {
@@ -118,6 +116,8 @@ export default function MeasureForm({ measure }) {
                 }
             }
         } else {
+
+            //console.log(JSON.stringify(data));
 
             if (previewImage) {
                 file = await storageService.uploadImage(previewImage);
@@ -224,8 +224,6 @@ export default function MeasureForm({ measure }) {
                                     control={control}
                                     name={"image"}
 
-
-
                                     render={({ field: { value, onChange, ...field } }) => {
                                         return (
                                             <Input required={conf.measureImageRequired === 'true'} {...field} name='image' label={measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
@@ -251,6 +249,7 @@ export default function MeasureForm({ measure }) {
                                     }}
                                 />
                                 <label>{t('uploadExplaination')}</label>
+                                <p className="font-extralight">{t('uploadImageDisclaimer')}</p>
                             </>
                         )}
 
@@ -311,10 +310,6 @@ export default function MeasureForm({ measure }) {
                     </div>
                 </form>
             </div>
-
-
-
-
         </>
     )
 }

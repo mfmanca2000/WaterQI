@@ -99,9 +99,9 @@ export class DatabaseService {
         }
     }
 
-    async updateMeasure(measureId, { latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
+    async updateMeasure(measureId, { username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
         try {            
-            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, measureId, { latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });
+            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, measureId, { username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });
         } catch (error) {
             console.log('--- Appwrite DatabaseService updateMeasure ' + error);
             return null;
@@ -136,9 +136,9 @@ export class DatabaseService {
         }
     }
 
-    async updateMeasureGroup(measureGroupId, { description, latitude, longitude, imageId, measures, lastOperationTime }) {
+    async updateMeasureGroup(measureGroupId, { username, description, latitude, longitude, imageId, measures, lastOperationTime }) {
         try {
-            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, measureGroupId, { description, latitude, longitude, imageId, measures, lastOperationTime })
+            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, measureGroupId, { username, description, latitude, longitude, imageId, measures, lastOperationTime })
         } catch (error) {
             console.log('--- Appwrite DatabaseService updateMeasureGroup ' + error);
             return null;
@@ -177,9 +177,9 @@ export class DatabaseService {
         }
     }
 
-    async updateReport(measureId, { latitude, longitude, title, description, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
+    async updateReport(measureId, {username, latitude, longitude, title, description, datetime, imageId }) {
         try {            
-            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, measureId, { latitude, longitude, title, description, datetime, imageId });
+            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, measureId, { username, latitude, longitude, title, description, datetime, imageId });
         } catch (error) {
             console.log('--- Appwrite DatabaseService updateReport ' + error);
             return null;

@@ -31,14 +31,29 @@ const TDS_levels = [
     }
 ]
 
+function calculateWQIMeasureGroup(measureGroup) {
+    if (!measureGroup) return [0, 'notAvailable'];
+
+    let lastMeasure = null;
+
+    if (measureGroup.measures && measureGroup.measures.length > 0) {
+        lastMeasure = measureGroup?.measures.sort(function (a, b) {
+            return new Date(b.datetime) - new Date(a.datetime);
+        })[0];
+
+        return calculateWQI(lastMeasure);
+    }
+
+    return [0, 'notAvailable']
+}
 
 function calculateWQI(measure) {
 
     let wqi = 0;
-    let wqiText = 'Not available';
+    let wqiText = 'notAvailable';
     if (measure?.totalDissolvedSolids) {
         TDS_levels.forEach(element => {
-            if (measure.totalDissolvedSolids >= element.min && measure.totalDissolvedSolids <= element.max) {                
+            if (measure.totalDissolvedSolids >= element.min && measure.totalDissolvedSolids <= element.max) {
                 wqi = element.level;
                 wqiText = element.description;
             }
@@ -75,7 +90,49 @@ function getMarkerColor(measure) {
     }
 }
 
+function getMarkerColorMeasureGroup(measureGroup) {
+    if (!measureGroup) return null;
+
+    let lastMeasure = null;
+
+    if (measureGroup.measures && measureGroup.measures.length > 0) {
+        lastMeasure = measureGroup?.measures.sort(function (a, b) {
+            return new Date(b.datetime) - new Date(a.datetime);
+        })[0];
+
+        const [wqi, _] = calculateWQI(lastMeasure);
+        //console.log('Calculated WQI: ' + wqi)
+        switch (wqi) {
+            case 0:
+                return 'multiplemarkerGray.png';
+
+            case 1:
+                return 'multiplemarkerBrown.png';
+
+            case 2:
+                return 'multiplemarkerRed.png';
+
+            case 3:
+                return 'multiplemarkerYellow.png';
+
+            case 4:
+                return 'multiplemarkerGreen.png'
+
+            case 5:
+                return 'multiplemarkerBlue.png';
+
+            default:
+                return 'multiplemarkerGray.png'
+
+        }
+
+    }
+
+}
+
 export {
     calculateWQI,
-    getMarkerColor
+    calculateWQIMeasureGroup,
+    getMarkerColor,
+    getMarkerColorMeasureGroup
 }

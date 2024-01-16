@@ -81,8 +81,11 @@
     "reportTitle": "Title",
     "reportDescription": "Description",
     "myMeasures": "My measures",
+    "myMeasuresNumber" : "Numero massimo di misure",
     "myMeasureGroups": "My measure groups",
+    "myMeasureGroupsNumber" : "Numero massimo di misure",
     "myReports": "My reports",
+    "myReportsNumber" : "Numero massimo di misure",
     "myLastInsertedMeasures": "MY LAST INSERTED MEASURES",
     "myLastModifiedMeasureGroups": "MY LAST MODIFIED MEASURE GROUPS",
     "myLastInsertedReports": "MY LAST INSERTED REPORTS",
@@ -91,8 +94,20 @@
     "tdsLevel2": "Purified",
     "tdsLevel3": "Tap",
     "tdsLevel4": "Super polluted",
+    "notAvailable": "Not available",
     "returnToMeasures": "Back to all measures",
     "returnToMeasureGroup": "Back to measure group",
-    "uploadExplaination": "JPG, JPEG, PNG, max 150.000 bytes"
+    "uploadExplaination": "JPG, JPEG, PNG, max 150.000 bytes",
+    "deleteMeasureGroupModalTitle": "Deleting measure group",
+    "deleteMeasureGroupModalDescription1": "You can choose to delete this measure group and all related measures or just this measure group.",
+    "deleteMeasureGroupModalDescription2": "If you delete only the measure group, all the related measures will remain in the database but they will not be grouped anymore and you will not have to follow their progress through the time.",
+    "deleteMeasureGroupModalDeleteOnlyMeasureGroup": "Keep the measures",
+    "deleteMeasureGroupModalDeleteAll": "Delete measures too",
+    "deleteMeasureModalDescription": "Do you want to delete the measure ?",
+    "deleteMeasureModalDelete": "Delete the measure",
+    "deleteReportModalDescription": "Do you want to delete this report ?",
+    "deleteReportModalDelete": "Delete the report",
+    "deleteModalCancel": "Cancel",
+    "uploadImageDisclaimer": "By uploading your photo(s) you warrant and represent that you own or otherwise control all of the rights to your Images, including all the rights necessary for you to provide, post, upload, input or submit the Images"
   }
 }

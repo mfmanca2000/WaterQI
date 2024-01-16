@@ -12,6 +12,7 @@ import MeasureGroupCard from '../components/MeasureGroupCard.jsx'
 import { useTranslation } from 'react-i18next'
 import ReportMarker from '../components/ReportMarker.jsx'
 import ReportCard from '../components/ReportCard.jsx'
+import { deleteMeasure, deleteMeasureGroup, deleteReport } from '../utils/dataAccess.js'
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -34,6 +35,7 @@ function Measures({ type = '' }) {
     const [measureNumber, setMeasureNumber] = useState();
     const [searchText, setSearchText] = useState();
     const userData = useSelector((state) => state.auth.userData);
+    const [toggle, setToggle] = useState(false);
 
     useEffect(() => {
 
@@ -49,18 +51,20 @@ function Measures({ type = '' }) {
 
 
     useEffect(() => {
-
-        //console.log('Type: ' + type)
-
+        
         const currentUserId = userData.$id;
+
+        const measuresNumberToShow = userData?.prefs.myMeasuresNumber && userData?.prefs.myMeasuresNumber > 0 ? userData?.prefs.myMeasuresNumber : conf.lastInsertedMeasuresNumber;
+        const measureGroupsNumberToShow = userData?.prefs.myMeasureGroupsNumber && userData?.prefs.myMeasureGroupsNumber > 0 ? userData?.prefs.myMeasureGroupsNumber : conf.lastModifiedMeasureGroupsNumber;
+        const reportsNumberToShow = userData?.prefs.myReportsNumber && userData?.prefs.myReportsNumber > 0 ? userData?.prefs.myReportsNumber : conf.lastInsertedReportsNumber
 
         if (type === '') {
             //console.log('ALL');
 
             databaseService.getAllMeasures().then((returnedMeasures) => {
-                if (returnedMeasures) {
+                if (returnedMeasures) {                                    
 
-                    sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, conf.lastInsertedMeasuresNumber);
+                    sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, measuresNumberToShow);                    
 
                     filteredStandaloneMeasures.current = returnedMeasures.documents.filter((m) => {
                         var dt = new Date(m.datetime).getTime();
@@ -76,7 +80,7 @@ function Measures({ type = '' }) {
 
 
                     databaseService.getAllMeasureGroups().then((returnedMeasureGroups) => {
-                        sortedMeasureGroups.current = returnedMeasureGroups.documents.slice(0, conf.lastModifiedMeasureGroupsNumber);
+                        sortedMeasureGroups.current = returnedMeasureGroups.documents.slice(0, measureGroupsNumberToShow);
 
                         filteredMeasureGroups.current = returnedMeasureGroups.documents.filter((mg) => {
                             return showMeasureGroups &&
@@ -88,7 +92,7 @@ function Measures({ type = '' }) {
 
 
                         databaseService.getAllReports().then((returnedReports) => {
-                            sortedReports.current = returnedReports.documents.slice(0, conf.lastInsertedReportsNumber);
+                            sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
 
                             filteredReports.current = returnedReports.documents.filter((r) => {
                                 return showReports &&
@@ -96,6 +100,7 @@ function Measures({ type = '' }) {
                                     (!searchText || r.title.toLowerCase().includes(searchText.toLowerCase()) || r.description.toLowerCase().includes(searchText.toLowerCase()));
                             });
 
+                            console.log('Old:' + measureNumber + ' Nes:' + (filteredStandaloneMeasures.current.length + filteredMeasureGroups.current.length + filteredReports.current.length));
                             setMeasureNumber(filteredStandaloneMeasures.current.length + filteredMeasureGroups.current.length + filteredReports.current.length);
                         })
                     });
@@ -106,7 +111,7 @@ function Measures({ type = '' }) {
         } else if (type == 'mymeasures') {
 
             databaseService.getMeasuresByUserId(currentUserId).then((returnedMeasures) => {
-                sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, conf.lastInsertedMeasuresNumber);
+                sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, measuresNumberToShow);                
 
                 filteredStandaloneMeasures.current = returnedMeasures.documents.filter((m) => {
                     var dt = new Date(m.datetime).getTime();
@@ -122,7 +127,7 @@ function Measures({ type = '' }) {
         } else if (type == 'mymeasuregroups') {
 
             databaseService.getMeasureGroupsByUserId(currentUserId).then((returnedMeasureGroups) => {
-                sortedMeasureGroups.current = returnedMeasureGroups.documents.slice(0, conf.lastModifiedMeasureGroupsNumber);
+                sortedMeasureGroups.current = returnedMeasureGroups.documents.slice(0, measureGroupsNumberToShow);                
 
                 filteredMeasureGroups.current = returnedMeasureGroups.documents.filter((mg) => {
                     return (mg.userId === currentUserId) &&
@@ -136,7 +141,7 @@ function Measures({ type = '' }) {
         } else if (type == 'myreports') {
 
             databaseService.getReportssByUserId(currentUserId).then((returnedReports) => {
-                sortedReports.current = returnedReports.documents.slice(0, conf.lastInsertedReportsNumber);
+                sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);                
 
                 filteredReports.current = returnedReports.documents.filter((r) => {
                     var dt = new Date(r.datetime).getTime();
@@ -150,35 +155,41 @@ function Measures({ type = '' }) {
                 setMeasureNumber(filteredReports.current.length);
             })
         }
-    }, [showYourDataOnly, userData, dateFrom, dateTo, filteredStandaloneMeasures, searchText, measureNumber, showMeasures, showMeasureGroups, showReports, type]);
+    }, [showYourDataOnly, userData, dateFrom, dateTo, filteredStandaloneMeasures, searchText, measureNumber, showMeasures, showMeasureGroups, showReports, type, toggle]);
 
 
 
 
-    const onDeleteStandaloneMeasure = (e, $id) => {
+    const onDeleteStandaloneMeasure = async (e, measure) => {
         e.preventDefault();
-
-        if (databaseService.deleteMeasure($id)) {
-            setMeasureNumber(measureNumber - 1);
+                 
+        if (await deleteMeasure(measure)) {                    
+            if(showMeasures){
+                console.log('passing by here');
+                setToggle(! toggle);
+            } 
         }
-
     }
 
-    const onDeleteMeasureGroup = (e, $id) => {
+    const onDeleteMeasureGroup = async (e, measureGroup, deleteAllMeasures) => {
         e.preventDefault();
 
-        if (databaseService.deleteMeasureGroup($id)) {
+        if (await deleteMeasureGroup(measureGroup, deleteAllMeasures)) {
             console.log('MeasureGroup deleted')
-            setMeasureNumber(measureNumber - 1);
-        }
+            if (showMeasureGroups) {
+                setToggle(! toggle);
+            } 
+        }              
     }
 
-    const onDeleteReport = (e, $id) => {
+    const onDeleteReport = async (e, report) => {
         e.preventDefault();
 
-        if (databaseService.deleteReport($id)) {
+        if (await deleteReport(report)) {
             console.log('Report deleted')
-            setMeasureNumber(measureNumber - 1);
+            if (showReports) {
+                setToggle(! toggle)
+            }
         }
     }
 
@@ -212,17 +223,17 @@ function Measures({ type = '' }) {
                         </div>
 
                         <div className='sm:w-1/5 mt-2'>
-                            <input type="checkbox" checked={showMeasures} id='showMeasures' label={t('measuresShowStandaloneMeasures')} className="-mt-1 mr-2" onChange={(e) => {
-                                setShowMeasures((prev) => !prev)
-                            }} />
-                            <label className="mb-4 mr-4" htmlFor='showMeasures'>{t('measuresShowStandaloneMeasures')}</label>
-                        </div>
-                        <div className='sm:w-1/5 mt-2'>
                             <input type="checkbox" checked={showMeasureGroups} id='showMeasureGroups' label={t('measuresShowMeasureGroups')} className="-mt-1 mr-2" onChange={(e) => {
                                 setShowMeasureGroups((prev) => !prev)
                             }} />
                             <label className="mb-4 mr-4" htmlFor='showMeasureGroups'>{t('measuresShowMeasureGroups')}</label>
                         </div>
+                        <div className='sm:w-1/5 mt-2'>
+                            <input type="checkbox" checked={showMeasures} id='showMeasures' label={t('measuresShowStandaloneMeasures')} className="-mt-1 mr-2" onChange={(e) => {
+                                setShowMeasures((prev) => !prev)
+                            }} />
+                            <label className="mb-4 mr-4" htmlFor='showMeasures'>{t('measuresShowStandaloneMeasures')}</label>
+                        </div>                        
                         <div className='sm:w-1/5 mt-2'>
                             <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={(e) => {
                                 setShowReports((prev) => !prev)
@@ -275,7 +286,7 @@ function Measures({ type = '' }) {
                                 <ReportMarker report={report} clickable={true} />
                             </div>
                         ))}
-                        
+
                         {filteredStandaloneMeasures.current?.map((measure) => (
                             <div className='p-2 w-1/4' key={measure.$id}>
                                 <MeasureMarker measure={measure} clickable={true} />

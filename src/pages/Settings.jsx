@@ -26,7 +26,10 @@ function Settings() {
             showMeasures: userData?.prefs.showStandaloneMeasures,
             showMeasureGroups: userData?.prefs.showMeasureGroups,
             showReports: userData?.prefs.showReports,
-            language: i18n.selectedLanguage
+            language: userData.prefs?.language,
+            myMeasuresNumber: userData?.prefs.myMeasuresNumber,
+            myMeasureGroupsNumber: userData?.prefs.myMeasuresGroupsMumber,
+            myReportsNumber: userData?.prefs.myReportsNumber
         }
     })
 
@@ -41,7 +44,10 @@ function Settings() {
             showMeasures: userData?.prefs.showStandaloneMeasures,
             showMeasureGroups: userData?.prefs.showMeasureGroups,
             showReports: userData?.prefs.showReports,
-            language: userData.prefs?.language
+            language: userData.prefs?.language,
+            myMeasuresNumber: userData?.prefs.myMeasuresNumber,
+            myMeasureGroupsNumber: userData?.prefs.myMeasuresGroupsMumber,
+            myReportsNumber: userData?.prefs.myReportsNumber
         });
 
     }, [reset, userData, i18n]);
@@ -59,7 +65,10 @@ function Settings() {
             showMeasureGroups: getValues('showMeasureGroups'),
             showReports: getValues('showReports'),
             username: getValues('username'),
-            language: i18n.language
+            language: i18n.language,
+            myMeasuresNumber: getValues('myMeasuresNumber'),
+            myMeasureGroupsNumber: getValues('myMeasureGroupsNumber'),
+            myReportsNMumber: getValues('myReportsNumber')
         });
         if (saved) {
             navigate('/');
@@ -99,24 +108,38 @@ function Settings() {
                             <label className='text-xl'>{t('settingsMapDefaults')}</label>
                         </div>
 
-                        <div className='w-full flex flex-wrap'>
+                        <div className='w-full flex flex-wrap pt-2'>
                             <div className='pl-4 p-2'>
                                 <input className='mr-2' type='checkbox' id='onlyYourMeasures' label={t('measuresShowYourDataOnly')} {...register('showYourDataOnly')}></input>
                                 <label className="mb-4" htmlFor='onlyYourMeasures'>{t('measuresShowYourDataOnly')}</label>
+                            </div>                            
+                            <div className='pl-4 p-2'>
+                                <input className='mr-2' type='checkbox' id='showMeasureGroups' label={t('measuresShowMeasureGroups')} {...register('showMeasureGroups')}></input>
+                                <label htmlFor='showMeasureGroups'>{t('measuresShowMeasureGroups')}</label>
                             </div>
                             <div className='pl-4 p-2'>
                                 <input className='mr-2' type='checkbox' id='showMeasures' label={t('measuresShowStandaloneMeasures')} {...register('showMeasures')}></input>
                                 <label htmlFor='showMeasures'>{t('measuresShowStandaloneMeasures')}</label>
                             </div>
                             <div className='pl-4 p-2'>
-                                <input className='mr-2' type='checkbox' id='showMeasureGroups' label={t('measuresShowMeasureGroups')} {...register('showMeasureGroups')}></input>
-                                <label htmlFor='showMeasureGroups'>{t('measuresShowMeasureGroups')}</label>
-                            </div>
-                            <div className='pl-4 p-2'>
                                 <input className='mr-2' type='checkbox' id='showReports' label={t('measuresShowReports')} {...register('showReports')}></input>
                                 <label htmlFor='showReports'>{t('measuresShowReports')}</label>
                             </div>
                         </div>
+
+
+                        <div className='w-full flex flex-wrap'>                            
+                            <div className='pl-4 p-2'>
+                                <Input label={t('myMeasureGroupsNumber')} {...register('myMeasureGroupsNumber')} />
+                            </div>
+                            <div className='pl-4 p-2'>
+                                <Input label={t('myMeasuresNumber')} {...register('myMeasuresNumber')} />
+                            </div>
+                            <div className='pl-4 p-2'>
+                                <Input label={t('myReportsNumber')} {...register('myReportsNumber')} />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 

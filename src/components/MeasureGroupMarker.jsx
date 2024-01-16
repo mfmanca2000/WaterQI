@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import { Marker, InfoWindow, useAdvancedMarkerRef, AdvancedMarker } from '@vis.gl/react-google-maps';
 import { Link } from 'react-router-dom';
+import { calculateWQIMeasureGroup, getMarkerColorMeasureGroup } from '../utils/wqi';
+import { useTranslation } from 'react-i18next';
 
 function MeasureGroupMarker({ measureGroup }) {
     const [infowindowOpen, setInfowindowOpen] = useState(false);
     const [markerRef, marker] = useAdvancedMarkerRef();
+    const { t } = useTranslation();
+
+    const [wqi, wqiText] = calculateWQIMeasureGroup(measureGroup);
 
     return (
         <>
@@ -13,7 +18,7 @@ function MeasureGroupMarker({ measureGroup }) {
                 onClick={() => setInfowindowOpen(true)}
                 position={{ lat: measureGroup.latitude, lng: measureGroup.longitude }}
                 title={measureGroup.description}>
-                <img src={window.location.origin + '/multiplemarker.png'} className="w-8" />
+                <img src={window.location.origin + '/' + getMarkerColorMeasureGroup(measureGroup)} className="w-9" title={t(wqiText)} />
             </AdvancedMarker>
 
             {infowindowOpen && (

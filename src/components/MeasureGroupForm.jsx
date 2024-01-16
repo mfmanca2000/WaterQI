@@ -16,7 +16,7 @@ import { Link } from 'react-router-dom';
 import StorageService from '../appwrite/storage.js'
 import { useTranslation } from 'react-i18next'
 import MeasureChart from './MeasureChart.jsx';
-import { calculateWQI, getMarkerColor } from '../utils/wqi.js';
+import { calculateWQI, calculateWQIMeasureGroup, getMarkerColor, getMarkerColorMeasureGroup } from '../utils/wqi.js';
 
 
 const defaultLatitude = conf.defaultLatitude;
@@ -103,7 +103,7 @@ function MeasureGroupForm({ measureGroup }) {
                 measureGroup.measures.push(dbMeasure);
                 //measures.current = measureGroup.measures;
 
-                const newMg = await databaseService.updateMeasureGroup(measureGroup.$id, { ...measureGroup, lastOperationTime: new Date(Date.now()) });
+                const newMg = await databaseService.updateMeasureGroup(measureGroup.$id, { ...measureGroup, username: userData.prefs.username, lastOperationTime: new Date(Date.now()) });
 
                 setLastUpdatedAt(newMg.$updatedAt)
                 setMeasureNumber(newMg.measures.length)
@@ -124,7 +124,7 @@ function MeasureGroupForm({ measureGroup }) {
                 measures.current.splice(found, 1);
                 // console.log('After splice: ' + measures.current.length)
                 // console.log('Before databaseService.updateMeasureGroup updatedAt is ' + measureGroup.$updatedAt)
-                const newMg = await databaseService.updateMeasureGroup(measureGroup.$id, { ...measureGroup, lastOperationTime: new Date(Date.now()) });
+                const newMg = await databaseService.updateMeasureGroup(measureGroup.$id, { ...measureGroup, username: userData.prefs.username, lastOperationTime: new Date(Date.now()) });
                 if (newMg) {
                     // console.log('After databaseService.updateMeasureGroup updatedAt is ' + newMg.$updatedAt)
                     // console.log('After databaseService.updateMeasureGroup lastOperationTime is ' + newMg.lastOperationTime)
@@ -157,11 +157,11 @@ function MeasureGroupForm({ measureGroup }) {
                 }
             }
 
-            const dbMeasureGroup = await databaseService.updateMeasureGroup(measureGroup.$id, { ...data, imageId: file?.$id });
+            const dbMeasureGroup = await databaseService.updateMeasureGroup(measureGroup.$id, { ...data, username: userData.prefs.username, imageId: file?.$id });
             if (dbMeasureGroup) {
                 //modify the image, lat and lng of all related measures
                 dbMeasureGroup.measures.forEach(async (m) => {
-                    await databaseService.updateMeasure(m.$id, { ...m, imageId: dbMeasureGroup.imageId, latitude: dbMeasureGroup.latitude, longitude: dbMeasureGroup.longitude })
+                    await databaseService.updateMeasure(m.$id, { ...m, username: userData.prefs.username, imageId: dbMeasureGroup.imageId, latitude: dbMeasureGroup.latitude, longitude: dbMeasureGroup.longitude })
                 });
 
                 navigate(`/measures`)
@@ -209,6 +209,8 @@ function MeasureGroupForm({ measureGroup }) {
         return null;
     }
 
+    const [wqi, wqiText] = calculateWQIMeasureGroup(measureGroup);
+    const imageName = window.location.origin + '/' + (getMarkerColorMeasureGroup(measureGroup) ?? 'multiplemarker.png');
 
     return (
         <>
@@ -241,7 +243,7 @@ function MeasureGroupForm({ measureGroup }) {
                                 }
                             }}>
                             <AdvancedMarker ref={markerRef} clickable={true} position={markerPosition}>
-                                <img src={window.location.origin + '/multiplemarker.png'} className="w-8" />
+                                <img src={imageName} className="w-8" title={wqiText} />
                             </AdvancedMarker>
                         </Map>
                     </APIProvider>
@@ -277,7 +279,7 @@ function MeasureGroupForm({ measureGroup }) {
 
                             render={({ field: { value, onChange, ...field } }) => {
                                 return (
-                                    <Input required={conf.measureGroupImageRequired === 'true'} {...field} name='image' label={measureGroup ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                    <Input required={!measureGroup && conf.measureGroupImageRequired === 'true'} {...field} name='image' label={measureGroup ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
                                         type="file" className="mb-4"
                                         accept="image/png, image/jpg, image/jpeg"
 
@@ -298,6 +300,7 @@ function MeasureGroupForm({ measureGroup }) {
                             }}
                         />
                         <label>{t('uploadExplaination')}</label>
+                        <p className="font-extralight">{t('uploadImageDisclaimer')}</p>
                     </>)}
 
                     <div className='md:w-1/4'>
@@ -326,13 +329,13 @@ function MeasureGroupForm({ measureGroup }) {
 
                     {measureGroup && (
                         <div className='mt-8'>
-                            {canModify() && (
-                                <div className='text-right'>
-                                    <Button onClick={handleAddMeasureToGroup} className='duration-200 bg-green-500 hover:bg-casaleggio-btn-rgba w-full md:w-1/4'>
-                                        {t('measureGroupAddMeasure')}
-                                    </Button>
-                                </div>
-                            )}
+
+                            <div className='text-right'>
+                                <Button onClick={handleAddMeasureToGroup} className='duration-200 bg-green-500 hover:bg-casaleggio-btn-rgba w-full md:w-1/4'>
+                                    {t('measureGroupAddMeasure')}
+                                </Button>
+                            </div>
+
                             {measureGroup.measures?.length > 0 && (<>
                                 <div className='flex flex-wrap max-h-64 mt-4 px-4 pb-4 bg-casaleggio-rgba  border border-black/10 overflow-x-hidden overflow-y-scroll'>
                                     <table className='table-auto mt-4 w-full'>
