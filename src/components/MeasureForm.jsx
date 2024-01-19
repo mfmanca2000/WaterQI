@@ -11,9 +11,7 @@ import { conf } from "../conf/conf.js";
 import { formatDateTime, removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
 import { calculateWQI, getMarkerColor } from "../utils/wqi.js";
-import { Datepicker, FileInput } from "flowbite-react";
 import { useTranslation } from 'react-i18next'
-import Container from "./Container.jsx";
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -99,7 +97,7 @@ export default function MeasureForm({ measure }) {
         if (measure) {
 
             if (previewImage) {
-                console.log('We have a previewImage...' + previewImage)
+                //console.log('We have a previewImage...' + previewImage)
                 file = await storageService.uploadImage(previewImage);
                 if (file && measure.imageId) {
                     console.log('Have to delete previous image')
@@ -109,10 +107,10 @@ export default function MeasureForm({ measure }) {
 
             const dbMeasure = await databaseService.updateMeasure(measure.$id, { ...data, imageId: file ? file.$id : measure.imageId, username: userData.prefs.username });
             if (dbMeasure) {
-                if (measure.measureGroup) {
-                    navigate('/measureGroup/' + measure.measureGroup.$id)
+                if (measure.location) {
+                    navigate('/location/' + measure.location.$id)
                 } else {
-                    navigate('/measures')
+                    navigate('/locations')
                 }
             }
         } else {
@@ -126,9 +124,13 @@ export default function MeasureForm({ measure }) {
                 }
             }
 
-            const dbMeasure = await databaseService.addMeasure({ ...data, userId: userData.$id, username: userData.prefs.username });
-            if (dbMeasure) {
-                navigate(`/measures`);
+
+            const dbLocation = await databaseService.addLocation({userId: userData.$id, username: userData.prefs.username, name: getValues('placeDescription'), latitude: data.latitude, longitude: data.longitude, imageId: data.imageId, measures: [
+                { ...data, userId: userData.$id, username: userData.prefs.username }
+            ]})
+
+            if (dbLocation) {
+                navigate(`/locations`);
             }
 
         }
@@ -145,8 +147,8 @@ export default function MeasureForm({ measure }) {
 
     return (
         <>
-            <Link className='underline font-bold ' to={measure?.measureGroup ? '/measuregroup/' + measure.measureGroup.$id : '/measures'}>
-                {measure?.measureGroup ? t('returnToMeasureGroup') : t('returnToMeasures')}
+            <Link className='underline font-bold ' to={measure?.location ? '/location/' + measure.location.$id : '/locations'}>
+                {measure?.location ? t('returnToMeasureGroup') : t('returnToMeasures')}
             </Link>
 
             <div className='mb-4'>
@@ -165,8 +167,8 @@ export default function MeasureForm({ measure }) {
                             gestureHandling={'greedy'}
                             disableDefaultUI={true}
                             onClick={(ev) => {
-                                if (canModify() && !(measure?.measureGroup)) {
-                                    //console.log("latitide = ", ev.detail.latLng.lat);
+                                if (canModify() && !(measure?.location)) {
+                                    //console.log("latitude = ", ev.detail.latLng.lat);
                                     setValue("latitude", ev.detail.latLng.lat)
                                     //console.log("longitude = ", ev.detail.latLng.lng);
                                     setValue("longitude", ev.detail.latLng.lng);
@@ -174,9 +176,7 @@ export default function MeasureForm({ measure }) {
                                     //console.log(marker.position.lat)
                                 }
                             }}>
-                            {/* <Marker ref={markerRef} clickable={true} position={markerPosition}>
-                                <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
-                            </Marker> */}
+                            
                             <AdvancedMarker position={markerPosition} clickable='true'>
                                 <img src={imageName} className="w-16" title={wqiText} />
                             </AdvancedMarker>
@@ -191,21 +191,21 @@ export default function MeasureForm({ measure }) {
                             {...register("placeDescription", { required: true, maxLength: 255 })}
                         />
 
-                        {(measure && measure.measureGroup) && (<>
+                        {(measure && measure.location) && (<>
                             <label className='font-thin mb-6'>{t('measureExplaination')} </label>
-                            <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >{t('measureGroup')}</Link>
+                            <Link className="underline" to={`/location/${measure.location.$id}`} >{t('location')}</Link>
                         </>)}
-                        <Input label={t('measureGroupLatitude') + ' *'}
+                        <Input label={t('locationLatitude') + ' *'}
                             placeholder="insert a latitude (i.e. 45.4637979)"
-                            disabled={!canModify() || measure?.measureGroup}
-                            className={`mb-4 ${(!canModify() || measure?.measureGroup) ? 'bg-gray-200' : ''}`}
+                            disabled={!canModify() || measure?.location}
+                            className={`mb-4 ${(!canModify() || measure?.location) ? 'bg-gray-200' : ''}`}
                             {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
                         />
 
-                        <Input label={t('measureGroupLongitude') + ' *'}
+                        <Input label={t('locationLongitude') + ' *'}
                             placeholder="insert a longitude (i.e. 7.87375)"
-                            disabled={!canModify() || measure?.measureGroup}
-                            className={`mb-4 ${(!canModify() || measure?.measureGroup) ? 'bg-gray-200' : ''}`}
+                            disabled={!canModify() || measure?.location}
+                            className={`mb-4 ${(!canModify() || measure?.location) ? 'bg-gray-200' : ''}`}
                             {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
                         />
 
@@ -218,7 +218,7 @@ export default function MeasureForm({ measure }) {
                         />
 
 {console.log('Required:' + (conf.measureImageRequired === 'true'))}
-                        {(canModify() && !(measure?.measureGroup)) && (
+                        {(canModify() && !(measure?.location)) && (
                             <>
                                 <Controller
                                     control={control}
@@ -226,7 +226,7 @@ export default function MeasureForm({ measure }) {
 
                                     render={({ field: { value, onChange, ...field } }) => {
                                         return (
-                                            <Input required={conf.measureImageRequired === 'true'} {...field} name='image' label={measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                            <Input required={conf.measureImageRequired === 'true'} {...field} name='image' label={measure ? t('locationImage') : t('locationImage') + ' *'}
                                                 type="file" className="mb-2"
                                                 accept="image/png, image/jpg, image/jpeg"
 
@@ -302,11 +302,11 @@ export default function MeasureForm({ measure }) {
 
                         {canModify() &&
                             <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:w-1/4 mt-8">
-                                {measure ? t('measureGroupUpdate') : t('measureGroupCreate')}
+                                {measure ? t('locationUpdate') : t('locationCreate')}
                             </Button>
                         }
 
-                        {measure && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(measure.$updatedAt))}</label>)}
+                        {measure && (<label className='mb-4 pl-1'>{t('locationLastUpdate') + ' ' + formatDateTime(new Date(measure.$updatedAt))}</label>)}
                     </div>
                 </form>
             </div>

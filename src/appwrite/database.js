@@ -1,5 +1,6 @@
-import {conf} from "../conf/conf";
+import { conf } from "../conf/conf";
 import { Client, Databases, Query, ID } from "appwrite";
+import { getBoundingBoxCoordinates } from "../utils/geo";
 
 export class DatabaseService {
     client = new Client();
@@ -19,6 +20,16 @@ export class DatabaseService {
         }
     }
 
+    async getLocation(locationId) {
+        try {
+            return await this.databases.getDocument(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, locationId);
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getLocation ' + error);
+            return null;
+        }
+    }
+
+    //DEPRECATED
     async getMeasureGroup(measureGroupId) {
         try {
             return await this.databases.getDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, measureGroupId);
@@ -28,7 +39,7 @@ export class DatabaseService {
         }
     }
 
-    async getReport(reportId){
+    async getReport(reportId) {
         try {
             return await this.databases.getDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, reportId);
         } catch (error) {
@@ -39,7 +50,7 @@ export class DatabaseService {
 
     async getAllMeasures() {
         try {
-            const measures = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [ Query.orderDesc('datetime') ])
+            const measures = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [Query.orderDesc('datetime')])
             //console.log('Measures: ' + JSON.stringify(measures.documents))
             return measures;
         } catch (error) {
@@ -48,11 +59,59 @@ export class DatabaseService {
         }
     }
 
+    async getAllLocations() {
+        try {
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, [Query.orderDesc('$updatedAt')])
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getAllLocations ' + error);
+            return null;
+        }
+    }
+
+    //DEPRECATED
     async getAllMeasureGroups() {
         try {
             return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, [Query.orderDesc('$updatedAt')])
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllMeasureGroups ' + error);
+            return null;
+        }
+    }
+
+
+    async getAllLocationsAround(refLatitude, refLongitude, distance){
+        const boundingBox = getBoundingBoxCoordinates(refLatitude, refLongitude, distance);
+
+        try {
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId,
+                [
+                    Query.greaterThan('latitude', boundingBox.minLatitude),
+                    Query.lessThan('latitude', boundingBox.maxLatitude),
+                    Query.greaterThan('longitude', boundingBox.minLongitude),
+                    Query.lessThan('longitude', boundingBox.maxLatitude)
+                ])
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getAllLocationsAround ' + error);
+            return null;
+        }
+    }
+
+
+    //DEPRECATED
+    async getAllMeasureGroupsAround(refLatitude, refLongitude, distance) {
+        
+        const boundingBox = getBoundingBoxCoordinates(refLatitude, refLongitude, distance);
+
+        try {
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId,
+                [
+                    Query.greaterThan('latitude', boundingBox.minLatitude),
+                    Query.lessThan('latitude', boundingBox.maxLatitude),
+                    Query.greaterThan('longitude', boundingBox.minLongitude),
+                    Query.lessThan('longitude', boundingBox.maxLatitude)
+                ])
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getAllMeasureGroupsAround ' + error);
             return null;
         }
     }
@@ -100,7 +159,7 @@ export class DatabaseService {
     }
 
     async updateMeasure(measureId, { username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
-        try {            
+        try {
             return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, measureId, { username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });
         } catch (error) {
             console.log('--- Appwrite DatabaseService updateMeasure ' + error);
@@ -118,6 +177,17 @@ export class DatabaseService {
         }
     }
 
+
+    async getLocationsByUserId(userId){
+        try {
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, [Query.equal('userId', userId)])
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getLocationsByUserId ' + error);
+            return null;
+        }
+    }
+
+    //DEPRECATED
     async getMeasureGroupsByUserId(userId) {
         try {
             return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, [Query.equal('userId', userId)])
@@ -127,6 +197,16 @@ export class DatabaseService {
         }
     }
 
+    async addLocation({ userId, username, name, latitude, longitude, imageId, measures }) {
+        try {
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, ID.unique(), { userId, username, name, latitude, longitude, imageId, measures });
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService addLocation ' + error);
+            return null;
+        }
+    }
+
+    //DEPRECATED
     async addMeasureGroup({ userId, username, description, latitude, longitude, imageId, measures }) {
         try {
             return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, ID.unique(), { userId, username, description, latitude, longitude, imageId, measures });
@@ -136,6 +216,17 @@ export class DatabaseService {
         }
     }
 
+
+    async updateLocation(locationId, { username, name, latitude, longitude, imageId, measures, lastOperationTime }) {
+        try {
+            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, locationId, { username, name, latitude, longitude, imageId, measures, lastOperationTime })
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService updateLocation ' + error);
+            return null;
+        }
+    }
+
+    //DEPRECATED
     async updateMeasureGroup(measureGroupId, { username, description, latitude, longitude, imageId, measures, lastOperationTime }) {
         try {
             return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, measureGroupId, { username, description, latitude, longitude, imageId, measures, lastOperationTime })
@@ -145,10 +236,22 @@ export class DatabaseService {
         }
     }
 
+
+    async deleteLocation(locationId){
+        try {
+            await this.databases.deleteDocument(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, locationId);
+            return true;
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService deleteLocation ' + error);
+            return false;
+        }
+    }
+
+    //DEPRECATED
     async deleteMeasureGroup(measureGroupId) {
         try {
             await this.databases.deleteDocument(conf.appwriteDatabaseId, conf.appwriteMeasureGroupsCollectionId, measureGroupId);
-            return true; 
+            return true;
         } catch (error) {
             console.log('--- Appwrite DatabaseService deleteMeasureGroup ' + error);
             return false;
@@ -170,15 +273,15 @@ export class DatabaseService {
 
     async addReport({ userId, username, latitude, longitude, title, description, datetime, imageId }) {
         try {
-            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, ID.unique(), { userId, username, latitude, longitude, title, description, datetime, imageId});
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, ID.unique(), { userId, username, latitude, longitude, title, description, datetime, imageId });
         } catch (error) {
             console.log('--- Appwrite DatabaseService addReport ' + error);
             return null;
         }
     }
 
-    async updateReport(measureId, {username, latitude, longitude, title, description, datetime, imageId }) {
-        try {            
+    async updateReport(measureId, { username, latitude, longitude, title, description, datetime, imageId }) {
+        try {
             return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, measureId, { username, latitude, longitude, title, description, datetime, imageId });
         } catch (error) {
             console.log('--- Appwrite DatabaseService updateReport ' + error);

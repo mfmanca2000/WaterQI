@@ -47,6 +47,23 @@ function calculateWQIMeasureGroup(measureGroup) {
     return [0, 'notAvailable']
 }
 
+
+function calculateWQILocation(location) {
+    if (!location) return [0, 'notAvailable'];
+
+    let lastMeasure = null;
+
+    if (location.measures && location.measures.length > 0) {
+        lastMeasure = location?.measures.sort(function (a, b) {
+            return new Date(b.datetime) - new Date(a.datetime);
+        })[0];
+
+        return calculateWQI(lastMeasure);
+    }
+
+    return [0, 'notAvailable']
+}
+
 function calculateWQI(measure) {
 
     let wqi = 0;
@@ -130,9 +147,55 @@ function getMarkerColorMeasureGroup(measureGroup) {
 
 }
 
+
+function getMarkerColorLocation(location) {
+    if (!location) return null;
+
+    let lastMeasure = null;
+
+    if (location.measures && location.measures.length > 0) {
+        lastMeasure = location.measures.sort(function (a, b) {
+            return new Date(b.datetime) - new Date(a.datetime);
+        })[0];
+
+        const [wqi, _] = calculateWQI(lastMeasure);
+        //console.log('Calculated WQI: ' + wqi)
+        switch (wqi) {
+            case 0:
+                return 'multiplemarkerGray.png';
+
+            case 1:
+                return 'multiplemarkerBrown.png';
+
+            case 2:
+                return 'multiplemarkerRed.png';
+
+            case 3:
+                return 'multiplemarkerYellow.png';
+
+            case 4:
+                return 'multiplemarkerGreen.png'
+
+            case 5:
+                return 'multiplemarkerBlue.png';
+
+            default:
+                return 'multiplemarkerGray.png'
+
+        }
+
+    }
+
+}
+
+
+
+
 export {
     calculateWQI,
     calculateWQIMeasureGroup,
+    calculateWQILocation,
     getMarkerColor,
-    getMarkerColorMeasureGroup
+    getMarkerColorMeasureGroup,
+    getMarkerColorLocation,
 }

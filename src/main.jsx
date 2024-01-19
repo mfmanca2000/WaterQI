@@ -21,6 +21,8 @@ import Help from './pages/Help.jsx'
 import Profile from './pages/Profile.jsx'
 import AddReport from './pages/AddReport.jsx'
 import ReportDetail from './pages/ReportDetail.jsx'
+import Locations from './pages/Locations.jsx'
+import LocationDetail from './pages/LocationDetail.jsx'
 
 const router = createBrowserRouter([
   {
@@ -52,6 +54,14 @@ const router = createBrowserRouter([
         element: (
           <Protected authenticationRequired={true}>
             <Measures />
+          </Protected>
+        )
+      },
+      {
+        path: '/locations',
+        element: (
+          <Protected authenticationRequired={true}>
+            <Locations />
           </Protected>
         )
       },
@@ -125,6 +135,14 @@ const router = createBrowserRouter([
         element: (
           <Protected authenticationRequired={true}>
             <MeasureGroupDetail />
+          </Protected>
+        )
+      },
+      {
+        path: '/location/:locationId',
+        element: (
+          <Protected authenticationRequired={true}>
+            <LocationDetail />
           </Protected>
         )
       },

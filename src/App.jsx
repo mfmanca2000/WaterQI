@@ -6,6 +6,7 @@ import Footer from './components/Footer.jsx'
 import { useDispatch } from "react-redux";
 import { login, logout } from "./store/authSlice";
 import authService from './appwrite/auth'
+import HeaderNew from './components/HeaderNew'
 
 function App() {    
     
@@ -25,7 +26,8 @@ function App() {
     return !loading ? (
         <div className="min-h-screen flex flex-wrap content-between bg-white" >
             <div className="w-full block">
-                <Header />
+                {/* <Header /> */}
+                <HeaderNew />
                 <main>
                     <Outlet />
                 </main>

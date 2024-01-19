@@ -27,7 +27,7 @@ const MeasureChart = ({ values }) => {
     };
 
     const handleLegendMouseEnter = (e) => {  
-        console.log(e.dataKey)      
+       // console.log(e.dataKey)      
         if (!lineProps[e.dataKey]) {
             setLineProps({ ...lineProps, hover: e.dataKey });
         }
