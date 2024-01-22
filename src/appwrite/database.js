@@ -88,8 +88,7 @@ export class DatabaseService {
                     Query.greaterThan('latitude', boundingBox.minLatitude),
                     Query.lessThan('latitude', boundingBox.maxLatitude),
                     Query.greaterThan('longitude', boundingBox.minLongitude),
-                    Query.lessThan('longitude', boundingBox.maxLatitude),
-                    Query.orderDesc('$createdAt')
+                    Query.lessThan('longitude', boundingBox.maxLatitude)                    
                 ])
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllLocationsAround ' + error);
