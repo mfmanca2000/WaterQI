@@ -10,8 +10,10 @@ import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/
 import { conf } from "../conf/conf.js";
 import { formatDateTime, removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
-import { calculateWQI, getMarkerColor } from "../utils/wqi.js";
+import { calculateWQI, calculateWQILocation, getMarkerColor, getMarkerColorLocation } from "../utils/wqi.js";
 import { useTranslation } from 'react-i18next'
+import { Modal } from "flowbite-react";
+import { TbMapPinQuestion } from "react-icons/tb";
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -41,6 +43,8 @@ export default function MeasureForm({ measure }) {
     const [previewImageUrl, setPreviewImageUrl] = useState(null)
     const [previewImage, setPreviewImage] = useState(null)
     const [markerRef, marker] = useMarkerRef();
+    const [openModal, setOpenModal] = useState(false);
+    const [locationsAround, setLocationsAround] = useState(null)
 
     const [markerPosition, setMarkerPosition] = useState({
         lat: Number(measure?.latitude || defaultLatitude),
@@ -124,17 +128,23 @@ export default function MeasureForm({ measure }) {
                 }
             }
 
+            const locAround = await databaseService.getAllLocationsAround(data.latitude, data.longitude);
 
-            const dbLocation = await databaseService.addLocation({userId: userData.$id, username: userData.prefs.username, name: getValues('placeDescription'), latitude: data.latitude, longitude: data.longitude, imageId: data.imageId, measures: [
-                { ...data, userId: userData.$id, username: userData.prefs.username }
-            ]})
+            if (locAround.documents.length > 0) {
+                setLocationsAround(locAround);
+                setOpenModal(true);
+            } else {
+                const dbLocation = await databaseService.addLocation({
+                    userId: userData.$id, username: userData.prefs.username, name: getValues('placeDescription'), latitude: data.latitude, longitude: data.longitude, imageId: data.imageId, measures: [
+                        { ...data, userId: userData.$id, username: userData.prefs.username }
+                    ]
+                })
 
-            if (dbLocation) {
-                navigate(`/locations`);
+                if (dbLocation) {
+                    navigate(`/locations`);
+                }
             }
-
         }
-
     }
 
     function canModify() {
@@ -145,10 +155,42 @@ export default function MeasureForm({ measure }) {
     const [wqi, wqiText] = calculateWQI(measure);
     const imageName = window.location.origin + '/' + getMarkerColor(measure);
 
+
+    const onAddMeasureToNearestLocation = async (e, location) => {
+        //console.log('HERE');
+        e.preventDefault();
+
+        console.log('Object: ' + JSON.stringify({ ...getValues(), userId: userData.$id, username: userData.prefs.username, location: locationsAround.documents[0].$id }))
+
+        const dbMeasure = await databaseService.addMeasure({ ...getValues(), userId: userData.$id, username: userData.prefs.username, location: locationsAround.documents[0].$id });
+
+        console.log('dbMeasure: ' + JSON.stringify(dbMeasure))
+
+        if (dbMeasure) {
+            console.log('Measure added to location')
+            // setToggle(!toggle);
+            navigate(`/locations`);
+        }
+    }
+
+    const onAddMeasureToNewLocation = async (e) => {
+        e.preventDefault();
+
+        const dbLocation = await databaseService.addLocation({
+            userId: userData.$id, username: userData.prefs.username, name: getValues('placeDescription'), latitude: getValues('latitude'), longitude: getValues('longitude'), imageId: getValues('imageId'), measures: [
+                { ...getValues(), userId: userData.$id, username: userData.prefs.username }
+            ]
+        })
+
+        if (dbLocation) {
+            navigate(`/locations`);
+        }
+    }
+
     return (
         <>
             <Link className='underline font-bold ' to={measure?.location ? '/location/' + measure.location.$id : '/locations'}>
-                {measure?.location ? t('returnToMeasureGroup') : t('returnToMeasures')}
+                {measure?.location ? t('returnToLocation') : t('returnToMeasures')}
             </Link>
 
             <div className='mb-4'>
@@ -165,6 +207,7 @@ export default function MeasureForm({ measure }) {
                             zoom={conf.defaultZoomLevel}
                             center={centerPosition}
                             gestureHandling={'greedy'}
+                            scaleControl={true}
                             disableDefaultUI={true}
                             onClick={(ev) => {
                                 if (canModify() && !(measure?.location)) {
@@ -176,7 +219,7 @@ export default function MeasureForm({ measure }) {
                                     //console.log(marker.position.lat)
                                 }
                             }}>
-                            
+
                             <AdvancedMarker position={markerPosition} clickable='true'>
                                 <img src={imageName} className="w-16" title={wqiText} />
                             </AdvancedMarker>
@@ -184,6 +227,69 @@ export default function MeasureForm({ measure }) {
                     </APIProvider>
                 </div>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
+
+                    <Modal show={openModal} onClose={() => setOpenModal(false)} popup>
+                        <Modal.Header />
+                        <Modal.Body>
+                            <div className="text-center">
+                                <TbMapPinQuestion className="mx-auto mb-4 h-14 w-14 text-casaleggio-rgba dark:text-gray-200" />
+                                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                    {t('addMeasureModalDescription1', { distance: conf.maxDistanceMeters})}
+                                </h3>
+                                <h6 className='text-base font-thin leading-relaxed justify-normal text-gray-500 dark:text-gray-400'>
+                                    {t('addMeasureModalDescription2')}
+                                </h6>
+                                {console.log('LocationsAround: ' + JSON.stringify(locationsAround))}
+                                {locationsAround && (<div className="w-full h-36 mt-4" >
+                                    <APIProvider apiKey={conf.googleMapsAPIKey}>
+                                        <Map mapId={'bf51a910020fa25b'}
+                                            zoom={16}
+                                            center={{ lat: locationsAround.documents[0].latitude, lng: locationsAround.documents[0].longitude }}
+                                            gestureHandling={'greedy'}
+                                            disableDefaultUI={true}
+                                            scaleControl={true}
+                                        >
+
+                                            <AdvancedMarker position={{ lat: locationsAround.documents[0].latitude, lng: locationsAround.documents[0].longitude }} clickable='true'>
+                                                {/* <img src={window.location.origin + '/' + (getMarkerColorLocation(locationsAround.documents[0]) ?? 'multiplemarker.png')} className="w-16" title={calculateWQILocation(locationsAround.documents[0])[1]} /> */}
+                                                <img src={window.location.origin + '/' + (getMarkerColorLocation(locationsAround.documents[0]) ?? 'multiplemarker.png')} className="w-16" title='PROVA' />
+                                            </AdvancedMarker>
+
+                                            <AdvancedMarker position={{ lat: getValues('latitude'), lng: getValues('longitude') }} clickable='true'>
+                                                <img src={window.location.origin + '/markerGray.png'} className="w-16" title={t('measureTitleNew')} />
+                                            </AdvancedMarker>
+                                        </Map>
+                                    </APIProvider>
+                                </div>)}
+
+
+                                <div className="flex justify-center gap-4 mt-8">
+
+                                    <Button className="bg-green-600" onClick={(e) => {
+                                        onAddMeasureToNearestLocation(e, location);
+                                        setOpenModal(false)
+                                    }}>
+                                        {t('addMeasureToNearestLocation')}
+                                    </Button>
+                                    <Button className="bg-red-600" onClick={(e) => {
+                                        onAddMeasureToNewLocation(e, location);
+                                        setOpenModal(false)
+                                    }}>
+                                        {t('addMeasureCreateNewLocation')}
+                                    </Button>
+                                    <Button color="gray" onClick={() => {
+                                        setOpenModal(false)
+                                    }}>
+                                        {t('addMeasureModalCancel')}
+                                    </Button>
+                                </div>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer />
+                    </Modal>
+
+
+
                     <div className="w-full">
                         <Input label={t('measurePlaceDescription') + ' *'}
                             disabled={!canModify()}
@@ -217,7 +323,7 @@ export default function MeasureForm({ measure }) {
                             {...register("datetime", { required: true, valueAsDate: true })}
                         />
 
-{console.log('Required:' + (conf.measureImageRequired === 'true'))}
+                        {/* {console.log('Required:' + (conf.measureImageRequired === 'true'))} */}
                         {(canModify() && !(measure?.location)) && (
                             <>
                                 <Controller
@@ -244,7 +350,7 @@ export default function MeasureForm({ measure }) {
                                                     }
                                                 }}
                                             />
-                                            
+
                                         );
                                     }}
                                 />

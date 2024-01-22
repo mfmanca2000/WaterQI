@@ -77,15 +77,23 @@ const router = createBrowserRouter([
         path: '/mymeasures',
         element: (
           <Protected authenticationRequired={true}>
-            <Measures type='mymeasures'/>
+            <Locations type='mymeasures' />
           </Protected>
         )
       },
+      // {
+      //   path: '/mymeasuregroups',
+      //   element: (
+      //     <Protected authenticationRequired={true}>
+      //       <Measures type='mymeasuregroups'/>
+      //     </Protected>
+      //   )
+      // },
       {
-        path: '/mymeasuregroups',
+        path: '/mylocations',
         element: (
           <Protected authenticationRequired={true}>
-            <Measures type='mymeasuregroups'/>
+            <Locations type='mylocations' />
           </Protected>
         )
       },
@@ -93,11 +101,11 @@ const router = createBrowserRouter([
         path: '/myreports',
         element: (
           <Protected authenticationRequired={true}>
-            <Measures type='myreports'/>
+            <Locations type='myreports' />
           </Protected>
         )
       },
-      
+
       {
         path: '/addMeasure',
         element: (

@@ -167,6 +167,7 @@ function ReportForm({ report }) {
                             zoom={conf.defaultZoomLevel}
                             center={centerPosition}
                             gestureHandling={'greedy'}
+                            scaleControl={true}
                             disableDefaultUI={true}
                             onClick={(ev) => {
                                 if (canModify()) {

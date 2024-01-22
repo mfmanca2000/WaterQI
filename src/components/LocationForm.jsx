@@ -214,7 +214,7 @@ function LocationForm({ location }) {
     }
 
     const onDeleteLocation = async (e, location) => {
-        console.log('HERE');
+        //console.log('HERE');
         e.preventDefault();
 
         if (await deleteLocation(location)) {
@@ -258,6 +258,7 @@ function LocationForm({ location }) {
                             zoom={conf.defaultZoomLevel}
                             center={centerPosition}
                             gestureHandling={'greedy'}
+                            scaleControl={true}
                             disableDefaultUI={true}
                             onClick={(ev) => {
                                 console.log('HERE2')

@@ -6,7 +6,7 @@ import { useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { Badge, Tooltip } from 'flowbite-react';
-import { IoBeaker, IoWarning, IoStatsChart } from "react-icons/io5";
+import { IoBeaker, IoWarning, IoStatsChart, IoLocationOutline } from "react-icons/io5";
 import { IconContext } from 'react-icons';
 
 function Counters() {
@@ -15,7 +15,8 @@ function Counters() {
     const { t, i18n } = useTranslation();
 
     const [myMeasuresNumber, setMyMeasuresNumber] = useState(0)
-    const [myMeasureGroupsNumber, setMyMeasureGroupsNumber] = useState(0)
+    //const [myMeasureGroupsNumber, setMyMeasureGroupsNumber] = useState(0)
+    const [myLocationsNumber, setMyLocationsNumber] = useState(0)
     const [myReportsNumber, setMyReportsNumber] = useState(0)
 
     useEffect(() => {
@@ -26,9 +27,14 @@ function Counters() {
                 setMyMeasuresNumber(mm.documents.length);
             }
 
-            const mg = await databaseService.getMeasureGroupsByUserId(userData.$id);
-            if (mg) {
-                setMyMeasureGroupsNumber(mg.documents.length);
+            // const mg = await databaseService.getMeasureGroupsByUserId(userData.$id);
+            // if (mg) {
+            //     setMyMeasureGroupsNumber(mg.documents.length);
+            // }
+
+            const ml = await databaseService.getLocationsByUserId(userData.$id);
+            if (ml) {
+                setMyLocationsNumber(ml.documents.length);
             }
 
             const r = await databaseService.getReportssByUserId(userData.$id);
@@ -45,11 +51,19 @@ function Counters() {
 
         <div className='p-4 flex flex-wrap gap-2'>
             <IconContext.Provider value={{ color: 'white', size: '20px' }}>
-                <Tooltip content={t('myMeasureGroups')}>
+                {/* <Tooltip content={t('myMeasureGroups')}>
                     <Badge className='bg-casaleggio-rgba text-white' color='warning' href='/mymeasuregroups' size='sm'>
                         <div className='text-center'>
                             <IoStatsChart />
                             {myMeasureGroupsNumber}
+                        </div>
+                    </Badge>
+                </Tooltip> */}
+                <Tooltip content={t('myLocations')}>
+                    <Badge className='bg-casaleggio-rgba text-white' color='warning' href='/mylocations' size='sm'>
+                        <div className='text-center'>
+                            <IoLocationOutline />
+                            {myLocationsNumber}
                         </div>
                     </Badge>
                 </Tooltip>

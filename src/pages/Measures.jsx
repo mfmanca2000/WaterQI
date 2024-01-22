@@ -197,8 +197,10 @@ function Measures({ type = '' }) {
         switch (type) {
             case 'mymeasures':
                 return t('myMeasures');
-            case 'mymeasuregroups':
-                return t('myMeasureGroups');
+            // case 'mymeasuregroups':
+            //     return t('myMeasureGroups');
+            case 'mylocations':
+                return t('mylocations');
             case 'myreports':
                 return t('myReports');
             default:
@@ -279,6 +281,7 @@ function Measures({ type = '' }) {
                         zoom={conf.defaultZoomLevel}
                         center={{ lat: defaultLatitude, lng: defaultLongitude }}
                         gestureHandling={'greedy'}
+                        scaleControl={true}
                         disableDefaultUI={true}>
 
                         {filteredReports.current?.map((report) => (

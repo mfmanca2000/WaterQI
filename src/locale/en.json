@@ -95,6 +95,7 @@
     "myMeasures": "My measures",
     "myMeasuresNumber": "Numero massimo di misure",
     "myMeasureGroups": "My measure groups",
+    "myLocations": "My locations",
     "myMeasureGroupsNumber": "Numero massimo di misure",
     "myReports": "My reports",
     "myReportsNumber": "Numero massimo di misure",
@@ -109,6 +110,7 @@
     "notAvailable": "Not available",
     "returnToMeasures": "Back to all measures",
     "returnToMeasureGroup": "Back to measure group",
+    "returnToLocation": "Back to location",
     "uploadExplaination": "JPG, JPEG, PNG, max 150.000 bytes",
     "deleteMeasureGroupModalTitle": "Deleting measure group",
     "deleteMeasureGroupModalDescription1": "You can choose to delete this measure group and all related measures or just this measure group.",
@@ -124,6 +126,11 @@
     "deleteReportModalDelete": "Delete the report",
     "deleteModalCancel": "Cancel",
     "uploadImageDisclaimer": "By uploading your photo(s) you warrant and represent that you own or otherwise control all of the rights to your Images, including all the rights necessary for you to provide, post, upload, input or submit the Images",
-    "edited": "Edited"
+    "edited": "Edited",
+    "addMeasureModalDescription1": "We have found an existing location at a distance of less than {{distance}} meters",
+    "addMeasureModalDescription2": "You can add your new measure to this existing location in order to be able to compare the values through the time or you can create a new location containing your new measure but values will not be compared with the ones already added by other users",
+    "addMeasureToNearestLocation": "Add measure to the existing location",
+    "addMeasureCreateNewLocation": "Add measure at a new location",
+    "addMeasureModalCancel": "Cancel"
   }
 }

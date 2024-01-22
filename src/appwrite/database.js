@@ -79,7 +79,7 @@ export class DatabaseService {
     }
 
 
-    async getAllLocationsAround(refLatitude, refLongitude, distance){
+    async getAllLocationsAround(refLatitude, refLongitude, distance = conf.maxDistanceMeters){
         const boundingBox = getBoundingBoxCoordinates(refLatitude, refLongitude, distance);
 
         try {
@@ -88,7 +88,8 @@ export class DatabaseService {
                     Query.greaterThan('latitude', boundingBox.minLatitude),
                     Query.lessThan('latitude', boundingBox.maxLatitude),
                     Query.greaterThan('longitude', boundingBox.minLongitude),
-                    Query.lessThan('longitude', boundingBox.maxLatitude)
+                    Query.lessThan('longitude', boundingBox.maxLatitude),
+                    Query.orderDesc('$createdAt')
                 ])
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllLocationsAround ' + error);
@@ -149,9 +150,9 @@ export class DatabaseService {
         }
     }
 
-    async addMeasure({ userId, username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
+    async addMeasure({ userId, username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity, location }) {
         try {
-            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, ID.unique(), { userId, username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, ID.unique(), { userId, username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity, location });
         } catch (error) {
             console.log('--- Appwrite DatabaseService addMeasure ' + error);
             return null;

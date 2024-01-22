@@ -95,6 +95,7 @@
         "myMeasures": "Mes mesures",
         "myMeasuresNumber": "Nombre de mesures à montrer",
         "myMeasureGroups": "Mes groupes de mesures",
+        "myLocations": "Mes lieux",
         "myMeasureGroupsNumber": "Nombre de groupes de mesures à montrer",
         "myReports": "Mes rapports",
         "myReportsNumber": "Nombre de rapports à montrer",
@@ -109,6 +110,7 @@
         "notAvailable": "Pas disponible",
         "returnToMeasures": "Retourner aux mesures",
         "returnToMeasureGroup": "Retourner au groupe de mesures",
+        "returnToLocation": "Retourne au lieu",
         "uploadExplaination": "JPG, JPEG, PNG, max 150.000 bytes",
         "deleteMeasureGroupModalTitle": "Suppression du groupe de mesures",
         "deleteMeasureGroupModalDescription1": "Vous pouvez choisir de supprimer ce groupe de mesure et toutes les mesures liées ou seulement le groupe lui même.",
@@ -124,6 +126,11 @@
         "deleteReportModalDelete": "Effacer le rapport",
         "deleteModalCancel": "Annuler",
         "uploadImageDisclaimer": "En téléchargeant vos photos, vous garantissez et déclarez que vous possédez ou contrôlez tous les droits sur vos images, y compris tous les droits nécessaires pour que vous puissiez fournir, publier, télécharger, saisir ou soumettre les images.",
-        "edited": "Modifié"
+        "edited": "Modifié",
+        "addMeasureModalDescription1": "Nous avons trouvé un lieu existant à une distance de moins de {{distance}} metres",
+        "addMeasureModalDescription2": "Vous pouvez ajouter votre nouvelle mesure à ce lieu existant pour pouvoir suivre l'evolution des valeurs dans le temps, ou vous pouvez créer un nouveau lieu mais les valeurs de votre nouvelle mesure ne pourront pas être comparé aux mesures existants saisies par autres utilisateurs",
+        "addMeasureToNearestLocation": "Ajoter la mesure au lieu existant",
+        "addMeasureCreateNewLocation": "Ajouter la mesure à un nouveau lieu",
+        "addMeasureModalCancel": "Annuler"
     }
 }

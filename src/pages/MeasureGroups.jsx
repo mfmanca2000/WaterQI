@@ -75,6 +75,7 @@ function MeasureGroups() {
             zoom={8}
             center={{ lat: defaultLatitude, lng: defaultLongitude }}
             gestureHandling={'greedy'}
+            scaleControl={true}
             disableDefaultUI={true}
           >
             {measureGroups.current?.map((measureGroup) => (

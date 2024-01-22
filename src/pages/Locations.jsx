@@ -41,7 +41,7 @@ function Locations({ type = '' }) {
     }, [userData])
 
 
-    function hasMeasuresInInterval(location) {
+    function hasMeasuresInInterval(location, userId = null) {
         if (!dateFrom && !dateTo) return true;
 
         if (dateFrom && dateTo) {
@@ -50,24 +50,23 @@ function Locations({ type = '' }) {
 
             return location.measures.filter(m => {
                 const mdate = new Date(m.datetime).getTime();
-                return mdate >= df && mdate <= dt
+                return mdate >= df && mdate <= dt && (userId === null || m.userId === userId)
             }).length > 0;
         } else if (dateFrom) {
-            console.log('HERE!!')
             const df = new Date(dateFrom).getTime();
 
             return location.measures.filter(m => {
                 const mdate = new Date(m.datetime).getTime();
-                return mdate >= df;
+                return mdate >= df && (userId === null || m.userId === userId);
             }).length > 0;
         } else if (dateTo) {
             const dt = new Date(dateTo).getTime();
 
             return location.measures.filter(m => {
                 const mdate = new Date(m.datetime).getTime();
-                return mdate <= dt;
+                return mdate <= dt && (userId === null || m.userId === userId);
             }).length > 0;
-        }        
+        }
     }
 
     useEffect(() => {
@@ -77,11 +76,7 @@ function Locations({ type = '' }) {
         const measureLocationsNumberToShow = userData?.prefs.myLocationsNumber && userData?.prefs.myLocationsNumber > 0 ? userData?.prefs.myLocationsNumber : conf.lastModifiedLocationsNumber;
         const reportsNumberToShow = userData?.prefs.myReportsNumber && userData?.prefs.myReportsNumber > 0 ? userData?.prefs.myReportsNumber : conf.lastInsertedReportsNumber
 
-        if (type === '') {            
-
-            
-
-
+        if (type === '') {
             databaseService.getAllLocations().then((returnedLocations) => {
                 if (returnedLocations) {
                     sortedLocations.current = returnedLocations.documents.slice(0, measureLocationsNumberToShow);
@@ -95,33 +90,69 @@ function Locations({ type = '' }) {
                         // console.log('First: ' + firstCondition)
                         // console.log('Second: ' + secondCondition)
                         // console.log('Third: ' + thirdCondition)
-                        
+
                         return firstCondition && secondCondition && thirdCondition;
 
-                    })                    
+                    })
 
                     databaseService.getAllReports().then((returnedReports) => {
                         sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
-        
+
                         filteredReports.current = returnedReports.documents.filter((r) => {
                             return showReports &&
                                 (!showYourDataOnly || r.userId === currentUserId) &&
                                 (!searchText || r.title.toLowerCase().includes(searchText.toLowerCase()) || r.description.toLowerCase().includes(searchText.toLowerCase()));
                         });
-        
+
                         //console.log('Old:' + measureNumber + ' New:' + (filteredLocations.current.length + filteredReports.current.length));
                         setMeasureNumber(filteredLocations.current.length + filteredReports.current.length);
                     })
                 }
             })
 
+        } else if (type == 'mylocations') {
 
-            
+            databaseService.getLocationsByUserId(currentUserId).then((returnedLocations) => {
+                sortedLocations.current = returnedLocations.documents.slice(0, measureLocationsNumberToShow);
 
-            
+                filteredLocations.current = returnedLocations.documents.filter((l) => {
+                    
+                    const firstCondition = (!searchText || l.name.toLowerCase().includes(searchText.toLowerCase()))
+                    const secondCondition = hasMeasuresInInterval(l, currentUserId)
+
+                    // console.log('First: ' + firstCondition)
+                    // console.log('Second: ' + secondCondition)
+                    // console.log('Third: ' + thirdCondition)
+
+                    return firstCondition && secondCondition;
+
+                })
+
+                setMeasureNumber(filteredLocations.current.length);
+            })
+
         } else if (type == 'mymeasures') {
 
-            console.log('MyMeasures not implemented yet');
+            databaseService.getAllLocations().then((returnedLocations) => {
+                const locationsWithMyMeasures = returnedLocations.documents.filter((l) => {
+                    return l.measures.some((m) => m.userId === currentUserId)
+                })
+
+                console.log('LocationsWithMyMeasures: ' + locationsWithMyMeasures.length)
+
+                sortedLocations.current = locationsWithMyMeasures.slice(0, measureLocationsNumberToShow);
+
+                filteredLocations.current = locationsWithMyMeasures.filter((l) => {
+                    const firstCondition = (!searchText || l.name.toLowerCase().includes(searchText.toLowerCase()))
+                    const secondCondition = hasMeasuresInInterval(l)
+
+                    return firstCondition && secondCondition;
+                })
+
+                setMeasureNumber(filteredLocations.current.length)
+            })
+
+            
 
         } else if (type == 'myreports') {
 
@@ -219,6 +250,7 @@ function Locations({ type = '' }) {
                         zoom={conf.defaultZoomLevel}
                         center={{ lat: defaultLatitude, lng: defaultLongitude }}
                         gestureHandling={'greedy'}
+                        scaleControl={true}
                         disableDefaultUI={true}>
 
                         {filteredReports.current?.map((report) => (
@@ -227,7 +259,7 @@ function Locations({ type = '' }) {
                             </div>
                         ))}
 
-                            
+
 
                         {filteredLocations.current?.map((loc) => (
                             <div className='p-2 w-1/4' key={loc.$id}>

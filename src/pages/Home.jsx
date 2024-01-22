@@ -47,11 +47,17 @@ function Home() {
 
 
   const menuItems = [
+    // {
+    //   title: `${t('menuItemAddmeasureGroupTitleNew')}`,
+    //   description: `${t('menuItemAddMeasureGroupDescription')}`,
+    //   path: '/addMeasureGroup',
+    //   image: '/multiple-measurements.png'
+    // },
     {
-      title: `${t('menuItemAddmeasureGroupTitleNew')}`,
-      description: `${t('menuItemAddMeasureGroupDescription')}`,
-      path: '/addMeasureGroup',
-      image: '/multiple-measurements.png'
+      title: `${t('menuItemAllMeasuresTitle')}`,
+      description: `${t('menuItemAllMeasuresDescription')}`,
+      path: '/locations',
+      image: '/map.png'
     },
     {
       title: `${t('menuItemAddMeasureTitle')}`,
@@ -71,12 +77,7 @@ function Home() {
     //   path: '/measureGroups',
     //   image: 'eco.png'
     // },
-    {
-      title: `${t('menuItemAllMeasuresTitle')}`,
-      description: `${t('menuItemAllMeasuresDescription')}`,
-      path: '/measures',
-      image: '/map.png'
-    },
+   
     {
       title: `${t('menuItemFindSensorTitle')}`,
       description: `${t('menuItemFindSensorDescription')}`,
