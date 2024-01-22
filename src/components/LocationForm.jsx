@@ -122,8 +122,8 @@ function LocationForm({ location }) {
                     // console.log('After databaseService.updateLocation updatedAt is ' + newLoc.$updatedAt)
                     // console.log('After databaseService.updateLocation lastOperationTime is ' + newLoc.lastOperationTime)
                     // console.log('After removal ' + measures.current.length + ' are left')
-                    setLastUpdatedAt(newMg.$updatedAt)
-                    setMeasureNumber(newMg.measures.length);
+                    setLastUpdatedAt(newLoc.$updatedAt)
+                    setMeasureNumber(newLoc.measures.length);
                 } else {
                     console.log('Unable to update Location')
                     window.location.reload(false);
