@@ -23,3 +23,5 @@ dist-ssr
 *.sln
 *.sw?
 .env
+GlobalDataSet.csv
+Global_Data_Set_XvsX_0.csv

@@ -1,0 +1,29 @@
+Site Name;Sample Date;Sample Time;Freshwater body type;What is the main land use within 50m?;Estimate the water flow;Estimate the water level;Nitrate (mg/L);If Nitrate >10 mg/L, please enter result;Phosphate (mg/L);Ammonia;Ammonium (mg/L);Conductivity (æS cm-1) Europe;pH;Total dissolved solids (mg/L);Water temperature (øC);Water quality - Secchi Tube (Turbidity);Estimate the water colour;What are the atmospheric conditions?;Odour;x;y
+Kybes Lane, Faudry Brook;10/16/2018 12:00:00 AM;15:00:00;Stream;Agriculture;Steady;Average;5-10;0;0.5-1;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+Kybes Lane, Foudry Brook;11/8/2018 12:00:00 AM;19:27:00;Stream;Agriculture;Steady;Average;5-10;0;0.1-0.2;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9917;51.4111
+Kybes Lane, Foudry Brook;12/13/2018 12:00:00 AM;20:29:00;Stream;Agriculture;Steady;Average;5-10;0;<0.02;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+Kybes Lane, Foudry Brook;1/13/2019 12:00:00 AM;14:55:00;Stream;Agriculture;Steady;Average;5-10;0;<0.02;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+Kybes Lane, Foudry Brook;3/21/2019 12:00:00 AM;17:01:00;Stream;Agriculture;Steady;High;5-10;0;0.1-0.2;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+Kybes Lane, Foudry Brook;4/18/2019 12:00:00 AM;16:28:00;Stream;Agriculture;Steady;Low;5-10;0;<0.02;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+Kybes Lane, Foudry Brook;5/14/2019 12:00:00 AM;17:28:00;Stream;Agriculture;Steady;Low;5-10;0;<0.02;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+Kybes Lane, Foudry Brook;7/24/2019 12:00:00 AM;16:34:00;Stream;Agriculture;Slow;Low;5-10;0;>1;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+Kybes Lane, Foudry Brook;8/7/2019 12:00:00 AM;13:00:00;Stream;Agriculture;Slow;Low;2-5;0;0.02-0.05;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+Kybes Lane, Foudry Brook;9/11/2019 12:00:00 AM;13:00:00;Stream;Agriculture;Slow;Low;5-10;0;0.2-0.5;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+Kybes Lane, Foudry Brook;11/12/2019 12:00:00 AM;16:24:00;Stream;Agriculture;Surging;High;5-10;0;<0.02;None;None;;None;;None;<14_NTU;Brown;None;None;-0.9924;51.4134
+Kybes Lane, Foudry Brook;2/25/2019 12:00:00 AM;10:25:00;Stream;Agriculture;Steady;Average;5-10;0;0.1-0.2;None;None;;None;;None;<14_NTU;Colourless;None;None;-0.9919;51.4126
+River Dunn;4/16/2021 12:00:00 AM;13:55:00;River;Agriculture;Steady;High;0.5-1;0;0.02-0.05;None;None;;None;;None;<14_NTU;Colourless;None;None;-1.5738;51.4
+River Dunn;6/28/2020 12:00:00 AM;13:43:00;River;Agriculture;Slow;High;2-5;0;0.02-0.05;None;None;;None;;None;<14_NTU;Colourless;None;None;-1.5906;51.3857
+River Dun;3/8/2020 12:00:00 AM;14:27:00;River;Agriculture;Surging;High;5-10;0;0.05-0.1;None;None;;None;;None;<14_NTU;Green;None;None;-1.5903;51.3846
+River Dun;7/11/2021 12:00:00 AM;09:59:00;River;Agriculture;Slow;Average;5-10;0;<0.02;None;None;;None;;None;<14_NTU;Colourless;None;None;-1.5899;51.3854
+River Dunn;9/12/2021 12:00:00 AM;10:48:00;River;Agriculture;Steady;Low;1-2;0;<0.02;None;None;;None;;None;<14_NTU;Colourless;None;None;-1.5886;51.3854
+River Dunn;9/12/2021 12:00:00 AM;10:48:00;River;Agriculture;Steady;Low;1-2;0;<0.02;None;None;;None;;None;<14_NTU;Colourless;None;None;-1.5886;51.3854
+River Dunn;9/12/2021 12:00:00 AM;10:48:00;River;Agriculture;Steady;Low;1-2;0;<0.02;None;None;;None;;None;<14_NTU;Colourless;None;None;-1.5886;51.3854
+River Dunn Great Bedwyn;9/27/2020 12:00:00 AM;10:41:00;River;Agriculture;Steady;Average;2-5;0;0.05-0.1;None;None;;None;;None;>240_NTU;Yellow;None;None;-1.5921;51.3839
+River Dunn Great Bedwyn;9/27/2020 12:00:00 AM;10:41:00;River;Agriculture;Steady;Average;2-5;0;0.05-0.1;None;None;;None;;None;>240_NTU;Yellow;None;None;-1.5921;51.3839
+River Dunn;1/11/2021 12:00:00 AM;10:31:00;River;Agriculture;Surging;High;5-10;0;0.02-0.05;None;None;;None;;None;;Colourless;None;None;-1.5898;51.3854
+River Dunn;1/11/2021 12:00:00 AM;10:31:00;River;Agriculture;Surging;High;5-10;0;0.02-0.05;None;None;;None;;None;;Colourless;None;None;-1.5898;51.3854
+Manor FARM;5/7/2021 12:00:00 AM;00:00:00;River;Agriculture;Steady;Average;5-10;0;<0.02;None;None;;None;;None;;Colourless;None;None;-1.2224;51.3899
+East Shefford house;5/7/2021 12:00:00 AM;00:00:00;River;Agriculture;Steady;Average;2-5;0;0.02-0.05;None;None;;None;;None;;Colourless;None;None;-1.441;51.4701
+North Croft fish ladder river kennet;5/7/2021 12:00:00 AM;00:00:00;River;Urban_residential;Slow;Low;5-10;0;0.5-1;None;None;;None;;None;;;None;None;-1.3368;51.4014
+East Shefford house;6/22/2021 12:00:00 AM;00:00:00;River;Agriculture;Slow;Low;2-5;0;0.02-0.05;None;None;;None;;None;;Colourless;None;None;-1.441;51.4701
+Manor FARM river kennet;6/24/2021 12:00:00 AM;00:00:00;River;Agriculture;Steady;Average;2-5;0;0.02-0.05;None;None;;None;;None;;Colourless;None;None;-1.2225;51.3899

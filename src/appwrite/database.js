@@ -1,6 +1,7 @@
-import { conf } from "../conf/conf";
+import { conf } from "../conf/conf.js";
 import { Client, Databases, Query, ID } from "appwrite";
-import { getBoundingBoxCoordinates } from "../utils/geo";
+import { getBoundingBoxCoordinates } from "../utils/geo.js";
+import _ from 'lodash';
 
 export class DatabaseService {
     client = new Client();
@@ -9,6 +10,10 @@ export class DatabaseService {
     constructor() {
         this.client.setEndpoint(conf.appwriteUrl).setProject(conf.appwriteProjectId);
         this.databases = new Databases(this.client)
+    }
+
+    getIdUnique(){
+        return ID.unique()
     }
 
     async getMeasure(measureId) {
@@ -79,7 +84,7 @@ export class DatabaseService {
     }
 
 
-    async getAllLocationsAround(refLatitude, refLongitude, distance = conf.maxDistanceMeters){
+    async getAllLocationsAround(refLatitude, refLongitude, distance = conf.maxDistanceMeters) {
         const boundingBox = getBoundingBoxCoordinates(refLatitude, refLongitude, distance);
 
         try {
@@ -88,7 +93,7 @@ export class DatabaseService {
                     Query.greaterThan('latitude', boundingBox.minLatitude),
                     Query.lessThan('latitude', boundingBox.maxLatitude),
                     Query.greaterThan('longitude', boundingBox.minLongitude),
-                    Query.lessThan('longitude', boundingBox.maxLatitude)                    
+                    Query.lessThan('longitude', boundingBox.maxLatitude)
                 ])
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllLocationsAround ' + error);
@@ -96,10 +101,23 @@ export class DatabaseService {
         }
     }
 
+    getAllLocationsAroundFromList(locations, refLatitude, refLongitude, distance = conf.maxDistanceMeters) {
+        const boundingBox = getBoundingBoxCoordinates(refLatitude, refLongitude, distance)
+
+        try {
+            return locations.filter((l) => {
+                return l.latitude > boundingBox.minLatitude && l.latitude < boundingBox.maxLatitude && l.longitude > boundingBox.minLongitude && l.longitude < boundingBox.maxLongitude
+            })
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService getAllLocationsAroundFromList ' + error)
+            return null
+        }
+    }
+
 
     //DEPRECATED
     async getAllMeasureGroupsAround(refLatitude, refLongitude, distance) {
-        
+
         const boundingBox = getBoundingBoxCoordinates(refLatitude, refLongitude, distance);
 
         try {
@@ -178,7 +196,7 @@ export class DatabaseService {
     }
 
 
-    async getLocationsByUserId(userId){
+    async getLocationsByUserId(userId) {
         try {
             return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, [Query.equal('userId', userId)])
         } catch (error) {
@@ -202,6 +220,22 @@ export class DatabaseService {
             return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, ID.unique(), { userId, username, name, latitude, longitude, imageId, measures });
         } catch (error) {
             console.log('--- Appwrite DatabaseService addLocation ' + error);
+            return null;
+        }
+    }
+
+    async restoreLocation(location) {
+        try {
+
+            const measures = location.measures.map((e) => {
+                return _.pick(e, ['userId', 'username', 'datetime', 'latitude', 'longitude', 'imageId', 'electricalConductivity', 'totalDissolvedSolids', 'pH', 'temperature', 'salinity', 'placeDescription']);
+            })
+
+            //console.log(measures)
+
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, location.$id ?? ID.unique(), { userId: location.userId, username: location.username, name: location.name, lastOperationTime: location.lastOperationTime, latitude: location.latitude, longitude: location.longitude, imageId: location.imageId, measures: measures });
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService restoreLocation ' + error);
             return null;
         }
     }
@@ -237,7 +271,7 @@ export class DatabaseService {
     }
 
 
-    async deleteLocation(locationId){
+    async deleteLocation(locationId) {
         try {
             await this.databases.deleteDocument(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, locationId);
             return true;
@@ -276,6 +310,15 @@ export class DatabaseService {
             return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, ID.unique(), { userId, username, latitude, longitude, title, description, datetime, imageId });
         } catch (error) {
             console.log('--- Appwrite DatabaseService addReport ' + error);
+            return null;
+        }
+    }
+
+    async restoreReport(report) {
+        try {
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, report.$id, { userId: report.userId, username: report.username, title: report.title, description: report.name, datetime: report.datetime, latitude: report.latitude, longitude: report.longitude, imageId: report.imageId });
+        } catch (error) {
+            console.log('--- Appwrite DatabaseService restoreReport ' + error);
             return null;
         }
     }
