@@ -8,6 +8,7 @@ import { conf } from "../conf/conf.js";
 import LocationMarker from '../components/LocationMarker';
 import ReportMarker from '../components/ReportMarker';
 import databaseService from '../appwrite/database';
+import LocationMarkers from '../components/LocationMarkers';
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -29,7 +30,7 @@ function Locations({ type = '' }) {
     const filteredLocations = useRef([]);
     const sortedLocations = useRef([]);
 
-
+    
     useEffect(() => {
 
         if (userData && userData.prefs) {
@@ -116,7 +117,7 @@ function Locations({ type = '' }) {
                 sortedLocations.current = returnedLocations.documents.slice(0, measureLocationsNumberToShow);
 
                 filteredLocations.current = returnedLocations.documents.filter((l) => {
-                    
+
                     const firstCondition = (!searchText || l.name.toLowerCase().includes(searchText.toLowerCase()))
                     const secondCondition = hasMeasuresInInterval(l, currentUserId)
 
@@ -152,7 +153,7 @@ function Locations({ type = '' }) {
                 setMeasureNumber(filteredLocations.current.length)
             })
 
-            
+
 
         } else if (type == 'myreports') {
 
@@ -245,7 +246,7 @@ function Locations({ type = '' }) {
 
             <Container>
                 <APIProvider apiKey={conf.googleMapsAPIKey}>
-                    <Map className='h-96 mt-6'
+                    <Map className='h-[500px] mt-6'
                         mapId={'bf51a910020fa25a'}
                         zoom={conf.defaultZoomLevel}
                         center={{ lat: defaultLatitude, lng: defaultLongitude }}
@@ -253,7 +254,7 @@ function Locations({ type = '' }) {
                         scaleControl={true}
                         disableDefaultUI={true}>
 
-                        {filteredReports.current?.map((report) => (
+                         {filteredReports.current?.map((report) => (
                             <div className='p-2 w-1/4' key={report.$id}>
                                 <ReportMarker report={report} clickable={true} />
                             </div>
@@ -265,8 +266,8 @@ function Locations({ type = '' }) {
                             <div className='p-2 w-1/4' key={loc.$id}>
                                 <LocationMarker location={loc} clickable={true} />
                             </div>
-                        ))}
-
+                        ))} 
+                        
 
                     </Map>
                 </APIProvider>

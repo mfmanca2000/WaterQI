@@ -13,7 +13,7 @@ import { IoBeaker, IoLocationOutline, IoStatsChart, IoWarning } from 'react-icon
 import { FaFileImport, FaFileExport } from "react-icons/fa6";
 import { MdOutlineRestore } from "react-icons/md";
 import { IconContext } from 'react-icons';
-import ImportGlobalDataSet from '../utils/ImportGlobalDataSet';
+import ImportGlobalDataSet from '../utils/SaveGlobalDataSet';
 import ExportDatabase from '../utils/ExportDatabase';
 import RestoreDatabase from '../utils/RestoreDatabase';
 
@@ -128,7 +128,7 @@ function Profile() {
                         <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
                             <Card className="">
                                 <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
-                                    Import Global Dataset
+                                    Save Global Dataset
                                 </div>
                                 <div className='flex w-full justify-center gap-2'>
                                     <FaFileImport />

@@ -11,7 +11,7 @@ import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/
 import { conf } from "../conf/conf.js";
 import { formatDateTime } from "../utils/date.js";
 import { Link } from "react-router-dom";
-import { calculateWQI, calculateWQILocation, getMarkerColor, getMarkerColorLocation } from "../utils/wqi.js";
+import { calculateWQI, calculateWQILocation, cleanData, getMarkerColor, getMarkerColorLocation } from "../utils/wqi.js";
 import { useTranslation } from 'react-i18next';
 import MeasureChart from './MeasureChart.jsx';
 import { Accordion, Modal, Table } from "flowbite-react";
@@ -137,6 +137,8 @@ function LocationForm({ location }) {
 
 
     const submit = async (data) => {
+
+        cleanData(data)
 
         let file = null;
 
@@ -420,7 +422,7 @@ function LocationForm({ location }) {
                                         </Table.HeadCell>
                                         <Table.HeadCell>{t('measureDescription')}</Table.HeadCell>
                                         <Table.HeadCell>{t('measureDate')}</Table.HeadCell>
-                                        <Table.HeadCell colSpan={2}>{t('measureActions')}</Table.HeadCell>
+                                        <Table.HeadCell colSpan={1}>{t('measureActions')}</Table.HeadCell>
                                     </Table.Head>
                                     <Table.Body className="divide-y">
                                         {location.measures.sort(function (a, b) {
@@ -434,14 +436,14 @@ function LocationForm({ location }) {
                                                             <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={t(wqiText)} />
                                                         </Table.Cell>
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                            {measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}
+                                                        <Link to={`/measure/${measure.$id}`}> {measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}</Link>
                                                         </Table.Cell>
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                                             {formatDateTime(new Date(measure.datetime))}
                                                         </Table.Cell>
-                                                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                                        {/* <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                                             <Link to={`/measure/${measure.$id}`}><IoOpenOutline className='size-6' /></Link>
-                                                        </Table.Cell>
+                                                        </Table.Cell> */}
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                                             {canModify() && (<Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6' /></Link>)}
                                                         </Table.Cell>

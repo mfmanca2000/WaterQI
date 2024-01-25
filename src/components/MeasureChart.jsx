@@ -10,7 +10,7 @@ let inputLabels = [
     { key: "salinity", color: "cyan" },
 ];
 
-const MeasureChart = ({ values }) => {
+const MeasureChart = ({ values, height = 400 }) => {
 
     const [lineProps, setLineProps] = useState(
         inputLabels.reduce(
@@ -63,7 +63,7 @@ const MeasureChart = ({ values }) => {
     }
 
     return (
-        <ResponsiveContainer width="95%" height={400} className='mt-4'>
+        <ResponsiveContainer width="95%" height={height} className='mt-4'>
             <LineChart data={values} 
                 margin={{ top: 5, right: 10, bottom: 5, left: 50 }}>
                 <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />

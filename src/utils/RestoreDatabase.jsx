@@ -10,34 +10,41 @@ function RestoreDatabase() {
         setOpenModal(true);
     }
 
-    const onReaderLoad = (event) => {
+    const delay = ms => new Promise(res => setTimeout(res, ms));
+
+    const onReaderLoad = async (event) => {
         console.log(event.target.result);
         var allData = JSON.parse(event.target.result);
         //console.log(allData)  
-        
-        allData.locations.documents.forEach(async (l) => {
-            const exists = await databaseService.getLocation(l.$id)
-            if (! exists) {
-                await databaseService.restoreLocation(l)
-                console.log('Restored location')
-            } else {
-                console.log('Already existing location')
-            }
-        });
+        if (allData.locations) {
+            for (const l of allData.locations.documents) {
 
-        allData.reports.documents.forEach(async (r) => {
-            const exists = await databaseService.getReport(r.$id)
-            if (! exists) {
-                await databaseService.restoreReport(r)
-                console.log('Restored report')
-            } else {
-                console.log('Already existing report')
+                const exists = await databaseService.getLocation(l.$id)
+                if (!exists) {
+                    await databaseService.restoreLocation(l)
+                    console.log('Restored location')
+                    await delay(3000)
+                } else {
+                    console.log('Already existing location')
+                }
             }
-        })
+        }
+
+        if (allData.reports) {
+            for (const r of allData.reports.documents) {
+                const exists = await databaseService.getReport(r.$id)
+                if (!exists) {
+                    await databaseService.restoreReport(r)
+                    console.log('Restored report')
+                } else {
+                    console.log('Already existing report')
+                }
+            }
+        }
     }
 
     const onRestoreClicked = () => {
-        const fileInput = document.getElementById('file-upload');        
+        const fileInput = document.getElementById('file-upload');
 
         var reader = new FileReader();
         reader.onload = onReaderLoad;
@@ -56,19 +63,19 @@ function RestoreDatabase() {
                     <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                         Select the backup file .json
                     </h3>
-                                        
+
 
                     <FileInput id="file-upload" />
 
                     <div className="flex justify-center gap-4 mt-8">
 
                         <Button className="bg-green-600" onClick={(e) => {
-                            onRestoreClicked(e, );
+                            onRestoreClicked(e,);
                             setOpenModal(false)
                         }}>
                             Restore
                         </Button>
-                        
+
                         <Button color="gray" onClick={() => {
                             setOpenModal(false)
                         }}>

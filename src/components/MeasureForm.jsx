@@ -10,7 +10,7 @@ import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/
 import { conf } from "../conf/conf.js";
 import { formatDateTime, removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
-import { calculateWQI, calculateWQILocation, getMarkerColor, getMarkerColorLocation } from "../utils/wqi.js";
+import { calculateWQI, calculateWQILocation, cleanData, getMarkerColor, getMarkerColorLocation } from "../utils/wqi.js";
 import { useTranslation } from 'react-i18next'
 import { Modal } from "flowbite-react";
 import { TbMapPinQuestion } from "react-icons/tb";
@@ -95,8 +95,13 @@ export default function MeasureForm({ measure }) {
     }
 
 
+    
+
 
     const submit = async (data) => {
+
+        cleanData(data)
+
         let file = null;
         if (measure) {
 

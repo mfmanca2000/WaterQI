@@ -13,7 +13,7 @@ function ReportMarker({ report }) {
         <>
             <AdvancedMarker
                 ref={markerRef}
-                onClick={() => setInfowindowOpen(true)}
+                onClick={() => setInfowindowOpen(!infowindowOpen)}
                 position={{ lat: report?.latitude, lng: report?.longitude }}
                 title={report?.title}>
                 <img src='warning.png' className="w-10" title={report?.title} />
@@ -21,9 +21,9 @@ function ReportMarker({ report }) {
             {infowindowOpen && (
                 <InfoWindow
                     anchor={marker}
-                    maxWidth={450}
+                    maxWidth={450} minWidth={300}
                     onCloseClick={() => setInfowindowOpen(false)}>
-                    <div className='grid grid-cols-2'>
+                    {/* <div className='grid grid-cols-2'>
                         <div>
                             <Link className='font-bold underline text-right col-span-2' to={`/report/${report.$id}`}>
                                 <label className='font-extrabold text-lg' style={{ whiteSpace: 'nowrap' }}> {report.title} </label><br />
@@ -34,6 +34,19 @@ function ReportMarker({ report }) {
                         <div className='text-center pt-2 pb-6'>
                             <img src={storageService.getPreviewImageUrl(report.imageId)} alt={report.title} className='rounded-lg w-48 object-fill' />
                         </div>
+                    </div> */}
+
+                    <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+                        <Link className='underline font-bold' to={`/report/${report.$id}`}>{report.title}</Link>
+                    </div>
+                    <div className='w-full text-md text-right font-bold '>
+                        {formatDateTime(new Date(report.datetime))}
+                    </div>
+                    <div>
+                        <p className='my-2 text-wrap text-justify' >{report.description}</p>
+                    </div>
+                    <div className='w-48 mx-auto'>
+                        <img src={storageService.getPreviewImageUrl(report.imageId)} alt={report.title} className='rounded-lg w-48 object-fill' />
                     </div>
 
 

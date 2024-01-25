@@ -276,7 +276,7 @@ function Measures({ type = '' }) {
 
             <Container>
                 <APIProvider apiKey={conf.googleMapsAPIKey}>
-                    <Map className='h-96 mt-6'
+                    <Map className='h-screen mt-6'
                         mapId={'bf51a910020fa25a'}
                         zoom={conf.defaultZoomLevel}
                         center={{ lat: defaultLatitude, lng: defaultLongitude }}

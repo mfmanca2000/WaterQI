@@ -24,6 +24,7 @@ function ReportForm({ report }) {
     const userData = useSelector((state) => state.auth.userData)
     const [previewImageUrl, setPreviewImageUrl] = useState(null)
     const [previewImage, setPreviewImage] = useState(null)
+    const [charsCount, setCharsCount] = useState(0)
 
     useEffect(() => {
         async function retrievePosition() {
@@ -53,7 +54,7 @@ function ReportForm({ report }) {
             longitude: report?.longitude || longitudeDevice || defaultLongitude,
             title: report?.title || '',
             description: report?.description || '',
-            datetime: report ? removeTimeZone(new Date(report.datetime)) : removeTimeZone(new Date(Date.now())),      
+            datetime: report ? removeTimeZone(new Date(report.datetime)) : removeTimeZone(new Date(Date.now())),
             imageId: report?.imageId || ''
         }
     })
@@ -71,7 +72,7 @@ function ReportForm({ report }) {
 
     useEffect(() => {
 
-        console.log('Report:' + JSON.stringify(report));
+        //console.log('Report:' + JSON.stringify(report));
 
         reset({
             latitude: report?.latitude || latitudeDevice || defaultLatitude,
@@ -90,11 +91,11 @@ function ReportForm({ report }) {
 
 
 
-    }, [reset, report, getValues, latitudeDevice, longitudeDevice]);
+    }, [reset, report, getValues, latitudeDevice, longitudeDevice, charsCount]);
 
     function latitudeChangedHandler(event) {
         if (!isNaN(event.target.value)) {
-            console.log('Latitude changed: ' + event.target.value);
+            //console.log('Latitude changed: ' + event.target.value);
             setMarkerPosition({ lat: Number(event.target.value), lng: Number(getValues("longitude")) })
         }
     }
@@ -102,7 +103,7 @@ function ReportForm({ report }) {
     function longitudeChangedHandler(event) {
 
         if (!isNaN(event.target.value)) {
-            console.log('Longitude changed: ' + event.target.value + ' Lat-->' + getValues("latitude"));
+            //console.log('Longitude changed: ' + event.target.value + ' Lat-->' + getValues("latitude"));
             setMarkerPosition({ lat: Number(getValues("latitude")), lng: Number(event.target.value) })
         }
     }
@@ -112,17 +113,17 @@ function ReportForm({ report }) {
         if (report) {
 
             if (previewImage) {
-                console.log('We have a previewImage...' + previewImage)
+                //console.log('We have a previewImage...' + previewImage)
                 file = await storageService.uploadImage(previewImage);
                 if (file && report.imageId) {
-                    console.log('Have to delete previous image')
+                    //console.log('Have to delete previous image')
                     storageService.deleteImage(report.imageId);
                 }
             }
 
             const dbReport = await databaseService.updateReport(report.$id, { ...data, imageId: file ? file.$id : report.imageId, username: userData.prefs.username });
             if (dbReport) {
-                navigate('/measures')
+                navigate('/locations')
             }
         } else {
 
@@ -135,7 +136,7 @@ function ReportForm({ report }) {
 
             const dbReport = await databaseService.addReport({ ...data, userId: userData.$id, username: userData.prefs.username });
             if (dbReport) {
-                navigate(`/measures`);
+                navigate(`/locations`);
             }
 
         }
@@ -149,7 +150,7 @@ function ReportForm({ report }) {
 
     return (
         <>
-            <Link className='underline font-bold ' to={'/measures'}>
+            <Link className='underline font-bold ' to={'/locations'}>
                 {t('returnToMeasures')}
             </Link>
 
@@ -190,19 +191,21 @@ function ReportForm({ report }) {
                 </div>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
                     <div className="w-full">
-                        <Input label={t('reportTitle') + ' *'}
+                        <Input label={t('reportTitle') + ' * (' + (watch('title') ? (watch('title').length) + '/255)' : '(max 255 chars)')}
                             disabled={!canModify()}
                             className={`mb-4 ${!canModify() ? 'bg-gray-200' : ''}`}
                             {...register("title", { required: true, maxLength: 255 })}
                         />
 
                         <div className='w-full'>
-                            <label htmlFor={'descriptionTxt'} className='w-full inline-block mb-1 pl-1 mr-2'>
-                                {t('reportDescription') + ' *'}
+                            <label htmlFor={'descriptionTxt'} className={`w-full inline-block mb-1 pl-1 mr-2 ${watch('description') && watch('description').length > 255 ? 'text-red-600' : ''}`}>
+                                {t('reportDescription') + ' * (' + (watch('description') ? (watch('description').length) + '/255)' : '(max 255 chars)')}
+                                
                             </label>
 
                             <ResponsiveContainer>
                                 <textarea id='descriptionTxt'
+                                    
                                     disabled={!canModify()}
                                     className={`px-3 py-2 rounded-lg w-full text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 ${!canModify() ? 'bg-gray-200' : ''}`}
                                     rows={5}
@@ -246,7 +249,7 @@ function ReportForm({ report }) {
 
                                     render={({ field: { value, onChange, ...field } }) => {
                                         return (
-                                            <Input required={conf.reportImageRequired === 'true'} {...field} name='image' label={report ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                            <Input required={conf.reportImageRequired === 'true' && !report?.imageId} {...field} name='image' label={report ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
                                                 type="file" className="mb-4"
                                                 accept="image/png, image/jpg, image/jpeg"
 

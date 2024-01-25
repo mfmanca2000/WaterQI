@@ -64,6 +64,14 @@ function calculateWQILocation(location) {
     return [0, 'notAvailable']
 }
 
+function cleanData(data) {
+    if (data.electricalConductivity === '') data.electricalConductivity = null
+    if (data.totalDissolvedSolids === '') data.totalDissolvedSolids = null
+    if (data.pH === '') data.pH = null
+    if (data.temperature === '') data.temperature = null
+    if (data.salinity === '') data.salinity = null
+}
+
 function calculateWQI(measure) {
 
     let wqi = 0;
@@ -198,4 +206,5 @@ export {
     getMarkerColor,
     getMarkerColorMeasureGroup,
     getMarkerColorLocation,
+    cleanData
 }

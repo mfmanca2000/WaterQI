@@ -131,6 +131,8 @@
         "addMeasureModalDescription2": "Vous pouvez ajouter votre nouvelle mesure à ce lieu existant pour pouvoir suivre l'evolution des valeurs dans le temps, ou vous pouvez créer un nouveau lieu mais les valeurs de votre nouvelle mesure ne pourront pas être comparé aux mesures existants saisies par autres utilisateurs",
         "addMeasureToNearestLocation": "Ajoter la mesure au lieu existant",
         "addMeasureCreateNewLocation": "Ajouter la mesure à un nouveau lieu",
-        "addMeasureModalCancel": "Annuler"
+        "addMeasureModalCancel": "Annuler",
+        "measureLabel": "mesure",
+        "measuresLabel": "mesures"
     }
 }
