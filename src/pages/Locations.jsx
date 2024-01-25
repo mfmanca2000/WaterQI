@@ -8,7 +8,6 @@ import { conf } from "../conf/conf.js";
 import LocationMarker from '../components/LocationMarker';
 import ReportMarker from '../components/ReportMarker';
 import databaseService from '../appwrite/database';
-import LocationMarkers from '../components/LocationMarkers';
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -270,7 +269,7 @@ function Locations({ type = '' }) {
                         
 
                     </Map>
-                </APIProvider>
+                </APIProvider>                
             </Container>
         </div>
     )
