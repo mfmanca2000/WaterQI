@@ -4,10 +4,15 @@ import { useTranslation } from 'react-i18next';
 import Input from '../components/Input';
 import Container from '../components/Container';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
+//import GoogleMap from 'google-maps-react-markers'
 import { conf } from "../conf/conf.js";
 import LocationMarker from '../components/LocationMarker';
 import ReportMarker from '../components/ReportMarker';
 import databaseService from '../appwrite/database';
+//import GoogleMapReact from 'google-map-react'
+import { calculateWQIMeasureGroup, getMarkerColorLocation } from '../utils/wqi';
+import { Button } from 'flowbite-react';
+import Markers from '../components/Markers';
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -29,7 +34,18 @@ function Locations({ type = '' }) {
     const filteredLocations = useRef([]);
     const sortedLocations = useRef([]);
 
-    
+    const Marker = ({ children }) => children;
+    const mapRef = useRef();
+    const [mapReady, setMapReady] = useState(false)
+    const [zoom, setZoom] = useState(conf.defaultZoomLevel)
+    const [bounds, setBounds] = useState()
+
+
+    const onGoogleApiLoaded = ({ map, maps }) => {
+        mapRef.current = map
+        setMapReady(true)
+    }
+
     useEffect(() => {
 
         if (userData && userData.prefs) {
@@ -174,9 +190,6 @@ function Locations({ type = '' }) {
     }, [showYourDataOnly, userData, dateFrom, dateTo, searchText, measureNumber, showReports, type, toggle]);
 
 
-
-
-
     function getTitle(type) {
         switch (type) {
             case 'mymeasures':
@@ -253,23 +266,25 @@ function Locations({ type = '' }) {
                         scaleControl={true}
                         disableDefaultUI={true}>
 
-                         {filteredReports.current?.map((report) => (
+                        {filteredReports.current?.map((report) => (
                             <div className='p-2 w-1/4' key={report.$id}>
                                 <ReportMarker report={report} clickable={true} />
                             </div>
                         ))}
 
 
+                        <Markers locations={filteredLocations.current} />
 
-                        {filteredLocations.current?.map((loc) => (
+
+                        {/* {filteredLocations.current?.map((loc) => (
                             <div className='p-2 w-1/4' key={loc.$id}>
                                 <LocationMarker location={loc} clickable={true} />
                             </div>
-                        ))} 
-                        
+                        ))}  */}
+
 
                     </Map>
-                </APIProvider>                
+                </APIProvider>
             </Container>
         </div>
     )

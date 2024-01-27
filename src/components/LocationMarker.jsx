@@ -28,19 +28,7 @@ function LocationMarker({ location }) {
                 <InfoWindow
                     anchor={marker}
                     maxWidth={300} minWidth={300}
-                    onCloseClick={() => setInfowindowOpen(false)}>
-
-                    {/* <Card className='flex flex-wrap hover:bg-casaleggio-btn-rgba ' href={`/location/${location.$id}`}>
-                            <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center">
-                                {location.name}
-                            </div>
-                            <div className='flex justify-center gap-2 align-middle'>
-                                <IoBeaker className='w-5 h-5'/>
-                                <p className="text-lg text-gray-700 dark:text-gray-400 text-casaleggio-rgba">
-                                    {location.measures.length}
-                                </p>
-                            </div>
-                        </Card> */}
+                    onCloseClick={() => setInfowindowOpen(false)}>                   
 
                     <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
                         <Link className='underline font-bold' to={`/location/${location.$id}`}>{location.name}</Link> 

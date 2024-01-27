@@ -68,7 +68,8 @@ export default function SaveGlobalDataSet() {
           counter++
           if (counter == 1) return; // skip first line with headers
           //at least one of the values is not null or empty
-          else if (( r[12] != null && r[12] != '') || (r[13 != 'None' && r[13] != null]) || (r[14] != '' && r[14] != null) || (r[15] != 'None' && r[15] != null)) {
+          //else if (( r[12] != null && r[12] != '') || (r[13 != 'None' && r[13] != null]) || (r[14] != '' && r[14] != null) || (r[15] != 'None' && r[15] != null)) {
+            else if (r[12] != null && r[12] != '' && r[12] > 0 && r[14] != '' && r[14] != null && r[14] > 0) {
 
             console.log('Locations inserted so far: ' + locations.length)
 
