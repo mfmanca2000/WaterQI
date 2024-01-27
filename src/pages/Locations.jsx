@@ -68,7 +68,7 @@ function Locations({ type = '' }) {
                     if (showReports) {                        
                         databaseService.getAllReports(showYourDataOnly ? currentUserId : null, searchText, limit)
                             .then((returnedReports) => {
-                                console.log('Reports: ' + returnedReports.documents.length)
+                                //console.log('Reports: ' + returnedReports.documents.length)
                                 sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
                                 filteredReports.current = returnedReports.documents;
                                 setMeasureNumber(filteredLocations.current.length + filteredReports.current.length);

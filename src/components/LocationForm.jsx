@@ -215,13 +215,11 @@ function LocationForm({ location }) {
         setOpenModal(true);
     }
 
-    const onDeleteLocation = async (e, location) => {
-        //console.log('HERE');
+    const onDeleteLocation = async (e, location) => {        
         e.preventDefault();
 
         if (await deleteLocation(location)) {
-            console.log('MeasureGroup deleted')
-           // setToggle(!toggle);
+           navigate('/locations')
         }
     }
 
