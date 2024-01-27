@@ -74,10 +74,9 @@ function Markers({ locations, type = 'location' }) {
                             }
                         }
                         }
-                    >
-                        {console.log('Type: ' + type)}
+                    >                        
                         {type === 'location' && (<img src={window.location.origin + '/' + getMarkerColorLocation(loc)} className="w-9" title={t(calculateWQIMeasureGroup(loc)[1])} />)}
-                        {type === 'report' && (<img src={window.location.origin + '/warning.png'} className="w-10" title={loc?.title} />)}
+                        {type === 'report' && (<img src={window.location.origin + '/warning.png'} className="w-9" title={loc?.title} />)}
                     </AdvancedMarker>
 
                     {openFlagsArray.indexOf(loc.$id) != -1 && (

@@ -22,7 +22,7 @@ function Counters() {
     useEffect(() => {
 
         async function getAllNumbers() {
-            const mm = await databaseService.getMeasuresByUserId(userData.$id);
+            const mm = await databaseService.getMeasuresByUserId(userData.$id, null, 100);
             if (mm) {
                 setMyMeasuresNumber(mm.documents.length);
             }
@@ -63,7 +63,7 @@ function Counters() {
                     <Badge className='bg-casaleggio-rgba text-white' color='warning' href='/mylocations' size='sm'>
                         <div className='text-center'>
                             <IoLocationOutline />
-                            {myLocationsNumber}
+                            {myLocationsNumber}{myLocationsNumber > 99 ? '+' : ''}
                         </div>
                     </Badge>
                 </Tooltip>
@@ -71,7 +71,7 @@ function Counters() {
                     <Badge className='bg-casaleggio-rgba text-white' color='warning' href='/mymeasures' size='sm'>
                         <div className='text-center'>
                             <IoBeaker />
-                            {myMeasuresNumber}
+                            {myMeasuresNumber}{myMeasuresNumber > 99 ? '+' : ''}
                         </div>
                     </Badge>
                 </Tooltip>
@@ -80,7 +80,7 @@ function Counters() {
 
                         <div className='text-center'>
                             <IoWarning />
-                            {myReportsNumber}
+                            {myReportsNumber}{myReportsNumber > 99 ? '+' : ''}
                         </div>
                     </Badge>
                 </Tooltip>

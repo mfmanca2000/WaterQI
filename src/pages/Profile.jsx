@@ -32,7 +32,7 @@ function Profile() {
     useEffect(() => {
 
         async function getAllNumbers() {
-            const mm = await databaseService.getMeasuresByUserId(userData.$id);
+            const mm = await databaseService.getMeasuresByUserId(userData.$id, null, 100);
             if (mm) {
                 setMyMeasuresNumber(mm.documents.length);
             }
