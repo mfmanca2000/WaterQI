@@ -11,6 +11,8 @@ import { formatDateTime } from '../utils/date';
 
 function Markers({ locations, type = 'location' }) {
 
+    console.log('Type:' + type)
+
     const map = useMap();
     const [markers, setMarkers] = useState({});
     const [openFlagsArray, setOpenFlagsArray] = useState([]);
@@ -50,7 +52,8 @@ function Markers({ locations, type = 'location' }) {
 
 
     return (
-        <>            
+        <>
+        {console.log(locations)}
             {locations.map((loc) => (
                 <div key={'div_' + loc.$id}>
 
@@ -75,8 +78,9 @@ function Markers({ locations, type = 'location' }) {
                         }
                         }
                     >
+                        {console.log('Type: ' + type)}
                         {type === 'location' && (<img src={window.location.origin + '/' + getMarkerColorLocation(loc)} className="w-9" title={t(calculateWQIMeasureGroup(loc)[1])} />)}
-                        {type === 'report' && (<img src='warning.png' className="w-10" title={loc?.title} />)}
+                        {type === 'report' && (<img src={window.location.origin + '/warning.png'} className="w-10" title={loc?.title} />)}
                     </AdvancedMarker>
 
                     {openFlagsArray.indexOf(loc.$id) != -1 && (
@@ -89,19 +93,20 @@ function Markers({ locations, type = 'location' }) {
                                 })
                             })}
                         >
-                            {type === 'location' && (<>
-                                <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
-                                    <Link className='underline font-bold' to={`/location/${loc.$id}`}>{loc.name}</Link>
-                                </div>
-                                <div className='w-full text-md text-right font-bold'>
-                                    {loc.measures.length + ' ' + ((loc.measures.length == 0 || loc.measures.length > 1) ? t('measuresLabel') : t('measureLabel'))}
-                                </div>
-                                <div>
-                                    <MeasureChart height={200} values={loc.measures.sort(function (a, b) {
-                                        return new Date(a.datetime) - new Date(b.datetime);
-                                    })} />
-                                </div>
-                            </>)}
+                            {type === 'location' && (
+                                <>
+                                    <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+                                        <Link className='underline font-bold' to={`/location/${loc.$id}`}>{loc.name}</Link>
+                                    </div>
+                                    <div className='w-full text-md text-right font-bold'>
+                                        {loc.measures.length + ' ' + ((loc.measures.length == 0 || loc.measures.length > 1) ? t('measuresLabel') : t('measureLabel'))}
+                                    </div>
+                                    <div>
+                                        <MeasureChart height={200} values={loc.measures.sort(function (a, b) {
+                                            return new Date(a.datetime) - new Date(b.datetime);
+                                        })} />
+                                    </div>
+                                </>)}
 
                             {type === 'report' && (
                                 <>

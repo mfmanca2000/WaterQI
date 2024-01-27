@@ -18,11 +18,11 @@ function Locations({ type = '' }) {
 
     const { t } = useTranslation();
     const [showYourDataOnly, setShowYourDataOnly] = useState(false);
-    const [showReports, setShowReports] = useState(true);
+    const [showReports, setShowReports] = useState(false);
     const [limit, setLimit] = useState(50)
     const [dateFrom, setDateFrom] = useState(null);
     const [dateTo, setDateTo] = useState(null);
-    const [measureNumber, setMeasureNumber] = useState();
+    const [measureNumber, setMeasureNumber] = useState(0);
     const [searchText, setSearchText] = useState();
     const userData = useSelector((state) => state.auth.userData);
 
@@ -66,14 +66,21 @@ function Locations({ type = '' }) {
                     }
 
                     if (showReports) {
+                        console.log('HERE')
                         databaseService.getAllReports(showYourDataOnly ? currentUserId : null, searchText, limit)
                             .then((returnedReports) => {
+                                console.log('Reports: ' + returnedReports.documents.length)
                                 sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
-                                filteredLocations.current = returnedReports.documents;
+                                filteredReports.current = returnedReports.documents;
+                                setMeasureNumber(filteredLocations.current.length + filteredReports.current.length);
                             })
+                    } else {
+                        console.log('THERE')
+                        filteredReports.current.length = 0
+                        setMeasureNumber(filteredLocations.current.length)
                     }
 
-                    setMeasureNumber(filteredLocations.current.length + filteredReports.current.length);
+                    
                 })
 
         } else if (type == 'mylocations') {
@@ -110,8 +117,7 @@ function Locations({ type = '' }) {
                         var dt = new Date(r.datetime).getTime();
 
                         return (!dateFrom || dt >= new Date(dateFrom).getTime()) &&
-                            (!dateTo || dt <= new Date(dateTo).getTime()) &&
-                            (!searchText || r.description.toLowerCase().includes(searchText.toLowerCase()) || r.title.toLowerCase().includes(searchText.toLowerCase()));
+                            (!dateTo || dt <= new Date(dateTo).getTime())                            
                     });
 
                     setMeasureNumber(filteredReports.current.length);
@@ -162,10 +168,17 @@ function Locations({ type = '' }) {
         }
     }
 
-    function handleChangeLimit(e) {
+    const handleChangeLimit = (e) => {
         setLimit(e.target.value)
     }
 
+    const handleChangeShowYourDataOnly = () => {
+        setShowYourDataOnly(!showYourDataOnly)
+    }
+
+    const handleChangeShowReports = () => {
+        setShowReports(!showReports)
+    }
 
     const onSearchTextChange = useMemo(
         () =>
@@ -188,16 +201,12 @@ function Locations({ type = '' }) {
                 {(type === '') && (<div className='flex'>
                     <div className='flex flex-wrap w-full'>
                         <div className='sm:w-1/5 mt-2'>
-                            <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={() => {
-                                setShowYourDataOnly((prev) => !prev)
-                            }} />
+                            <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={handleChangeShowYourDataOnly} />
                             <label className="mb-4 mr-4" htmlFor='onlyYourLocations'>{t('measuresShowYourLocationsOnly')}</label>
                         </div>
 
                         <div className='sm:w-1/5 mt-2'>
-                            <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={() => {
-                                setShowReports((prev) => !prev)
-                            }} />
+                            <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={handleChangeShowReports} />
                             <label className="mb-4 mr-4" htmlFor='showReports'>{t('measuresShowReports')}</label>
                         </div>
 
@@ -253,7 +262,7 @@ function Locations({ type = '' }) {
 
                         <Markers locations={filteredReports.current} type='report' />
 
-                        <Markers locations={filteredLocations.current} type='location' /> 
+                        {/* <Markers locations={filteredLocations.current} type='location' />   */}
                        
                     </Map>
                 </APIProvider>
