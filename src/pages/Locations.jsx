@@ -1,18 +1,15 @@
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Input from '../components/Input';
 import Container from '../components/Container';
 import { APIProvider, Map } from '@vis.gl/react-google-maps';
-//import GoogleMap from 'google-maps-react-markers'
 import { conf } from "../conf/conf.js";
-import LocationMarker from '../components/LocationMarker';
-import ReportMarker from '../components/ReportMarker';
+//import LocationMarker from '../components/LocationMarker';
+//import ReportMarker from '../components/ReportMarker';
 import databaseService from '../appwrite/database';
-//import GoogleMapReact from 'google-map-react'
-import { calculateWQIMeasureGroup, getMarkerColorLocation } from '../utils/wqi';
-import { Button } from 'flowbite-react';
 import Markers from '../components/Markers';
+import _ from 'lodash';
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -22,29 +19,18 @@ function Locations({ type = '' }) {
     const { t } = useTranslation();
     const [showYourDataOnly, setShowYourDataOnly] = useState(false);
     const [showReports, setShowReports] = useState(true);
+    const [limit, setLimit] = useState(25)
     const [dateFrom, setDateFrom] = useState(null);
     const [dateTo, setDateTo] = useState(null);
     const [measureNumber, setMeasureNumber] = useState();
     const [searchText, setSearchText] = useState();
     const userData = useSelector((state) => state.auth.userData);
-    const [toggle, setToggle] = useState(false);
 
     const filteredReports = useRef([]);
     const sortedReports = useRef([]);
     const filteredLocations = useRef([]);
     const sortedLocations = useRef([]);
 
-    const Marker = ({ children }) => children;
-    const mapRef = useRef();
-    const [mapReady, setMapReady] = useState(false)
-    const [zoom, setZoom] = useState(conf.defaultZoomLevel)
-    const [bounds, setBounds] = useState()
-
-
-    const onGoogleApiLoaded = ({ map, maps }) => {
-        mapRef.current = map
-        setMapReady(true)
-    }
 
     useEffect(() => {
 
@@ -55,6 +41,84 @@ function Locations({ type = '' }) {
         }
 
     }, [userData])
+
+
+    useEffect(() => {
+        
+        const currentUserId = userData.$id;
+
+        const measureLocationsNumberToShow = userData?.prefs.myLocationsNumber && userData?.prefs.myLocationsNumber > 0 ? userData?.prefs.myLocationsNumber : conf.lastModifiedLocationsNumber;
+        const reportsNumberToShow = userData?.prefs.myReportsNumber && userData?.prefs.myReportsNumber > 0 ? userData?.prefs.myReportsNumber : conf.lastInsertedReportsNumber
+
+        if (type === '') {
+            databaseService.getAllLocations(showYourDataOnly ? currentUserId : null,
+                searchText,
+                limit)
+                .then((returnedLocations) => {
+
+                    //console.log(JSON.stringify(returnedLocations))
+
+                    if (returnedLocations) {
+                        sortedLocations.current = returnedLocations.documents.slice(0, measureLocationsNumberToShow);
+                        filteredLocations.current = returnedLocations.documents.filter((l) => {
+                            return hasMeasuresInInterval(l)
+                        })
+                    }
+
+                    if (showReports) {
+                        databaseService.getAllReports(showYourDataOnly ? currentUserId : null, searchText, limit)
+                            .then((returnedReports) => {
+                                sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
+                                filteredLocations.current = returnedReports.documents;
+                            })
+                    }
+
+                    setMeasureNumber(filteredLocations.current.length + filteredReports.current.length);
+                })
+
+        } else if (type == 'mylocations') {
+
+            databaseService.getAllLocations(currentUserId, searchText, limit)
+                .then((returnedLocations) => {
+                    sortedLocations.current = returnedLocations.documents.slice(0, measureLocationsNumberToShow);
+                    filteredLocations.current = returnedLocations.documents.filter((l) => {
+                        return hasMeasuresInInterval(l, currentUserId)
+                    })
+
+                    setMeasureNumber(filteredLocations.current.length);
+                })
+
+        } else if (type == 'mymeasures') {
+
+            databaseService.getMeasuresByUserId(currentUserId, searchText, limit)
+                .then((returnedMeasures) => {
+                    const locationsWithMyMeasures = returnedMeasures.documents.map((m) => databaseService.getLocation(m.location.$id))
+                    sortedLocations.current = locationsWithMyMeasures.slice(0, measureLocationsNumberToShow);
+                    filteredLocations.current = locationsWithMyMeasures.filter((l) => {
+                        return hasMeasuresInInterval(l)
+                    })
+
+                    setMeasureNumber(filteredLocations.current.length)
+                })                        
+
+        } else if (type == 'myreports') {
+
+            databaseService.getAllReports(currentUserId, searchText, limit)
+                .then((returnedReports) => {
+                    sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
+                    filteredReports.current = returnedReports.documents.filter((r) => {
+                        var dt = new Date(r.datetime).getTime();
+
+                        return (!dateFrom || dt >= new Date(dateFrom).getTime()) &&
+                            (!dateTo || dt <= new Date(dateTo).getTime()) &&
+                            (!searchText || r.description.toLowerCase().includes(searchText.toLowerCase()) || r.title.toLowerCase().includes(searchText.toLowerCase()));
+                    });
+
+                    setMeasureNumber(filteredReports.current.length);
+                })
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [showYourDataOnly, userData, dateFrom, dateTo, showReports, type, limit, searchText]);
 
 
     function hasMeasuresInInterval(location, userId = null) {
@@ -85,113 +149,10 @@ function Locations({ type = '' }) {
         }
     }
 
-    useEffect(() => {
-
-        const currentUserId = userData.$id;
-
-        const measureLocationsNumberToShow = userData?.prefs.myLocationsNumber && userData?.prefs.myLocationsNumber > 0 ? userData?.prefs.myLocationsNumber : conf.lastModifiedLocationsNumber;
-        const reportsNumberToShow = userData?.prefs.myReportsNumber && userData?.prefs.myReportsNumber > 0 ? userData?.prefs.myReportsNumber : conf.lastInsertedReportsNumber
-
-        if (type === '') {
-            databaseService.getAllLocations().then((returnedLocations) => {
-                if (returnedLocations) {
-                    sortedLocations.current = returnedLocations.documents.slice(0, measureLocationsNumberToShow);
-
-                    filteredLocations.current = returnedLocations.documents.filter((l) => {
-
-                        const firstCondition = (!showYourDataOnly || l.userId === currentUserId);
-                        const secondCondition = (!searchText || l.name.toLowerCase().includes(searchText.toLowerCase()))
-                        const thirdCondition = hasMeasuresInInterval(l)
-
-                        // console.log('First: ' + firstCondition)
-                        // console.log('Second: ' + secondCondition)
-                        // console.log('Third: ' + thirdCondition)
-
-                        return firstCondition && secondCondition && thirdCondition;
-
-                    })
-
-                    databaseService.getAllReports().then((returnedReports) => {
-                        sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
-
-                        filteredReports.current = returnedReports.documents.filter((r) => {
-                            return showReports &&
-                                (!showYourDataOnly || r.userId === currentUserId) &&
-                                (!searchText || r.title.toLowerCase().includes(searchText.toLowerCase()) || r.description.toLowerCase().includes(searchText.toLowerCase()));
-                        });
-
-                        //console.log('Old:' + measureNumber + ' New:' + (filteredLocations.current.length + filteredReports.current.length));
-                        setMeasureNumber(filteredLocations.current.length + filteredReports.current.length);
-                    })
-                }
-            })
-
-        } else if (type == 'mylocations') {
-
-            databaseService.getLocationsByUserId(currentUserId).then((returnedLocations) => {
-                sortedLocations.current = returnedLocations.documents.slice(0, measureLocationsNumberToShow);
-
-                filteredLocations.current = returnedLocations.documents.filter((l) => {
-
-                    const firstCondition = (!searchText || l.name.toLowerCase().includes(searchText.toLowerCase()))
-                    const secondCondition = hasMeasuresInInterval(l, currentUserId)
-
-                    // console.log('First: ' + firstCondition)
-                    // console.log('Second: ' + secondCondition)
-                    // console.log('Third: ' + thirdCondition)
-
-                    return firstCondition && secondCondition;
-
-                })
-
-                setMeasureNumber(filteredLocations.current.length);
-            })
-
-        } else if (type == 'mymeasures') {
-
-            databaseService.getAllLocations().then((returnedLocations) => {
-                const locationsWithMyMeasures = returnedLocations.documents.filter((l) => {
-                    return l.measures.some((m) => m.userId === currentUserId)
-                })
-
-                console.log('LocationsWithMyMeasures: ' + locationsWithMyMeasures.length)
-
-                sortedLocations.current = locationsWithMyMeasures.slice(0, measureLocationsNumberToShow);
-
-                filteredLocations.current = locationsWithMyMeasures.filter((l) => {
-                    const firstCondition = (!searchText || l.name.toLowerCase().includes(searchText.toLowerCase()))
-                    const secondCondition = hasMeasuresInInterval(l)
-
-                    return firstCondition && secondCondition;
-                })
-
-                setMeasureNumber(filteredLocations.current.length)
-            })
-
-
-
-        } else if (type == 'myreports') {
-
-            databaseService.getReportssByUserId(currentUserId).then((returnedReports) => {
-                sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
-
-                filteredReports.current = returnedReports.documents.filter((r) => {
-                    var dt = new Date(r.datetime).getTime();
-
-                    return (r.userId === currentUserId) &&
-                        (!dateFrom || dt >= new Date(dateFrom).getTime()) &&
-                        (!dateTo || dt <= new Date(dateTo).getTime()) &&
-                        (!searchText || r.description.toLowerCase().includes(searchText.toLowerCase()) || r.title.toLowerCase().includes(searchText.toLowerCase()));
-                });
-
-                setMeasureNumber(filteredReports.current.length);
-            })
-        }
-    }, [showYourDataOnly, userData, dateFrom, dateTo, searchText, measureNumber, showReports, type, toggle]);
-
-
     function getTitle(type) {
         switch (type) {
+            case 'mylocations':
+                return t('myLocations');
             case 'mymeasures':
                 return t('myMeasures');
             case 'myreports':
@@ -200,6 +161,21 @@ function Locations({ type = '' }) {
                 return ''
         }
     }
+
+    function handleChangeLimit(e) {
+        setLimit(e.target.value)
+    }
+
+
+    const onSearchTextChange = useMemo(
+        () =>
+            _.debounce((e) => {
+                setSearchText(e.target.value)
+            }, 1000),
+        []
+    );
+
+
 
 
     return (
@@ -212,18 +188,29 @@ function Locations({ type = '' }) {
                 {(type === '') && (<div className='flex'>
                     <div className='flex flex-wrap w-full'>
                         <div className='sm:w-1/5 mt-2'>
-                            <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={(e) => {
+                            <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={() => {
                                 setShowYourDataOnly((prev) => !prev)
                             }} />
                             <label className="mb-4 mr-4" htmlFor='onlyYourLocations'>{t('measuresShowYourLocationsOnly')}</label>
                         </div>
 
                         <div className='sm:w-1/5 mt-2'>
-                            <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={(e) => {
+                            <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={() => {
                                 setShowReports((prev) => !prev)
                             }} />
                             <label className="mb-4 mr-4" htmlFor='showReports'>{t('measuresShowReports')}</label>
                         </div>
+
+                        <div className='sm:w-1/5'>
+                            <label className="mb-4 mr-4" htmlFor='limit'>{t('limitLabel')}</label>
+                            <select className='mr-2 indent-0' id='limit' value={limit} onChange={handleChangeLimit}>
+                                <option>25</option>
+                                <option>50</option>
+                                <option>75</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+
                         <div className='sm:w-1/5 mt-2'>
                             <label className="mb-4 mr-4 font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
                         </div>
@@ -245,9 +232,7 @@ function Locations({ type = '' }) {
 
 
                     <div className='sm:w-1/4 pr-2' >
-                        <Input className="mr-2" label={t('measuresSearch')} onChange={(e) => {
-                            setSearchText(e.target.value);
-                        }} />
+                        <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
                     </div>
 
                     {type != '' && (<div className='sm:w-1/4 mt-2 flex text-right'>
@@ -266,23 +251,10 @@ function Locations({ type = '' }) {
                         scaleControl={true}
                         disableDefaultUI={true}>
 
-                        {filteredReports.current?.map((report) => (
-                            <div className='p-2 w-1/4' key={report.$id}>
-                                <ReportMarker report={report} clickable={true} />
-                            </div>
-                        ))}
+                        <Markers locations={filteredReports.current} type='report' />
 
-
-                        <Markers locations={filteredLocations.current} />
-
-
-                        {/* {filteredLocations.current?.map((loc) => (
-                            <div className='p-2 w-1/4' key={loc.$id}>
-                                <LocationMarker location={loc} clickable={true} />
-                            </div>
-                        ))}  */}
-
-
+                        <Markers locations={filteredLocations.current} type='location' /> 
+                       
                     </Map>
                 </APIProvider>
             </Container>

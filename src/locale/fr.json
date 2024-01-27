@@ -133,6 +133,8 @@
         "addMeasureCreateNewLocation": "Ajouter la mesure à un nouveau lieu",
         "addMeasureModalCancel": "Annuler",
         "measureLabel": "mesure",
-        "measuresLabel": "mesures"
+        "measuresLabel": "mesures",
+        "last": "Derniers {{limit}}",
+        "limitLabel": "Montre derniers"
     }
 }

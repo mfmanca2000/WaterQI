@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Marker, InfoWindow, useAdvancedMarkerRef, AdvancedMarker } from '@vis.gl/react-google-maps';
+import { Marker, useAdvancedMarkerRef, AdvancedMarker } from '@vis.gl/react-google-maps';
+import { InfoWindow } from './InfoWindow';
 import { Link } from 'react-router-dom';
 import { calculateWQIMeasureGroup, getMarkerColorMeasureGroup } from '../utils/wqi';
 import { useTranslation } from 'react-i18next';

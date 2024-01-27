@@ -12,7 +12,7 @@ export class DatabaseService {
         this.databases = new Databases(this.client)
     }
 
-    getIdUnique(){
+    getIdUnique() {
         return ID.unique()
     }
 
@@ -64,9 +64,18 @@ export class DatabaseService {
         }
     }
 
-    async getAllLocations() {
+    async getAllLocations(userId, searchText, limit) {
         try {
-            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, [Query.orderDesc('$updatedAt')])
+            const queries = [];
+
+            if (userId) queries.push(Query.equal('userId', userId));
+            if (searchText) queries.push(Query.search('name', searchText));
+            queries.push(Query.orderDesc('$updatedAt'));
+            queries.push(Query.limit(limit));
+
+            //console.log(queries)
+
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appriteLocationsCollectionId, queries  )
         } catch (error) {
             console.log('--- Appwrite DatabaseService getAllLocations ' + error);
             return null;
@@ -134,9 +143,19 @@ export class DatabaseService {
         }
     }
 
-    async getAllReports() {
+    async getAllReports(userId, searchText, limit) {
         try {
-            const reports = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, [Query.orderDesc('$updatedAt')]);
+
+            const queries = [];
+
+            if (userId) queries.push(Query.equal('userId', userId));
+            if (searchText) queries.push(Query.search('title', searchText)); //TODO: When Appwrite will implement the logical OR in queries, we need to add a search on the "description" field too
+            queries.push(Query.orderDesc('$updatedAt'));
+            queries.push(Query.limit(limit));
+
+            //console.log(queries)
+
+            const reports = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteReportsCollectionId, queries);
             //console.log('LIST OF REPORTS: ' + JSON.stringify(reports));
             return reports;
         } catch (error) {
@@ -158,9 +177,18 @@ export class DatabaseService {
     //     }
     // }
 
-    async getMeasuresByUserId(userId) {
+    async getMeasuresByUserId(userId, searchText, limit) {
         try {
-            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [Query.equal('userId', userId)])
+
+            const queries = [];
+
+            if (userId) queries.push(Query.equal('userId', userId));
+            if (searchText) queries.push(Query.search('title', searchText));
+            queries.push(Query.orderDesc('$updatedAt'));
+            queries.push(Query.limit(limit));
+
+            return await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, queries)
+
         } catch (error) {
             console.log('--- Appwrite DatabaseService getMeasuresByUserId ' + error);
             return null;
