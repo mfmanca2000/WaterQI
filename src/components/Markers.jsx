@@ -1,5 +1,5 @@
 import { MarkerClusterer } from '@googlemaps/markerclusterer';
-import { AdvancedMarker, useMap } from '@vis.gl/react-google-maps';
+import { AdvancedMarker, Marker, useMap } from '@vis.gl/react-google-maps';
 import { InfoWindow } from './InfoWindow';
 import React, { useEffect, useRef, useState } from 'react'
 import { useTranslation } from 'react-i18next';
@@ -10,8 +10,6 @@ import storageService from '../appwrite/storage';
 import { formatDateTime } from '../utils/date';
 
 function Markers({ locations, type = 'location' }) {
-
-    console.log('Type:' + type)
 
     const map = useMap();
     const [markers, setMarkers] = useState({});
@@ -53,7 +51,6 @@ function Markers({ locations, type = 'location' }) {
 
     return (
         <>
-        {console.log(locations)}
             {locations.map((loc) => (
                 <div key={'div_' + loc.$id}>
 

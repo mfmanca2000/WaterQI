@@ -65,8 +65,7 @@ function Locations({ type = '' }) {
                         })
                     }
 
-                    if (showReports) {
-                        console.log('HERE')
+                    if (showReports) {                        
                         databaseService.getAllReports(showYourDataOnly ? currentUserId : null, searchText, limit)
                             .then((returnedReports) => {
                                 console.log('Reports: ' + returnedReports.documents.length)
@@ -74,13 +73,10 @@ function Locations({ type = '' }) {
                                 filteredReports.current = returnedReports.documents;
                                 setMeasureNumber(filteredLocations.current.length + filteredReports.current.length);
                             })
-                    } else {
-                        console.log('THERE')
+                    } else {                        
                         filteredReports.current.length = 0
                         setMeasureNumber(filteredLocations.current.length)
-                    }
-
-                    
+                    }                    
                 })
 
         } else if (type == 'mylocations') {
@@ -262,7 +258,7 @@ function Locations({ type = '' }) {
 
                         <Markers locations={filteredReports.current} type='report' />
 
-                        {/* <Markers locations={filteredLocations.current} type='location' />   */}
+                        <Markers locations={filteredLocations.current} type='location' />  
                        
                     </Map>
                 </APIProvider>
