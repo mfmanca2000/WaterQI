@@ -51,7 +51,7 @@ function Measures({ type = '' }) {
 
 
     useEffect(() => {
-        
+
         const currentUserId = userData.$id;
 
         const measuresNumberToShow = userData?.prefs.myMeasuresNumber && userData?.prefs.myMeasuresNumber > 0 ? userData?.prefs.myMeasuresNumber : conf.lastInsertedMeasuresNumber;
@@ -62,9 +62,9 @@ function Measures({ type = '' }) {
             //console.log('ALL');
 
             databaseService.getAllMeasures().then((returnedMeasures) => {
-                if (returnedMeasures) {                                    
+                if (returnedMeasures) {
 
-                    sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, measuresNumberToShow);                    
+                    sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, measuresNumberToShow);
 
                     filteredStandaloneMeasures.current = returnedMeasures.documents.filter((m) => {
                         var dt = new Date(m.datetime).getTime();
@@ -111,7 +111,7 @@ function Measures({ type = '' }) {
         } else if (type == 'mymeasures') {
 
             databaseService.getMeasuresByUserId(currentUserId).then((returnedMeasures) => {
-                sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, measuresNumberToShow);                
+                sortedStandaloneMeasures.current = returnedMeasures.documents.slice(0, measuresNumberToShow);
 
                 filteredStandaloneMeasures.current = returnedMeasures.documents.filter((m) => {
                     var dt = new Date(m.datetime).getTime();
@@ -124,24 +124,10 @@ function Measures({ type = '' }) {
 
                 setMeasureNumber(filteredStandaloneMeasures.current.length);
             })
-        } else if (type == 'mymeasuregroups') {
-
-            databaseService.getMeasureGroupsByUserId(currentUserId).then((returnedMeasureGroups) => {
-                sortedMeasureGroups.current = returnedMeasureGroups.documents.slice(0, measureGroupsNumberToShow);                
-
-                filteredMeasureGroups.current = returnedMeasureGroups.documents.filter((mg) => {
-                    return (mg.userId === currentUserId) &&
-                        (!searchText || mg.description.toLowerCase().includes(searchText.toLowerCase()));
-                });
-
-                //console.log('How many are left? ' + (filteredStandaloneMeasures.current.length + filteredMeasureGroups.current.length));
-                setMeasureNumber(filteredMeasureGroups.current.length);
-            })
-
         } else if (type == 'myreports') {
 
-            databaseService.getReportssByUserId(currentUserId).then((returnedReports) => {
-                sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);                
+            databaseService.getReportsByUserId(currentUserId).then((returnedReports) => {
+                sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
 
                 filteredReports.current = returnedReports.documents.filter((r) => {
                     var dt = new Date(r.datetime).getTime();
@@ -162,12 +148,12 @@ function Measures({ type = '' }) {
 
     const onDeleteStandaloneMeasure = async (e, measure) => {
         e.preventDefault();
-                 
-        if (await deleteMeasure(measure)) {                    
-            if(showMeasures){
+
+        if (await deleteMeasure(measure)) {
+            if (showMeasures) {
                 console.log('passing by here');
-                setToggle(! toggle);
-            } 
+                setToggle(!toggle);
+            }
         }
     }
 
@@ -177,9 +163,9 @@ function Measures({ type = '' }) {
         if (await deleteMeasureGroup(measureGroup, deleteAllMeasures)) {
             console.log('MeasureGroup deleted')
             if (showMeasureGroups) {
-                setToggle(! toggle);
-            } 
-        }              
+                setToggle(!toggle);
+            }
+        }
     }
 
     const onDeleteReport = async (e, report) => {
@@ -188,7 +174,7 @@ function Measures({ type = '' }) {
         if (await deleteReport(report)) {
             console.log('Report deleted')
             if (showReports) {
-                setToggle(! toggle)
+                setToggle(!toggle)
             }
         }
     }
@@ -197,8 +183,6 @@ function Measures({ type = '' }) {
         switch (type) {
             case 'mymeasures':
                 return t('myMeasures');
-            // case 'mymeasuregroups':
-            //     return t('myMeasureGroups');
             case 'mylocations':
                 return t('mylocations');
             case 'myreports':
@@ -235,7 +219,7 @@ function Measures({ type = '' }) {
                                 setShowMeasures((prev) => !prev)
                             }} />
                             <label className="mb-4 mr-4" htmlFor='showMeasures'>{t('measuresShowStandaloneMeasures')}</label>
-                        </div>                        
+                        </div>
                         <div className='sm:w-1/5 mt-2'>
                             <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={(e) => {
                                 setShowReports((prev) => !prev)
@@ -309,11 +293,12 @@ function Measures({ type = '' }) {
 
 
 
-            {(type === '' || type === 'mymeasuregroups') && (<> <Container>
-                <div className='text-3xl mt-4 p-4 font-bold'>
-                    {type === 'mymeasuregroups' ? t('myLastModifiedMeasureGroups') : t('measuresLastModifiedMeasureGroups')}
-                </div>
-            </Container>
+            {(type === '' || type === 'mymeasuregroups') && (<>
+                <Container>
+                    <div className='text-3xl mt-4 p-4 font-bold'>
+                        {type === 'mymeasuregroups' ? t('myLastModifiedMeasureGroups') : t('measuresLastModifiedMeasureGroups')}
+                    </div>
+                </Container>
 
                 <Container>
                     <div className='flex flex-wrap mt-4'>

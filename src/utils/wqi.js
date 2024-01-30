@@ -89,6 +89,13 @@ function calculateWQI(measure) {
     return [wqi, wqiText];
 }
 
+function getMarkerIcon(measure) {
+    return new Icon({
+        iconUrl: window.location.origin + '/' + getMarkerColor(measure),
+        iconSize: [42, 42] // size of the icon
+    });
+}
+
 function getMarkerColor(measure) {
     const [wqi, _] = calculateWQI(measure);
     //console.log('Calculated WQI: ' + wqi)
@@ -157,12 +164,19 @@ function getMarkerColorMeasureGroup(measureGroup) {
 
 }
 
-function getLocationIcon(location){
-    return new Icon({
-        // iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
-        iconUrl: window.location.origin + '/' + getMarkerColorLocation(location),
-        iconSize: [36, 36] // size of the icon
-    });    
+function getLocationIcon(location) {
+    if (location) {
+
+        return new Icon({            
+            iconUrl: window.location.origin + '/' + getMarkerColorLocation(location),
+            iconSize: [36, 36] // size of the icon
+        });
+    } else {
+        return new Icon({            
+            iconUrl: window.location.origin + '/markerGray.png',
+            iconSize: [36, 36] // size of the icon
+        });
+    }
 }
 
 
@@ -201,6 +215,8 @@ function getMarkerColorLocation(location) {
                 return 'multiplemarkerGray.png'
 
         }
+    } else {        
+        return 'multiplemarker.png'
     }
 }
 
@@ -211,6 +227,7 @@ export {
     calculateWQI,
     calculateWQIMeasureGroup,
     calculateWQILocation,
+    getMarkerIcon,
     getMarkerColor,
     getMarkerColorMeasureGroup,
     getLocationIcon,

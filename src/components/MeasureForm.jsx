@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Button from "./Button.jsx";
 import Input from "./Input.jsx";
@@ -6,14 +6,15 @@ import storageService from "../appwrite/storage.js"
 import databaseService from "../appwrite/database.js"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import { conf } from "../conf/conf.js";
 import { formatDateTime, removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
-import { calculateWQI, calculateWQILocation, cleanData, getMarkerColor, getMarkerColorLocation } from "../utils/wqi.js";
+import { calculateWQI, cleanData, getLocationIcon, getMarkerColor, getMarkerIcon } from "../utils/wqi.js";
 import { useTranslation } from 'react-i18next'
 import { Modal } from "flowbite-react";
 import { TbMapPinQuestion } from "react-icons/tb";
+import { MapContainer, Marker, TileLayer, useMap, useMapEvent } from "react-leaflet";
+import MapController from "./MapController.jsx";
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -42,7 +43,6 @@ export default function MeasureForm({ measure }) {
     const userData = useSelector((state) => state.auth.userData)
     const [previewImageUrl, setPreviewImageUrl] = useState(null)
     const [previewImage, setPreviewImage] = useState(null)
-    const [markerRef, marker] = useMarkerRef();
     const [openModal, setOpenModal] = useState(false);
     const [locationsAround, setLocationsAround] = useState(null)
 
@@ -55,6 +55,9 @@ export default function MeasureForm({ measure }) {
         lat: Number(measure?.latitude || defaultLatitude),
         lng: Number(measure?.longitude || defaultLongitude)
     });
+
+
+
 
     useEffect(() => {
 
@@ -83,6 +86,7 @@ export default function MeasureForm({ measure }) {
         if (!isNaN(event.target.value)) {
             console.log('Latitude changed: ' + event.target.value);
             setMarkerPosition({ lat: Number(event.target.value), lng: Number(getValues("longitude")) })
+            setCenterPosition({ lat: Number(event.target.value), lng: Number(getValues("longitude")) })
         }
     }
 
@@ -91,11 +95,12 @@ export default function MeasureForm({ measure }) {
         if (!isNaN(event.target.value)) {
             console.log('Longitude changed: ' + event.target.value + ' Lat-->' + getValues("latitude"));
             setMarkerPosition({ lat: Number(getValues("latitude")), lng: Number(event.target.value) })
+            setCenterPosition({ lat: Number(getValues("latitude")), lng: Number(event.target.value) })
         }
     }
 
 
-    
+
 
 
     const submit = async (data) => {
@@ -192,6 +197,7 @@ export default function MeasureForm({ measure }) {
         }
     }
 
+
     return (
         <>
             <Link className='underline font-bold ' to={measure?.location ? '/location/' + measure.location.$id : '/locations'}>
@@ -205,31 +211,18 @@ export default function MeasureForm({ measure }) {
                 </div>}
             </div>
 
-            <div className="w-full">
+            <div className="w-3/4">
                 <div className="w-full h-72 " >
-                    <APIProvider apiKey={conf.googleMapsAPIKey}>
-                        <Map mapId={'bf51a910020fa25b'}
-                            zoom={conf.defaultZoomLevel}
-                            center={centerPosition}
-                            gestureHandling={'greedy'}
-                            scaleControl={true}
-                            disableDefaultUI={true}
-                            onClick={(ev) => {
-                                if (canModify() && !(measure?.location)) {
-                                    //console.log("latitude = ", ev.detail.latLng.lat);
-                                    setValue("latitude", ev.detail.latLng.lat)
-                                    //console.log("longitude = ", ev.detail.latLng.lng);
-                                    setValue("longitude", ev.detail.latLng.lng);
-                                    setMarkerPosition({ lat: ev.detail.latLng.lat, lng: ev.detail.latLng.lng })
-                                    //console.log(marker.position.lat)
-                                }
-                            }}>
 
-                            <AdvancedMarker position={markerPosition} clickable='true'>
-                                <img src={imageName} className="w-16" title={wqiText} />
-                            </AdvancedMarker>
-                        </Map>
-                    </APIProvider>
+                    <MapContainer className='h-72 my-6' center={[centerPosition.lat, centerPosition.lng]} zoom={conf.defaultZoomLevel}>
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={[markerPosition.lat, markerPosition.lng]} icon={getMarkerIcon(measure)} />
+                        <MapController canModify={canModify() && !(measure?.location)} setValue={setValue} setMarkerPosition={setMarkerPosition} setCenterPosition={setCenterPosition} center={centerPosition} />
+                    </MapContainer>
+
                 </div>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
 
@@ -239,32 +232,22 @@ export default function MeasureForm({ measure }) {
                             <div className="text-center">
                                 <TbMapPinQuestion className="mx-auto mb-4 h-14 w-14 text-casaleggio-rgba dark:text-gray-200" />
                                 <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
-                                    {t('addMeasureModalDescription1', { distance: conf.maxDistanceMeters})}
+                                    {t('addMeasureModalDescription1', { distance: conf.maxDistanceMeters })}
                                 </h3>
                                 <h6 className='text-base font-thin leading-relaxed justify-normal text-gray-500 dark:text-gray-400'>
                                     {t('addMeasureModalDescription2')}
                                 </h6>
                                 {console.log('LocationsAround: ' + JSON.stringify(locationsAround))}
                                 {locationsAround && (<div className="w-full h-36 mt-4" >
-                                    <APIProvider apiKey={conf.googleMapsAPIKey}>
-                                        <Map mapId={'bf51a910020fa25b'}
-                                            zoom={16}
-                                            center={{ lat: locationsAround.documents[0].latitude, lng: locationsAround.documents[0].longitude }}
-                                            gestureHandling={'greedy'}
-                                            disableDefaultUI={true}
-                                            scaleControl={true}
-                                        >
+                                    <MapContainer className='h-36 my-6' center={[locationsAround.documents[0].latitude, locationsAround.documents[0].longitude]} zoom={16}>
+                                        <TileLayer
+                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+                                        <Marker position={[locationsAround.documents[0].latitude, locationsAround.documents[0].longitude]} icon={getLocationIcon(locationsAround.documents[0])} />
+                                        <Marker position={[getValues('latitude'), getValues('longitude')]} icon={getLocationIcon(null)} title={t('measureTitleNew')} />
 
-                                            <AdvancedMarker position={{ lat: locationsAround.documents[0].latitude, lng: locationsAround.documents[0].longitude }} clickable='true'>
-                                                {/* <img src={window.location.origin + '/' + (getMarkerColorLocation(locationsAround.documents[0]) ?? 'multiplemarker.png')} className="w-16" title={calculateWQILocation(locationsAround.documents[0])[1]} /> */}
-                                                <img src={window.location.origin + '/' + (getMarkerColorLocation(locationsAround.documents[0]) ?? 'multiplemarker.png')} className="w-16" title='PROVA' />
-                                            </AdvancedMarker>
-
-                                            <AdvancedMarker position={{ lat: getValues('latitude'), lng: getValues('longitude') }} clickable='true'>
-                                                <img src={window.location.origin + '/markerGray.png'} className="w-16" title={t('measureTitleNew')} />
-                                            </AdvancedMarker>
-                                        </Map>
-                                    </APIProvider>
+                                    </MapContainer>
                                 </div>)}
 
 

@@ -46,13 +46,7 @@ function Home() {
   }, []);
 
 
-  const menuItems = [
-    // {
-    //   title: `${t('menuItemAddmeasureGroupTitleNew')}`,
-    //   description: `${t('menuItemAddMeasureGroupDescription')}`,
-    //   path: '/addMeasureGroup',
-    //   image: '/multiple-measurements.png'
-    // },
+  const menuItems = [    
     {
       title: `${t('menuItemAllMeasuresTitle')}`,
       description: `${t('menuItemAllMeasuresDescription')}`,
@@ -70,14 +64,7 @@ function Home() {
       description: `${t('menuItemAddReportDescription')}`,
       path: '/addReport',
       image: '/warningBig.png'
-    },
-    // {
-    //   title: "See all measure groups",
-    //   description: 'See all the locations where people have collected multiple data through the years',
-    //   path: '/measureGroups',
-    //   image: 'eco.png'
-    // },
-   
+    },   
     {
       title: `${t('menuItemFindSensorTitle')}`,
       description: `${t('menuItemFindSensorDescription')}`,

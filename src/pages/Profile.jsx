@@ -20,12 +20,10 @@ import RestoreDatabase from '../utils/RestoreDatabase';
 
 
 function Profile() {
-    const userData = useSelector((state) => state.auth.userData);
-    const navigate = useNavigate();
+    const userData = useSelector((state) => state.auth.userData);    
     const { t, i18n } = useTranslation();
 
     const [myMeasuresNumber, setMyMeasuresNumber] = useState(0)
-    //const [myMeasureGroupsNumber, setMyMeasureGroupsNumber] = useState(0)
     const [myLocationsNumber, setMyLocationsNumber] = useState(0)
     const [myReportsNumber, setMyReportsNumber] = useState(0)
 
@@ -37,17 +35,12 @@ function Profile() {
                 setMyMeasuresNumber(mm.documents.length);
             }
 
-            // const mg = await databaseService.getMeasureGroupsByUserId(userData.$id);
-            // if (mg) {
-            //     setMyMeasureGroupsNumber(mg.documents.length);
-            // }
-
             const ml = await databaseService.getLocationsByUserId(userData.$id);
             if (ml) {
                 setMyLocationsNumber(ml.documents.length);
             }
 
-            const r = await databaseService.getReportssByUserId(userData.$id);
+            const r = await databaseService.getReportsByUserId(userData.$id);
             if (r) {
                 setMyReportsNumber(r.documents.length);
             }
@@ -62,20 +55,7 @@ function Profile() {
             <label className='text-4xl'>{t('headerProfile')}</label>
             <IconContext.Provider value={{ color: 'rgba(150, 181, 102, 1)', size: '64px' }}>
                 <Container>
-                    <div className='flex flex-wrap mt-4'>
-                        {/* <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
-                            <Card className="" href='/mymeasuregroups'>
-                                <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
-                                    {t('myMeasureGroups')}
-                                </div>
-                                <div className='flex w-full justify-center gap-2'>
-                                    <IoStatsChart />
-                                    <p className="text-6xl text-gray-700 dark:text-gray-400 text-casaleggio-rgba">
-                                        {myMeasureGroupsNumber}
-                                    </p>
-                                </div>
-                            </Card>
-                        </div> */}
+                    <div className='flex flex-wrap mt-4'>                        
 
                         <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
                             <Card className="" href='/mylocations'>

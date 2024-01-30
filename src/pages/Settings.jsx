@@ -34,7 +34,7 @@ function Settings() {
     })
 
     useEffect(() => {
-        console.log('Inside:' + JSON.stringify(userData.prefs.language))
+        //console.log('Inside:' + JSON.stringify(userData.prefs.language))
         reset({
             userId: userData?.$id,
             name: userData?.name,
@@ -81,8 +81,8 @@ function Settings() {
             <label className='text-4xl'>{t('headerSettings')}</label>
             <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
                 <div className='w-full'>
-                    <div className='w-full'>
-                        <div className='border-t-2 border-l-2 rounded-tl-xl pl-2 border-gray-400 py-2'>
+                    <div className='w-full '>
+                        <div className='border-t-2 border-l-2 rounded-tl-xl pl-2  mt-10 border-gray-400 py-2'>
                             <label className='text-xl '>{t('settingsPersonalInfo')}</label>
                         </div>
 
@@ -104,7 +104,7 @@ function Settings() {
                             <LanguageSelector className='my-2' />
                         </div>
 
-                        <div className='border-t-2 border-l-2 rounded-tl-xl pl-2 border-gray-400 py-2'>
+                        <div className='border-t-2 border-l-2 rounded-tl-xl pl-2 mt-10 border-gray-400 py-2'>
                             <label className='text-xl'>{t('settingsMapDefaults')}</label>
                         </div>
 
@@ -112,15 +112,15 @@ function Settings() {
                             <div className='pl-4 p-2'>
                                 <input className='mr-2' type='checkbox' id='onlyYourMeasures' label={t('measuresShowYourDataOnly')} {...register('showYourDataOnly')}></input>
                                 <label className="mb-4" htmlFor='onlyYourMeasures'>{t('measuresShowYourDataOnly')}</label>
-                            </div>                            
-                            <div className='pl-4 p-2'>
+                            </div>
+                            {/* <div className='pl-4 p-2'>
                                 <input className='mr-2' type='checkbox' id='showMeasureGroups' label={t('measuresShowMeasureGroups')} {...register('showMeasureGroups')}></input>
                                 <label htmlFor='showMeasureGroups'>{t('measuresShowMeasureGroups')}</label>
-                            </div>
-                            <div className='pl-4 p-2'>
+                            </div> */}
+                            {/* <div className='pl-4 p-2'>
                                 <input className='mr-2' type='checkbox' id='showMeasures' label={t('measuresShowStandaloneMeasures')} {...register('showMeasures')}></input>
                                 <label htmlFor='showMeasures'>{t('measuresShowStandaloneMeasures')}</label>
-                            </div>
+                            </div> */}
                             <div className='pl-4 p-2'>
                                 <input className='mr-2' type='checkbox' id='showReports' label={t('measuresShowReports')} {...register('showReports')}></input>
                                 <label htmlFor='showReports'>{t('measuresShowReports')}</label>
@@ -128,7 +128,7 @@ function Settings() {
                         </div>
 
 
-                        <div className='w-full flex flex-wrap'>                            
+                        {/* <div className='w-full flex flex-wrap'>                            
                             <div className='pl-4 p-2'>
                                 <Input label={t('myMeasureGroupsNumber')} {...register('myMeasureGroupsNumber')} />
                             </div>
@@ -138,7 +138,7 @@ function Settings() {
                             <div className='pl-4 p-2'>
                                 <Input label={t('myReportsNumber')} {...register('myReportsNumber')} />
                             </div>
-                        </div>
+                        </div> */}
 
                     </div>
                 </div>

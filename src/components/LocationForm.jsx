@@ -7,21 +7,24 @@ import storageService from "../appwrite/storage.js"
 import databaseService from "../appwrite/database.js"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import { conf } from "../conf/conf.js";
 import { formatDateTime } from "../utils/date.js";
 import { Link } from "react-router-dom";
-import { calculateWQI, calculateWQILocation, cleanData, getMarkerColor, getMarkerColorLocation } from "../utils/wqi.js";
+import { calculateWQI, calculateWQILocation, cleanData, getLocationIcon, getMarkerColor, getMarkerColorLocation } from "../utils/wqi.js";
 import { useTranslation } from 'react-i18next';
 import MeasureChart from './MeasureChart.jsx';
 import { Accordion, Modal, Table } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { deleteLocation } from '../utils/dataAccess.js'
+import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
+import MapController from "./MapController.jsx";
 
 function LocationForm({ location }) {
 
     const defaultLatitude = conf.defaultLatitude;
     const defaultLongitude = conf.defaultLongitude;
+
+    const [isManuallyDirty, setIsManuallyDirty] = useState(false)
 
     const { register, handleSubmit, reset, control, setValue, getValues, formState: { isDirty, dirtyFields } } = useForm({
         defaultValues: {
@@ -52,14 +55,12 @@ function LocationForm({ location }) {
     const navigate = useNavigate();
     const { t } = useTranslation();
     const userData = useSelector((state) => state.auth.userData)
-    const [markerRef, marker] = useMarkerRef();
     const measures = useRef([]);
     const [measureNumber, setMeasureNumber] = useState(0);
     const [lastUpdatedAt, setLastUpdatedAt] = useState(null);
     const [previewImageUrl, setPreviewImageUrl] = useState(null)
     const [previewImage, setPreviewImage] = useState(null)
-    const [openModal, setOpenModal] = useState(false);
-    const [toggle, setToggle] = useState(false);
+    const [openModal, setOpenModal] = useState(false);    
 
     const [markerPosition, setMarkerPosition] = useState({
         lat: Number(location?.latitude || defaultLatitude),
@@ -178,10 +179,7 @@ function LocationForm({ location }) {
 
         }
     }
-
-    const dateFormatter = date => {
-        return formatDateTime(new Date(date)).slice(0, 10);
-    };
+    
 
     function canModify() {
         //it's a new Location, or this user is an admin, or the location was created by this user
@@ -215,17 +213,15 @@ function LocationForm({ location }) {
         setOpenModal(true);
     }
 
-    const onDeleteLocation = async (e, location) => {        
+    const onDeleteLocation = async (e, location) => {
         e.preventDefault();
 
         if (await deleteLocation(location)) {
-           navigate('/locations')
+            navigate('/locations')
         }
     }
 
     const [wqi, wqiText] = calculateWQILocation(location);
-    const imageName = window.location.origin + '/' + (getMarkerColorLocation(location) ?? 'multiplemarker.png');
-
 
     return (
         <>
@@ -253,31 +249,21 @@ function LocationForm({ location }) {
 
             <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
                 <div className='w-full h-72'>
-                    <APIProvider apiKey={conf.googleMapsAPIKey}>
-                        <Map mapId={'bf51a910020fa25c'}
-                            zoom={conf.defaultZoomLevel}
-                            center={centerPosition}
-                            gestureHandling={'greedy'}
-                            scaleControl={true}
-                            disableDefaultUI={true}
-                            onClick={(ev) => {
-                                console.log('HERE2')
-                                if (canModify()) {
-                                    //console.log("latitide = ", ev.detail.latLng.lat);
-                                    setValue("latitude", ev.detail.latLng.lat, { shouldDirty: true })
-                                    //console.log("longitude = ", ev.detail.latLng.lng);
-                                    setValue("longitude", ev.detail.latLng.lng, { shouldDirty: true });
-                                    setMarkerPosition({ lat: ev.detail.latLng.lat, lng: ev.detail.latLng.lng })
-                                }
-                            }}>
-                            <AdvancedMarker ref={markerRef} clickable={true} position={markerPosition}>
-                                <img src={imageName} className="w-8" title={wqiText} />
-                            </AdvancedMarker>
-                        </Map>
-                    </APIProvider>
+                    
+                    <MapContainer className='h-72 my-6' center={[centerPosition.lat, centerPosition.lng]} zoom={conf.defaultZoomLevel} >
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={[markerPosition.lat, markerPosition.lng]} icon={getLocationIcon(location)}>
+                            <Tooltip>{t(wqiText)}</Tooltip>
+                        </Marker>
+                        <MapController canModify={canModify()} setValue={setValue} setMarkerPosition={setMarkerPosition} setCenterPosition={setCenterPosition} center={centerPosition} setIsManuallyDirty={setIsManuallyDirty}/>
+                    </MapContainer>
+
                 </div>
 
-                <Accordion collapseAll className="w-full mt-4">
+                <Accordion collapseAll className="w-full mt-12">
                     <Accordion.Panel>
                         <Accordion.Title>Edit</Accordion.Title>
                         <Accordion.Content>
@@ -351,7 +337,7 @@ function LocationForm({ location }) {
                     </Accordion.Panel>
                 </Accordion>
 
-                {canModify() && isDirty && (
+                {canModify() && (isDirty || isManuallyDirty) && (
                     <>
                         <Button type="submit" bgColor={location ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:mt-8">
                             {location ? t('locationUpdate') : t('locationCreate')}
@@ -368,7 +354,7 @@ function LocationForm({ location }) {
                     </>
                 )}
 
-                <Modal show={openModal} onClose={() => setOpenModal(false)} popup>                    
+                <Modal show={openModal} onClose={() => setOpenModal(false)} popup>
                     <Modal.Header />
                     <Modal.Body>
                         <div className="text-center">
@@ -434,7 +420,7 @@ function LocationForm({ location }) {
                                                             <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={t(wqiText)} />
                                                         </Table.Cell>
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                        <Link to={`/measure/${measure.$id}`}> {measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}</Link>
+                                                            <Link to={`/measure/${measure.$id}`}> {measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}</Link>
                                                         </Table.Cell>
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                                             {formatDateTime(new Date(measure.datetime))}

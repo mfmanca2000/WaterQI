@@ -10,11 +10,8 @@ import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Measures from './pages/Measures.jsx'
-//import MeasureGroups from './pages/MeasureGroups.jsx'
 import MeasureDetail from './pages/MeasureDetail.jsx'
 import AddMeasure from './pages/AddMeasure.jsx'
-import AddMeasureGroup from './pages/AddMeasureGroup.jsx'
-import MeasureGroupDetail from './pages/MeasureGroupDetail.jsx'
 import './i18n';
 import Settings from './pages/Settings.jsx'
 import Help from './pages/Help.jsx'
@@ -49,14 +46,14 @@ const router = createBrowserRouter([
           </Protected>
         )
       },
-      {
-        path: '/measures',
-        element: (
-          <Protected authenticationRequired={true}>
-            <Measures />
-          </Protected>
-        )
-      },
+      // {
+      //   path: '/measures',
+      //   element: (
+      //     <Protected authenticationRequired={true}>
+      //       <Measures />
+      //     </Protected>
+      //   )
+      // },
       {
         path: '/locations',
         element: (
@@ -64,15 +61,7 @@ const router = createBrowserRouter([
             <Locations />
           </Protected>
         )
-      },
-      // {
-      //   path: '/measureGroups',
-      //   element: (
-      //     <Protected authenticationRequired={true}>
-      //       <MeasureGroups/>
-      //     </Protected>
-      //   )
-      // },
+      },     
       {
         path: '/mymeasures',
         element: (
@@ -80,15 +69,7 @@ const router = createBrowserRouter([
             <Locations type='mymeasures' />
           </Protected>
         )
-      },
-      // {
-      //   path: '/mymeasuregroups',
-      //   element: (
-      //     <Protected authenticationRequired={true}>
-      //       <Measures type='mymeasuregroups'/>
-      //     </Protected>
-      //   )
-      // },
+      },      
       {
         path: '/mylocations',
         element: (
@@ -113,15 +94,7 @@ const router = createBrowserRouter([
             <AddMeasure />
           </Protected>
         )
-      },
-      {
-        path: '/addMeasureGroup',
-        element: (
-          <Protected authenticationRequired={true}>
-            <AddMeasureGroup />
-          </Protected>
-        )
-      },
+      },      
       {
         path: '/addReport',
         element: (
@@ -138,14 +111,7 @@ const router = createBrowserRouter([
           </Protected>
         )
       },
-      {
-        path: '/measureGroup/:measureGroupId',
-        element: (
-          <Protected authenticationRequired={true}>
-            <MeasureGroupDetail />
-          </Protected>
-        )
-      },
+      
       {
         path: '/location/:locationId',
         element: (

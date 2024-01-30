@@ -3,15 +3,13 @@ import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Input from '../components/Input';
 import Container from '../components/Container';
-import { APIProvider, Map } from '@vis.gl/react-google-maps';
 import { conf } from "../conf/conf.js";
 //import LocationMarker from '../components/LocationMarker';
 //import ReportMarker from '../components/ReportMarker';
 import databaseService from '../appwrite/database';
-import Markers from '../components/Markers';
 import _ from 'lodash';
 
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import { divIcon, Icon, point } from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
@@ -19,7 +17,8 @@ import storageService from '../appwrite/storage';
 import { formatDateTime } from '../utils/date';
 import { Link } from 'react-router-dom';
 import MeasureChart from '../components/MeasureChart';
-import { getLocationIcon } from '../utils/wqi';
+import { calculateWQILocation, getLocationIcon, getMarkerColorLocation } from '../utils/wqi';
+import { Table } from 'flowbite-react';
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -119,13 +118,25 @@ function Locations({ type = '' }) {
 
             databaseService.getMeasuresByUserId(currentUserId, searchText, limit)
                 .then((returnedMeasures) => {
-                    const locationsWithMyMeasures = returnedMeasures.documents.map((m) => databaseService.getLocation(m.location.$id))
-                    sortedLocations.current = locationsWithMyMeasures.slice(0, measureLocationsNumberToShow);
-                    filteredLocations.current = locationsWithMyMeasures.filter((l) => {
-                        return hasMeasuresInInterval(l)
-                    })
+                    const locationsWithMyMeasures = [];
 
-                    setMeasureNumber(filteredLocations.current.length)
+                    for (let index = 0; index < returnedMeasures.documents.length; index++) {
+                        const m = returnedMeasures.documents[index];
+                        databaseService.getLocation(m.location.$id).then((l) => {
+                            console.log(l)
+                            locationsWithMyMeasures.push(l)
+                            console.log('LocationsWithMy: ' + index + ' ---- ' + JSON.stringify(locationsWithMyMeasures))
+
+                            if (index === returnedMeasures.documents.length - 1) {
+                                sortedLocations.current = locationsWithMyMeasures.slice(0, measureLocationsNumberToShow);
+                                filteredLocations.current = locationsWithMyMeasures.filter((l) => {
+                                    return hasMeasuresInInterval(l)
+                                })
+
+                                setMeasureNumber(filteredLocations.current.length)
+                            }
+                        })
+                    }
                 })
 
         } else if (type == 'myreports') {
@@ -212,139 +223,163 @@ function Locations({ type = '' }) {
 
 
     return (
-        <div className='w-full py-8'>
-            <Container>
-                <div className='m-4'>
-                    <label className='font-bold text-4xl pb-4'>{getTitle(type)}</label>
-                </div>
-
-                {(type === '') && (<div className='flex'>
-                    <div className='flex flex-wrap w-full'>
-                        <div className='sm:w-1/5 mt-2'>
-                            <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={handleChangeShowYourDataOnly} />
-                            <label className="mb-4 mr-4" htmlFor='onlyYourLocations'>{t('measuresShowYourLocationsOnly')}</label>
-                        </div>
-
-                        <div className='sm:w-1/5 mt-2'>
-                            <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={handleChangeShowReports} />
-                            <label className="mb-4 mr-4" htmlFor='showReports'>{t('measuresShowReports')}</label>
-                        </div>
-
-                        <div className='sm:w-1/5'>
-                            <label className="mb-4 mr-4" htmlFor='limit'>{t('limitLabel')}</label>
-                            <select className='mr-2 indent-0' id='limit' value={limit} onChange={handleChangeLimit}>
-                                <option>25</option>
-                                <option>50</option>
-                                <option>75</option>
-                                <option>100</option>
-                            </select>
-                        </div>
-
-                        <div className='sm:w-1/5 mt-2'>
-                            <label className="mb-4 mr-4 font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
-                        </div>
-                    </div>
-                </div>)}
-
-                <div className='flex flex-wrap'>
-                    <div className='sm:w-1/4 pr-2'>
-                        <Input className="" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
-                            setDateFrom(e.target.value);
-                        }} />
+        <div className='flex flex-wrap'>
+            <div className='w-full py-8'>
+                <Container>
+                    <div className='m-4'>
+                        <label className='font-bold text-4xl pb-4'>{getTitle(type)}</label>
                     </div>
 
-                    <div className='sm:w-1/4 pr-2'>
-                        <Input className="" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
-                            setDateTo(e.target.value);
-                        }} />
-                    </div>
+                    {(type === '') && (<div className='flex'>
+                        <div className='flex flex-wrap w-full'>
+                            <div className='sm:w-1/4 mt-2'>
+                                <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={handleChangeShowYourDataOnly} />
+                                <label className="mb-4 mr-4" htmlFor='onlyYourLocations'>{t('measuresShowYourLocationsOnly')}</label>
+                            </div>
 
+                            <div className='sm:w-1/4 mt-2'>
+                                <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={handleChangeShowReports} />
+                                <label className="mb-4 mr-4" htmlFor='showReports'>{t('measuresShowReports')}</label>
+                            </div>
 
-                    <div className='sm:w-1/4 pr-2' >
-                        <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
-                    </div>
+                            <div className='sm:w-1/4'>
+                                <label className="mb-4 mr-4" htmlFor='limit'>{t('limitLabel')}</label>
+                                <select className='mr-2 indent-0 -p-8' id='limit' value={limit} onChange={handleChangeLimit}>
+                                    <option>25</option>
+                                    <option>50</option>
+                                    <option>75</option>
+                                    <option>100</option>
+                                </select>
+                            </div>
 
-                    {type != '' && (<div className='sm:w-1/4 mt-2 flex text-right'>
-                        <label className="mb-4 mr-4 text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
+                            <div className='sm:w-1/4 mt-2'>
+                                <label className="mb-4 mr-4 font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
+                            </div>
+                        </div>
                     </div>)}
+
+                    <div className='flex flex-wrap'>
+                        <div className='sm:w-1/4 pr-2'>
+                            <Input className="" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
+                                setDateFrom(e.target.value);
+                            }} />
+                        </div>
+
+                        <div className='sm:w-1/4 pr-2'>
+                            <Input className="" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
+                                setDateTo(e.target.value);
+                            }} />
+                        </div>
+
+
+                        <div className='sm:w-1/4 pr-2' >
+                            <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
+                        </div>
+
+                        {type != '' && (<div className='sm:w-1/4 mt-2 flex text-right'>
+                            <label className="mb-4 mr-4 text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
+                        </div>)}
+                    </div>
+                </Container >
+
+                <div className='w-full'>
+                    <MapContainer className='h-[80vh] m-4' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon} showCoverageOnHover={false}>
+
+                            {console.log('Filter:' + JSON.stringify(filteredLocations.current))}
+
+                            {filteredLocations.current.map((l) => {
+
+                                return (
+                                    <Marker key={'l_' + l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)}>
+                                        <Popup>
+                                            <div className='w-[300px]'>
+                                                <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+                                                    <Link className='underline font-bold' to={`/location/${l.$id}`}>{l.name}</Link>
+                                                </div>
+                                                <div className='w-full text-md text-right font-bold'>
+                                                    {l.measures?.length + ' ' + ((l.measures?.length == 0 || l.measures?.length > 1) ? t('measuresLabel') : t('measureLabel'))}
+                                                </div>
+                                                <div>
+                                                    <MeasureChart height={200} values={l.measures?.sort(function (a, b) {
+                                                        return new Date(a.datetime) - new Date(b.datetime);
+                                                    })} />
+                                                </div>
+                                            </div>
+                                        </Popup>
+                                        <Tooltip>{t(calculateWQILocation(l)[1])}</Tooltip>
+                                    </Marker>
+                                )
+                            })}
+
+                            {filteredReports.current.map((r) => {
+                                return (
+                                    <Marker key={'r_' + r.$id} position={[r.latitude, r.longitude]} icon={warningIcon}>
+                                        <Popup>
+                                            <div className='w-[300px]'>
+                                                <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+                                                    <Link className='underline font-bold' to={`/report/${r.$id}`}>{r.title}</Link>
+                                                </div>
+                                                <div className='w-full text-md text-right font-bold '>
+                                                    {formatDateTime(new Date(r.datetime))}
+                                                </div>
+                                                <div>
+                                                    <p className='my-2 text-wrap text-justify' >{r.description}</p>
+                                                </div>
+                                                <div className='w-48 mx-auto'>
+                                                    <img src={storageService.getPreviewImageUrl(r.imageId)} alt={r.title} className='rounded-lg w-48 object-fill' />
+                                                </div>
+                                            </div>
+                                        </Popup>
+                                        <Tooltip>{r.title}</Tooltip>
+                                    </Marker>
+                                )
+                            })}
+                        </MarkerClusterGroup>
+
+                    </MapContainer>
                 </div>
-            </Container >
+                {/* <div className='w-full lg:w-1/4 max-w-2'>
+                    <Table striped className="mt-4 h-[80vh] table-fixed" >
+                        <Table.Head>
+                            <Table.HeadCell className='w-[90px]'>
+                                <span className="sr-only">Icon</span>
+                            </Table.HeadCell>
+                            <Table.HeadCell className='w-[190px] '>{t('locationName')}</Table.HeadCell>
+                            <Table.HeadCell className='w-[150px]'>{t('locationLastUpdate')}</Table.HeadCell>                            
+                        </Table.Head>
+                        <Table.Body className="divide-y h-[50vh]" >
+                            {filteredLocations.current.map(
+                                (l) => {
+                                    const [wqi, wqiText] = calculateWQILocation(l);
+                                    return (
+                                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 " key={l.$id}>
+                                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                                <img src={window.location.origin + '/' + getMarkerColorLocation(l)} className="w-[30px] h-[30px]" title={t(wqiText)} />
+                                            </Table.Cell>
+                                            <Table.Cell className="whitespace-break-spaces font-medium text-gray-900 dark:text-white">
+                                                {l.name}
+                                            </Table.Cell>
+                                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                                {formatDateTime(new Date(l.$updatedAt))}
+                                            </Table.Cell>                                            
+                                        </Table.Row>
+                                    )
+                                }
+                            )}
 
-            {/* <Container>
-                <APIProvider apiKey={conf.googleMapsAPIKey}>
-                    <Map className='h-[500px] mt-6'
-                        mapId={'bf51a910020fa25a'}
-                        zoom={conf.defaultZoomLevel}
-                        center={{ lat: defaultLatitude, lng: defaultLongitude }}
-                        gestureHandling={'greedy'}
-                        scaleControl={true}
-                        disableDefaultUI={true}>
-
-                        <Markers locations={filteredReports.current} type='report' />
-
-                        <Markers locations={filteredLocations.current} type='location' />  
-                       
-                    </Map>
-                </APIProvider>
-            </Container> */}
-
-            <MapContainer className='h-[500px] m-4' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
-                <TileLayer
-                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                />
-                <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
-
-
-                    {filteredLocations.current.map((l) => {
-                        return (
-                            <Marker key={l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)}>
-                                <Popup>
-                                    <div className='w-[300px]'>
-                                        <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
-                                            <Link className='underline font-bold' to={`/location/${l.$id}`}>{l.name}</Link>
-                                        </div>
-                                        <div className='w-full text-md text-right font-bold'>
-                                            {l.measures.length + ' ' + ((l.measures.length == 0 || l.measures.length > 1) ? t('measuresLabel') : t('measureLabel'))}
-                                        </div>
-                                        <div>
-                                            <MeasureChart height={200} values={l.measures.sort(function (a, b) {
-                                                return new Date(a.datetime) - new Date(b.datetime);
-                                            })} />
-                                        </div>
-                                    </div>
-                                </Popup>
-                            </Marker>
-                        )
-                    })}
-
-                    {filteredReports.current.map((r) => {
-                        return (
-                            <Marker key={r.$id} position={[r.latitude, r.longitude]} icon={warningIcon}>
-                                <Popup>
-                                    <div className='w-[300px]'>
-                                        <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
-                                            <Link className='underline font-bold' to={`/report/${r.$id}`}>{r.title}</Link>
-                                        </div>
-                                        <div className='w-full text-md text-right font-bold '>
-                                            {formatDateTime(new Date(r.datetime))}
-                                        </div>
-                                        <div>
-                                            <p className='my-2 text-wrap text-justify' >{r.description}</p>
-                                        </div>
-                                        <div className='w-48 mx-auto'>
-                                            <img src={storageService.getPreviewImageUrl(r.imageId)} alt={r.title} className='rounded-lg w-48 object-fill' />
-                                        </div>
-                                    </div>
-                                </Popup>
-                            </Marker>
-                        )
-                    })}
-                </MarkerClusterGroup>
-
-            </MapContainer>
+                        </Table.Body>
+                    </Table>
+                </div> */}
 
 
+            </div>
+
+            <div className='w-1/4 bg-casaleggio-rgba' />
         </div>
     )
 }
