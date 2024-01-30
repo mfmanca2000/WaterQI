@@ -11,6 +11,16 @@ import databaseService from '../appwrite/database';
 import Markers from '../components/Markers';
 import _ from 'lodash';
 
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import "leaflet/dist/leaflet.css";
+import { divIcon, Icon, point } from 'leaflet';
+import MarkerClusterGroup from 'react-leaflet-cluster';
+import storageService from '../appwrite/storage';
+import { formatDateTime } from '../utils/date';
+import { Link } from 'react-router-dom';
+import MeasureChart from '../components/MeasureChart';
+import { getLocationIcon } from '../utils/wqi';
+
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
 
@@ -31,6 +41,20 @@ function Locations({ type = '' }) {
     const filteredLocations = useRef([]);
     const sortedLocations = useRef([]);
 
+    const warningIcon = new Icon({
+        // iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
+        iconUrl: window.location.origin + '/warning.png',
+        iconSize: [36, 31] // size of the icon
+    });
+
+    const createClusterCustomIcon = function (cluster) {
+        return new divIcon({
+            html: `<span style="background-color: rgba(150, 181, 102, 1);height: 2em;width: 2em;color: #fff;display: flex;align-items: center;justify-content: center;border-radius: 50%;font-size: 1.2rem;box-shadow: 0 0 0px 5px #fff;">${cluster.getChildCount()}</span>`,
+            className: "custom-marker-cluster",
+            iconSize: point(33, 33, true)
+        });
+    };
+
 
     useEffect(() => {
 
@@ -44,7 +68,7 @@ function Locations({ type = '' }) {
 
 
     useEffect(() => {
-        
+
         const currentUserId = userData.$id;
 
         const measureLocationsNumberToShow = userData?.prefs.myLocationsNumber && userData?.prefs.myLocationsNumber > 0 ? userData?.prefs.myLocationsNumber : conf.lastModifiedLocationsNumber;
@@ -65,7 +89,7 @@ function Locations({ type = '' }) {
                         })
                     }
 
-                    if (showReports) {                        
+                    if (showReports) {
                         databaseService.getAllReports(showYourDataOnly ? currentUserId : null, searchText, limit)
                             .then((returnedReports) => {
                                 //console.log('Reports: ' + returnedReports.documents.length)
@@ -73,10 +97,10 @@ function Locations({ type = '' }) {
                                 filteredReports.current = returnedReports.documents;
                                 setMeasureNumber(filteredLocations.current.length + filteredReports.current.length);
                             })
-                    } else {                        
+                    } else {
                         filteredReports.current.length = 0
                         setMeasureNumber(filteredLocations.current.length)
-                    }                    
+                    }
                 })
 
         } else if (type == 'mylocations') {
@@ -102,7 +126,7 @@ function Locations({ type = '' }) {
                     })
 
                     setMeasureNumber(filteredLocations.current.length)
-                })                        
+                })
 
         } else if (type == 'myreports') {
 
@@ -113,7 +137,7 @@ function Locations({ type = '' }) {
                         var dt = new Date(r.datetime).getTime();
 
                         return (!dateFrom || dt >= new Date(dateFrom).getTime()) &&
-                            (!dateTo || dt <= new Date(dateTo).getTime())                            
+                            (!dateTo || dt <= new Date(dateTo).getTime())
                     });
 
                     setMeasureNumber(filteredReports.current.length);
@@ -246,7 +270,7 @@ function Locations({ type = '' }) {
                 </div>
             </Container >
 
-            <Container>
+            {/* <Container>
                 <APIProvider apiKey={conf.googleMapsAPIKey}>
                     <Map className='h-[500px] mt-6'
                         mapId={'bf51a910020fa25a'}
@@ -262,7 +286,65 @@ function Locations({ type = '' }) {
                        
                     </Map>
                 </APIProvider>
-            </Container>
+            </Container> */}
+
+            <MapContainer className='h-[500px] m-4' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
+                <TileLayer
+                    attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon}>
+
+
+                    {filteredLocations.current.map((l) => {
+                        return (
+                            <Marker key={l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)}>
+                                <Popup>
+                                    <div className='w-[300px]'>
+                                        <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+                                            <Link className='underline font-bold' to={`/location/${l.$id}`}>{l.name}</Link>
+                                        </div>
+                                        <div className='w-full text-md text-right font-bold'>
+                                            {l.measures.length + ' ' + ((l.measures.length == 0 || l.measures.length > 1) ? t('measuresLabel') : t('measureLabel'))}
+                                        </div>
+                                        <div>
+                                            <MeasureChart height={200} values={l.measures.sort(function (a, b) {
+                                                return new Date(a.datetime) - new Date(b.datetime);
+                                            })} />
+                                        </div>
+                                    </div>
+                                </Popup>
+                            </Marker>
+                        )
+                    })}
+
+                    {filteredReports.current.map((r) => {
+                        return (
+                            <Marker key={r.$id} position={[r.latitude, r.longitude]} icon={warningIcon}>
+                                <Popup>
+                                    <div className='w-[300px]'>
+                                        <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+                                            <Link className='underline font-bold' to={`/report/${r.$id}`}>{r.title}</Link>
+                                        </div>
+                                        <div className='w-full text-md text-right font-bold '>
+                                            {formatDateTime(new Date(r.datetime))}
+                                        </div>
+                                        <div>
+                                            <p className='my-2 text-wrap text-justify' >{r.description}</p>
+                                        </div>
+                                        <div className='w-48 mx-auto'>
+                                            <img src={storageService.getPreviewImageUrl(r.imageId)} alt={r.title} className='rounded-lg w-48 object-fill' />
+                                        </div>
+                                    </div>
+                                </Popup>
+                            </Marker>
+                        )
+                    })}
+                </MarkerClusterGroup>
+
+            </MapContainer>
+
+
         </div>
     )
 }

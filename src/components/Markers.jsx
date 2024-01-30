@@ -15,7 +15,7 @@ function Markers({ locations, type = 'location' }) {
     const [markers, setMarkers] = useState({});
     const [openFlagsArray, setOpenFlagsArray] = useState([]);
     const clusterer = useRef(null);
-    const { t } = useTranslation();
+    const { t } = useTranslation();    
 
     // Initialize MarkerClusterer
     useEffect(() => {
@@ -27,6 +27,7 @@ function Markers({ locations, type = 'location' }) {
 
     // Update markers
     useEffect(() => {
+        console.log('UseEffect clusterer')
         clusterer.current?.clearMarkers();
         clusterer.current?.addMarkers(Object.values(markers));
     }, [markers]);
@@ -34,8 +35,9 @@ function Markers({ locations, type = 'location' }) {
 
 
     const setMarkerRef = (marker, key) => {
+        console.log('setMarkerRef: ' + marker)
         if (marker && markers[key]) return;
-        if (!marker && !markers[key]) return;
+        if (!marker && !markers[key]) return;        
 
         setMarkers((prev) => {
             if (marker) {
@@ -46,11 +48,13 @@ function Markers({ locations, type = 'location' }) {
                 return newMarkers;
             }
         });
-    };
+    };  
 
 
     return (
+        
         <>
+            {console.log('Redrawing')}
             {locations.map((loc) => (
                 <div key={'div_' + loc.$id}>
 
@@ -58,20 +62,22 @@ function Markers({ locations, type = 'location' }) {
                         position={{ lat: loc.latitude, lng: loc.longitude }}
                         key={loc.$id}
                         title={type === 'location' ? loc.name : loc.title}
-                        ref={(marker) => setMarkerRef(marker, 'm_' + loc.$id)}
+                        ref={(marker) => setMarkerRef(marker, 'm_' + loc.$id)}                        
                         onClick={() => {
-                            let i = openFlagsArray ? openFlagsArray.indexOf(loc.$id) : -1;
+                            let i = openFlagsArray ? openFlagsArray.indexOf(loc.$id) : -1;                            
                             if (i != -1) {
                                 setOpenFlagsArray((prev) => {
-                                    return prev.filter(flag => {
+                                    const ret = prev.filter(flag => {
                                         return flag != loc.$id
-                                    })
+                                    })                                    
+                                    return ret;
                                 })
                             } else {
-                                setOpenFlagsArray((prev) => {
-                                    return [...prev, loc.$id];
+                                setOpenFlagsArray((prev) => {                                    
+                                    const ret = [...prev, loc.$id];                                    
+                                    return ret;
                                 })
-                            }
+                            }                        
                         }
                         }
                     >                        
@@ -79,9 +85,10 @@ function Markers({ locations, type = 'location' }) {
                         {type === 'report' && (<img src={window.location.origin + '/warning.png'} className="w-9" title={loc?.title} />)}
                     </AdvancedMarker>
 
-                    {openFlagsArray.indexOf(loc.$id) != -1 && (
+                    {openFlagsArray.indexOf(loc.$id) != -1 && (                        
                         <InfoWindow key={'iw_' + loc.$id}
                             anchor={markers['m_' + loc.$id]}
+                            //position={{ lat: loc.latitude, lng: loc.longitude }}
                             maxWidth={type === 'location' ? 300 : 450} minWidth={300}
                             onCloseClick={() => setOpenFlagsArray((prev) => {
                                 return prev.filter(flag => {

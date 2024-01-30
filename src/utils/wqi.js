@@ -1,3 +1,5 @@
+import { Icon } from "leaflet";
+
 const TDS_levels = [
     {
         min: 0,
@@ -155,6 +157,14 @@ function getMarkerColorMeasureGroup(measureGroup) {
 
 }
 
+function getLocationIcon(location){
+    return new Icon({
+        // iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
+        iconUrl: window.location.origin + '/' + getMarkerColorLocation(location),
+        iconSize: [36, 36] // size of the icon
+    });    
+}
+
 
 function getMarkerColorLocation(location) {
     if (!location) return null;
@@ -191,9 +201,7 @@ function getMarkerColorLocation(location) {
                 return 'multiplemarkerGray.png'
 
         }
-
     }
-
 }
 
 
@@ -205,6 +213,7 @@ export {
     calculateWQILocation,
     getMarkerColor,
     getMarkerColorMeasureGroup,
+    getLocationIcon,
     getMarkerColorLocation,
     cleanData
 }
