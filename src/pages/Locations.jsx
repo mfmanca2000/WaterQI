@@ -123,9 +123,9 @@ function Locations({ type = '' }) {
                     for (let index = 0; index < returnedMeasures.documents.length; index++) {
                         const m = returnedMeasures.documents[index];
                         databaseService.getLocation(m.location.$id).then((l) => {
-                            console.log(l)
+                            //console.log(l)
                             locationsWithMyMeasures.push(l)
-                            console.log('LocationsWithMy: ' + index + ' ---- ' + JSON.stringify(locationsWithMyMeasures))
+                            //console.log('LocationsWithMy: ' + index + ' ---- ' + JSON.stringify(locationsWithMyMeasures))
 
                             if (index === returnedMeasures.documents.length - 1) {
                                 sortedLocations.current = locationsWithMyMeasures.slice(0, measureLocationsNumberToShow);
@@ -290,7 +290,7 @@ function Locations({ type = '' }) {
                         />
                         <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon} showCoverageOnHover={false}>
 
-                            {console.log('Filter:' + JSON.stringify(filteredLocations.current))}
+                            {/* {console.log('Filter:' + JSON.stringify(filteredLocations.current))} */}
 
                             {filteredLocations.current.map((l) => {
 

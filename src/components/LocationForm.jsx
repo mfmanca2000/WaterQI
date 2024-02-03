@@ -13,7 +13,7 @@ import { Link } from "react-router-dom";
 import { calculateWQI, calculateWQILocation, cleanData, getLocationIcon, getMarkerColor, getMarkerColorLocation } from "../utils/wqi.js";
 import { useTranslation } from 'react-i18next';
 import MeasureChart from './MeasureChart.jsx';
-import { Accordion, Modal, Table } from "flowbite-react";
+import { Accordion, Modal, Table, TableHead } from "flowbite-react";
 import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { deleteLocation } from '../utils/dataAccess.js'
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
@@ -60,7 +60,7 @@ function LocationForm({ location }) {
     const [lastUpdatedAt, setLastUpdatedAt] = useState(null);
     const [previewImageUrl, setPreviewImageUrl] = useState(null)
     const [previewImage, setPreviewImage] = useState(null)
-    const [openModal, setOpenModal] = useState(false);    
+    const [openModal, setOpenModal] = useState(false);
 
     const [markerPosition, setMarkerPosition] = useState({
         lat: Number(location?.latitude || defaultLatitude),
@@ -179,7 +179,7 @@ function LocationForm({ location }) {
 
         }
     }
-    
+
 
     function canModify() {
         //it's a new Location, or this user is an admin, or the location was created by this user
@@ -239,7 +239,7 @@ function LocationForm({ location }) {
                     <div>
                         <label className='text-4xl pb-4'>{location.name}</label><label className="ml-4 align-baseline font-extrabold text-red-600">{isDirty ? t('edited') : ''}</label>
                         <div>
-                            <label className='text-sm'> {t('by') + ' ' + (location.username ? location.username : location.userId)}</label>
+                            <label className='text-sm'> {t('locationCreatedBy') + ' ' + (location.username ? location.username : location.userId)}</label>
                         </div>
                     </div>
                 )}
@@ -249,7 +249,7 @@ function LocationForm({ location }) {
 
             <form onSubmit={handleSubmit(submit)} className="flex flex-wrap">
                 <div className='w-full h-72'>
-                    
+
                     <MapContainer className='h-72 my-6' center={[centerPosition.lat, centerPosition.lng]} zoom={conf.defaultZoomLevel} >
                         <TileLayer
                             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -258,7 +258,7 @@ function LocationForm({ location }) {
                         <Marker position={[markerPosition.lat, markerPosition.lng]} icon={getLocationIcon(location)}>
                             <Tooltip>{t(wqiText)}</Tooltip>
                         </Marker>
-                        <MapController canModify={canModify()} setValue={setValue} setMarkerPosition={setMarkerPosition} setCenterPosition={setCenterPosition} center={centerPosition} setIsManuallyDirty={setIsManuallyDirty}/>
+                        <MapController canModify={canModify()} setValue={setValue} setMarkerPosition={setMarkerPosition} setCenterPosition={setCenterPosition} center={centerPosition} setIsManuallyDirty={setIsManuallyDirty} />
                     </MapContainer>
 
                 </div>
@@ -399,11 +399,12 @@ function LocationForm({ location }) {
                             {location.measures?.length > 0 && (<>
                                 {/* <div className='flex flex-wrap max-h-64 mt-4 px-4 pb-4 bg-casaleggio-rgba  border border-black/10 overflow-x-hidden overflow-y-scroll'> */}
 
-                                <Table striped className="mt-4">
+                                <Table striped className="mt-4 md:table-fixed w-[600px] md:w-full">
                                     <Table.Head>
                                         <Table.HeadCell>
-                                            <span className="sr-only">Icon</span>
+                                            <span className="sr-only"></span>
                                         </Table.HeadCell>
+                                        <Table.HeadCell>{t('measureCreatedBy')}</Table.HeadCell>
                                         <Table.HeadCell>{t('measureDescription')}</Table.HeadCell>
                                         <Table.HeadCell>{t('measureDate')}</Table.HeadCell>
                                         <Table.HeadCell colSpan={1}>{t('measureActions')}</Table.HeadCell>
@@ -416,10 +417,13 @@ function LocationForm({ location }) {
                                                 const [wqi, wqiText] = calculateWQI(measure);
                                                 return (
                                                     <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800" key={measure.$id}>
-                                                        <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                                        <Table.Cell className=" font-medium">
                                                             <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={t(wqiText)} />
                                                         </Table.Cell>
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+                                                            {measure.username ? measure.username : measure.userId}
+                                                        </Table.Cell>
+                                                        <Table.Cell className="whitespace-break-spaces font-medium text-gray-900 dark:text-white">
                                                             <Link to={`/measure/${measure.$id}`}> {measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}</Link>
                                                         </Table.Cell>
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
@@ -429,7 +433,9 @@ function LocationForm({ location }) {
                                                             <Link to={`/measure/${measure.$id}`}><IoOpenOutline className='size-6' /></Link>
                                                         </Table.Cell> */}
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                            {canModify() && (<Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6' /></Link>)}
+                                                            <div className="px-4">
+                                                                {canModify() && (<Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6' /></Link>)}
+                                                            </div>
                                                         </Table.Cell>
                                                     </Table.Row>
                                                 )

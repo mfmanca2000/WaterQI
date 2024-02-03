@@ -25,3 +25,7 @@ dist-ssr
 .env
 GlobalDataSet.csv
 Global_Data_Set_XvsX_0.csv
+.vs/ProjectSettings.json
+.vs/slnx.sqlite
+.vs/VSWorkspaceState.json
+.vs/WaterQI/v17/.wsuo
