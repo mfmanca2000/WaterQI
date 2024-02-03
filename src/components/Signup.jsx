@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { useDispatch } from 'react-redux'
 import { login } from '../store/authSlice'
 import { useTranslation, Trans } from 'react-i18next'
+import { FaFacebook, FaGoogle } from 'react-icons/fa'
 
 function Signup() {
     const { t, i18n } = useTranslation();
@@ -91,10 +92,10 @@ function Signup() {
                     Or login with...&nbsp;
                     <div>
                         <button onClick={(e) => googleLogin(e)} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
-                            <img src='google.png' className='w-8' />
+                            <FaGoogle className='w-8 h-8 text-white' />
                         </button>
                         <button onClick={(e) => facebookLogin(e)} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
-                            <img src='facebook.webp' className='w-8' />
+                            <FaFacebook className='w-8 h-8 text-white' />
                         </button>
                     </div>
                 </div>

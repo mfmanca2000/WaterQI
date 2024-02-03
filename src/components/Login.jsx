@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form"
 import { useDispatch } from 'react-redux'
 import { login as authLogin } from '../store/authSlice'
 import { useTranslation, Trans } from 'react-i18next'
+import { FaGoogle, FaFacebook } from "react-icons/fa";
 
 function Login() {
     const { t, i18n } = useTranslation();
@@ -34,10 +35,9 @@ function Login() {
                 const userData = await authService.getCurrentUser();
                 //console.log(JSON.stringify(userData.prefs));
                 if (userData) {
-                    if (userData.prefs?.language)
-                    {
+                    if (userData.prefs?.language) {
                         await i18n.changeLanguage(userData.prefs?.language);
-                    }   
+                    }
                     console.log('UserData: ' + JSON.stringify(userData));
                     dispatch(authLogin({ userData }));
                 }
@@ -53,7 +53,7 @@ function Login() {
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
-                        <img width="100%" src='Logo.png'/>
+                        <img width="100%" src='Logo.png' />
                     </span>
                 </div>
                 <h2 className="text-center text-2xl font-bold leading-tight mt-4">{t('loginTitle')}</h2>
@@ -100,10 +100,10 @@ function Login() {
                     {t('otherLogin')}&nbsp;
                     <div>
                         <button onClick={() => googleLogin()} className='inline-block m-8 px-6 py-2 max-h-16 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
-                            <img src='google.png' className='w-12' />
+                            <FaGoogle className='w-8 h-8 text-white' />
                         </button>
                         <button onClick={() => facebookLogin()} className='inline-block m-8 px-6 py-2 max-h-16 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm disabled: '>
-                            <img src='facebook.webp' className='w-12 ' />
+                            <FaFacebook className='w-8 h-8 text-white' />
                         </button>
                     </div>
                 </div>

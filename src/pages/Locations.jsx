@@ -223,164 +223,290 @@ function Locations({ type = '' }) {
 
 
     return (
-        <div className='flex flex-wrap'>
-            <div className='w-full py-8'>
-                <Container>
-                    <div className='m-4'>
-                        <label className='font-bold text-4xl pb-4'>{getTitle(type)}</label>
-                    </div>
 
-                    {(type === '') && (<div className='flex'>
-                        <div className='flex flex-wrap w-full'>
-                            <div className='sm:w-1/4 mt-2'>
-                                <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={handleChangeShowYourDataOnly} />
-                                <label className="mb-4 mr-4" htmlFor='onlyYourLocations'>{t('measuresShowYourLocationsOnly')}</label>
-                            </div>
-
-                            <div className='sm:w-1/4 mt-2'>
-                                <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={handleChangeShowReports} />
-                                <label className="mb-4 mr-4" htmlFor='showReports'>{t('measuresShowReports')}</label>
-                            </div>
-
-                            <div className='sm:w-1/4'>
-                                <label className="mb-4 mr-4" htmlFor='limit'>{t('limitLabel')}</label>
-                                <select className='mr-2 indent-0 -p-8' id='limit' value={limit} onChange={handleChangeLimit}>
-                                    <option>25</option>
-                                    <option>50</option>
-                                    <option>75</option>
-                                    <option>100</option>
-                                </select>
-                            </div>
-
-                            <div className='sm:w-1/4 mt-2'>
-                                <label className="mb-4 mr-4 font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
-                            </div>
-                        </div>
-                    </div>)}
-
-                    <div className='flex flex-wrap'>
-                        <div className='sm:w-1/4 pr-2'>
-                            <Input className="" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
-                                setDateFrom(e.target.value);
-                            }} />
-                        </div>
-
-                        <div className='sm:w-1/4 pr-2'>
-                            <Input className="" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
-                                setDateTo(e.target.value);
-                            }} />
-                        </div>
-
-
-                        <div className='sm:w-1/4 pr-2' >
-                            <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
-                        </div>
-
-                        {type != '' && (<div className='sm:w-1/4 mt-2 flex text-right'>
-                            <label className="mb-4 mr-4 text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
-                        </div>)}
-                    </div>
-                </Container >
-
-                <div className='w-full'>
-                    <MapContainer className='h-[80vh] m-4' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
-                        <TileLayer
-                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                        />
-                        <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon} showCoverageOnHover={false}>
-
-                            {/* {console.log('Filter:' + JSON.stringify(filteredLocations.current))} */}
-
-                            {filteredLocations.current.map((l) => {
-
-                                return (
-                                    <Marker key={'l_' + l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)}>
-                                        <Popup>
-                                            <div className='w-[300px]'>
-                                                <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
-                                                    <Link className='underline font-bold' to={`/location/${l.$id}`}>{l.name}</Link>
-                                                </div>
-                                                <div className='w-full text-md text-right font-bold'>
-                                                    {l.measures?.length + ' ' + ((l.measures?.length == 0 || l.measures?.length > 1) ? t('measuresLabel') : t('measureLabel'))}
-                                                </div>
-                                                <div>
-                                                    <MeasureChart height={200} values={l.measures?.sort(function (a, b) {
-                                                        return new Date(a.datetime) - new Date(b.datetime);
-                                                    })} />
-                                                </div>
-                                            </div>
-                                        </Popup>
-                                        <Tooltip>{t(calculateWQILocation(l)[1])}</Tooltip>
-                                    </Marker>
-                                )
-                            })}
-
-                            {filteredReports.current.map((r) => {
-                                return (
-                                    <Marker key={'r_' + r.$id} position={[r.latitude, r.longitude]} icon={warningIcon}>
-                                        <Popup>
-                                            <div className='w-[300px]'>
-                                                <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
-                                                    <Link className='underline font-bold' to={`/report/${r.$id}`}>{r.title}</Link>
-                                                </div>
-                                                <div className='w-full text-md text-right font-bold '>
-                                                    {formatDateTime(new Date(r.datetime))}
-                                                </div>
-                                                <div>
-                                                    <p className='my-2 text-wrap text-justify' >{r.description}</p>
-                                                </div>
-                                                <div className='w-48 mx-auto'>
-                                                    <img src={storageService.getPreviewImageUrl(r.imageId)} alt={r.title} className='rounded-lg w-48 object-fill' />
-                                                </div>
-                                            </div>
-                                        </Popup>
-                                        <Tooltip>{r.title}</Tooltip>
-                                    </Marker>
-                                )
-                            })}
-                        </MarkerClusterGroup>
-
-                    </MapContainer>
+        <Container>
+            <div className='w-full'>
+                <div className='m-4'>
+                    <label className='font-bold text-4xl pb-4'>{getTitle(type)}</label>
                 </div>
-                {/* <div className='w-full lg:w-1/4 max-w-2'>
-                    <Table striped className="mt-4 h-[80vh] table-fixed" >
-                        <Table.Head>
-                            <Table.HeadCell className='w-[90px]'>
-                                <span className="sr-only">Icon</span>
-                            </Table.HeadCell>
-                            <Table.HeadCell className='w-[190px] '>{t('locationName')}</Table.HeadCell>
-                            <Table.HeadCell className='w-[150px]'>{t('locationLastUpdate')}</Table.HeadCell>                            
-                        </Table.Head>
-                        <Table.Body className="divide-y h-[50vh]" >
-                            {filteredLocations.current.map(
-                                (l) => {
-                                    const [wqi, wqiText] = calculateWQILocation(l);
-                                    return (
-                                        <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 " key={l.$id}>
-                                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                <img src={window.location.origin + '/' + getMarkerColorLocation(l)} className="w-[30px] h-[30px]" title={t(wqiText)} />
-                                            </Table.Cell>
-                                            <Table.Cell className="whitespace-break-spaces font-medium text-gray-900 dark:text-white">
-                                                {l.name}
-                                            </Table.Cell>
-                                            <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                                                {formatDateTime(new Date(l.$updatedAt))}
-                                            </Table.Cell>                                            
-                                        </Table.Row>
-                                    )
-                                }
-                            )}
 
-                        </Table.Body>
-                    </Table>
-                </div> */}
+                {(type === '') && (
+
+                    <div className='flex flex-wrap w-full justify-between pr-8 sm:pr-0'>
+                        <div className='mt-2 h-8'>
+                            <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={handleChangeShowYourDataOnly} />
+                            <label className="mb-4 mr-4" htmlFor='onlyYourLocations'>{t('measuresShowYourLocationsOnly')}</label>
+                        </div>
+
+                        <div className='mt-2 h-8'>
+                            <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={handleChangeShowReports} />
+                            <label className="mb-4 mr-4" htmlFor='showReports'>{t('measuresShowReports')}</label>
+                        </div>
+
+                        <div className=''>
+                            <label className="mb-4 mr-4" htmlFor='limit'>{t('limitLabel')}</label>
+                            <select className=' -indent-0 ' id='limit' value={limit} onChange={handleChangeLimit}>
+                                <option>25</option>
+                                <option>50</option>
+                                <option>75</option>
+                                <option>100</option>
+                            </select>
+                        </div>
+
+                    </div>
+                )}
+
+                <div className='flex flex-wrap mt-2 pr-8 sm:pr-0'>
+                    <div className='mt-2 sm:w-1/3 pr-2'>
+                        <Input className="" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
+                            setDateFrom(e.target.value);
+                        }} />
+                    </div>
+
+                    <div className='mt-2 sm:w-1/3 px-2'>
+                        <Input className="" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
+                            setDateTo(e.target.value);
+                        }} />
+                    </div>
+
+
+                    <div className='mt-2 sm:w-1/3 pl-2' >
+                        <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
+                    </div>
+
+                    <div className='flex items-center justify-end w-full h-16 align-middle'>
+                        <label className="text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
+                    </div>
+
+                </div>
 
 
             </div>
 
-            <div className='w-1/4 bg-casaleggio-rgba' />
-        </div>
+            <div className='w-full mb-4'>
+                <MapContainer className='h-[80vh] mr-8 sm:mr-0' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
+                    <TileLayer
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                    />
+                    <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon} showCoverageOnHover={false}>
+
+                        {/* {console.log('Filter:' + JSON.stringify(filteredLocations.current))} */}
+
+                        {filteredLocations.current.map((l) => {
+
+                            return (
+                                <Marker key={'l_' + l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)}>
+                                    <Popup>
+                                        <div className='w-[300px]'>
+                                            <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+                                                <Link className='underline font-bold' to={`/location/${l.$id}`}>{l.name}</Link>
+                                            </div>
+                                            <div className='w-full text-md text-right font-bold'>
+                                                {l.measures?.length + ' ' + ((l.measures?.length == 0 || l.measures?.length > 1) ? t('measuresLabel') : t('measureLabel'))}
+                                            </div>
+                                            <div>
+                                                <MeasureChart height={200} values={l.measures?.sort(function (a, b) {
+                                                    return new Date(a.datetime) - new Date(b.datetime);
+                                                })} />
+                                            </div>
+                                        </div>
+                                    </Popup>
+                                    <Tooltip>{t(calculateWQILocation(l)[1])}</Tooltip>
+                                </Marker>
+                            )
+                        })}
+
+                        {filteredReports.current.map((r) => {
+                            return (
+                                <Marker key={'r_' + r.$id} position={[r.latitude, r.longitude]} icon={warningIcon}>
+                                    <Popup>
+                                        <div className='w-[300px]'>
+                                            <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+                                                <Link className='underline font-bold' to={`/report/${r.$id}`}>{r.title}</Link>
+                                            </div>
+                                            <div className='w-full text-md text-right font-bold '>
+                                                {formatDateTime(new Date(r.datetime))}
+                                            </div>
+                                            <div>
+                                                <p className='my-2 text-wrap text-justify' >{r.description}</p>
+                                            </div>
+                                            <div className='w-48 mx-auto'>
+                                                <img src={storageService.getPreviewImageUrl(r.imageId)} alt={r.title} className='rounded-lg w-48 object-fill' />
+                                            </div>
+                                        </div>
+                                    </Popup>
+                                    <Tooltip>{r.title}</Tooltip>
+                                </Marker>
+                            )
+                        })}
+                    </MarkerClusterGroup>
+
+                </MapContainer>
+            </div>
+
+        </Container>
+
+
+
+        // <div className='flex flex-wrap'>
+        //     <div className='w-full py-8'>
+        //         <Container>
+        //             <div className='m-4'>
+        //                 <label className='font-bold text-4xl pb-4'>{getTitle(type)}</label>
+        //             </div>
+
+        //             {(type === '') && (<div className='flex'>
+        //                 <div className='flex flex-wrap w-full'>
+        //                     <div className='sm:w-1/4 mt-2'>
+        //                         <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={handleChangeShowYourDataOnly} />
+        //                         <label className="mb-4 mr-4" htmlFor='onlyYourLocations'>{t('measuresShowYourLocationsOnly')}</label>
+        //                     </div>
+
+        //                     <div className='sm:w-1/4 mt-2'>
+        //                         <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={handleChangeShowReports} />
+        //                         <label className="mb-4 mr-4" htmlFor='showReports'>{t('measuresShowReports')}</label>
+        //                     </div>
+
+        //                     <div className='sm:w-1/4'>
+        //                         <label className="mb-4 mr-4" htmlFor='limit'>{t('limitLabel')}</label>
+        //                         <select className='mr-2 indent-0 -p-8' id='limit' value={limit} onChange={handleChangeLimit}>
+        //                             <option>25</option>
+        //                             <option>50</option>
+        //                             <option>75</option>
+        //                             <option>100</option>
+        //                         </select>
+        //                     </div>
+
+        //                     <div className='sm:w-1/4 mt-2'>
+        //                         <label className="mb-4 mr-4 font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
+        //                     </div>
+        //                 </div>
+        //             </div>)}
+
+        //             <div className='flex flex-wrap'>
+        //                 <div className='sm:w-1/4 pr-2'>
+        //                     <Input className="" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
+        //                         setDateFrom(e.target.value);
+        //                     }} />
+        //                 </div>
+
+        //                 <div className='sm:w-1/4 pr-2'>
+        //                     <Input className="" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
+        //                         setDateTo(e.target.value);
+        //                     }} />
+        //                 </div>
+
+
+        //                 <div className='sm:w-1/4 pr-2' >
+        //                     <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
+        //                 </div>
+
+        //                 {type != '' && (<div className='sm:w-1/4 mt-2 flex text-right'>
+        //                     <label className="mb-4 mr-4 text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
+        //                 </div>)}
+        //             </div>
+        //         </Container >
+
+        //         <div className='w-full'>
+        //             <MapContainer className='h-[80vh] m-4' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
+        //                 <TileLayer
+        //                     attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        //                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        //                 />
+        //                 <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon} showCoverageOnHover={false}>
+
+        //                     {/* {console.log('Filter:' + JSON.stringify(filteredLocations.current))} */}
+
+        //                     {filteredLocations.current.map((l) => {
+
+        //                         return (
+        //                             <Marker key={'l_' + l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)}>
+        //                                 <Popup>
+        //                                     <div className='w-[300px]'>
+        //                                         <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+        //                                             <Link className='underline font-bold' to={`/location/${l.$id}`}>{l.name}</Link>
+        //                                         </div>
+        //                                         <div className='w-full text-md text-right font-bold'>
+        //                                             {l.measures?.length + ' ' + ((l.measures?.length == 0 || l.measures?.length > 1) ? t('measuresLabel') : t('measureLabel'))}
+        //                                         </div>
+        //                                         <div>
+        //                                             <MeasureChart height={200} values={l.measures?.sort(function (a, b) {
+        //                                                 return new Date(a.datetime) - new Date(b.datetime);
+        //                                             })} />
+        //                                         </div>
+        //                                     </div>
+        //                                 </Popup>
+        //                                 <Tooltip>{t(calculateWQILocation(l)[1])}</Tooltip>
+        //                             </Marker>
+        //                         )
+        //                     })}
+
+        //                     {filteredReports.current.map((r) => {
+        //                         return (
+        //                             <Marker key={'r_' + r.$id} position={[r.latitude, r.longitude]} icon={warningIcon}>
+        //                                 <Popup>
+        //                                     <div className='w-[300px]'>
+        //                                         <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
+        //                                             <Link className='underline font-bold' to={`/report/${r.$id}`}>{r.title}</Link>
+        //                                         </div>
+        //                                         <div className='w-full text-md text-right font-bold '>
+        //                                             {formatDateTime(new Date(r.datetime))}
+        //                                         </div>
+        //                                         <div>
+        //                                             <p className='my-2 text-wrap text-justify' >{r.description}</p>
+        //                                         </div>
+        //                                         <div className='w-48 mx-auto'>
+        //                                             <img src={storageService.getPreviewImageUrl(r.imageId)} alt={r.title} className='rounded-lg w-48 object-fill' />
+        //                                         </div>
+        //                                     </div>
+        //                                 </Popup>
+        //                                 <Tooltip>{r.title}</Tooltip>
+        //                             </Marker>
+        //                         )
+        //                     })}
+        //                 </MarkerClusterGroup>
+
+        //             </MapContainer>
+        //         </div>
+        //         {/* <div className='w-full lg:w-1/4 max-w-2'>
+        //             <Table striped className="mt-4 h-[80vh] table-fixed" >
+        //                 <Table.Head>
+        //                     <Table.HeadCell className='w-[90px]'>
+        //                         <span className="sr-only">Icon</span>
+        //                     </Table.HeadCell>
+        //                     <Table.HeadCell className='w-[190px] '>{t('locationName')}</Table.HeadCell>
+        //                     <Table.HeadCell className='w-[150px]'>{t('locationLastUpdate')}</Table.HeadCell>                            
+        //                 </Table.Head>
+        //                 <Table.Body className="divide-y h-[50vh]" >
+        //                     {filteredLocations.current.map(
+        //                         (l) => {
+        //                             const [wqi, wqiText] = calculateWQILocation(l);
+        //                             return (
+        //                                 <Table.Row className="bg-white dark:border-gray-700 dark:bg-gray-800 " key={l.$id}>
+        //                                     <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+        //                                         <img src={window.location.origin + '/' + getMarkerColorLocation(l)} className="w-[30px] h-[30px]" title={t(wqiText)} />
+        //                                     </Table.Cell>
+        //                                     <Table.Cell className="whitespace-break-spaces font-medium text-gray-900 dark:text-white">
+        //                                         {l.name}
+        //                                     </Table.Cell>
+        //                                     <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
+        //                                         {formatDateTime(new Date(l.$updatedAt))}
+        //                                     </Table.Cell>                                            
+        //                                 </Table.Row>
+        //                             )
+        //                         }
+        //                     )}
+
+        //                 </Table.Body>
+        //             </Table>
+        //         </div> */}
+
+
+        //     </div>
+
+        //     <div className='w-1/4 bg-casaleggio-rgba' />
+        // </div>
     )
 }
 

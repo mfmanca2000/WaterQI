@@ -137,6 +137,6 @@
         "measureLabel": "mesure",
         "measuresLabel": "mesures",
         "last": "Derniers {{limit}}",
-        "limitLabel": "Montre derniers"
+        "limitLabel": "Montrer derniers"
     }
 }

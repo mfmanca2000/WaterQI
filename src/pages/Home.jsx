@@ -13,40 +13,21 @@ function Home() {
   //const [userData, setUserData] = useState(null);
   const userData = useSelector((state) => state.auth.userData);
 
-  const { t, i18n } = useTranslation();
+  const { t } = useTranslation();
+
   // useEffect(() => {
-  //   databaseService.getMeasuresInTimeInterval(new Date('1900-01-01T00:00:00.000Z'), new Date(Date.now())).then((measures) => {
-  //     if (measures) {
-  //       setMeasures(measures.documents);
-  //     }
-  //   })
+
+  //   if (userData) {
+  //     databaseService.getAllMeasures().then((measures) => {
+  //       if (measures) {
+  //         setMeasures(measures.documents);
+  //       }
+  //     });
+  //   }
   // }, []);
 
-  useEffect(() => {
 
-    if (userData) {
-      databaseService.getAllMeasures().then((measures) => {
-        if (measures) {
-          setMeasures(measures.documents);
-        }
-      });
-    }
-
-    // authService.getCurrentUser().then((user) => {
-    //   if (user) {
-    //     setUserData(user);
-
-    //     databaseService.getAllMeasures().then((measures) => {
-    //       if (measures) {
-    //         setMeasures(measures.documents);
-    //       }
-    //     });
-    //   }
-    // });
-  }, []);
-
-
-  const menuItems = [    
+  const menuItems = [
     {
       title: `${t('menuItemAllMeasuresTitle')}`,
       description: `${t('menuItemAllMeasuresDescription')}`,
@@ -64,7 +45,7 @@ function Home() {
       description: `${t('menuItemAddReportDescription')}`,
       path: '/addReport',
       image: '/warningBig.png'
-    },   
+    },
     {
       title: `${t('menuItemFindSensorTitle')}`,
       description: `${t('menuItemFindSensorDescription')}`,
@@ -76,17 +57,21 @@ function Home() {
   //if (measures.length === 0) {
   if (!userData) {
     return (
-      <div className='flex flex-wrap py-8 text-lg justify-center'>
-        <div className='w-1/4'>
-          <img src='cleanWaterGoal.png' alt="Water quality goal" />
-          <img className='py-2 w-full' src='clean-water.jpg' alt="Water quality goal" />
+      <div className='flex flex-wrap text-lg justify-center md:justify-start'>
+        <div className='w-full md:w-1/2'>
+          <div className='w-full p-4 md:pl-4 md:pt:4 md:pr-2'>
+            <img className=' w-full' src='clean-water.jpg' alt="Water quality goal" />
+          </div>
+
+          <div className='w-full p-4' >
+            <div className='flex flex-wrap' dangerouslySetInnerHTML={
+              { __html: t('homePageIntro', { interpolation: { escapeValue: false } }) }
+            } />
+          </div>
         </div>
 
-        <div className='w-1/2 px-10 ' >
-          <div className='flex flex-wrap' dangerouslySetInnerHTML={
-            { __html: t('homePageIntro', { interpolation: { escapeValue: false } }) }
-          } />
-
+        <div className='w-full md:w-1/2 p-4 md:pt-4 md:pr-4 md:pl-2 '>
+          <img src='cleanWaterGoal.png' alt="Water quality goal" />
         </div>
       </div >
     )
@@ -97,20 +82,22 @@ function Home() {
           <Counters />
         </div>
         <div className="flex flex-wrap text-lg justify-center">
-          <div className="pt-2 pl-10"  >
+
+
+
+          <Container>
             {t('homeWelcome')} <span className='font-extrabold'>{userData?.name}.<br /></span>
             <p>{t('homeIntroText')}</p>
 
-            <Container>
-              <div className='flex flex-wrap mt-4'>
-                {menuItems.map((m) => (
-                  <div className='p-2 lg:w-1/4 sm:w-1/2' key={m.title}>
-                    <HomeMenuItem menuItem={m} />
-                  </div>
-                ))}
-              </div>
-            </Container>
-          </div>
+            <div className='flex flex-wrap'>
+              {menuItems.map((m) => (
+                <div className='px-2 mt-4 lg:w-1/4 sm:w-1/2' key={m.title}>
+                  <HomeMenuItem menuItem={m} />
+                </div>
+              ))}
+            </div>
+          </Container>
+
 
           <div className='text-gray-300 text-xs text-center w-full'>
             <a href="https://www.flaticon.com/free-icons/measuring-cup" title="measuring cup icons">Measuring cup icons created by DinosoftLabs</a>{' '}
