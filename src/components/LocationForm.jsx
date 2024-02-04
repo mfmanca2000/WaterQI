@@ -60,7 +60,9 @@ function LocationForm({ location }) {
     const [lastUpdatedAt, setLastUpdatedAt] = useState(null);
     const [previewImageUrl, setPreviewImageUrl] = useState(null)
     const [previewImage, setPreviewImage] = useState(null)
-    const [openModal, setOpenModal] = useState(false);
+    const [openDeleteLocationModal, setOpenDeleteLocationModal] = useState(false);
+    const [openDeleteMeasurenModal, setOpenDeleteMeasureModal] = useState(false);
+    const [measureToDelete, setMeasureToDelete] = useState(null);
 
     const [markerPosition, setMarkerPosition] = useState({
         lat: Number(location?.latitude || defaultLatitude),
@@ -107,34 +109,7 @@ function LocationForm({ location }) {
     }
 
 
-    const handleDeleteMeasure = async (e, measure) => {
-        e.preventDefault();
-
-        if (databaseService.deleteMeasure(measure.$id)) {
-            const found = location.measures.indexOf(measure);
-            if (found !== -1) {
-                console.log('Found at index ' + found + ' out of ' + location.measures.length);
-                const deleted = location.measures.splice(found, 1);
-                measures.current.splice(found, 1);
-                // console.log('After splice: ' + measures.current.length)
-                // console.log('Before databaseService.updateLocation updatedAt is ' + location.$updatedAt)
-                const newLoc = await databaseService.updateLocation(location.$id, { ...location, lastOperationTime: new Date(Date.now()) });
-                if (newLoc) {
-                    // console.log('After databaseService.updateLocation updatedAt is ' + newLoc.$updatedAt)
-                    // console.log('After databaseService.updateLocation lastOperationTime is ' + newLoc.lastOperationTime)
-                    // console.log('After removal ' + measures.current.length + ' are left')
-                    setLastUpdatedAt(newLoc.$updatedAt)
-                    setMeasureNumber(newLoc.measures.length);
-                } else {
-                    console.log('Unable to update Location')
-                    window.location.reload(false);
-                }
-            } else {
-                console.log('What is going on here??')
-            }
-
-        }
-    }
+    
 
 
     const submit = async (data) => {
@@ -208,9 +183,15 @@ function LocationForm({ location }) {
         return null;
     }
 
-    const handleDelete = (e) => {
+    const handleDeleteLocationClick = (e) => {
         e.preventDefault();
-        setOpenModal(true);
+        setOpenDeleteLocationModal(true);
+    }
+
+    const handleDeleteMeasureClick = (e, measure) => {
+        e.preventDefault();
+        setMeasureToDelete(measure);
+        setOpenDeleteMeasureModal(true);
     }
 
     const onDeleteLocation = async (e, location) => {
@@ -218,6 +199,35 @@ function LocationForm({ location }) {
 
         if (await deleteLocation(location)) {
             navigate('/locations')
+        }
+    }
+
+    const onDeleteMeasure = async (e) => {        
+        e.preventDefault();
+
+        if (measureToDelete && await databaseService.deleteMeasure(measureToDelete.$id)) {
+            const found = location.measures.indexOf(measureToDelete);
+            if (found !== -1) {
+                console.log('Found at index ' + found + ' out of ' + location.measures.length);
+                const deleted = location.measures.splice(found, 1);
+                measures.current.splice(found, 1);
+                // console.log('After splice: ' + measures.current.length)
+                // console.log('Before databaseService.updateLocation updatedAt is ' + location.$updatedAt)
+                const newLoc = await databaseService.updateLocation(location.$id, { ...location, lastOperationTime: new Date(Date.now()) });
+                if (newLoc) {
+                    // console.log('After databaseService.updateLocation updatedAt is ' + newLoc.$updatedAt)
+                    // console.log('After databaseService.updateLocation lastOperationTime is ' + newLoc.lastOperationTime)
+                    // console.log('After removal ' + measures.current.length + ' are left')
+                    setLastUpdatedAt(newLoc.$updatedAt)
+                    setMeasureNumber(newLoc.measures.length);
+                } else {
+                    console.log('Unable to update Location')
+                    window.location.reload(false);
+                }
+            } else {
+                console.log('What is going on here??')
+            }
+
         }
     }
 
@@ -229,7 +239,7 @@ function LocationForm({ location }) {
                 {t('returnToMeasures')}
             </Link>
 
-            <div className='mb-4 align-middle'>
+            <div className='my-4 align-middle'>
                 {!location && (
                     <label className='text-4xl pb-4'>{t('locationTitleNew')}</label>
                 )}
@@ -348,13 +358,13 @@ function LocationForm({ location }) {
 
                 {canDelete() && (
                     <>
-                        <Button className="w-full md:mt-8 bg-red-600" onClick={handleDelete}>
+                        <Button className="w-full md:mt-8 bg-red-600" onClick={handleDeleteLocationClick}>
                             {t('measuresDelete')}
                         </Button>
                     </>
                 )}
 
-                <Modal show={openModal} onClose={() => setOpenModal(false)} popup>
+                <Modal show={openDeleteLocationModal} onClose={() => setOpenDeleteLocationModal(false)} popup>
                     <Modal.Header />
                     <Modal.Body>
                         <div className="text-center">
@@ -369,12 +379,12 @@ function LocationForm({ location }) {
 
                                 <Button className="bg-red-600" onClick={(e) => {
                                     onDeleteLocation(e, location);
-                                    setOpenModal(false)
+                                    setOpenDeleteLocationModal(false)
                                 }}>
                                     {t('deleteLocationModalDeleteAll')}
                                 </Button>
                                 <Button color="gray" onClick={() => {
-                                    setOpenModal(false)
+                                    setOpenDeleteLocationModal(false)
                                 }}>
                                     {t('deleteModalCancel')}
                                 </Button>
@@ -383,6 +393,41 @@ function LocationForm({ location }) {
                     </Modal.Body>
                     <Modal.Footer />
                 </Modal>
+
+
+                <Modal show={openDeleteMeasurenModal} onClose={() => setOpenDeleteMeasureModal(false)} popup>
+                    <Modal.Header />
+                    <Modal.Body>
+                        <div className="text-center">
+                            <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                            <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                {t('deleteMeasureModalDescription')}
+                            </h3>
+                            
+                            <div className="flex justify-center gap-4 mt-8">
+
+                                <Button className="bg-red-600" onClick={(e) => {
+                                    onDeleteMeasure(e);
+                                    setMeasureToDelete(null)
+                                    setOpenDeleteMeasureModal(false)
+                                }}>
+                                    {t('deleteMeasureModalDelete')}
+                                </Button>
+                                <Button color="gray" onClick={() => {
+                                    setMeasureToDelete(null)
+                                    setOpenDeleteMeasureModal(false)
+                                }}>
+                                    {t('deleteModalCancel')}
+                                </Button>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                    <Modal.Footer />
+                </Modal>
+
+
+
+
 
 
                 <div className='w-full'>
@@ -434,7 +479,7 @@ function LocationForm({ location }) {
                                                         </Table.Cell> */}
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                                             <div className="px-4">
-                                                                {canModify() && (<Link onClick={(e) => handleDeleteMeasure(e, measure)}><IoTrash className='size-6' /></Link>)}
+                                                                {canModify() && (<Link onClick={(e) => handleDeleteMeasureClick(e, measure)}><IoTrash className='size-6' /></Link>)}
                                                             </div>
                                                         </Table.Cell>
                                                     </Table.Row>

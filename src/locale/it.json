@@ -137,6 +137,7 @@
         "measureLabel": "misura",
         "measuresLabel": "misure",
         "last": "Ultimi {{limit}}",
-        "limitLabel": "Mostra ultimi"
+        "limitLabel": "Mostra ultimi",
+        "filtersTitle": "Filtri"
     }
 }

@@ -20,7 +20,7 @@ import RestoreDatabase from '../utils/RestoreDatabase';
 
 
 function Profile() {
-    const userData = useSelector((state) => state.auth.userData);    
+    const userData = useSelector((state) => state.auth.userData);
     const { t, i18n } = useTranslation();
 
     const [myMeasuresNumber, setMyMeasuresNumber] = useState(0)
@@ -55,7 +55,7 @@ function Profile() {
             <label className='text-4xl'>{t('headerProfile')}</label>
             <IconContext.Provider value={{ color: 'rgba(150, 181, 102, 1)', size: '64px' }}>
                 <Container>
-                    <div className='flex flex-wrap mt-4'>                        
+                    <div className='flex flex-wrap mt-4 items-center justify-center'>
 
                         <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
                             <Card className="" href='/mylocations'>
@@ -103,45 +103,46 @@ function Profile() {
                     </div>
                 </Container>
 
-                {userData.labels.includes('admin') && (<Container>
-                    <div className='flex flex-wrap'>
-                        <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
-                            <Card className="">
-                                <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
-                                    Save Global Dataset
-                                </div>
-                                <div className='flex w-full justify-center gap-2'>
-                                    <FaFileImport />
-                                    <ImportGlobalDataSet />
-                                </div>
-                            </Card>
-                        </div>
+                {userData.labels.includes('admin') && (
+                    <Container>
+                        <div className='flex flex-wrap items-center justify-center'>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Save Global Dataset
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ImportGlobalDataSet />
+                                    </div>
+                                </Card>
+                            </div>
 
-                        <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
-                            <Card className="">
-                                <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
-                                    Backup
-                                </div>
-                                <div className='flex w-full justify-center gap-2'>
-                                    <FaFileExport />
-                                    <ExportDatabase />
-                                </div>
-                            </Card>
-                        </div>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Backup
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileExport />
+                                        <ExportDatabase />
+                                    </div>
+                                </Card>
+                            </div>
 
-                        <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
-                            <Card className="">
-                                <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
-                                    Restore
-                                </div>
-                                <div className='flex w-full justify-center gap-2'>
-                                    <MdOutlineRestore />
-                                    <RestoreDatabase />
-                                </div>
-                            </Card>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Restore
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <MdOutlineRestore />
+                                        <RestoreDatabase />
+                                    </div>
+                                </Card>
+                            </div>
                         </div>
-                    </div>
-                </Container>)}
+                    </Container>)}
             </IconContext.Provider>
 
 

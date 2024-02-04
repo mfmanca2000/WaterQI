@@ -9,7 +9,7 @@ import { conf } from "../conf/conf.js";
 import databaseService from '../appwrite/database';
 import _ from 'lodash';
 
-import { MapContainer, TileLayer, Marker, Popup, Tooltip } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Tooltip, ScaleControl  } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import { divIcon, Icon, point } from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
@@ -18,7 +18,7 @@ import { formatDateTime } from '../utils/date';
 import { Link } from 'react-router-dom';
 import MeasureChart from '../components/MeasureChart';
 import { calculateWQILocation, getLocationIcon, getMarkerColorLocation } from '../utils/wqi';
-import { Table } from 'flowbite-react';
+import { Accordion, Table } from 'flowbite-react';
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -225,7 +225,11 @@ function Locations({ type = '' }) {
     return (
 
         <Container>
-            <div className='w-full'>
+            <Accordion collapseAll className="w-full mt-4">
+                <Accordion.Panel>
+                    <Accordion.Title>{t('filtersTitle')}</Accordion.Title>
+                    <Accordion.Content>
+                    <div className='w-full'>
                 <div className='m-4'>
                     <label className='font-bold text-4xl pb-4'>{getTitle(type)}</label>
                 </div>
@@ -282,13 +286,19 @@ function Locations({ type = '' }) {
 
 
             </div>
+                    </Accordion.Content>
+                </Accordion.Panel>
+            </Accordion>
+
+            
 
             <div className='w-full mb-4'>
-                <MapContainer className='h-[80vh] mr-8 sm:mr-0' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
+                <MapContainer className='h-[70vh] mr-8 sm:mr-0' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                     />
+                    <ScaleControl imperial={false} position="bottomleft" />
                     <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon} showCoverageOnHover={false}>
 
                         {/* {console.log('Filter:' + JSON.stringify(filteredLocations.current))} */}
