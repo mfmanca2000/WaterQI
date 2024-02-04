@@ -18,6 +18,7 @@ import { HiOutlineExclamationCircle } from "react-icons/hi";
 import { deleteLocation } from '../utils/dataAccess.js'
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import MapController from "./MapController.jsx";
+import { FiEdit } from "react-icons/fi";
 
 function LocationForm({ location }) {
 
@@ -109,7 +110,7 @@ function LocationForm({ location }) {
     }
 
 
-    
+
 
 
     const submit = async (data) => {
@@ -202,7 +203,7 @@ function LocationForm({ location }) {
         }
     }
 
-    const onDeleteMeasure = async (e) => {        
+    const onDeleteMeasure = async (e) => {
         e.preventDefault();
 
         if (measureToDelete && await databaseService.deleteMeasure(measureToDelete.$id)) {
@@ -403,7 +404,7 @@ function LocationForm({ location }) {
                             <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                                 {t('deleteMeasureModalDescription')}
                             </h3>
-                            
+
                             <div className="flex justify-center gap-4 mt-8">
 
                                 <Button className="bg-red-600" onClick={(e) => {
@@ -469,7 +470,12 @@ function LocationForm({ location }) {
                                                             {measure.username ? measure.username : measure.userId}
                                                         </Table.Cell>
                                                         <Table.Cell className="whitespace-break-spaces font-medium text-gray-900 dark:text-white">
-                                                            <Link to={`/measure/${measure.$id}`}> {measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}</Link>
+                                                            <Link className="underline font-bold" to={`/measure/${measure.$id}`}>
+                                                                <div className="flex items-center">
+                                                                {measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}
+                                                                <FiEdit className="ml-2 size-5"/>
+                                                                </div>
+                                                            </Link>
                                                         </Table.Cell>
                                                         <Table.Cell className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
                                                             {formatDateTime(new Date(measure.datetime))}
