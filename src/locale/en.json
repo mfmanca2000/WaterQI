@@ -138,6 +138,11 @@
     "measuresLabel": "measures",
     "last": "Last {{limit}}",
     "limitLabel": "Show last",
-    "filtersTitle": "Filters"
+    "filtersTitle": "Filters",
+    "electricalConductivity": "Electrical Conductivity",
+    "totalDissolvedSolids": "Total Dissolved Solids",
+    "pH": "pH",
+    "temperature": "Temperature",
+    "salinity": "Salinity"
   }
 }

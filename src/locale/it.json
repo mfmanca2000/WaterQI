@@ -138,6 +138,11 @@
         "measuresLabel": "misure",
         "last": "Ultimi {{limit}}",
         "limitLabel": "Mostra ultimi",
-        "filtersTitle": "Filtri"
+        "filtersTitle": "Filtri",
+        "electricalConductivity": "Conducibilità Elettrica",
+        "totalDissolvedSolids": "Solidi Disciolti Totali",
+        "pH": "pH",
+        "temperature": "Temperatura",
+        "salinity": "Salinità"
     }
 }

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, Label, CartesianGrid, ResponsiveContainer } from "recharts";
 import { formatDateTime } from "../utils/date";
 
@@ -10,7 +11,10 @@ let inputLabels = [
     { key: "salinity", color: "cyan" },
 ];
 
+
+
 const MeasureChart = ({ values, height = 400 }) => {
+    const { t } = useTranslation();
 
     const [lineProps, setLineProps] = useState(
         inputLabels.reduce(
@@ -78,6 +82,7 @@ const MeasureChart = ({ values, height = 400 }) => {
 
                 {inputLabels.map((label, index) => (
                     <Line type="monotone"
+                        name={t(label.key)}
                         key={index}
                         dataKey={label.key}
                         stroke={label.color}                        
