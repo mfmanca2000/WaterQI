@@ -200,7 +200,13 @@ function Locations({ type = '' }) {
     }
 
     const handleChangeLimit = (e) => {
-        setLimit(e.target.value)
+        if (!isNaN(e.target.value)){
+            console.log('Here')
+            setLimit(e.target.value)
+        } else if (e.target.value === t('headerAllMeasures')) {
+            console.log('There')
+            setLimit(1000000)
+        }       
     }
 
     const handleChangeShowYourDataOnly = () => {
@@ -254,6 +260,7 @@ function Locations({ type = '' }) {
                                             <option>50</option>
                                             <option>75</option>
                                             <option>100</option>
+                                            <option>{t('headerAllMeasures')}</option>
                                         </select>
                                     </div>
 
