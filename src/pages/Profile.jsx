@@ -16,6 +16,7 @@ import { IconContext } from 'react-icons';
 import ImportGlobalDataSet from '../utils/SaveGlobalDataSet';
 import ExportDatabase from '../utils/ExportDatabase';
 import RestoreDatabase from '../utils/RestoreDatabase';
+import ImportFriuliDataSet from '../utils/ImportFriuli';
 
 
 
@@ -138,6 +139,18 @@ function Profile() {
                                     <div className='flex w-full justify-center gap-2'>
                                         <MdOutlineRestore />
                                         <RestoreDatabase />
+                                    </div>
+                                </Card>
+                            </div>
+
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Friuli
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ImportFriuliDataSet />
                                     </div>
                                 </Card>
                             </div>

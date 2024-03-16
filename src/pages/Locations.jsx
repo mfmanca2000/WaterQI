@@ -9,7 +9,7 @@ import { conf } from "../conf/conf.js";
 import databaseService from '../appwrite/database';
 import _ from 'lodash';
 
-import { MapContainer, TileLayer, Marker, Popup, Tooltip, ScaleControl  } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Popup, Tooltip, ScaleControl } from 'react-leaflet';
 import "leaflet/dist/leaflet.css";
 import { divIcon, Icon, point } from 'leaflet';
 import MarkerClusterGroup from 'react-leaflet-cluster';
@@ -225,72 +225,72 @@ function Locations({ type = '' }) {
     return (
 
         <Container>
-            <Accordion collapseAll className="w-full mt-4">
+            <Accordion className="w-full mt-4">
                 <Accordion.Panel>
                     <Accordion.Title>{t('filtersTitle')}</Accordion.Title>
                     <Accordion.Content>
-                    <div className='w-full'>
-                <div className='m-4'>
-                    <label className='font-bold text-4xl pb-4'>{getTitle(type)}</label>
-                </div>
+                        <div className='w-full'>
+                            <div className='m-4'>
+                                <label className='font-bold text-4xl pb-4'>{getTitle(type)}</label>
+                            </div>
 
-                {(type === '') && (
+                            {(type === '') && (
 
-                    <div className='flex flex-wrap w-full justify-between pr-8 sm:pr-0'>
-                        <div className='mt-2 h-8'>
-                            <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={handleChangeShowYourDataOnly} />
-                            <label className="mb-4 mr-4" htmlFor='onlyYourLocations'>{t('measuresShowYourLocationsOnly')}</label>
+                                <div className='flex flex-wrap w-full justify-between pr-8 sm:pr-0'>
+                                    <div className='mt-2 h-8'>
+                                        <input type="checkbox" checked={showYourDataOnly} id='onlyYourLocations' label={t('measuresShowYourLocationsOnly')} className="-mt-1 mr-2" onChange={handleChangeShowYourDataOnly} />
+                                        <label className="mb-4 mr-4" htmlFor='onlyYourLocations'>{t('measuresShowYourLocationsOnly')}</label>
+                                    </div>
+
+                                    <div className='mt-2 h-8'>
+                                        <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={handleChangeShowReports} />
+                                        <label className="mb-4 mr-4" htmlFor='showReports'>{t('measuresShowReports')}</label>
+                                    </div>
+
+                                    <div className=''>
+                                        <label className="mb-4 mr-4" htmlFor='limit'>{t('limitLabel')}</label>
+                                        <select className=' -indent-0 ' id='limit' value={limit} onChange={handleChangeLimit}>
+                                            <option>25</option>
+                                            <option>50</option>
+                                            <option>75</option>
+                                            <option>100</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            )}
+
+                            <div className='flex flex-wrap mt-2 pr-8 sm:pr-0'>
+                                <div className='mt-2 sm:w-1/3 pr-2'>
+                                    <Input className="" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
+                                        setDateFrom(e.target.value);
+                                    }} />
+                                </div>
+
+                                <div className='mt-2 sm:w-1/3 px-2'>
+                                    <Input className="" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
+                                        setDateTo(e.target.value);
+                                    }} />
+                                </div>
+
+
+                                <div className='mt-2 sm:w-1/3 pl-2' >
+                                    <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
+                                </div>
+
+                                <div className='flex items-center justify-end w-full h-16 align-middle'>
+                                    <label className="text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
+                                </div>
+
+                            </div>
+
+
                         </div>
-
-                        <div className='mt-2 h-8'>
-                            <input type="checkbox" checked={showReports} id='showReports' label={t('measuresShowReports')} className="-mt-1 mr-2" onChange={handleChangeShowReports} />
-                            <label className="mb-4 mr-4" htmlFor='showReports'>{t('measuresShowReports')}</label>
-                        </div>
-
-                        <div className=''>
-                            <label className="mb-4 mr-4" htmlFor='limit'>{t('limitLabel')}</label>
-                            <select className=' -indent-0 ' id='limit' value={limit} onChange={handleChangeLimit}>
-                                <option>25</option>
-                                <option>50</option>
-                                <option>75</option>
-                                <option>100</option>
-                            </select>
-                        </div>
-
-                    </div>
-                )}
-
-                <div className='flex flex-wrap mt-2 pr-8 sm:pr-0'>
-                    <div className='mt-2 sm:w-1/3 pr-2'>
-                        <Input className="" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
-                            setDateFrom(e.target.value);
-                        }} />
-                    </div>
-
-                    <div className='mt-2 sm:w-1/3 px-2'>
-                        <Input className="" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
-                            setDateTo(e.target.value);
-                        }} />
-                    </div>
-
-
-                    <div className='mt-2 sm:w-1/3 pl-2' >
-                        <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
-                    </div>
-
-                    <div className='flex items-center justify-end w-full h-16 align-middle'>
-                        <label className="text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
-                    </div>
-
-                </div>
-
-
-            </div>
                     </Accordion.Content>
                 </Accordion.Panel>
             </Accordion>
 
-            
+
 
             <div className='w-full mb-4'>
                 <MapContainer className='h-[70vh] mr-8 sm:mr-0' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
