@@ -200,13 +200,8 @@ function Locations({ type = '' }) {
     }
 
     const handleChangeLimit = (e) => {
-        if (!isNaN(e.target.value)){
-            console.log('Here')
-            setLimit(e.target.value)
-        } else if (e.target.value === t('headerAllMeasures')) {
-            console.log('There')
-            setLimit(1000000)
-        }       
+        setLimit(e.target.value)
+
     }
 
     const handleChangeShowYourDataOnly = () => {
@@ -256,11 +251,11 @@ function Locations({ type = '' }) {
                                     <div className=''>
                                         <label className="mb-4 mr-4" htmlFor='limit'>{t('limitLabel')}</label>
                                         <select className=' -indent-0 ' id='limit' value={limit} onChange={handleChangeLimit}>
-                                            <option>25</option>
-                                            <option>50</option>
-                                            <option>75</option>
-                                            <option>100</option>
-                                            <option>{t('headerAllMeasures')}</option>
+                                            <option key={25} value={25}>25</option>
+                                            <option key={50} value={50}>50</option>
+                                            <option key={75} value={75}>75</option>
+                                            <option key={100} value={100}>100</option>
+                                            <option key={'All'} value={1000000}>{t('headerAllMeasures')}</option>
                                         </select>
                                     </div>
 
