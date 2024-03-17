@@ -46,7 +46,10 @@ export class DatabaseService {
 
     async getAllMeasures() {
         try {
-            const measures = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, [Query.orderDesc('datetime')])
+            const queries = [];
+            queries.push(Query.orderDesc('datetime'))
+            queries.push(Query.limit(1000000));            
+            const measures = await this.databases.listDocuments(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, queries)
             //console.log('Measures: ' + JSON.stringify(measures.documents))
             return measures;
         } catch (error) {
@@ -55,11 +58,11 @@ export class DatabaseService {
         }
     }
 
-    async getAllLocations(userId, searchText, limit) {
+    async getAllLocations(userId, searchText, limit, withMeasures = false) {
         try {
             const queries = [];
 
-            queries.push(Query.select(['$id', 'name', 'latitude', 'longitude']))
+            if (!withMeasures) queries.push(Query.select(['$id', 'name', 'latitude', 'longitude']))
             if (userId) queries.push(Query.equal('userId', userId));
             if (searchText) queries.push(Query.search('name', searchText));
             queries.push(Query.orderDesc('$updatedAt'));
