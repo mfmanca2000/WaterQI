@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Input from '../components/Input';
@@ -26,6 +26,7 @@ const defaultLongitude = conf.defaultLongitude;
 function Locations({ type = '' }) {
 
     const { t } = useTranslation();
+    const [isLoading, setIsLoading] = useState(false)
     const [showYourDataOnly, setShowYourDataOnly] = useState(false);
     const [showReports, setShowReports] = useState(false);
     const [limit, setLimit] = useState(50)
@@ -39,6 +40,8 @@ function Locations({ type = '' }) {
     const sortedReports = useRef([]);
     const filteredLocations = useRef([]);
     const sortedLocations = useRef([]);
+
+    const [selectedLocation, setSelectedLocation] = useState(null)
 
     const warningIcon = new Icon({
         // iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
@@ -73,13 +76,15 @@ function Locations({ type = '' }) {
         const measureLocationsNumberToShow = userData?.prefs.myLocationsNumber && userData?.prefs.myLocationsNumber > 0 ? userData?.prefs.myLocationsNumber : conf.lastModifiedLocationsNumber;
         const reportsNumberToShow = userData?.prefs.myReportsNumber && userData?.prefs.myReportsNumber > 0 ? userData?.prefs.myReportsNumber : conf.lastInsertedReportsNumber
 
+        setIsLoading(true)
+
         if (type === '') {
             databaseService.getAllLocations(showYourDataOnly ? currentUserId : null,
                 searchText,
                 limit)
                 .then((returnedLocations) => {
 
-                    //console.log(JSON.stringify(returnedLocations))
+                    console.log('Locations returned: ' + returnedLocations.documents.length)
 
                     if (returnedLocations) {
                         sortedLocations.current = returnedLocations.documents.slice(0, measureLocationsNumberToShow);
@@ -95,11 +100,14 @@ function Locations({ type = '' }) {
                                 sortedReports.current = returnedReports.documents.slice(0, reportsNumberToShow);
                                 filteredReports.current = returnedReports.documents;
                                 setMeasureNumber(filteredLocations.current.length + filteredReports.current.length);
+
                             })
                     } else {
                         filteredReports.current.length = 0
                         setMeasureNumber(filteredLocations.current.length)
                     }
+
+                    setIsLoading(false)
                 })
 
         } else if (type == 'mylocations') {
@@ -112,6 +120,8 @@ function Locations({ type = '' }) {
                     })
 
                     setMeasureNumber(filteredLocations.current.length);
+
+                    setIsLoading(false)
                 })
 
         } else if (type == 'mymeasures') {
@@ -135,6 +145,7 @@ function Locations({ type = '' }) {
 
                                 setMeasureNumber(filteredLocations.current.length)
                             }
+                            setIsLoading(false)
                         })
                     }
                 })
@@ -152,13 +163,18 @@ function Locations({ type = '' }) {
                     });
 
                     setMeasureNumber(filteredReports.current.length);
+                    setIsLoading(false)
                 })
         }
+
+
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [showYourDataOnly, userData, dateFrom, dateTo, showReports, type, limit, searchText]);
 
 
-    function hasMeasuresInInterval(location, userId = null) {
+
+    const hasMeasuresInInterval = useCallback((location, userId = null) => {
         if (!dateFrom && !dateTo) return true;
 
         if (dateFrom && dateTo) {
@@ -184,7 +200,9 @@ function Locations({ type = '' }) {
                 return mdate <= dt && (userId === null || m.userId === userId);
             }).length > 0;
         }
-    }
+    }, [dateFrom, dateTo])
+
+
 
     function getTitle(type) {
         switch (type) {
@@ -201,7 +219,6 @@ function Locations({ type = '' }) {
 
     const handleChangeLimit = (e) => {
         setLimit(e.target.value)
-
     }
 
     const handleChangeShowYourDataOnly = () => {
@@ -219,7 +236,6 @@ function Locations({ type = '' }) {
             }, 1000),
         []
     );
-
 
 
 
@@ -255,7 +271,7 @@ function Locations({ type = '' }) {
                                             <option key={50} value={50}>50</option>
                                             <option key={75} value={75}>75</option>
                                             <option key={100} value={100}>100</option>
-                                            <option key={'All'} value={1000000}>{t('headerAllMeasures')}</option>
+                                            <option key={'All'} value={1000000}>{t('all')}</option>
                                         </select>
                                     </div>
 
@@ -280,9 +296,14 @@ function Locations({ type = '' }) {
                                     <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
                                 </div>
 
-                                <div className='flex items-center justify-end w-full h-16 align-middle'>
+                                {console.log('When rendering: ' + isLoading)}
+
+                                {isLoading && (<div className='flex items-center justify-end w-full h-16 align-middle'>
+                                    <label className="text-right font-extrabold">Loading...</label>
+                                </div>)}
+                                {!isLoading && (<div className='flex items-center justify-end w-full h-16 align-middle'>
                                     <label className="text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
-                                </div>
+                                </div>)}
 
                             </div>
 
@@ -295,7 +316,11 @@ function Locations({ type = '' }) {
 
 
             <div className='w-full mb-4'>
+
                 <MapContainer className='h-[70vh] mr-8 sm:mr-0' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
+
+
+
                     <TileLayer
                         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -308,22 +333,26 @@ function Locations({ type = '' }) {
                         {filteredLocations.current.map((l) => {
 
                             return (
-                                <Marker key={'l_' + l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)}>
-                                    <Popup>
+                                <Marker key={l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)} eventHandlers={{
+                                    click: async (e) => {                                        
+                                        setSelectedLocation(await databaseService.getLocation(l.$id))
+                                    },
+                                }}>
+                                    (<Popup>
                                         <div className='w-[300px]'>
                                             <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
-                                                <Link className='underline font-bold' to={`/location/${l.$id}`}>{l.name}</Link>
+                                                <Link className='underline font-bold' to={`/location/${selectedLocation?.$id}`}>{selectedLocation?.name}</Link>
                                             </div>
                                             <div className='w-full text-md text-right font-bold'>
-                                                {l.measures?.length + ' ' + ((l.measures?.length == 0 || l.measures?.length > 1) ? t('measuresLabel') : t('measureLabel'))}
+                                                {selectedLocation?.measures?.length + ' ' + ((selectedLocation?.measures?.length == 0 || selectedLocation?.measures?.length > 1) ? t('measuresLabel') : t('measureLabel'))}
                                             </div>
                                             <div>
-                                                <MeasureChart height={200} values={l.measures?.sort(function (a, b) {
+                                                <MeasureChart height={200} values={selectedLocation?.measures?.sort(function (a, b) {
                                                     return new Date(a.datetime) - new Date(b.datetime);
                                                 })} />
                                             </div>
                                         </div>
-                                    </Popup>
+                                    </Popup>)
                                     <Tooltip>{t(calculateWQILocation(l)[1])}</Tooltip>
                                 </Marker>
                             )

@@ -143,7 +143,9 @@
         "totalDissolvedSolids": "Solides totaux dissous",
         "pH": "pH",
         "temperature": "Temperature",
-        "salinity": "Salinité"
+        "salinity": "Salinité",
+        "slow": "(Lent)",
+        "all": "Tous"
 
     }
 }

@@ -59,6 +59,7 @@ export class DatabaseService {
         try {
             const queries = [];
 
+            queries.push(Query.select(['$id', 'name', 'latitude', 'longitude']))
             if (userId) queries.push(Query.equal('userId', userId));
             if (searchText) queries.push(Query.search('name', searchText));
             queries.push(Query.orderDesc('$updatedAt'));
