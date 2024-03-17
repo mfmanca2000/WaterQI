@@ -109,7 +109,7 @@
         "tdsLevel2": "Acqua purificata",
         "tdsLevel3": "Acqua di rubinetto",
         "tdsLevel4": "Acqua inquinata",
-        "notAvailable": "Non disponibile",
+        "notAvailable": "Quality Index non disponibile",
         "returnToMeasures": "Ritorna alle misure",
         "returnToMeasureGroup": "Ritorna al gruppo di misure",
         "returnToLocation": "Ritorna al luogo",
@@ -145,6 +145,7 @@
         "temperature": "Temperatura",
         "salinity": "Salinità",
         "slow": "(Lento)",
-        "all": "Tutte"
+        "all": "Tutte",
+        "locations": "luoghi"
     }
 }

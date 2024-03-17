@@ -109,7 +109,7 @@
         "tdsLevel2": "Eau purifiée",
         "tdsLevel3": "Eau du robinet",
         "tdsLevel4": "Eau",
-        "notAvailable": "Pas disponible",
+        "notAvailable": "Quality Index pas disponible",
         "returnToMeasures": "Retourner aux mesures",
         "returnToMeasureGroup": "Retourner au groupe de mesures",
         "returnToLocation": "Retourne au lieu",
@@ -145,7 +145,8 @@
         "temperature": "Temperature",
         "salinity": "Salinité",
         "slow": "(Lent)",
-        "all": "Tous"
+        "all": "Tous",
+        "locations": "lieux"
 
     }
 }

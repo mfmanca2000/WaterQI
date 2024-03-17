@@ -29,7 +29,7 @@ function Locations({ type = '' }) {
     const [isLoading, setIsLoading] = useState(false)
     const [showYourDataOnly, setShowYourDataOnly] = useState(false);
     const [showReports, setShowReports] = useState(false);
-    const [limit, setLimit] = useState(50)
+    const [limit, setLimit] = useState(1000000)
     const [dateFrom, setDateFrom] = useState(null);
     const [dateTo, setDateTo] = useState(null);
     const [measureNumber, setMeasureNumber] = useState(0);
@@ -302,7 +302,7 @@ function Locations({ type = '' }) {
                                     <label className="text-right font-extrabold">Loading...</label>
                                 </div>)}
                                 {!isLoading && (<div className='flex items-center justify-end w-full h-16 align-middle'>
-                                    <label className="text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber}</label>
+                                    <label className="text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber + ' ' + t('locations')}</label>
                                 </div>)}
 
                             </div>

@@ -109,7 +109,7 @@
     "tdsLevel2": "Purified",
     "tdsLevel3": "Tap",
     "tdsLevel4": "Super polluted",
-    "notAvailable": "Not available",
+    "notAvailable": "Quality Index not available",
     "returnToMeasures": "Back to all measures",
     "returnToMeasureGroup": "Back to measure group",
     "returnToLocation": "Back to location",
@@ -145,6 +145,7 @@
     "temperature": "Temperature",
     "salinity": "Salinity",
     "slow": "(Slow)",
-    "all": "All"
+    "all": "All",
+    "locations": "locations"
   }
 }
