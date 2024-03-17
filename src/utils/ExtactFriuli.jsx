@@ -19,7 +19,7 @@ const filename = 'FriuliVeneziaGiulia.csv'
 
 
 
-export default function ImportFriuliDataSet() {
+export default function ExtractFriuliDataSet() {
     const [results, setResults] = useState([])
     const { readRemoteFile } = usePapaParse();
 

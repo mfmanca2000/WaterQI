@@ -23,7 +23,7 @@ function RestoreDatabase() {
                 if (!exists) {
                     await databaseService.restoreLocation(l)
                     console.log('Restored location')
-                    await delay(3000)
+                    await delay(500)
                 } else {
                     console.log('Already existing location')
                 }
