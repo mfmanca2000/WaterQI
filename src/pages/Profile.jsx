@@ -19,6 +19,7 @@ import RestoreDatabase from '../utils/RestoreDatabase';
 import ExtractFriuliDataSet from '../utils/ExtactFriuli';
 import ExtractLiguriaDataSet from '../utils/ExtractLiguria';
 import ExtractToscanaDataSet from '../utils/ExtractToscana';
+import ExtractPiemonteDataSet from '../utils/ExtractPiemonte';
 
 
 
@@ -184,7 +185,17 @@ function Profile() {
                                 </Card>
                             </div>
 
-                            
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Piemonte
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractPiemonteDataSet />
+                                    </div>
+                                </Card>
+                            </div>
                             
                         </div>
                     </Container>)}
