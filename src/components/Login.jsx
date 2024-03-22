@@ -53,7 +53,7 @@ function Login() {
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
                 <div className="mb-2 flex justify-center">
                     <span className="inline-block w-full max-w-[100px]">
-                        <img width="100%" src='Logo.png' />
+                        <img width="100%" src='/LogoFiumiPuliti.png' />
                     </span>
                 </div>
                 <h2 className="text-center text-2xl font-bold leading-tight mt-4">{t('loginTitle')}</h2>

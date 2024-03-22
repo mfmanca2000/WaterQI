@@ -7,8 +7,8 @@ import { login, logout } from "./store/authSlice";
 import authService from './appwrite/auth'
 import HeaderNew from './components/HeaderNew'
 
-function App() {    
-    
+function App() {
+
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
 
@@ -24,7 +24,8 @@ function App() {
 
     return !loading ? (
         <div className="min-h-screen flex flex-wrap content-between bg-white" >
-            <div className="w-full block">                
+
+            <div className="w-full block">
                 <HeaderNew />
                 <main>
                     <Outlet />

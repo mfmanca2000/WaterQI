@@ -125,7 +125,7 @@ export class DatabaseService {
             //console.log('LIST OF REPORTS: ' + JSON.stringify(reports));
             return reports;
         } catch (error) {
-            console.log('--- Appwrite DatabaseService getAllMeasureGroups ' + error);
+            console.log('--- Appwrite DatabaseService getAllReports ' + error);
             return null;
         }
     }

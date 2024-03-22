@@ -73,8 +73,8 @@ function HeaderNew() {
             <Navbar fluid rounded className='bg-transparent mx-8'>
                 <Navbar.Brand className='' href="/">
                     <div className='sm:w-48 sm:flex'>
-                        <img src="/Logo.png" className="mr-3 h-8 sm:h-14" alt="WaterQI Logo" />
-                        <span className="w-full self-center whitespace-nowrap text-3xl font-semibold dark:text-white">WaterQI</span>
+                        <img src="/LogoFiumiPuliti.png" className="mr-3 h-12 sm:h-20" alt="Fiumi Puliti Logo" />
+                        <span className="w-full self-center whitespace-nowrap text-3xl font-semibold text-white">Fiumi Puliti</span>
                     </div>
                 </Navbar.Brand>
 
@@ -112,10 +112,10 @@ function HeaderNew() {
                     <Navbar.Toggle className='mx-2' />
                 </div>
 
-                <Navbar.Collapse className=''>
+                <Navbar.Collapse className='text-white'>
                     {
                         navItems.map((item) => item.active ? (
-                            <Navbar.Link className='text-lg' key={item.name} href={item.slug}>
+                            <Navbar.Link className='text-2xl text-white' key={item.name} href={item.slug}>
                                 {item.name}
                             </Navbar.Link>
                         ) : null)

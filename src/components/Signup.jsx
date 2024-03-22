@@ -9,13 +9,14 @@ import { useDispatch } from 'react-redux'
 import { login } from '../store/authSlice'
 import { useTranslation, Trans } from 'react-i18next'
 import { FaFacebook, FaGoogle } from 'react-icons/fa'
+import { Label } from 'flowbite-react'
 
 function Signup() {
     const { t, i18n } = useTranslation();
     const navigate = useNavigate();
     const [error, setError] = useState("");
     const dispatch = useDispatch();
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, isValid, isDirty } = useForm()
 
     const googleLogin = (e) => {
         e.preventDefault();
@@ -63,27 +64,31 @@ function Signup() {
                 <form onSubmit={handleSubmit(createUser)} className="mt-8">
                     <div className="space-y-5">
                         <Input
-                            {...register("name", { required: true })}
-                            label="Full Name"
-                            placeholder="Full Name"
+                            {...register("name", { required: true, maxLength: 50 })}
+                            label="Nome e Cognome (Max 50 caratteri)"
+                            placeholder="Nome e Cognome"
                         />
                         <Input
-                            {...register("email", {
-                                required: true,
-
-                            })}
+                            {...register("email", { required: true })}
                             label="Email"
-                            placeholder="Email Address"
+                            placeholder="Email"
                             type="email"
                         />
                         <Input
-                            {...register("password", { required: true })}
-                            label="Password"
+                            {...register("password", { required: true, minLength: 8 })}
+                            label={t('password')}
                             type="password"
                             placeholder="Password"
                         />
+
+                        <div className='flex'>
+                            <input name="acceptTerms" type="checkbox" {...register("accept", { required: true })} id="acceptTerms" className={`form-check-input}`} />
+                            <Label htmlFor='acceptTerms' className="ml-2 underline"> <a href='https://www.gianrobertocasaleggio.com/privacy/' target='_blank'>{t('infoPrivacy')}</a></Label>
+                            
+                        </div>
+
                         <Button type="submit" className="w-full bg-casaleggio-rgba">
-                            Create Account
+                            {t('createAccount')}
                         </Button>
                     </div>
                 </form>
@@ -91,10 +96,10 @@ function Signup() {
                 <div className="mt-6 text-center text-base text-black/60">
                     Or login with...&nbsp;
                     <div>
-                        <button onClick={(e) => googleLogin(e)} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
+                        <button disabled={!isDirty || !isValid} onClick={(e) => googleLogin(e)} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
                             <FaGoogle className='w-8 h-8 text-white' />
                         </button>
-                        <button onClick={(e) => facebookLogin(e)} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
+                        <button disabled={!isDirty || !isValid} onClick={(e) => facebookLogin(e)} className='inline-block m-8 px-6 py-2 duration-200 bg-casaleggio-rgba hover:bg-casaleggio-btn-rgba rounded-sm'>
                             <FaFacebook className='w-8 h-8 text-white' />
                         </button>
                     </div>
