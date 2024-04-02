@@ -153,8 +153,22 @@
         "pH": "pH",
         "temperature": "Temperatura",
         "salinity": "Salinità",
+        "nitrates": "Nitrati",
+        "phosphates": "Fosfati",
+        "escherichiaColi": "Escherichia Coli",
+        "dissolvedOxygen": "Ossigeno disciolto",
+        "limeco": "Indice LIMeco",
         "slow": "(Lento)",
         "all": "Tutte",
-        "locations": "luoghi"
+        "locations": "luoghi",
+        "legendaPH": "Indica il carattere acido o basico/alcalino delle soluzioni. I valori devono essere compresi tra il 6.5 e 9 con un valore ottimale per i fiumi di 7.4",
+        "legendaTotalDissolvedSolids": "Indica la quantità di sali totali disciolti nell'acqua che possono derivare anche dalla tipologia di fiume. È importante che non ci siano grandi variazioni nel tempo",
+        "legendaNitrates": "È una delle cause più importanti dell'eutrofizzazione o bloom algale, dovrebbe essere inferiore a 5.0 mg/L",
+        "legendaPhosphates": "Può portare al fenomeno dell'eutrofizzazione. È consigliato sia inferiore a 0,1 mg/L",
+        "legendaEscherichiaColi": "Indica la balneabilità dell'acqua che in modo semplificato viene indicato in 900 UFC (sul 90% delle rilevazioni)",
+        "legendaDissolvedOxygen": "Indica la possibilità di vita per i pesci. Deve avere un valore minimo di 6.5 mg/L",
+        "legendaTemperature": "È importante che non ci siano grandi variazioni nel tempo",
+        "legendaLimeco": "L'indice LIMeco è l'indicatore di sintesi utilizzato dalle Arpa regionali italiane. È stato introdotto dal D.M. 260/2010 (che modifica le norme tecniche del D.Lgs. 152/2006), è un descrittore dello stato trofico del fiume, che considera quattro parametri: tre nutrienti (azoto ammoniacale, azoto nitrico, fosforo totale) e il livello di ossigeno disciolto espresso come percentuale di saturazione",
+        "downloadDoc": "Scarica il documento"
     }
 }
