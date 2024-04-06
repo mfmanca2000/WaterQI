@@ -52,15 +52,11 @@ export default function ExtractPiemonteDataSet() {
     }
 
 
-    const handleReadRemoteFile = (file) => {
-
-        console.log(file)
+    const handleReadRemoteFile = (file) => {        
 
         var reader = new FileReader();
         reader.onload = function (event) {
-            // The file's text will be printed here
-            console.log(event.target.result)
-
+            
             readString(event.target.result, {
                 fastMode: false,
                 complete: (results) => {
