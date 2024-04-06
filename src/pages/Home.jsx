@@ -103,6 +103,10 @@ function Home() {
     return (
 
 
+
+      
+
+
       <div className="relative bg-gradient-to-r from-casaleggio-rgba to-blue-600  text-white overflow-y-scroll">
 
         <div className="absolute inset-0">
@@ -111,7 +115,7 @@ function Home() {
         </div>
 
         <div className='mt-8'>
-          <MapContainer className='relative h-[60vh] lg:h-[70vh] m-2 lg:mx-24' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
+          <MapContainer className='relative h-[60vh] lg:h-[70vh] m-2 lg:mx-8' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -176,43 +180,46 @@ function Home() {
           </MapContainer>
         </div>
 
-
-        <div className="relative justify-center items-center text-sm h-[50vh] lg:h-[80vh] text-center lg:text-3xl lg:mt-8 lg:mx-24">
-          <Carousel className='w-full p-4 overflow-auto' slideInterval={10000} indicators={true} pauseOnHover leftControl="&nbsp;" rightControl="&nbsp;">
-            <span className='whitespace-pre-line'>{t('homePageFirstParagraph')}</span>
-            <span className='whitespace-pre-line'>{t('homePageSecondParagraph')}</span>
-            <span className='whitespace-pre-line'>{t('homePageThirdParagraph')}</span>
-            <span className='whitespace-pre-line'>{t('homePageFourthParagraph')}</span>
-            <span className='whitespace-pre-line'>{t('homePageFifthParagraph')}</span>
-
-          </Carousel>
-
-        </div>
-
         <Button color="blue" className='mx-auto my-8'>{t('downloadDoc')}</Button>
 
-        <div className='relative lg:mx-24 mx-auto my-8 p-4 bg-white rounded-[40px] text-black'>
-          <h1 className='text-2xl font-bold text-center'>Legenda</h1>
-          <h1 className='text-black text-xl'>{t('pH')}</h1>
-          <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaPH')}</p>
-          <h1 className='text-blue-600 text-xl'>{t('totalDissolvedSolids')}</h1>
-          <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaTotalDissolvedSolids')}</p>
-          <h1 className='text-blue-600 text-xl'>{t('nitrates')}</h1>
-          <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaNitrates')}</p>
-          <h1 className='text-blue-600 text-xl'>{t('phosphates')}</h1>
-          <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaPhosphates')}</p>
-          <h1 className='text-blue-600 text-xl'>{t('escherichiaColi')}</h1>
-          <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaEscherichiaColi')}</p>
-          <h1 className='text-blue-600 text-xl'>{t('dissolvedOxygen')}</h1>
-          <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaDissolvedOxygen')}</p>
-          <h1 className='text-red-600 text-xl'>{t('temperature')}</h1>
-          <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaTemperature')}</p>
-          <h1 className='text-blue-600 text-xl'>{t('limeco')}</h1>
-          <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaLimeco')}</p>
-        </div>
+        <div className='flex flex-col lg:flex-row w-full gap-8 justify-center'>
+          <div className="relative justify-center items-center text-sm text-justify w-full lg:w-1/2 lg:text-2xl lg:my-4 lg:ml-8">
+          
+            {/* <Carousel className='w-full p-4 overflow-auto' slideInterval={10000} indicators={true} pauseOnHover leftControl="&nbsp;" rightControl="&nbsp;"> */}
+              <p className='whitespace-pre-line p-2'>{t('homePageFirstParagraph')}</p>
+              <p className='whitespace-pre-line p-2'>{t('homePageSecondParagraph')}</p>
+              <p className='whitespace-pre-line p-2'>{t('homePageThirdParagraph')}</p>
+              <p className='whitespace-pre-line p-2'>{t('homePageFourthParagraph')}</p>
+              <p className='whitespace-pre-line p-2'>{t('homePageFifthParagraph')}</p>
 
-      </div >
+            {/* </Carousel> */}
+            
+          </div>
 
+          
+
+          <div className='relative w-full mx-auto my-4 p-8 lg:mr-8 lg:w-1/2 bg-casaleggio-rgba rounded-[40px] text-white'>          
+            <h1 className='text-2xl font-bold text-center'>Legenda</h1>
+            <h1 className='text-black text-xl'>{t('pH')}</h1>
+            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaPH')}</p>
+            <h1 className='text-blue-600 text-xl'>{t('totalDissolvedSolids')}</h1>
+            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaTotalDissolvedSolids')}</p>
+            <h1 className='text-blue-600 text-xl'>{t('nitrates')}</h1>
+            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaNitrates')}</p>
+            <h1 className='text-blue-600 text-xl'>{t('phosphates')}</h1>
+            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaPhosphates')}</p>
+            <h1 className='text-blue-600 text-xl'>{t('escherichiaColi')}</h1>
+            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaEscherichiaColi')}</p>
+            <h1 className='text-blue-600 text-xl'>{t('dissolvedOxygen')}</h1>
+            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaDissolvedOxygen')}</p>
+            <h1 className='text-red-600 text-xl'>{t('temperature')}</h1>
+            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaTemperature')}</p>
+            <h1 className='text-blue-600 text-xl'>{t('limeco')}</h1>
+            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaLimeco')}</p>
+          </div>
+
+        </div >
+      </div>
     )
   } else {
     return (

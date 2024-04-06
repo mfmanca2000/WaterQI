@@ -194,29 +194,29 @@ function getMarkerColorLocation(location) {
         //console.log('Calculated WQI: ' + wqi)
         switch (wqi) {
             case 0:
-                return 'multiplemarkerGray.png';
+                return location.userId == 'importer' ? 'multiplemarkerGray.png' : 'multiplemarkerGrayUser.png';
 
             case 1:
-                return 'multiplemarkerBrown.png';
+                return location.userId == 'importer' ? 'multiplemarkerBrown.png' : 'multiplemarkerBrownUser.png';
 
             case 2:
-                return 'multiplemarkerRed.png';
+                return location.userId == 'importer' ? 'multiplemarkerRed.png' : 'multiplemarkerRedUser.png';
 
             case 3:
-                return 'multiplemarkerYellow.png';
+                return location.userId == 'importer' ? 'multiplemarkerYellow.png' : 'multiplemarkerYellowUser.png';
 
             case 4:
-                return 'multiplemarkerGreen.png'
+                return location.userId == 'importer' ? 'multiplemarkerGreen.png' : 'multiplemarkerGreenUser.png';
 
             case 5:
-                return 'multiplemarkerBlue.png';
+                return location.userId == 'importer' ? 'multiplemarkerBlue.png' : 'multiplemarkerBlueUser.png';
 
             default:
-                return 'multiplemarkerGray.png'
+                return location.userId == 'importer' ? 'multiplemarkerGray.png' : 'multiplemarkerGrayUser.png';
 
         }
-    } else {        
-        return 'multiplemarker.png'
+    } else {           
+        return location.userId == 'importer' ? 'multiplemarker.png' : 'multiplemarkerUser.png'
     }
 }
 

@@ -62,11 +62,11 @@ export class DatabaseService {
         try {
             const queries = [];
 
-            if (!withMeasures) queries.push(Query.select(['$id', 'name', 'latitude', 'longitude']))
+            if (!withMeasures) queries.push(Query.select(['$id', 'name', 'latitude', 'longitude', 'userId']))
             if (userId) queries.push(Query.equal('userId', userId));
             if (searchText) queries.push(Query.search('name', searchText));
             queries.push(Query.orderDesc('$updatedAt'));
-            queries.push(Query.limit(limit));
+            queries.push(Query.limit(limit)); 
 
             //console.log(queries)
 
