@@ -33,6 +33,41 @@ const TDS_levels = [
     }
 ]
 
+//L'indice LIMECO va da 0 a 1. Valori bassi hanno "livello 5", valori alti hanno "livello 1" 
+const LIMECO_LEVELS = [
+    {
+        min: 0,
+        max: 0.17,
+        level: 5,
+        description: 'limecoLevel5'
+    },
+    {
+        min: 0.17,
+        max: 0.33,
+        level: 4,
+        description: 'limecoLevel4'
+    },
+    {
+        min: 0.33,
+        max: 0.50,
+        level: 3,
+        description: 'limecoLevel3'
+    },
+    {
+        min: 0.50,
+        max: 0.66,
+        level: 2,
+        description: 'limecoLevel2'
+    },
+    {
+        min: 0.66,
+        max: 1,
+        level: 1,
+        description: 'limecoLevel1'
+    }
+]
+
+
 function calculateWQIMeasureGroup(measureGroup) {
     if (!measureGroup) return [0, 'notAvailable'];
 
@@ -78,14 +113,24 @@ function calculateWQI(measure) {
 
     let wqi = 0;
     let wqiText = 'notAvailable';
-    if (measure?.totalDissolvedSolids) {
-        TDS_levels.forEach(element => {
-            if (measure.totalDissolvedSolids >= element.min && measure.totalDissolvedSolids <= element.max) {
+    // if (measure?.totalDissolvedSolids) {
+    //     TDS_levels.forEach(element => {
+    //         if (measure.totalDissolvedSolids >= element.min && measure.totalDissolvedSolids <= element.max) {
+    //             wqi = element.level;
+    //             wqiText = element.description;
+    //         }
+    //     });
+    // }
+
+    if (measure?.limeco) {
+        LIMECO_LEVELS.forEach(element => {
+            if (measure.limeco >= element.min && measure.limeco < element.max) {
                 wqi = element.level;
                 wqiText = element.description;
             }
-        });
+        })
     }
+
     return [wqi, wqiText];
 }
 
@@ -103,19 +148,19 @@ function getMarkerColor(measure) {
         case 0:
             return 'markerGray.png';
 
-        case 1:
+        case 5:
             return 'markerBrown.png';
 
-        case 2:
+        case 4:
             return 'markerRed.png';
 
         case 3:
             return 'markerYellow.png';
 
-        case 4:
+        case 2:
             return 'markerGreen.png'
 
-        case 5:
+        case 1:
             return 'markerBlue.png';
 
         default:
@@ -140,19 +185,19 @@ function getMarkerColorMeasureGroup(measureGroup) {
             case 0:
                 return 'multiplemarkerGray.png';
 
-            case 1:
+            case 5:
                 return 'multiplemarkerBrown.png';
 
-            case 2:
+            case 4:
                 return 'multiplemarkerRed.png';
 
             case 3:
                 return 'multiplemarkerYellow.png';
 
-            case 4:
+            case 2:
                 return 'multiplemarkerGreen.png'
 
-            case 5:
+            case 1:
                 return 'multiplemarkerBlue.png';
 
             default:
@@ -196,19 +241,19 @@ function getMarkerColorLocation(location) {
             case 0:
                 return location.userId == 'importer' ? 'multiplemarkerGray.png' : 'multiplemarkerGrayUser.png';
 
-            case 1:
+            case 5:
                 return location.userId == 'importer' ? 'multiplemarkerBrown.png' : 'multiplemarkerBrownUser.png';
 
-            case 2:
+            case 4:
                 return location.userId == 'importer' ? 'multiplemarkerRed.png' : 'multiplemarkerRedUser.png';
 
             case 3:
                 return location.userId == 'importer' ? 'multiplemarkerYellow.png' : 'multiplemarkerYellowUser.png';
 
-            case 4:
+            case 2:
                 return location.userId == 'importer' ? 'multiplemarkerGreen.png' : 'multiplemarkerGreenUser.png';
 
-            case 5:
+            case 1:
                 return location.userId == 'importer' ? 'multiplemarkerBlue.png' : 'multiplemarkerBlueUser.png';
 
             default:
