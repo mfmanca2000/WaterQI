@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import databaseService from '../appwrite/database.js'
-import { usePapaParse } from 'react-papaparse'
+import { readString, usePapaParse } from 'react-papaparse'
 import { Button } from 'flowbite-react';
 import FileUploader from '../components/FileUploader.jsx';
 
@@ -42,7 +42,7 @@ export default function ExtractFriuliDataSet() {
     const handleReadRemoteFile = (file) => {
         var reader = new FileReader();
         reader.onload = function (event) {
-            readRemoteFile(filename, {
+            readString(event.target.result, {
                 fastMode: false,
                 complete: (results) => {
                     console.log('Results: ' + results.data.length)
@@ -54,14 +54,14 @@ export default function ExtractFriuliDataSet() {
 
                     results?.data?.forEach((r) => {
                         counter++
-                        if (counter == 1 || r[6] == null) return; // skip first line with headers                        
+                        if (counter == 1) return; // skip first line with headers                                      
                         else {
 
                             console.log('Locations inserted so far: ' + locations.length)
 
-                            const locationsAround = databaseService.getAllLocationsAroundFromList(locations, Number(r[6]), Number(r[7]), 100);
+                            const locationsAround = databaseService.getAllLocationsAroundFromList(locations, Number(r[5]), Number(r[6]), 100);
                             if (locationsAround.length === 0) {
-
+                                
                                 const measure = { 
                                     $id: null, 
                                     electricatConductivity: r[3]?.includes('Conduc') ? Number(r[4]) : null, 
@@ -72,10 +72,10 @@ export default function ExtractFriuliDataSet() {
                                     userId: 'importer', 
                                     placeDescription: r[1] + ' (' + r[0] + ')', 
                                     datetime: new Date(r[2]), 
-                                    latitude: r[6], 
-                                    longitude: r[7] 
+                                    latitude: r[5], 
+                                    longitude: r[6] 
                                 }
-                                const loc = { $id: null, userId: 'importer', username: null, name: r[1] + '(' + r[0] + ')', latitude: parseFloat(r[6]), longitude: parseFloat(r[7]), imageId: null, measures: [measure] }
+                                const loc = { $id: null, userId: 'importer', username: null, name: r[1] + ' (' + r[0] + ')', latitude: parseFloat(r[5]), longitude: parseFloat(r[6]), imageId: null, measures: [measure] }
                                 locations.push(loc)
                                 console.log('Added new location')
 
@@ -117,8 +117,8 @@ export default function ExtractFriuliDataSet() {
                                         userId: 'importer', 
                                         placeDescription: r[1] + '(' + r[0] + ')', 
                                         datetime: new Date(r[2]), 
-                                        latitude: r[6], 
-                                        longitude: r[7] 
+                                        latitude: r[5], 
+                                        longitude: r[6] 
                                     }
                                     locationsAround[0].measures.push(measure)
                                     console.log('Added measure to existing location')

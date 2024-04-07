@@ -161,18 +161,18 @@ export class DatabaseService {
         }
     }
 
-    async addMeasure({ userId, username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity, location }) {
+    async addMeasure({ userId, username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity, nitrates, phosphates, escherichiaColi, dissolvedOxygen, limeco, location }) {
         try {
-            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, ID.unique(), { userId, username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity, location });
+            return await this.databases.createDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, ID.unique(), { userId, username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity, nitrates, phosphates, escherichiaColi, dissolvedOxygen, limeco, location });
         } catch (error) {
             console.log('--- Appwrite DatabaseService addMeasure ' + error);
             return null;
         }
     }
 
-    async updateMeasure(measureId, { username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity }) {
+    async updateMeasure(measureId, { username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity, nitrates, phosphates, escherichiaColi, dissolvedOxygen, limeco, }) {
         try {
-            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, measureId, { username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity });
+            return await this.databases.updateDocument(conf.appwriteDatabaseId, conf.appwriteMeasuresCollectionId, measureId, { username, latitude, longitude, placeDescription, datetime, imageId, electricalConductivity, totalDissolvedSolids, pH, temperature, salinity, nitrates, phosphates, escherichiaColi, dissolvedOxygen, limeco, });
         } catch (error) {
             console.log('--- Appwrite DatabaseService updateMeasure ' + error);
             return null;
@@ -212,7 +212,7 @@ export class DatabaseService {
         try {
 
             const measures = location.measures.map((e) => {
-                return _.pick(e, ['userId', 'username', 'datetime', 'latitude', 'longitude', 'imageId', 'electricalConductivity', 'totalDissolvedSolids', 'pH', 'temperature', 'salinity', 'placeDescription']);
+                return _.pick(e, ['userId', 'username', 'datetime', 'latitude', 'longitude', 'imageId', 'electricalConductivity', 'totalDissolvedSolids', 'pH', 'temperature', 'salinity', 'nitrates', 'phosphates', 'escherichiaColi', 'dissolvedOxygen', 'limeco', 'placeDescription']);
             })
 
             //console.log(measures)

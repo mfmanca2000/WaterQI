@@ -106,7 +106,7 @@ export default function ExtractToscanaDataSet() {
                                     latitude: long_lat[1],
                                     longitude: long_lat[0]
                                 }
-                                const loc = { $id: null, userId: 'importer', username: null, name: r[1] + '(' + r[0] + ')', latitude: long_lat[1], longitude: long_lat[0], imageId: null, measures: [measure] }
+                                const loc = { $id: null, userId: 'importer', username: null, name: r[1] + ' (' + r[0] + ')', latitude: long_lat[1], longitude: long_lat[0], imageId: null, measures: [measure] }
                                 locations.push(loc)
                                 console.log('Added new location')
 

@@ -13,17 +13,17 @@ function RestoreDatabase() {
     const delay = ms => new Promise(res => setTimeout(res, ms));
 
     const onReaderLoad = async (event) => {
-        console.log(event.target.result);
+        //console.log(event.target.result);
         var allData = JSON.parse(event.target.result);
         //console.log(allData)  
         if (allData.locations) {
             for (const l of allData.locations.documents) {
 
-                const exists = await databaseService.getLocation(l.$id)
+                const exists = l.$id != null ? await databaseService.getLocation(l.$id) : false
                 if (!exists) {
                     await databaseService.restoreLocation(l)
                     console.log('Restored location')
-                    await delay(500)
+                    //await delay(5)
                 } else {
                     console.log('Already existing location')
                 }
@@ -32,7 +32,7 @@ function RestoreDatabase() {
 
         if (allData.reports) {
             for (const r of allData.reports.documents) {
-                const exists = await databaseService.getReport(r.$id)
+                const exists = r.$id != null ? await databaseService.getReport(r.$id) : false
                 if (!exists) {
                     await databaseService.restoreReport(r)
                     console.log('Restored report')
@@ -41,6 +41,8 @@ function RestoreDatabase() {
                 }
             }
         }
+
+        console.log('Restore completed')
     }
 
     const onRestoreClicked = () => {
