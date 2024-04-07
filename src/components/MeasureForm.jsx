@@ -32,7 +32,12 @@ export default function MeasureForm({ measure }) {
             totalDissolvedSolids: measure?.totalDissolvedSolids || null,
             pH: measure?.pH || null,
             temperature: measure?.temperature || null,
-            salinity: measure?.salinity || null
+            salinity: measure?.salinity || null,
+            nitrates: measure?.nitrates || null,
+            phosphates: measure?.phosphates || null,
+            escherichiaColi: measure?.escherichiaColi || null,
+            dissolvedOxygen: measure?.dissolvedOxygen || null,
+            limeco: measure?.limeco || null
         }
     })
 
@@ -71,7 +76,12 @@ export default function MeasureForm({ measure }) {
             totalDissolvedSolids: measure?.totalDissolvedSolids || null,
             pH: measure?.pH || null,
             temperature: measure?.temperature || null,
-            salinity: measure?.salinity || null
+            salinity: measure?.salinity || null,
+            nitrates: measure?.nitrates || null,
+            phosphates: measure?.phosphates || null,
+            escherichiaColi: measure?.escherichiaColi || null,
+            dissolvedOxygen: measure?.dissolvedOxygen || null,
+            limeco: measure?.limeco || null
         });
 
 
@@ -362,14 +372,16 @@ export default function MeasureForm({ measure }) {
                     </div>
 
                     <div className="w-full">
-                        <div className="w-full md:w-1/4 mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10">
-                            <Input label="Electrical Conductivity (μS/cm)"
+                        {/* <div className="w-full md:w-1/4 mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10"> */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-casaleggio-rgba rounded-xl border border-black/10 mt-4 px-4 pb-4">
+  
+                            <Input label={t('electricalConductivity') + " (μS/cm)"}
                                 disabled={!canModify()}
                                 className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("electricalConductivity")}
                             />
 
-                            <Input label="Total Dissolved Solids (ppm)"
+                            <Input label={t('totalDissolvedSolids') + " (ppm)"}
                                 disabled={!canModify()}
                                 className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("totalDissolvedSolids")}
@@ -381,16 +393,46 @@ export default function MeasureForm({ measure }) {
                                 {...register("pH")}
                             />
 
-                            <Input label="Temperature (°C)"
+                            <Input label={t('temperature') + " (°C)"}
                                 disabled={!canModify()}
                                 className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("temperature")}
                             />
 
-                            <Input label="Salinity"
+                            <Input label={t('salinity')}
                                 disabled={!canModify()}
                                 className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("salinity")}
+                            />
+
+                            <Input label={t('nitrates')}
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("nitrates")}
+                            />
+
+                            <Input label={t('phosphates')}
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("phosphates")}
+                            />
+
+                            <Input label={t('escherichia Coli')}
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("escherichiaColi")}
+                            />
+
+                            <Input label={t('dissolvedOxygen')}
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("dissolvedOxygen")}
+                            />
+
+                            <Input label="LIMECO Index"
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("limeco")}
                             />
                         </div>
 

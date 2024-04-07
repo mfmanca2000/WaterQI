@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { IoOpenOutline, IoTrash } from "react-icons/io5";
+import { IoOpenOutline, IoTrash, IoAddCircleOutline } from "react-icons/io5";
 import { Controller, useForm } from "react-hook-form";
 import Button from "./Button.jsx";
 import Input from "./Input.jsx";
@@ -436,9 +436,14 @@ function LocationForm({ location }) {
                     {location && (
                         <div className='mt-8'>
 
+                            <label className="text-2xl font-bold">{t('measuresInLocationTitle')}</label>
+
                             <div className='text-right'>
-                                <Button onClick={handleAddMeasureToLocation} className='duration-200 bg-green-500 hover:bg-casaleggio-btn-rgba w-full md:w-1/4'>
-                                    {t('locationAddMeasure')}
+                                <Button onClick={handleAddMeasureToLocation} className='duration-200 bg-green-500 hover:bg-casaleggio-btn-rgba '>
+                                    <div className="flex items-center gap-2">
+                                        <IoAddCircleOutline size='1.5rem'/>
+                                        {t('locationAddMeasure')}
+                                    </div>
                                 </Button>
                             </div>
 
@@ -472,8 +477,8 @@ function LocationForm({ location }) {
                                                         <Table.Cell className="whitespace-break-spaces font-medium text-gray-900 dark:text-white">
                                                             <Link className="underline font-bold" to={`/measure/${measure.$id}`}>
                                                                 <div className="flex items-center">
-                                                                {measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}
-                                                                <FiEdit className="ml-2 size-5"/>
+                                                                    {measure.placeDescription?.slice(0, 50) + (measure.placeDescription?.length > 50 ? '...' : '')}
+                                                                    <FiEdit className="ml-2 size-5" />
                                                                 </div>
                                                             </Link>
                                                         </Table.Cell>

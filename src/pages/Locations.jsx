@@ -296,7 +296,7 @@ function Locations({ type = '' }) {
                                     <Input type='text' className="mr-2" label={t('measuresSearch')} onKeyDown={onSearchTextChange} />
                                 </div>
 
-                                {console.log('When rendering: ' + isLoading)}
+                                {/* {console.log('When rendering: ' + isLoading)} */}
 
                                 {isLoading && (<div className='flex items-center justify-end w-full h-16 align-middle'>
                                     <label className="text-right font-extrabold">Loading...</label>
