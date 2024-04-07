@@ -20,6 +20,8 @@ import ExtractFriuliDataSet from '../utils/ExtactFriuli';
 import ExtractLiguriaDataSet from '../utils/ExtractLiguria';
 import ExtractToscanaDataSet from '../utils/ExtractToscana';
 import ExtractPiemonteDataSet from '../utils/ExtractPiemonte';
+import ExtractVdADataSet from '../utils/ExtractVdA';
+import ExtractLazioDataSet from '../utils/ExtractLazio';
 
 
 
@@ -146,6 +148,11 @@ function Profile() {
                                 </Card>
                             </div>
 
+
+                        </div>
+
+
+                        <div className='flex flex-wrap items-center justify-center'>
                             <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
                                 <Card className="">
                                     <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
@@ -157,10 +164,6 @@ function Profile() {
                                     </div>
                                 </Card>
                             </div>
-                        </div>
-
-
-                        <div className='flex flex-wrap items-center justify-center'>
                             <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
                                 <Card className="">
                                     <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
@@ -196,8 +199,36 @@ function Profile() {
                                     </div>
                                 </Card>
                             </div>
-                            
+
                         </div>
+
+
+                        <div className='flex flex-wrap items-center justify-center'>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Val d'Aosta
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractVdADataSet />
+                                    </div>
+                                </Card>
+                            </div>    
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Lazio
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractLazioDataSet />
+                                    </div>
+                                </Card>
+                            </div>                        
+                        </div>
+
+
                     </Container>)}
             </IconContext.Provider>
 

@@ -61,16 +61,16 @@ const MeasureChart = ({ values, height = 400 }) => {
                     <p className="font-bold text-center">{`${formatDateTime(new Date(payload[0].payload.datetime))}`}</p>
                     <div className="grid grid-cols-5 gap-1">
 
-                        <p className="bg-black text-white p-1 font-thin ">EC: {payload[0].payload.electricalConductivity ?? '-'} μS/cm</p>
-                        <p className="bg-orange-500 text-white p-1 font-thin">pH: {payload[0].payload.pH ?? '-'}</p>
-                        <p className="bg-red-500 text-white p-1 font-thin">Temp: {payload[0].payload.temperature ?? '-'} °C</p>
-                        <p className="bg-pink-500 text-white p-1 font-thin">Esch.Coli: {payload[0].payload.escherichiaColi ?? '-'}</p>
-                        <p className="bg-green-500 text-white p-1 font-thin">Limeco: {payload[0].payload.limeco ?? '-'}</p>
-                        <p className="bg-gray-500 text-white p-1 font-thin">Nit.: {payload[0].payload.nitrates ?? '-'}</p>
-                        <p className="bg-violet-800 text-white p-1 font-thin">Ph.: {payload[0].payload.phosphates ?? '-'}</p>
-                        <p className="bg-fuchsia-700 text-white p-1 font-thin">Diss.Ox.: {payload[0].payload.dissolvedOxygen ?? '-'}</p>
-                        <p className="bg-blue-600 text-white p-1 font-thin">TDS: {payload[0].payload.totalDissolvedSolids ?? '-'} ppm</p>
-                        <p className="bg-cyan-500 text-white p-1 font-thin">Salinity: {payload[0].payload.salinity ?? '-'}</p>
+                        <p className="bg-black text-white p-1 font-thin rounded-md">EC: {payload[0].payload.electricalConductivity ?? '-'} μS/cm</p>
+                        <p className="bg-orange-500 text-white p-1 font-thin rounded-md">pH: {payload[0].payload.pH ?? '-'}</p>
+                        <p className="bg-red-500 text-white p-1 font-thin rounded-md">Temp: {payload[0].payload.temperature ?? '-'} °C</p>
+                        <p className="bg-pink-500 text-white p-1 font-thin rounded-md">Esch.Coli: {payload[0].payload.escherichiaColi ?? '-'}</p>
+                        <p className="bg-green-500 text-white p-1 font-thin rounded-md">Limeco: {payload[0].payload.limeco ?? '-'}</p>
+                        <p className="bg-gray-500 text-white p-1 font-thin rounded-md">Nit.: {payload[0].payload.nitrates ?? '-'}</p>
+                        <p className="bg-violet-800 text-white p-1 font-thin rounded-md">Ph.: {payload[0].payload.phosphates ?? '-'}</p>
+                        <p className="bg-fuchsia-700 text-white p-1 font-thin rounded-md">Diss.Ox.: {payload[0].payload.dissolvedOxygen ?? '-'}</p>
+                        <p className="bg-blue-600 text-white p-1 font-thin rounded-md">TDS: {payload[0].payload.totalDissolvedSolids ?? '-'} ppm</p>
+                        <p className="bg-cyan-500 text-white p-1 font-thin rounded-md">Salinity: {payload[0].payload.salinity ?? '-'}</p>
                     </div >
                 </div >
             );
