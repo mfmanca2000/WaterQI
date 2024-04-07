@@ -20,3 +20,8 @@
 ::-webkit-scrollbar-thumb:hover{
     background: #377e96;
 }
+
+
+.recharts-legend-item-text {
+    font-size: smaller;
+}
