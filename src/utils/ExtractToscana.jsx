@@ -48,7 +48,7 @@ export default function ExtractToscanaDataSet() {
             lug: 6, ago: 7, set: 8, ott: 9, nov: 10, dic: 11
         };
         var p = s.split('-');
-        return new Date(p[2], months[p[1].toLowerCase()], p[0]);
+        return new Date('20' + p[2], months[p[1].toLowerCase()], p[0]);
     }
 
 
