@@ -20,6 +20,7 @@ import AddReport from './pages/AddReport.jsx'
 import ReportDetail from './pages/ReportDetail.jsx'
 import Locations from './pages/Locations.jsx'
 import LocationDetail from './pages/LocationDetail.jsx'
+import ReactGA from "react-ga4";
 
 const router = createBrowserRouter([
   {
@@ -165,3 +166,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>,
 )
+
+ReactGA.initialize(process.env.GA4_TRACKING);
