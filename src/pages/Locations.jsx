@@ -242,7 +242,7 @@ function Locations({ type = '' }) {
     return (
 
         <Container>
-            <Accordion className="w-full mt-4">
+           {true && (<Accordion className="w-full mt-4">
                 <Accordion.Panel>
                     <Accordion.Title>{t('filtersTitle')}</Accordion.Title>
                     <Accordion.Content>
@@ -280,13 +280,13 @@ function Locations({ type = '' }) {
 
                             <div className='flex flex-wrap mt-2 pr-8 sm:pr-0'>
                                 <div className='mt-2 sm:w-1/3 pr-2'>
-                                    <Input className="" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
+                                    <Input disabled className="bg-gray-300" label={t('measuresFrom')} type="datetime-local" onChange={(e) => {
                                         setDateFrom(e.target.value);
                                     }} />
                                 </div>
 
                                 <div className='mt-2 sm:w-1/3 px-2'>
-                                    <Input className="" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
+                                    <Input disabled className="bg-gray-300" label={t('measuresTo')} type="datetime-local" onChange={(e) => {
                                         setDateTo(e.target.value);
                                     }} />
                                 </div>
@@ -311,11 +311,11 @@ function Locations({ type = '' }) {
                         </div>
                     </Accordion.Content>
                 </Accordion.Panel>
-            </Accordion>
+            </Accordion>)}
 
 
 
-            <div className='w-full mb-4'>
+            <div className='w-full mb-4 mt-4'>
 
                 <MapContainer className='h-[70vh] mr-8 sm:mr-0' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
 
