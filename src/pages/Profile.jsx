@@ -23,6 +23,7 @@ import ExtractPiemonteDataSet from '../utils/ExtractPiemonte';
 import ExtractVdADataSet from '../utils/ExtractVdA';
 import ExtractLazioDataSet from '../utils/ExtractLazio';
 import ExtractPugliaDataSet from '../utils/ExtractPuglia';
+import ExtractLombardiaDataSet from '../utils/ExtractLombardia';
 
 
 
@@ -237,7 +238,18 @@ function Profile() {
                                         <ExtractPugliaDataSet />
                                     </div>
                                 </Card>
-                            </div>                        
+                            </div>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Lombardia
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractLombardiaDataSet />
+                                    </div>
+                                </Card>
+                            </div>                           
                         </div>
 
 
