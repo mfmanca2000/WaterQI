@@ -63,7 +63,7 @@ const MeasureChart = ({ values, height = 400 }) => {
 
                         <p className="bg-black text-white p-1 font-thin rounded-md">EC: {payload[0].payload.electricalConductivity ?? '-'} μS/cm</p>
                         <p className="bg-orange-500 text-white p-1 font-thin rounded-md">pH: {payload[0].payload.pH ?? '-'}</p>
-                        <p className="bg-red-500 text-white p-1 font-thin rounded-md">Temp: {payload[0].payload.temperature ?? '-'} °C</p>
+                        <p className="bg-red-600 text-white p-1 font-thin rounded-md">Temp: {payload[0].payload.temperature ?? '-'} °C</p>
                         <p className="bg-pink-500 text-white p-1 font-thin rounded-md">Esch.Coli: {payload[0].payload.escherichiaColi ?? '-'}</p>
                         <p className="bg-green-500 text-white p-1 font-thin rounded-md">Limeco: {payload[0].payload.limeco ?? '-'}</p>
                         <p className="bg-gray-500 text-white p-1 font-thin rounded-md">Nit.: {payload[0].payload.nitrates ?? '-'}</p>

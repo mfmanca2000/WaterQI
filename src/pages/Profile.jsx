@@ -22,6 +22,7 @@ import ExtractToscanaDataSet from '../utils/ExtractToscana';
 import ExtractPiemonteDataSet from '../utils/ExtractPiemonte';
 import ExtractVdADataSet from '../utils/ExtractVdA';
 import ExtractLazioDataSet from '../utils/ExtractLazio';
+import ExtractPugliaDataSet from '../utils/ExtractPuglia';
 
 
 
@@ -70,7 +71,7 @@ function Profile() {
                                 </div>
                                 <div className='flex w-full justify-center gap-2'>
                                     <IoLocationOutline />
-                                    <p className="text-6xl text-gray-700 dark:text-gray-400 text-casaleggio-rgba">
+                                    <p className="text-6xl dark:text-gray-400 text-casaleggio-rgba">
                                         {myLocationsNumber}
                                     </p>
                                 </div>
@@ -84,7 +85,7 @@ function Profile() {
                                 </div>
                                 <div className='flex w-full justify-center gap-2'>
                                     <IoBeaker />
-                                    <p className="text-6xl text-gray-700 dark:text-gray-400 text-casaleggio-rgba">
+                                    <p className="text-6xl  dark:text-gray-400 text-casaleggio-rgba">
                                         {myMeasuresNumber}
                                     </p>
                                 </div>
@@ -223,6 +224,17 @@ function Profile() {
                                     <div className='flex w-full justify-center gap-2'>
                                         <FaFileImport />
                                         <ExtractLazioDataSet />
+                                    </div>
+                                </Card>
+                            </div>      
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Puglia
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractPugliaDataSet />
                                     </div>
                                 </Card>
                             </div>                        

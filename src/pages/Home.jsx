@@ -200,21 +200,21 @@ function Home() {
 
           <div className='relative w-full mx-auto my-4 p-8 lg:mr-8 lg:w-1/2 bg-casaleggio-rgba rounded-[40px] text-white'>          
             <h1 className='text-2xl font-bold text-center'>Legenda</h1>
-            <h1 className='text-black text-xl'>{t('pH')}</h1>
+            <h1 className='text-orange-500 text-xl'>{t('pH')}</h1>
             <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaPH')}</p>
             <h1 className='text-blue-600 text-xl'>{t('totalDissolvedSolids')}</h1>
             <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaTotalDissolvedSolids')}</p>
-            <h1 className='text-blue-600 text-xl'>{t('nitrates')}</h1>
+            <h1 className='text-gray-500 text-xl'>{t('nitrates')}</h1>
             <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaNitrates')}</p>
-            <h1 className='text-blue-600 text-xl'>{t('phosphates')}</h1>
+            <h1 className='text-violet-800 text-xl'>{t('phosphates')}</h1>
             <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaPhosphates')}</p>
-            <h1 className='text-blue-600 text-xl'>{t('escherichiaColi')}</h1>
+            <h1 className='text-pink-500 text-xl'>{t('escherichiaColi')}</h1>
             <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaEscherichiaColi')}</p>
-            <h1 className='text-blue-600 text-xl'>{t('dissolvedOxygen')}</h1>
+            <h1 className='text-fuchsia-700 text-xl'>{t('dissolvedOxygen')}</h1>
             <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaDissolvedOxygen')}</p>
             <h1 className='text-red-600 text-xl'>{t('temperature')}</h1>
             <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaTemperature')}</p>
-            <h1 className='text-blue-600 text-xl'>{t('limeco')}</h1>
+            <h1 className='text-green-500 text-xl'>{t('limeco')}</h1>
             <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaLimeco')}</p>
           </div>
 
