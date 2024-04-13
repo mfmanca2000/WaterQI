@@ -180,7 +180,7 @@ function Home() {
           </MapContainer>
         </div>
 
-        <a href="https://associazionegianrobertocasaleggio.s3.amazonws.com/Fiumi+Puliti_WEB.pdf">
+        <a href="https://associazionegianrobertocasaleggio.s3.amazonaws.com/Fiumi+Puliti_WEB.pdf">
           <Button color="blue" className='mx-auto my-8'>{t('downloadDoc')}</Button>
         </a>
 
