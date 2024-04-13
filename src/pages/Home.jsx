@@ -180,7 +180,9 @@ function Home() {
           </MapContainer>
         </div>
 
-        <Button color="blue" className='mx-auto my-8'>{t('downloadDoc')}</Button>
+        <a href="https://associazionegianrobertocasaleggio.s3.amazonws.com/Fiumi+Puliti_WEB.pdf">
+          <Button color="blue" className='mx-auto my-8'>{t('downloadDoc')}</Button>
+        </a>
 
         <div className='flex flex-col lg:flex-row w-full gap-8 justify-center'>
           <div className="relative justify-center items-center text-sm text-justify w-full lg:w-1/2 lg:text-2xl lg:my-4 lg:ml-8">
