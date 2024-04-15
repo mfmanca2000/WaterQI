@@ -22,6 +22,14 @@ async function deleteMeasureGroup(measureGroup, deleteAllMeasures) {
     return await databaseService.deleteMeasureGroup(measureGroup.$id);
 }
 
+async function deleteLocation(location) {
+     //we are deleting everything so we can delete the image too
+     storageService.deleteImage(location.imageId);   
+     console.log('Deleted image');  
+     
+     return await databaseService.deleteLocation(location.$id);
+}
+
 
 async function deleteMeasure(measure){
     //the measure is not part of a group, we need to delete its image from the storage
@@ -43,6 +51,7 @@ async function deleteReport(report){
 
 export {
     deleteMeasureGroup,
+    deleteLocation,
     deleteMeasure,
     deleteReport
 }

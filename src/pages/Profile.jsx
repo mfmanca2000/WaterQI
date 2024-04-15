@@ -9,34 +9,46 @@ import { Card } from 'flowbite-react';
 import Container from '../components/Container';
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { IoBeaker, IoStatsChart, IoWarning } from 'react-icons/io5';
+import { IoBeaker, IoLocationOutline, IoStatsChart, IoWarning } from 'react-icons/io5';
+import { FaFileImport, FaFileExport } from "react-icons/fa6";
+import { MdOutlineRestore } from "react-icons/md";
 import { IconContext } from 'react-icons';
+import ImportGlobalDataSet from '../utils/SaveGlobalDataSet';
+import ExportDatabase from '../utils/ExportDatabase';
+import RestoreDatabase from '../utils/RestoreDatabase';
+import ExtractFriuliDataSet from '../utils/ExtactFriuli';
+import ExtractLiguriaDataSet from '../utils/ExtractLiguria';
+import ExtractToscanaDataSet from '../utils/ExtractToscana';
+import ExtractPiemonteDataSet from '../utils/ExtractPiemonte';
+import ExtractVdADataSet from '../utils/ExtractVdA';
+import ExtractLazioDataSet from '../utils/ExtractLazio';
+import ExtractPugliaDataSet from '../utils/ExtractPuglia';
+import ExtractLombardiaDataSet from '../utils/ExtractLombardia';
 
 
 
 function Profile() {
     const userData = useSelector((state) => state.auth.userData);
-    const navigate = useNavigate();
     const { t, i18n } = useTranslation();
 
     const [myMeasuresNumber, setMyMeasuresNumber] = useState(0)
-    const [myMeasureGroupsNumber, setMyMeasureGroupsNumber] = useState(0)
+    const [myLocationsNumber, setMyLocationsNumber] = useState(0)
     const [myReportsNumber, setMyReportsNumber] = useState(0)
 
     useEffect(() => {
 
         async function getAllNumbers() {
-            const mm = await databaseService.getMeasuresByUserId(userData.$id);
+            const mm = await databaseService.getMeasuresByUserId(userData.$id, null, 100);
             if (mm) {
                 setMyMeasuresNumber(mm.documents.length);
             }
 
-            const mg = await databaseService.getMeasureGroupsByUserId(userData.$id);
-            if (mg) {
-                setMyMeasureGroupsNumber(mg.documents.length);
+            const ml = await databaseService.getLocationsByUserId(userData.$id);
+            if (ml) {
+                setMyLocationsNumber(ml.documents.length);
             }
 
-            const r = await databaseService.getReportssByUserId(userData.$id);
+            const r = await databaseService.getReportsByUserId(userData.$id);
             if (r) {
                 setMyReportsNumber(r.documents.length);
             }
@@ -51,16 +63,17 @@ function Profile() {
             <label className='text-4xl'>{t('headerProfile')}</label>
             <IconContext.Provider value={{ color: 'rgba(150, 181, 102, 1)', size: '64px' }}>
                 <Container>
-                    <div className='flex flex-wrap mt-4'>
+                    <div className='flex flex-wrap mt-4 items-center justify-center'>
+
                         <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
-                            <Card className="" href='/mymeasuregroups'>
+                            <Card className="" href='/mylocations'>
                                 <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
-                                    {t('myMeasureGroups')}
+                                    {t('myLocations')}
                                 </div>
                                 <div className='flex w-full justify-center gap-2'>
-                                    <IoStatsChart />
-                                    <p className="text-6xl text-gray-700 dark:text-gray-400 text-casaleggio-rgba">
-                                        {myMeasureGroupsNumber}
+                                    <IoLocationOutline />
+                                    <p className="text-6xl dark:text-gray-400 text-casaleggio-rgba">
+                                        {myLocationsNumber}
                                     </p>
                                 </div>
                             </Card>
@@ -73,7 +86,7 @@ function Profile() {
                                 </div>
                                 <div className='flex w-full justify-center gap-2'>
                                     <IoBeaker />
-                                    <p className="text-6xl text-gray-700 dark:text-gray-400 text-casaleggio-rgba">
+                                    <p className="text-6xl  dark:text-gray-400 text-casaleggio-rgba">
                                         {myMeasuresNumber}
                                     </p>
                                 </div>
@@ -97,7 +110,152 @@ function Profile() {
 
                     </div>
                 </Container>
+
+                {userData.labels.includes('admin') && (
+                    <Container>
+                        <div className='flex flex-wrap items-center justify-center'>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Save Global Dataset
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ImportGlobalDataSet />
+                                    </div>
+                                </Card>
+                            </div>
+
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Backup
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileExport />
+                                        <ExportDatabase />
+                                    </div>
+                                </Card>
+                            </div>
+
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Restore
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <MdOutlineRestore />
+                                        <RestoreDatabase />
+                                    </div>
+                                </Card>
+                            </div>
+
+
+                        </div>
+
+
+                        <div className='flex flex-wrap items-center justify-center'>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Friuli
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractFriuliDataSet />
+                                    </div>
+                                </Card>
+                            </div>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Liguria
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractLiguriaDataSet />
+                                    </div>
+                                </Card>
+                            </div>
+
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Toscana
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractToscanaDataSet />
+                                    </div>
+                                </Card>
+                            </div>
+
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Piemonte
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractPiemonteDataSet />
+                                    </div>
+                                </Card>
+                            </div>
+
+                        </div>
+
+
+                        <div className='flex flex-wrap items-center justify-center'>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Val d'Aosta
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractVdADataSet />
+                                    </div>
+                                </Card>
+                            </div>    
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Lazio
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractLazioDataSet />
+                                    </div>
+                                </Card>
+                            </div>      
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Puglia
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractPugliaDataSet />
+                                    </div>
+                                </Card>
+                            </div>
+                            <div className='p-4 w-72 lg:w-1/4 sm:w-1/2'>
+                                <Card className="">
+                                    <div className="text-2xl font-bold tracking-tight text-gray-900 dark:text-white h-16 text-center">
+                                        Extract Lombardia
+                                    </div>
+                                    <div className='flex w-full justify-center gap-2'>
+                                        <FaFileImport />
+                                        <ExtractLombardiaDataSet />
+                                    </div>
+                                </Card>
+                            </div>                           
+                        </div>
+
+
+                    </Container>)}
             </IconContext.Provider>
+
 
         </div>
     )

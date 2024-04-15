@@ -6,12 +6,14 @@ import storageService from "../appwrite/storage.js"
 import databaseService from "../appwrite/database.js"
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import { conf } from "../conf/conf.js";
 import { formatDateTime, removeTimeZone } from "../utils/date.js";
 import { useTranslation } from 'react-i18next'
 import { IoWarning } from "react-icons/io5";
 import { ResponsiveContainer } from 'recharts';
+import { MapContainer, Marker, TileLayer } from 'react-leaflet';
+import MapController from './MapController.jsx';
+import { Icon } from 'leaflet';
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -24,6 +26,12 @@ function ReportForm({ report }) {
     const userData = useSelector((state) => state.auth.userData)
     const [previewImageUrl, setPreviewImageUrl] = useState(null)
     const [previewImage, setPreviewImage] = useState(null)
+    const [charsCount, setCharsCount] = useState(0)
+
+    const warningIcon = new Icon({
+        iconUrl: window.location.origin + '/warning.png',
+        iconSize: [48, 48] // size of the icon
+    });
 
     useEffect(() => {
         async function retrievePosition() {
@@ -38,6 +46,7 @@ function ReportForm({ report }) {
     }, [])
 
     function success(position) {
+        console.log('Position retrieved from the browser')
         setLatitudeDevice(position.coords.latitude);
         setLongitudeDevice(position.coords.longitude);
     }
@@ -53,7 +62,7 @@ function ReportForm({ report }) {
             longitude: report?.longitude || longitudeDevice || defaultLongitude,
             title: report?.title || '',
             description: report?.description || '',
-            datetime: report ? removeTimeZone(new Date(report.datetime)) : removeTimeZone(new Date(Date.now())),      
+            datetime: report ? removeTimeZone(new Date(report.datetime)) : removeTimeZone(new Date(Date.now())),
             imageId: report?.imageId || ''
         }
     })
@@ -84,26 +93,29 @@ function ReportForm({ report }) {
 
 
         if (!isNaN(getValues("latitude")) && !isNaN(getValues("longitude"))) {
+            console.log('Setting both')
             setMarkerPosition({ lat: getValues("latitude"), lng: getValues("longitude") });
             setCenterPosition({ lat: getValues("latitude"), lng: getValues("longitude") });
         }
 
 
 
-    }, [reset, report, getValues, latitudeDevice, longitudeDevice]);
+    }, [reset, report, getValues, latitudeDevice, longitudeDevice, charsCount]);
 
     function latitudeChangedHandler(event) {
         if (!isNaN(event.target.value)) {
-            console.log('Latitude changed: ' + event.target.value);
+            //console.log('Latitude changed: ' + event.target.value);
             setMarkerPosition({ lat: Number(event.target.value), lng: Number(getValues("longitude")) })
+            setCenterPosition({ lat: Number(event.target.value), lng: Number(getValues("longitude")) })
         }
     }
 
     function longitudeChangedHandler(event) {
 
         if (!isNaN(event.target.value)) {
-            console.log('Longitude changed: ' + event.target.value + ' Lat-->' + getValues("latitude"));
+            //console.log('Longitude changed: ' + event.target.value + ' Lat-->' + getValues("latitude"));
             setMarkerPosition({ lat: Number(getValues("latitude")), lng: Number(event.target.value) })
+            setCenterPosition({ lat: Number(getValues("latitude")), lng: Number(event.target.value) })
         }
     }
 
@@ -112,17 +124,17 @@ function ReportForm({ report }) {
         if (report) {
 
             if (previewImage) {
-                console.log('We have a previewImage...' + previewImage)
+                //console.log('We have a previewImage...' + previewImage)
                 file = await storageService.uploadImage(previewImage);
                 if (file && report.imageId) {
-                    console.log('Have to delete previous image')
+                    //console.log('Have to delete previous image')
                     storageService.deleteImage(report.imageId);
                 }
             }
 
             const dbReport = await databaseService.updateReport(report.$id, { ...data, imageId: file ? file.$id : report.imageId, username: userData.prefs.username });
             if (dbReport) {
-                navigate('/measures')
+                navigate('/locations')
             }
         } else {
 
@@ -135,21 +147,20 @@ function ReportForm({ report }) {
 
             const dbReport = await databaseService.addReport({ ...data, userId: userData.$id, username: userData.prefs.username });
             if (dbReport) {
-                navigate(`/measures`);
+                navigate(`/locations`);
             }
-
         }
-
     }
 
     function canModify() {
         //it's a new measure, or this user is an admin, or the measure was created by this user
         return !report || userData.labels.includes('admin') || userData.$id === report.userId;
-    }
+    }    
 
     return (
         <>
-            <Link className='underline font-bold ' to={'/measures'}>
+            {console.log('Redrawing with centerposition: ' + centerPosition.lat + ' ' + centerPosition.lng)}
+            <Link className='underline font-bold ' to={'/locations'}>
                 {t('returnToMeasures')}
             </Link>
 
@@ -160,48 +171,35 @@ function ReportForm({ report }) {
                 </div>}
             </div>
 
-            <div className="w-full">
-                <div className="w-full h-72 " >
-                    <APIProvider apiKey={conf.googleMapsAPIKey}>
-                        <Map mapId={'bf51a910020fa25d'}
-                            zoom={conf.defaultZoomLevel}
-                            center={centerPosition}
-                            gestureHandling={'greedy'}
-                            disableDefaultUI={true}
-                            onClick={(ev) => {
-                                if (canModify()) {
-                                    //console.log("latitide = ", ev.detail.latLng.lat);
-                                    setValue("latitude", ev.detail.latLng.lat)
-                                    //console.log("longitude = ", ev.detail.latLng.lng);
-                                    setValue("longitude", ev.detail.latLng.lng);
-                                    setMarkerPosition({ lat: ev.detail.latLng.lat, lng: ev.detail.latLng.lng })
-                                    //console.log(marker.position.lat)
-                                }
-                            }}>
-                            {/* <Marker ref={markerRef} clickable={true} position={markerPosition}>
-                                <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
-                            </Marker> */}
-                            <AdvancedMarker position={markerPosition} clickable='true'>
-                                <img src='/warning.png' className="w-12" />
-                            </AdvancedMarker>
-                        </Map>
-                    </APIProvider>
+            <div className="w-3/4">
+                <div className="w-full h-72 " >                    
+
+                    <MapContainer className='h-72 my-6' center={[centerPosition.lat, centerPosition.lng]} zoom={conf.defaultZoomLevel} >
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={[markerPosition.lat, markerPosition.lng]} icon={warningIcon} />
+                        <MapController canModify={canModify()} setValue={setValue} setMarkerPosition={setMarkerPosition} setCenterPosition={setCenterPosition} center={centerPosition}/>
+                    </MapContainer>
                 </div>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
                     <div className="w-full">
-                        <Input label={t('reportTitle') + ' *'}
+                        <Input label={t('reportTitle') + ' * ' + (watch('title') ? '(' + (watch('title').length) + '/255)' : '(max 255 chars)')}
                             disabled={!canModify()}
                             className={`mb-4 ${!canModify() ? 'bg-gray-200' : ''}`}
                             {...register("title", { required: true, maxLength: 255 })}
                         />
 
                         <div className='w-full'>
-                            <label htmlFor={'descriptionTxt'} className='w-full inline-block mb-1 pl-1 mr-2'>
-                                {t('reportDescription') + ' *'}
+                            <label htmlFor={'descriptionTxt'} className={`w-full inline-block mb-1 pl-1 mr-2 ${watch('description') && watch('description').length > 255 ? 'text-red-600' : ''}`}>
+                                {t('reportDescription') + ' * (' + (watch('description') ? (watch('description').length) + '/255)' : 'max 255 chars)')}
+
                             </label>
 
                             <ResponsiveContainer>
                                 <textarea id='descriptionTxt'
+
                                     disabled={!canModify()}
                                     className={`px-3 py-2 rounded-lg w-full text-black outline-none focus:bg-gray-50 duration-200 border border-gray-200 ${!canModify() ? 'bg-gray-200' : ''}`}
                                     rows={5}
@@ -245,7 +243,7 @@ function ReportForm({ report }) {
 
                                     render={({ field: { value, onChange, ...field } }) => {
                                         return (
-                                            <Input required={conf.reportImageRequired === 'true'} {...field} name='image' label={report ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                            <Input required={conf.reportImageRequired === 'true' && !report?.imageId} {...field} name='image' label={report ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
                                                 type="file" className="mb-4"
                                                 accept="image/png, image/jpg, image/jpeg"
 

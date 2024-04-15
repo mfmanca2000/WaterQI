@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState, useRef } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip, ResponsiveContainer, Legend } from 'recharts';
 import { IoOpenOutline, IoTrash } from "react-icons/io5";
 import { Controller, useForm } from "react-hook-form";
@@ -10,10 +10,8 @@ import storageService from "../appwrite/storage.js"
 import databaseService from "../appwrite/database.js"
 import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import { conf } from "../conf/conf.js";
-import Container from './Container.jsx';
 import { formatDateTime } from '../utils/date.js'
 import { Link } from 'react-router-dom';
-import StorageService from '../appwrite/storage.js'
 import { useTranslation } from 'react-i18next'
 import MeasureChart from './MeasureChart.jsx';
 import { calculateWQI, calculateWQIMeasureGroup, getMarkerColor, getMarkerColorMeasureGroup } from '../utils/wqi.js';
@@ -232,6 +230,7 @@ function MeasureGroupForm({ measureGroup }) {
                             zoom={conf.defaultZoomLevel}
                             center={centerPosition}
                             gestureHandling={'greedy'}
+                            scaleControl={true}
                             disableDefaultUI={true}
                             onClick={(ev) => {
                                 if (canModify()) {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import Button from "./Button.jsx";
 import Input from "./Input.jsx";
@@ -6,14 +6,15 @@ import storageService from "../appwrite/storage.js"
 import databaseService from "../appwrite/database.js"
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { AdvancedMarker, APIProvider, Map, Marker, useMarkerRef } from '@vis.gl/react-google-maps';
 import { conf } from "../conf/conf.js";
 import { formatDateTime, removeTimeZone } from "../utils/date.js";
 import { Link } from "react-router-dom";
-import { calculateWQI, getMarkerColor } from "../utils/wqi.js";
-import { Datepicker, FileInput } from "flowbite-react";
+import { calculateWQI, cleanData, getLocationIcon, getMarkerColor, getMarkerIcon } from "../utils/wqi.js";
 import { useTranslation } from 'react-i18next'
-import Container from "./Container.jsx";
+import { Modal } from "flowbite-react";
+import { TbMapPinQuestion } from "react-icons/tb";
+import { MapContainer, Marker, TileLayer, useMap, useMapEvent } from "react-leaflet";
+import MapController from "./MapController.jsx";
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
@@ -31,7 +32,12 @@ export default function MeasureForm({ measure }) {
             totalDissolvedSolids: measure?.totalDissolvedSolids || null,
             pH: measure?.pH || null,
             temperature: measure?.temperature || null,
-            salinity: measure?.salinity || null
+            salinity: measure?.salinity || null,
+            nitrates: measure?.nitrates || null,
+            phosphates: measure?.phosphates || null,
+            escherichiaColi: measure?.escherichiaColi || null,
+            dissolvedOxygen: measure?.dissolvedOxygen || null,
+            limeco: measure?.limeco || null
         }
     })
 
@@ -42,7 +48,8 @@ export default function MeasureForm({ measure }) {
     const userData = useSelector((state) => state.auth.userData)
     const [previewImageUrl, setPreviewImageUrl] = useState(null)
     const [previewImage, setPreviewImage] = useState(null)
-    const [markerRef, marker] = useMarkerRef();
+    const [openModal, setOpenModal] = useState(false);
+    const [locationsAround, setLocationsAround] = useState(null)
 
     const [markerPosition, setMarkerPosition] = useState({
         lat: Number(measure?.latitude || defaultLatitude),
@@ -53,6 +60,9 @@ export default function MeasureForm({ measure }) {
         lat: Number(measure?.latitude || defaultLatitude),
         lng: Number(measure?.longitude || defaultLongitude)
     });
+
+
+
 
     useEffect(() => {
 
@@ -66,7 +76,12 @@ export default function MeasureForm({ measure }) {
             totalDissolvedSolids: measure?.totalDissolvedSolids || null,
             pH: measure?.pH || null,
             temperature: measure?.temperature || null,
-            salinity: measure?.salinity || null
+            salinity: measure?.salinity || null,
+            nitrates: measure?.nitrates || null,
+            phosphates: measure?.phosphates || null,
+            escherichiaColi: measure?.escherichiaColi || null,
+            dissolvedOxygen: measure?.dissolvedOxygen || null,
+            limeco: measure?.limeco || null
         });
 
 
@@ -81,6 +96,7 @@ export default function MeasureForm({ measure }) {
         if (!isNaN(event.target.value)) {
             console.log('Latitude changed: ' + event.target.value);
             setMarkerPosition({ lat: Number(event.target.value), lng: Number(getValues("longitude")) })
+            setCenterPosition({ lat: Number(event.target.value), lng: Number(getValues("longitude")) })
         }
     }
 
@@ -89,17 +105,23 @@ export default function MeasureForm({ measure }) {
         if (!isNaN(event.target.value)) {
             console.log('Longitude changed: ' + event.target.value + ' Lat-->' + getValues("latitude"));
             setMarkerPosition({ lat: Number(getValues("latitude")), lng: Number(event.target.value) })
+            setCenterPosition({ lat: Number(getValues("latitude")), lng: Number(event.target.value) })
         }
     }
 
 
 
+
+
     const submit = async (data) => {
+
+        cleanData(data)
+
         let file = null;
         if (measure) {
 
             if (previewImage) {
-                console.log('We have a previewImage...' + previewImage)
+                //console.log('We have a previewImage...' + previewImage)
                 file = await storageService.uploadImage(previewImage);
                 if (file && measure.imageId) {
                     console.log('Have to delete previous image')
@@ -109,10 +131,10 @@ export default function MeasureForm({ measure }) {
 
             const dbMeasure = await databaseService.updateMeasure(measure.$id, { ...data, imageId: file ? file.$id : measure.imageId, username: userData.prefs.username });
             if (dbMeasure) {
-                if (measure.measureGroup) {
-                    navigate('/measureGroup/' + measure.measureGroup.$id)
+                if (measure.location) {
+                    navigate('/location/' + measure.location.$id)
                 } else {
-                    navigate('/measures')
+                    navigate('/locations')
                 }
             }
         } else {
@@ -126,13 +148,23 @@ export default function MeasureForm({ measure }) {
                 }
             }
 
-            const dbMeasure = await databaseService.addMeasure({ ...data, userId: userData.$id, username: userData.prefs.username });
-            if (dbMeasure) {
-                navigate(`/measures`);
+            const locAround = await databaseService.getAllLocationsAround(data.latitude, data.longitude);
+
+            if (locAround.documents.length > 0) {
+                setLocationsAround(locAround);
+                setOpenModal(true);
+            } else {
+                const dbLocation = await databaseService.addLocation({
+                    userId: userData.$id, username: userData.prefs.username, name: getValues('placeDescription'), latitude: data.latitude, longitude: data.longitude, imageId: data.imageId, measures: [
+                        { ...data, userId: userData.$id, username: userData.prefs.username }
+                    ]
+                })
+
+                if (dbLocation) {
+                    navigate(`/locations`);
+                }
             }
-
         }
-
     }
 
     function canModify() {
@@ -143,10 +175,43 @@ export default function MeasureForm({ measure }) {
     const [wqi, wqiText] = calculateWQI(measure);
     const imageName = window.location.origin + '/' + getMarkerColor(measure);
 
+
+    const onAddMeasureToNearestLocation = async (e, location) => {
+        //console.log('HERE');
+        e.preventDefault();
+
+        console.log('Object: ' + JSON.stringify({ ...getValues(), userId: userData.$id, username: userData.prefs.username, location: locationsAround.documents[0].$id }))
+
+        const dbMeasure = await databaseService.addMeasure({ ...getValues(), userId: userData.$id, username: userData.prefs.username, location: locationsAround.documents[0].$id });
+
+        console.log('dbMeasure: ' + JSON.stringify(dbMeasure))
+
+        if (dbMeasure) {
+            console.log('Measure added to location')
+            // setToggle(!toggle);
+            navigate(`/locations`);
+        }
+    }
+
+    const onAddMeasureToNewLocation = async (e) => {
+        e.preventDefault();
+
+        const dbLocation = await databaseService.addLocation({
+            userId: userData.$id, username: userData.prefs.username, name: getValues('placeDescription'), latitude: getValues('latitude'), longitude: getValues('longitude'), imageId: getValues('imageId'), measures: [
+                { ...getValues(), userId: userData.$id, username: userData.prefs.username }
+            ]
+        })
+
+        if (dbLocation) {
+            navigate(`/locations`);
+        }
+    }
+
+
     return (
         <>
-            <Link className='underline font-bold ' to={measure?.measureGroup ? '/measuregroup/' + measure.measureGroup.$id : '/measures'}>
-                {measure?.measureGroup ? t('returnToMeasureGroup') : t('returnToMeasures')}
+            <Link className='underline font-bold ' to={measure?.location ? '/location/' + measure.location.$id : '/locations'}>
+                {measure?.location ? t('returnToLocation') : t('returnToMeasures')}
             </Link>
 
             <div className='mb-4'>
@@ -156,34 +221,73 @@ export default function MeasureForm({ measure }) {
                 </div>}
             </div>
 
-            <div className="w-full">
+            <div className="w-3/4">
                 <div className="w-full h-72 " >
-                    <APIProvider apiKey={conf.googleMapsAPIKey}>
-                        <Map mapId={'bf51a910020fa25b'}
-                            zoom={conf.defaultZoomLevel}
-                            center={centerPosition}
-                            gestureHandling={'greedy'}
-                            disableDefaultUI={true}
-                            onClick={(ev) => {
-                                if (canModify() && !(measure?.measureGroup)) {
-                                    //console.log("latitide = ", ev.detail.latLng.lat);
-                                    setValue("latitude", ev.detail.latLng.lat)
-                                    //console.log("longitude = ", ev.detail.latLng.lng);
-                                    setValue("longitude", ev.detail.latLng.lng);
-                                    setMarkerPosition({ lat: ev.detail.latLng.lat, lng: ev.detail.latLng.lng })
-                                    //console.log(marker.position.lat)
-                                }
-                            }}>
-                            {/* <Marker ref={markerRef} clickable={true} position={markerPosition}>
-                                <img src={window.location.origin + '/' + getMarkerColor(measure)} className="w-10" title={wqiText} />
-                            </Marker> */}
-                            <AdvancedMarker position={markerPosition} clickable='true'>
-                                <img src={imageName} className="w-16" title={wqiText} />
-                            </AdvancedMarker>
-                        </Map>
-                    </APIProvider>
+
+                    <MapContainer className='h-72 my-6' center={[centerPosition.lat, centerPosition.lng]} zoom={conf.defaultZoomLevel}>
+                        <TileLayer
+                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        />
+                        <Marker position={[markerPosition.lat, markerPosition.lng]} icon={getMarkerIcon(measure)} />
+                        <MapController canModify={canModify() && !(measure?.location)} setValue={setValue} setMarkerPosition={setMarkerPosition} setCenterPosition={setCenterPosition} center={centerPosition} />
+                    </MapContainer>
+
                 </div>
                 <form onSubmit={handleSubmit(submit)} className="flex flex-wrap mt-4">
+
+                    <Modal show={openModal} onClose={() => setOpenModal(false)} popup>
+                        <Modal.Header />
+                        <Modal.Body>
+                            <div className="text-center">
+                                <TbMapPinQuestion className="mx-auto mb-4 h-14 w-14 text-casaleggio-rgba dark:text-gray-200" />
+                                <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                                    {t('addMeasureModalDescription1', { distance: conf.maxDistanceMeters })}
+                                </h3>
+                                <h6 className='text-base font-thin leading-relaxed justify-normal text-gray-500 dark:text-gray-400'>
+                                    {t('addMeasureModalDescription2')}
+                                </h6>
+                                {console.log('LocationsAround: ' + JSON.stringify(locationsAround))}
+                                {locationsAround && (<div className="w-full h-36 mt-4" >
+                                    <MapContainer className='h-36 my-6' center={[locationsAround.documents[0].latitude, locationsAround.documents[0].longitude]} zoom={16}>
+                                        <TileLayer
+                                            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                                        />
+                                        <Marker position={[locationsAround.documents[0].latitude, locationsAround.documents[0].longitude]} icon={getLocationIcon(locationsAround.documents[0])} />
+                                        <Marker position={[getValues('latitude'), getValues('longitude')]} icon={getLocationIcon(null)} title={t('measureTitleNew')} />
+
+                                    </MapContainer>
+                                </div>)}
+
+
+                                <div className="flex justify-center gap-4 mt-8">
+
+                                    <Button className="bg-green-600" onClick={(e) => {
+                                        onAddMeasureToNearestLocation(e, location);
+                                        setOpenModal(false)
+                                    }}>
+                                        {t('addMeasureToNearestLocation')}
+                                    </Button>
+                                    <Button className="bg-red-600" onClick={(e) => {
+                                        onAddMeasureToNewLocation(e, location);
+                                        setOpenModal(false)
+                                    }}>
+                                        {t('addMeasureCreateNewLocation')}
+                                    </Button>
+                                    <Button color="gray" onClick={() => {
+                                        setOpenModal(false)
+                                    }}>
+                                        {t('addMeasureModalCancel')}
+                                    </Button>
+                                </div>
+                            </div>
+                        </Modal.Body>
+                        <Modal.Footer />
+                    </Modal>
+
+
+
                     <div className="w-full">
                         <Input label={t('measurePlaceDescription') + ' *'}
                             disabled={!canModify()}
@@ -191,21 +295,21 @@ export default function MeasureForm({ measure }) {
                             {...register("placeDescription", { required: true, maxLength: 255 })}
                         />
 
-                        {(measure && measure.measureGroup) && (<>
+                        {(measure && measure.location) && (<>
                             <label className='font-thin mb-6'>{t('measureExplaination')} </label>
-                            <Link className="underline" to={`/measureGroup/${measure.measureGroup.$id}`} >{t('measureGroup')}</Link>
+                            <Link className="underline" to={`/location/${measure.location.$id}`} >{t('location')}</Link>
                         </>)}
-                        <Input label={t('measureGroupLatitude') + ' *'}
+                        <Input label={t('locationLatitude') + ' *'}
                             placeholder="insert a latitude (i.e. 45.4637979)"
-                            disabled={!canModify() || measure?.measureGroup}
-                            className={`mb-4 ${(!canModify() || measure?.measureGroup) ? 'bg-gray-200' : ''}`}
+                            disabled={!canModify() || measure?.location}
+                            className={`mb-4 ${(!canModify() || measure?.location) ? 'bg-gray-200' : ''}`}
                             {...register("latitude", { required: true, onChange: latitudeChangedHandler })}
                         />
 
-                        <Input label={t('measureGroupLongitude') + ' *'}
+                        <Input label={t('locationLongitude') + ' *'}
                             placeholder="insert a longitude (i.e. 7.87375)"
-                            disabled={!canModify() || measure?.measureGroup}
-                            className={`mb-4 ${(!canModify() || measure?.measureGroup) ? 'bg-gray-200' : ''}`}
+                            disabled={!canModify() || measure?.location}
+                            className={`mb-4 ${(!canModify() || measure?.location) ? 'bg-gray-200' : ''}`}
                             {...register("longitude", { required: true, onChange: longitudeChangedHandler })}
                         />
 
@@ -217,8 +321,8 @@ export default function MeasureForm({ measure }) {
                             {...register("datetime", { required: true, valueAsDate: true })}
                         />
 
-{console.log('Required:' + (conf.measureImageRequired === 'true'))}
-                        {(canModify() && !(measure?.measureGroup)) && (
+                        {/* {console.log('Required:' + (conf.measureImageRequired === 'true'))} */}
+                        {(canModify() && !(measure?.location)) && (
                             <>
                                 <Controller
                                     control={control}
@@ -226,7 +330,7 @@ export default function MeasureForm({ measure }) {
 
                                     render={({ field: { value, onChange, ...field } }) => {
                                         return (
-                                            <Input required={conf.measureImageRequired === 'true'} {...field} name='image' label={measure ? t('measureGroupLocationImage') : t('measureGroupLocationImage') + ' *'}
+                                            <Input required={conf.measureImageRequired === 'true'} {...field} name='image' label={measure ? t('locationImage') : t('locationImage') + ' *'}
                                                 type="file" className="mb-2"
                                                 accept="image/png, image/jpg, image/jpeg"
 
@@ -244,7 +348,7 @@ export default function MeasureForm({ measure }) {
                                                     }
                                                 }}
                                             />
-                                            
+
                                         );
                                     }}
                                 />
@@ -268,14 +372,16 @@ export default function MeasureForm({ measure }) {
                     </div>
 
                     <div className="w-full">
-                        <div className="w-full md:w-1/4 mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10">
-                            <Input label="Electrical Conductivity (μS/cm)"
+                        {/* <div className="w-full md:w-1/4 mt-4 px-4 pb-4 bg-casaleggio-rgba rounded-xl border border-black/10"> */}
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 bg-casaleggio-rgba rounded-xl border border-black/10 mt-4 px-4 pb-4">
+  
+                            <Input label={t('electricalConductivity') + " (μS/cm)"}
                                 disabled={!canModify()}
                                 className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("electricalConductivity")}
                             />
 
-                            <Input label="Total Dissolved Solids (ppm)"
+                            <Input label={t('totalDissolvedSolids') + " (ppm)"}
                                 disabled={!canModify()}
                                 className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("totalDissolvedSolids")}
@@ -287,26 +393,56 @@ export default function MeasureForm({ measure }) {
                                 {...register("pH")}
                             />
 
-                            <Input label="Temperature (°C)"
+                            <Input label={t('temperature') + " (°C)"}
                                 disabled={!canModify()}
                                 className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("temperature")}
                             />
 
-                            <Input label="Salinity"
+                            <Input label={t('salinity')}
                                 disabled={!canModify()}
                                 className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
                                 {...register("salinity")}
+                            />
+
+                            <Input label={t('nitrates')}
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("nitrates")}
+                            />
+
+                            <Input label={t('phosphates')}
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("phosphates")}
+                            />
+
+                            <Input label={t('escherichia Coli')}
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("escherichiaColi")}
+                            />
+
+                            <Input label={t('dissolvedOxygen')}
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("dissolvedOxygen")}
+                            />
+
+                            <Input label="LIMECO Index"
+                                disabled={!canModify()}
+                                className={`mb-2 ${!canModify() ? 'bg-gray-200' : ''}`}
+                                {...register("limeco")}
                             />
                         </div>
 
                         {canModify() &&
                             <Button type="submit" bgColor={measure ? "bg-casaleggio-rgba" : "bg-casaleggio-btn-rgba"} className="w-full md:w-1/4 mt-8">
-                                {measure ? t('measureGroupUpdate') : t('measureGroupCreate')}
+                                {measure ? t('locationUpdate') : t('locationCreate')}
                             </Button>
                         }
 
-                        {measure && (<label className='mb-4 pl-1'>{t('measureGroupLastUpdate') + ' ' + formatDateTime(new Date(measure.$updatedAt))}</label>)}
+                        {measure && (<label className='mb-4 pl-1'>{t('locationLastUpdate') + ' ' + formatDateTime(new Date(measure.$updatedAt))}</label>)}
                     </div>
                 </form>
             </div>

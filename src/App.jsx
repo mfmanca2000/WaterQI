@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import { Outlet } from 'react-router-dom'
-import Header from './components/Header.jsx'
 import Footer from './components/Footer.jsx'
 import { useDispatch } from "react-redux";
 import { login, logout } from "./store/authSlice";
 import authService from './appwrite/auth'
+import HeaderNew from './components/HeaderNew'
 
-function App() {    
-    
+function App() {
+
     const [loading, setLoading] = useState(true);
     const dispatch = useDispatch();
 
@@ -24,8 +24,9 @@ function App() {
 
     return !loading ? (
         <div className="min-h-screen flex flex-wrap content-between bg-white" >
+
             <div className="w-full block">
-                <Header />
+                <HeaderNew />
                 <main>
                     <Outlet />
                 </main>

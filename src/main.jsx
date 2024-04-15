@@ -10,17 +10,17 @@ import Home from './pages/Home.jsx'
 import Login from './pages/Login.jsx'
 import Signup from './pages/Signup.jsx'
 import Measures from './pages/Measures.jsx'
-//import MeasureGroups from './pages/MeasureGroups.jsx'
 import MeasureDetail from './pages/MeasureDetail.jsx'
 import AddMeasure from './pages/AddMeasure.jsx'
-import AddMeasureGroup from './pages/AddMeasureGroup.jsx'
-import MeasureGroupDetail from './pages/MeasureGroupDetail.jsx'
 import './i18n';
 import Settings from './pages/Settings.jsx'
 import Help from './pages/Help.jsx'
 import Profile from './pages/Profile.jsx'
 import AddReport from './pages/AddReport.jsx'
 import ReportDetail from './pages/ReportDetail.jsx'
+import Locations from './pages/Locations.jsx'
+import LocationDetail from './pages/LocationDetail.jsx'
+import ReactGA from "react-ga4";
 
 const router = createBrowserRouter([
   {
@@ -47,35 +47,35 @@ const router = createBrowserRouter([
           </Protected>
         )
       },
-      {
-        path: '/measures',
-        element: (
-          <Protected authenticationRequired={true}>
-            <Measures />
-          </Protected>
-        )
-      },
       // {
-      //   path: '/measureGroups',
+      //   path: '/measures',
       //   element: (
       //     <Protected authenticationRequired={true}>
-      //       <MeasureGroups/>
+      //       <Measures />
       //     </Protected>
       //   )
       // },
       {
+        path: '/locations',
+        element: (
+          <Protected authenticationRequired={true}>
+            <Locations />
+          </Protected>
+        )
+      },     
+      {
         path: '/mymeasures',
         element: (
           <Protected authenticationRequired={true}>
-            <Measures type='mymeasures'/>
+            <Locations type='mymeasures' />
           </Protected>
         )
-      },
+      },      
       {
-        path: '/mymeasuregroups',
+        path: '/mylocations',
         element: (
           <Protected authenticationRequired={true}>
-            <Measures type='mymeasuregroups'/>
+            <Locations type='mylocations' />
           </Protected>
         )
       },
@@ -83,11 +83,11 @@ const router = createBrowserRouter([
         path: '/myreports',
         element: (
           <Protected authenticationRequired={true}>
-            <Measures type='myreports'/>
+            <Locations type='myreports' />
           </Protected>
         )
       },
-      
+
       {
         path: '/addMeasure',
         element: (
@@ -95,15 +95,7 @@ const router = createBrowserRouter([
             <AddMeasure />
           </Protected>
         )
-      },
-      {
-        path: '/addMeasureGroup',
-        element: (
-          <Protected authenticationRequired={true}>
-            <AddMeasureGroup />
-          </Protected>
-        )
-      },
+      },      
       {
         path: '/addReport',
         element: (
@@ -120,11 +112,12 @@ const router = createBrowserRouter([
           </Protected>
         )
       },
+      
       {
-        path: '/measureGroup/:measureGroupId',
+        path: '/location/:locationId',
         element: (
           <Protected authenticationRequired={true}>
-            <MeasureGroupDetail />
+            <LocationDetail />
           </Protected>
         )
       },
@@ -173,3 +166,5 @@ ReactDOM.createRoot(document.getElementById('root')).render(
     </Provider>
   </React.StrictMode>,
 )
+
+ReactGA.initialize(process.env.GA4_TRACKING);

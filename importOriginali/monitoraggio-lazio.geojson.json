@@ -1,0 +1,4569 @@
+{
+	"type": "FeatureCollection",
+	"features": [
+		{
+			"id": 1,
+			"type": "Feature",
+			"properties": {
+				"fid": 1,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.08 - Pontecorvo - Fiume Liri (a valle) 2",
+				"cod_pnt": "F1.08",
+				"codice_europeo": "IT12-F1_08",
+				"data_creazione": "2005/01/24 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Liri (a valle) 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Pontecorvo",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.666736664002692,
+					41.45065262709607
+				]
+			}
+		},
+		{
+			"id": 2,
+			"type": "Feature",
+			"properties": {
+				"fid": 2,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.09 - San Giorgio a Liri - Fiume Liri (a valle) 3",
+				"cod_pnt": "F1.09",
+				"codice_europeo": "IT12-F1_09",
+				"data_creazione": "2005/01/25 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Liri (a valle) 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "San Giorgio a Liri",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.772950424140334,
+					41.419246638839819
+				]
+			}
+		},
+		{
+			"id": 3,
+			"type": "Feature",
+			"properties": {
+				"fid": 3,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.78 - Itri - Rio d'Itri 1",
+				"cod_pnt": "F2.78",
+				"codice_europeo": "IT12-F2_78",
+				"data_creazione": "2012/04/02 00:00:00+02",
+				"data_dismissione": "2015/03/26 00:00:00+01",
+				"unita_terr": "Rio d'Itri 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Itri",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.53153002812645,
+					41.300885358341798
+				]
+			}
+		},
+		{
+			"id": 4,
+			"type": "Feature",
+			"properties": {
+				"fid": 4,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.13 - Sora - Fiume Fibreno 1",
+				"cod_pnt": "F1.13",
+				"codice_europeo": "IT12-F1_13",
+				"data_creazione": "2005/01/18 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Fibreno 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Sora",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.590043089477648,
+					41.696455107839728
+				]
+			}
+		},
+		{
+			"id": 5,
+			"type": "Feature",
+			"properties": {
+				"fid": 5,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.18 - Cassino - Fiume Rapido 2",
+				"cod_pnt": "F1.18",
+				"codice_europeo": "IT12-F1_18",
+				"data_creazione": "2005/01/27 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Rapido 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Cassino",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.83892360807102,
+					41.48337552036243
+				]
+			}
+		},
+		{
+			"id": 6,
+			"type": "Feature",
+			"properties": {
+				"fid": 6,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.19 - Cassino - Fiume Gari 2",
+				"cod_pnt": "F1.19",
+				"codice_europeo": "IT12-F1_19",
+				"data_creazione": "2005/01/27 00:00:00+01",
+				"data_dismissione": "2016/12/15 00:00:00+01",
+				"unita_terr": "Fiume Gari 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Cassino",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.833608606441777,
+					41.44453510974068
+				]
+			}
+		},
+		{
+			"id": 7,
+			"type": "Feature",
+			"properties": {
+				"fid": 7,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.26 - Falvaterra - Fiume Sacco 5",
+				"cod_pnt": "F1.26",
+				"codice_europeo": "IT12-F1_26",
+				"data_creazione": "2005/01/11 00:00:00+01",
+				"data_dismissione": "2016/12/21 00:00:00+01",
+				"unita_terr": "Fiume Sacco 5",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Falvaterra",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.529082501996364,
+					41.51615370685844
+				]
+			}
+		},
+		{
+			"id": 8,
+			"type": "Feature",
+			"properties": {
+				"fid": 8,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.34 - Ceccano - Fiume Sacco 4",
+				"cod_pnt": "F1.34",
+				"codice_europeo": "IT12-F1_34",
+				"data_creazione": "2005/01/11 00:00:00+01",
+				"data_dismissione": "2016/12/21 00:00:00+01",
+				"unita_terr": "Fiume Sacco 4",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ceccano",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.338594553179139,
+					41.57067197817118
+				]
+			}
+		},
+		{
+			"id": 9,
+			"type": "Feature",
+			"properties": {
+				"fid": 9,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.35 - Sora - Fiume Liri (a monte) 1",
+				"cod_pnt": "F1.35",
+				"codice_europeo": "IT12-F1_35",
+				"data_creazione": "2005/01/18 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Liri (a monte) 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Sora",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.607126050861208,
+					41.76348528991137
+				]
+			}
+		},
+		{
+			"id": 10,
+			"type": "Feature",
+			"properties": {
+				"fid": 10,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.36 - Ferentino - Torrente Alabro 2",
+				"cod_pnt": "F1.36",
+				"codice_europeo": "IT12-F1_36",
+				"data_creazione": "2005/01/18 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Alabro 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ferentino",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.239009620403687,
+					41.650952794496678
+				]
+			}
+		},
+		{
+			"id": 11,
+			"type": "Feature",
+			"properties": {
+				"fid": 11,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.37 - Alatri - Torrente Cosa 2",
+				"cod_pnt": "F1.37",
+				"codice_europeo": "IT12-F1_37",
+				"data_creazione": "2005/01/11 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Cosa 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Alatri",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.412864009612218,
+					41.782644262268068
+				]
+			}
+		},
+		{
+			"id": 12,
+			"type": "Feature",
+			"properties": {
+				"fid": 12,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.68 - Castro dei Volsci - Fiume Sacco 5",
+				"cod_pnt": "F1.68",
+				"codice_europeo": "IT12-F1_68",
+				"data_creazione": "2017/05/30 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Sacco 5",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Castro dei Volsci",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.373805488088732,
+					41.53827998111371
+				]
+			}
+		},
+		{
+			"id": 13,
+			"type": "Feature",
+			"properties": {
+				"fid": 13,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.69 - Ceccano - Fiume Sacco 4",
+				"cod_pnt": "F1.69",
+				"codice_europeo": "IT12-F1_69",
+				"data_creazione": "2017/05/30 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Sacco 4",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ceccano",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.306722744767726,
+					41.58298241733235
+				]
+			}
+		},
+		{
+			"id": 14,
+			"type": "Feature",
+			"properties": {
+				"fid": 14,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.71 - Broccostella - Fiume Fibreno 2",
+				"cod_pnt": "F1.71",
+				"codice_europeo": "IT12-F1_71",
+				"data_creazione": "2012/03/07 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Fibreno 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Broccostella",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.634798871200701,
+					41.693495974886577
+				]
+			}
+		},
+		{
+			"id": 15,
+			"type": "Feature",
+			"properties": {
+				"fid": 15,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.72 - Cassino - Fiume Gari 1",
+				"cod_pnt": "F1.72",
+				"codice_europeo": "IT12-F1_72",
+				"data_creazione": "2013/01/29 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Gari 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Cassino",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.827040729104095,
+					41.48865763366543
+				]
+			}
+		},
+		{
+			"id": 16,
+			"type": "Feature",
+			"properties": {
+				"fid": 16,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.73 - Ceprano - Fiume Liri (a monte) 2",
+				"cod_pnt": "F1.73",
+				"codice_europeo": "IT12-F1_73",
+				"data_creazione": "2012/03/15 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Liri (a monte) 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ceprano",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.518637704794877,
+					41.5536823577333
+				]
+			}
+		},
+		{
+			"id": 17,
+			"type": "Feature",
+			"properties": {
+				"fid": 17,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.74 - Anagni - Torrente Alabro 1",
+				"cod_pnt": "F1.74",
+				"codice_europeo": "IT12-F1_74",
+				"data_creazione": "2013/01/28 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Alabro 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Anagni",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.207158304890769,
+					41.682635458008629
+				]
+			}
+		},
+		{
+			"id": 18,
+			"type": "Feature",
+			"properties": {
+				"fid": 18,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.75 - Ceccano - Fiume Cosa 3",
+				"cod_pnt": "F1.75",
+				"codice_europeo": "IT12-F1_75",
+				"data_creazione": "2012/02/15 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Cosa 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ceccano",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.323371407745786,
+					41.58838289084851
+				]
+			}
+		},
+		{
+			"id": 19,
+			"type": "Feature",
+			"properties": {
+				"fid": 19,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.76 - Atina - fiume melfa 2",
+				"cod_pnt": "F1.76",
+				"codice_europeo": "IT12-F1_76",
+				"data_creazione": "2005/03/01 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Melfa 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Atina",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.777026718264365,
+					41.628046004275898
+				]
+			}
+		},
+		{
+			"id": 20,
+			"type": "Feature",
+			"properties": {
+				"fid": 20,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.77 - Roccasecca - Fiume Melfa 3",
+				"cod_pnt": "F1.77",
+				"codice_europeo": "IT12-F1_77",
+				"data_creazione": "2013/01/24 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Melfa 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roccasecca",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.65593666557898,
+					41.55074646802251
+				]
+			}
+		},
+		{
+			"id": 21,
+			"type": "Feature",
+			"properties": {
+				"fid": 21,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.78 - Atina - Fiume Mollarino 2",
+				"cod_pnt": "F1.78",
+				"codice_europeo": "IT12-F1_78",
+				"data_creazione": "2012/03/08 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Mollarino 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Atina",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.805812200636203,
+					41.62531721489027
+				]
+			}
+		},
+		{
+			"id": 22,
+			"type": "Feature",
+			"properties": {
+				"fid": 22,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.79 - Pontecorvo - Rio Forma Quesa 1",
+				"cod_pnt": "F1.79",
+				"codice_europeo": "IT12-F1_79",
+				"data_creazione": "2005/01/24 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Rio Forma Quesa 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Pontecorvo",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.666119655392724,
+					41.429947021200209
+				]
+			}
+		},
+		{
+			"id": 23,
+			"type": "Feature",
+			"properties": {
+				"fid": 23,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F1.80 - Collepardo - Fiume Cosa 2",
+				"cod_pnt": "F1.80",
+				"codice_europeo": "IT12-F1_80",
+				"data_creazione": "2012/03/22 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Cosa 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Collepardo",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.347985454075756,
+					41.743147273168457
+				]
+			}
+		},
+		{
+			"id": 24,
+			"type": "Feature",
+			"properties": {
+				"fid": 24,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.02 - Sermoneta - Fiume Cavata 1",
+				"cod_pnt": "F2.02",
+				"codice_europeo": "IT12-F2_02",
+				"data_creazione": "2005/01/27 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Cavata 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Sermoneta",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.98347857726311,
+					41.48998349019245
+				]
+			}
+		},
+		{
+			"id": 25,
+			"type": "Feature",
+			"properties": {
+				"fid": 25,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.05 - Terracina - Fiume Ufente 2",
+				"cod_pnt": "F2.05",
+				"codice_europeo": "IT12-F2_05",
+				"data_creazione": "2005/01/20 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Ufente 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Terracina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.157542226174418,
+					41.35866004847426
+				]
+			}
+		},
+		{
+			"id": 26,
+			"type": "Feature",
+			"properties": {
+				"fid": 26,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.07 - Terracina - Fiume Amaseno 3",
+				"cod_pnt": "F2.07",
+				"codice_europeo": "IT12-F2_07",
+				"data_creazione": "2005/01/20 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Amaseno 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Terracina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.169607574547634,
+					41.36079516561329
+				]
+			}
+		},
+		{
+			"id": 27,
+			"type": "Feature",
+			"properties": {
+				"fid": 27,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.10 - Latina - Fosso Spaccasassi 3",
+				"cod_pnt": "F2.10",
+				"codice_europeo": "IT12-F2_10",
+				"data_creazione": "2005/01/31 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Spaccasassi 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Latina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.791261223959044,
+					41.524857069830868
+				]
+			}
+		},
+		{
+			"id": 28,
+			"type": "Feature",
+			"properties": {
+				"fid": 28,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.11 - Latina - Canale Acque alte/Moscarello 2",
+				"cod_pnt": "F2.11",
+				"codice_europeo": "IT12-F2_11",
+				"data_creazione": "2005/01/14 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Canale Acque alte/Moscarello 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Latina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.852007237506339,
+					41.52326492606771
+				]
+			}
+		},
+		{
+			"id": 29,
+			"type": "Feature",
+			"properties": {
+				"fid": 29,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.12 - Latina - Canale Acque alte/Moscarello 2",
+				"cod_pnt": "F2.12",
+				"codice_europeo": "IT12-F2_12",
+				"data_creazione": "2005/01/14 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Canale Acque alte/Moscarello 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Latina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.815622432645509,
+					41.430549542396949
+				]
+			}
+		},
+		{
+			"id": 30,
+			"type": "Feature",
+			"properties": {
+				"fid": 30,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "Canale acque medie/Rio Martino 1 - Strada chiesuola",
+				"cod_pnt": "F2.13",
+				"codice_europeo": "IT12-F2_13",
+				"data_creazione": "2005/01/14 00:00:00+01",
+				"data_dismissione": "2013/12/03 00:00:00+01",
+				"unita_terr": "Canale Acque medie/Rio Martino 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Latina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.909357793984127,
+					41.519947984211018
+				]
+			}
+		},
+		{
+			"id": 31,
+			"type": "Feature",
+			"properties": {
+				"fid": 31,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.14 - Latina - Canale Acque medie/Rio Martino 2",
+				"cod_pnt": "F2.14",
+				"codice_europeo": "IT12-F2_14",
+				"data_creazione": "2005/01/14 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Canale Acque medie/Rio Martino 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Latina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.994640061846143,
+					41.42390354193943
+				]
+			}
+		},
+		{
+			"id": 32,
+			"type": "Feature",
+			"properties": {
+				"fid": 32,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.15 - Sabaudia - Canale Acque medie/Rio Martino 3",
+				"cod_pnt": "F2.15",
+				"codice_europeo": "IT12-F2_15",
+				"data_creazione": "2005/01/14 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Canale Acque medie/Rio Martino 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Sabaudia",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.953305403280825,
+					41.38799868130161
+				]
+			}
+		},
+		{
+			"id": 33,
+			"type": "Feature",
+			"properties": {
+				"fid": 33,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.16 - Pontinia - Canale Linea Pio 1",
+				"cod_pnt": "F2.16",
+				"codice_europeo": "IT12-F2_16",
+				"data_creazione": "2005/01/27 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Canale Linea Pio 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Pontinia",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.09782041761221,
+					41.388527858373667
+				]
+			}
+		},
+		{
+			"id": 34,
+			"type": "Feature",
+			"properties": {
+				"fid": 34,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.19 - Terracina - Canale Botte 1",
+				"cod_pnt": "F2.19",
+				"codice_europeo": "IT12-F2_19",
+				"data_creazione": "2005/03/01 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Canale Botte 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Terracina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.178797385160804,
+					41.31918152484549
+				]
+			}
+		},
+		{
+			"id": 35,
+			"type": "Feature",
+			"properties": {
+				"fid": 35,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.25 - Prossedi - Fiume Amaseno 2",
+				"cod_pnt": "F2.25",
+				"codice_europeo": "IT12-F2_25",
+				"data_creazione": "2005/01/12 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Amaseno 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Prossedi",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.262055351264025,
+					41.5034382539866
+				]
+			}
+		},
+		{
+			"id": 36,
+			"type": "Feature",
+			"properties": {
+				"fid": 36,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.29 - Latina - Fiume Astura 2",
+				"cod_pnt": "F2.29",
+				"codice_europeo": "IT12-F2_29",
+				"data_creazione": "2005/01/31 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Astura 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Latina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.753222585866706,
+					41.469082677346268
+				]
+			}
+		},
+		{
+			"id": 37,
+			"type": "Feature",
+			"properties": {
+				"fid": 37,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.30 - Minturno - Rio Capodacqua (S. Croce) 1",
+				"cod_pnt": "F2.30",
+				"codice_europeo": "IT12-F2_30",
+				"data_creazione": "2005/02/04 00:00:00+01",
+				"data_dismissione": "2015/12/09 00:00:00+01",
+				"unita_terr": "Rio Capodacqua (S. Croce) 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Minturno",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.718034788848089,
+					41.281135598270839
+				]
+			}
+		},
+		{
+			"id": 38,
+			"type": "Feature",
+			"properties": {
+				"fid": 38,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "Rio Capodacqua (S. Croce) 2 - Via Petrosi",
+				"cod_pnt": "F2.31",
+				"codice_europeo": "IT12-F2_31",
+				"data_creazione": "2005/02/04 00:00:00+01",
+				"data_dismissione": "2012/02/27 00:00:00+01",
+				"unita_terr": "Rio Capodacqua (S. Croce) 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Minturno",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.696765314098752,
+					41.26385644245406
+				]
+			}
+		},
+		{
+			"id": 39,
+			"type": "Feature",
+			"properties": {
+				"fid": 39,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.32 - Formia - Rio Capodacqua (S. Croce) 2",
+				"cod_pnt": "F2.32",
+				"codice_europeo": "IT12-F2_32",
+				"data_creazione": "2005/02/04 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Rio Capodacqua (S. Croce) 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Formia",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.694627908197506,
+					41.263201337505147
+				]
+			}
+		},
+		{
+			"id": 40,
+			"type": "Feature",
+			"properties": {
+				"fid": 40,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.33 - Castelforte - Fiume Garigliano 2",
+				"cod_pnt": "F2.33",
+				"codice_europeo": "IT12-F2_33",
+				"data_creazione": "2005/02/04 00:00:00+01",
+				"data_dismissione": "2016/12/22 00:00:00+01",
+				"unita_terr": "Fiume Garigliano 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Castelforte",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.888684892270432,
+					41.31838964548929
+				]
+			}
+		},
+		{
+			"id": 41,
+			"type": "Feature",
+			"properties": {
+				"fid": 41,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.34 - Cisterna di Latina - Fiume Ninfa Sisto 1",
+				"cod_pnt": "F2.34",
+				"codice_europeo": "IT12-F2_34",
+				"data_creazione": "2005/01/17 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Ninfa Sisto 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Cisterna di Latina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.954086109344356,
+					41.55536778115427
+				]
+			}
+		},
+		{
+			"id": 42,
+			"type": "Feature",
+			"properties": {
+				"fid": 42,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.35 - Latina - Fiume Ninfa Sisto 2",
+				"cod_pnt": "F2.35",
+				"codice_europeo": "IT12-F2_35",
+				"data_creazione": "2005/01/17 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Ninfa Sisto 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Latina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.012511820357347,
+					41.4185452246501
+				]
+			}
+		},
+		{
+			"id": 43,
+			"type": "Feature",
+			"properties": {
+				"fid": 43,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.37 - Pontinia - Fiume Ninfa Sisto 3",
+				"cod_pnt": "F2.37",
+				"codice_europeo": "IT12-F2_37",
+				"data_creazione": "2005/01/17 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Ninfa Sisto 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Pontinia",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.100440702670245,
+					41.35370097945478
+				]
+			}
+		},
+		{
+			"id": 44,
+			"type": "Feature",
+			"properties": {
+				"fid": 44,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.69 - FONDI - Canale delle acque chiare 1",
+				"cod_pnt": "F2.69",
+				"codice_europeo": "IT12-F2_69",
+				"data_creazione": "2017/06/29 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Corpo Idrico Non Assegnato",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Fondi",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.382851329779428,
+					41.32719798645304
+				]
+			}
+		},
+		{
+			"id": 45,
+			"type": "Feature",
+			"properties": {
+				"fid": 45,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.70 - Sezze - Fiume Ufente 1",
+				"cod_pnt": "F2.70",
+				"codice_europeo": "IT12-F2_70",
+				"data_creazione": "2013/01/24 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Ufente 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Sezze",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.098548509416242,
+					41.46259561156873
+				]
+			}
+		},
+		{
+			"id": 46,
+			"type": "Feature",
+			"properties": {
+				"fid": 46,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.71 - Amaseno - Fiume Amaseno 1",
+				"cod_pnt": "F2.71",
+				"codice_europeo": "IT12-F2_71",
+				"data_creazione": "2012/03/22 00:00:00+01",
+				"data_dismissione": "2015/11/19 00:00:00+01",
+				"unita_terr": "Fiume Amaseno 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Amaseno",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.338886833155847,
+					41.48388175107648
+				]
+			}
+		},
+		{
+			"id": 47,
+			"type": "Feature",
+			"properties": {
+				"fid": 47,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.72 - Lanuvio - Fosso Spaccasassi 2",
+				"cod_pnt": "F2.72",
+				"codice_europeo": "IT12-F2_72",
+				"data_creazione": "2013/01/22 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Spaccasassi 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Lanuvio",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.681999074977137,
+					41.62101452329046
+				]
+			}
+		},
+		{
+			"id": 48,
+			"type": "Feature",
+			"properties": {
+				"fid": 48,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.73 - Latina - Canale Acque medie/Rio Martino 1",
+				"cod_pnt": "F2.73",
+				"codice_europeo": "IT12-F2_73",
+				"data_creazione": "2013/01/14 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Canale Acque medie/Rio Martino 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Latina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.938390642071055,
+					41.55252982012831
+				]
+			}
+		},
+		{
+			"id": 49,
+			"type": "Feature",
+			"properties": {
+				"fid": 49,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.74 - Aprilia - Fiume Astura 1",
+				"cod_pnt": "F2.74",
+				"codice_europeo": "IT12-F2_74",
+				"data_creazione": "2013/01/22 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Astura 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Aprilia",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.728161186430408,
+					41.539386664888727
+				]
+			}
+		},
+		{
+			"id": 50,
+			"type": "Feature",
+			"properties": {
+				"fid": 50,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.75 - Sant'Ambrogio sul Garigliano - Fiume Garigliano 1",
+				"cod_pnt": "F2.75",
+				"codice_europeo": "IT12-F2_75",
+				"data_creazione": "2012/03/26 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Garigliano 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "SantAmbrogio sul Garigliano",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.880019920199974,
+					41.38888884094659
+				]
+			}
+		},
+		{
+			"id": 51,
+			"type": "Feature",
+			"properties": {
+				"fid": 51,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.76 - Castelforte - Fiume Garigliano 3",
+				"cod_pnt": "F2.76",
+				"codice_europeo": "IT12-F2_76",
+				"data_creazione": "2012/03/26 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Garigliano 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Castelforte",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.788833005127133,
+					41.24276888918066
+				]
+			}
+		},
+		{
+			"id": 52,
+			"type": "Feature",
+			"properties": {
+				"fid": 52,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.77 - Terracina - Fiume Portatore 1",
+				"cod_pnt": "F2.77",
+				"codice_europeo": "IT12-F2_77",
+				"data_creazione": "2012/03/19 00:00:00+01",
+				"data_dismissione": "2015/12/14 00:00:00+01",
+				"unita_terr": "Fiume Portatore 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Terracina",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.193496942655488,
+					41.29464999805062
+				]
+			}
+		},
+		{
+			"id": 53,
+			"type": "Feature",
+			"properties": {
+				"fid": 53,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.79 - Gaeta - Rio d'Itri 2",
+				"cod_pnt": "F2.79",
+				"codice_europeo": "IT12-F2_79",
+				"data_creazione": "2012/03/29 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Rio d'Itri 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Gaeta",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.575674911316943,
+					41.248753011338568
+				]
+			}
+		},
+		{
+			"id": 54,
+			"type": "Feature",
+			"properties": {
+				"fid": 54,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.80 - Ausonia - Torrente Ausente 1",
+				"cod_pnt": "F2.80",
+				"codice_europeo": "IT12-F2_80",
+				"data_creazione": "2013/01/29 00:00:00+01",
+				"data_dismissione": "2015/03/26 00:00:00+01",
+				"unita_terr": "Torrente Ausente 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ausonia",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.750217102136978,
+					41.348523979578619
+				]
+			}
+		},
+		{
+			"id": 55,
+			"type": "Feature",
+			"properties": {
+				"fid": 55,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F2.81 - Minturno - Torrente Ausente 2",
+				"cod_pnt": "F2.81",
+				"codice_europeo": "IT12-F2_81",
+				"data_creazione": "2013/01/29 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Ausente 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Minturno",
+				"provincia": "Latina",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.78804228142205,
+					41.26919759193455
+				]
+			}
+		},
+		{
+			"id": 56,
+			"type": "Feature",
+			"properties": {
+				"fid": 56,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.15 - Rieti - Fiume Salto (a valle) 2",
+				"cod_pnt": "F3.15",
+				"codice_europeo": "IT12-F3_15",
+				"data_creazione": "2005/01/28 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Salto (a valle) 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Rieti",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.919151770808746,
+					42.372387571208587
+				]
+			}
+		},
+		{
+			"id": 57,
+			"type": "Feature",
+			"properties": {
+				"fid": 57,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.20 - Contigliano (Terria) - Fiume Turano (a valle) 2",
+				"cod_pnt": "F3.20",
+				"codice_europeo": "IT12-F3_20",
+				"data_creazione": "2005/01/14 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Turano (a valle) 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Contigliano",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.794524818382167,
+					42.418829909755199
+				]
+			}
+		},
+		{
+			"id": 58,
+			"type": "Feature",
+			"properties": {
+				"fid": 58,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.46 - Fiume velino 1 -Cittareale",
+				"cod_pnt": "F3.46",
+				"codice_europeo": "IT12-F3_46",
+				"data_creazione": "2014/01/23 00:00:00+01",
+				"data_dismissione": "2016/06/20 00:00:00+02",
+				"unita_terr": "Fiume Velino 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Cittareale",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.158198110456516,
+					42.634984435250469
+				]
+			}
+		},
+		{
+			"id": 59,
+			"type": "Feature",
+			"properties": {
+				"fid": 59,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.47 - Antrodoco - Fiume Velino 2",
+				"cod_pnt": "F3.47",
+				"codice_europeo": "IT12-F3_47",
+				"data_creazione": "2005/01/07 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Velino 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Antrodoco",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.156229390560112,
+					42.57719535886834
+				]
+			}
+		},
+		{
+			"id": 60,
+			"type": "Feature",
+			"properties": {
+				"fid": 60,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.48 - Rieti - Fiume Velino 4",
+				"cod_pnt": "F3.48",
+				"codice_europeo": "IT12-F3_48",
+				"data_creazione": "2005/01/11 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Velino 4",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Rieti",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.743917721188855,
+					42.504358362948618
+				]
+			}
+		},
+		{
+			"id": 61,
+			"type": "Feature",
+			"properties": {
+				"fid": 61,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.49 - Rieti - Fiume Velino 3",
+				"cod_pnt": "F3.49",
+				"codice_europeo": "IT12-F3_49",
+				"data_creazione": "2005/01/11 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Velino 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Rieti",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.829031513134188,
+					42.430642285223907
+				]
+			}
+		},
+		{
+			"id": 62,
+			"type": "Feature",
+			"properties": {
+				"fid": 62,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.50 - Borgorose - Fiume Salto (a monte) 1",
+				"cod_pnt": "F3.50",
+				"codice_europeo": "IT12-F3_50",
+				"data_creazione": "2005/01/28 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Salto (a monte) 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Borgorose",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.249537623511545,
+					42.15110022196227
+				]
+			}
+		},
+		{
+			"id": 63,
+			"type": "Feature",
+			"properties": {
+				"fid": 63,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.51 - Pozzaglia Sabina - Fiume Turano (a monte) 1",
+				"cod_pnt": "F3.51",
+				"codice_europeo": "IT12-F3_51",
+				"data_creazione": "2005/01/13 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Turano (a monte) 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Pozzaglia Sabina",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.006538341500752,
+					42.157784783750617
+				]
+			}
+		},
+		{
+			"id": 64,
+			"type": "Feature",
+			"properties": {
+				"fid": 64,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.52 - Rieti (Cottorella) - Fiume Turano (a valle) 3",
+				"cod_pnt": "F3.52",
+				"codice_europeo": "IT12-F3_52",
+				"data_creazione": "2005/01/13 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Turano (a valle) 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Rieti",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.862645187683217,
+					42.38358713437231
+				]
+			}
+		},
+		{
+			"id": 65,
+			"type": "Feature",
+			"properties": {
+				"fid": 65,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.53 - Montopoli di Sabina - Torrente Farfa 4",
+				"cod_pnt": "F3.53",
+				"codice_europeo": "IT12-F3_53",
+				"data_creazione": "2005/02/01 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Farfa 4",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Montopoli di Sabina",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.64635170779646,
+					42.212173297079129
+				]
+			}
+		},
+		{
+			"id": 66,
+			"type": "Feature",
+			"properties": {
+				"fid": 66,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.54 - Cittaducale - Fiume Peschiera 1",
+				"cod_pnt": "F3.54",
+				"codice_europeo": "IT12-F3_54",
+				"data_creazione": "2005/01/26 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Peschiera 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Cittaducale",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.998645135365413,
+					42.36524296284865
+				]
+			}
+		},
+		{
+			"id": 67,
+			"type": "Feature",
+			"properties": {
+				"fid": 67,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.55 - Colli sul Velino - Canale S. Susanna 1",
+				"cod_pnt": "F3.55",
+				"codice_europeo": "IT12-F3_55",
+				"data_creazione": "2005/01/14 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Canale S. Susanna 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Colli sul Velino",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.809363844762326,
+					42.49010120102925
+				]
+			}
+		},
+		{
+			"id": 68,
+			"type": "Feature",
+			"properties": {
+				"fid": 68,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.56 - Accumoli - Fiume Tronto 2",
+				"cod_pnt": "F3.56",
+				"codice_europeo": "IT12-F3_56",
+				"data_creazione": "2005/01/31 00:00:00+01",
+				"data_dismissione": "2016/08/16 00:00:00+02",
+				"unita_terr": "Fiume Tronto 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Accumoli",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.267489368501574,
+					42.74078148507443
+				]
+			}
+		},
+		{
+			"id": 69,
+			"type": "Feature",
+			"properties": {
+				"fid": 69,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.61 - CITTAREALE - Fiume velino 1",
+				"cod_pnt": "F3.61",
+				"codice_europeo": "IT12-F3_61",
+				"data_creazione": "2017/06/14 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Velino 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Cittareale",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.15664426097348,
+					42.61494174455516
+				]
+			}
+		},
+		{
+			"id": 70,
+			"type": "Feature",
+			"properties": {
+				"fid": 70,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.62 - RIETI - Fiume Velino 3",
+				"cod_pnt": "F3.62",
+				"codice_europeo": "IT12-F3_62",
+				"data_creazione": "2017/06/26 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Velino 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Rieti",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.043581944117426,
+					42.398737519015757
+				]
+			}
+		},
+		{
+			"id": 71,
+			"type": "Feature",
+			"properties": {
+				"fid": 71,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.63 - ACCUMOLI - Fiume Tronto 2",
+				"cod_pnt": "F3.63",
+				"codice_europeo": "IT12-F3_63",
+				"data_creazione": "2017/06/14 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Tronto 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Accumoli",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.268779461207324,
+					42.73058060323512
+				]
+			}
+		},
+		{
+			"id": 72,
+			"type": "Feature",
+			"properties": {
+				"fid": 72,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.70 - Petrella Salto - Fiume Salto (a valle) 1",
+				"cod_pnt": "F3.70",
+				"codice_europeo": "IT12-F3_70",
+				"data_creazione": "2013/01/07 00:00:00+01",
+				"data_dismissione": "2016/12/07 00:00:00+01",
+				"unita_terr": "Fiume Salto (a valle) 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Petrella Salto",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.002236031243364,
+					42.29524004122388
+				]
+			}
+		},
+		{
+			"id": 73,
+			"type": "Feature",
+			"properties": {
+				"fid": 73,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.71 - Rocca Sinibalda - Fiume Turano (a valle) 1",
+				"cod_pnt": "F3.71",
+				"codice_europeo": "IT12-F3_71",
+				"data_creazione": "2012/03/26 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Turano (a valle) 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Rocca Sinibalda",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.941144003478236,
+					42.23243400690916
+				]
+			}
+		},
+		{
+			"id": 74,
+			"type": "Feature",
+			"properties": {
+				"fid": 74,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.73 - Torricella in Sabina - Torrente Farfa 1",
+				"cod_pnt": "F3.73",
+				"codice_europeo": "IT12-F3_73",
+				"data_creazione": "2012/05/14 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Farfa 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Rocca Sinibalda",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.87940451602285,
+					42.24880174044287
+				]
+			}
+		},
+		{
+			"id": 75,
+			"type": "Feature",
+			"properties": {
+				"fid": 75,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.74 - Poggio San Lorenzo - Torrente Farfa 2",
+				"cod_pnt": "F3.74",
+				"codice_europeo": "IT12-F3_74",
+				"data_creazione": "2013/01/24 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Farfa 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Poggio San Lorenzo",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.802745830615049,
+					42.23291643801734
+				]
+			}
+		},
+		{
+			"id": 76,
+			"type": "Feature",
+			"properties": {
+				"fid": 76,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.75 - Fara in Sabina - Torrente Farfa 3",
+				"cod_pnt": "F3.75",
+				"codice_europeo": "IT12-F3_75",
+				"data_creazione": "2012/03/05 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Farfa 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Fara in Sabina",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.7059609881714,
+					42.23484287496178
+				]
+			}
+		},
+		{
+			"id": 77,
+			"type": "Feature",
+			"properties": {
+				"fid": 77,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.76 - Torrita Tiberina - Fiume Tevere 2",
+				"cod_pnt": "F3.76",
+				"codice_europeo": "IT12-F3_76",
+				"data_creazione": "2013/01/24 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Tevere 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Torrita Tiberina",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.629564562811222,
+					42.235029679273818
+				]
+			}
+		},
+		{
+			"id": 78,
+			"type": "Feature",
+			"properties": {
+				"fid": 78,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.77 - Scandriglia - Fosso Corese 1",
+				"cod_pnt": "F3.77",
+				"codice_europeo": "IT12-F3_77",
+				"data_creazione": "2012/03/01 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Corese 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Scandriglia",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.85242843601028,
+					42.170965342553177
+				]
+			}
+		},
+		{
+			"id": 79,
+			"type": "Feature",
+			"properties": {
+				"fid": 79,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.78 - Scandriglia - Fosso Corese 2",
+				"cod_pnt": "F3.78",
+				"codice_europeo": "IT12-F3_78",
+				"data_creazione": "2012/03/01 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Corese 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Scandriglia",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.81122945000787,
+					42.16779239147093
+				]
+			}
+		},
+		{
+			"id": 80,
+			"type": "Feature",
+			"properties": {
+				"fid": 80,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.79 - Cottanello - Torrente l'Aia 1",
+				"cod_pnt": "F3.79",
+				"codice_europeo": "IT12-F3_79",
+				"data_creazione": "2012/03/30 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Torrente l'Aia 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Cottanello",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.660877991138508,
+					42.40677803988981
+				]
+			}
+		},
+		{
+			"id": 81,
+			"type": "Feature",
+			"properties": {
+				"fid": 81,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.80 - Torri in Sabina - Torrente l'Aia 2",
+				"cod_pnt": "F3.80",
+				"codice_europeo": "IT12-F3_80",
+				"data_creazione": "2013/01/23 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente l'Aia 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Torri in Sabina",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.65091294053683,
+					42.37176677857204
+				]
+			}
+		},
+		{
+			"id": 82,
+			"type": "Feature",
+			"properties": {
+				"fid": 82,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F3.81 - Collevecchio - Torrente l'Aia 3",
+				"cod_pnt": "F3.81",
+				"codice_europeo": "IT12-F3_81",
+				"data_creazione": "2012/03/30 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Torrente l'Aia 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Collevecchio",
+				"provincia": "Rieti",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.512008344582986,
+					42.30976859547831
+				]
+			}
+		},
+		{
+			"id": 83,
+			"type": "Feature",
+			"properties": {
+				"fid": 83,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.05 - Roma, Ponte Mezzocamino - Fiume Tevere 5",
+				"cod_pnt": "F4.05",
+				"codice_europeo": "IT12-F4_05",
+				"data_creazione": "2005/01/11 00:00:00+01",
+				"data_dismissione": "2016/12/16 00:00:00+01",
+				"unita_terr": "Fiume Tevere 5",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.418280141337889,
+					41.80695044170122
+				]
+			}
+		},
+		{
+			"id": 84,
+			"type": "Feature",
+			"properties": {
+				"fid": 84,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.06 - Roma, Ponte Ripetta  - Fiume Tevere 5",
+				"cod_pnt": "F4.06",
+				"codice_europeo": "IT12-F4_06",
+				"data_creazione": "2005/01/08 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Tevere 5",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.472660528947566,
+					41.90959101338289
+				]
+			}
+		},
+		{
+			"id": 85,
+			"type": "Feature",
+			"properties": {
+				"fid": 85,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.07 - Roma, Castel Giubileo -  Fiume Tevere 4",
+				"cod_pnt": "F4.07",
+				"codice_europeo": "IT12-F4_07",
+				"data_creazione": "2005/01/08 00:00:00+01",
+				"data_dismissione": "2016/12/16 00:00:00+01",
+				"unita_terr": "Fiume Tevere 4",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.497726995209906,
+					41.98992877283554
+				]
+			}
+		},
+		{
+			"id": 86,
+			"type": "Feature",
+			"properties": {
+				"fid": 86,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.08 - Montelibretti - Fiume Tevere 3",
+				"cod_pnt": "F4.08",
+				"codice_europeo": "IT12-F4_08",
+				"data_creazione": "2005/01/19 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Tevere 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Montelibretti",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.635770853615873,
+					42.153473640408588
+				]
+			}
+		},
+		{
+			"id": 87,
+			"type": "Feature",
+			"properties": {
+				"fid": 87,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.09 - Roma - Fiume Aniene 5",
+				"cod_pnt": "F4.09",
+				"codice_europeo": "IT12-F4_09",
+				"data_creazione": "2005/01/17 00:00:00+01",
+				"data_dismissione": "2016/12/16 00:00:00+01",
+				"unita_terr": "Fiume Aniene 5",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.509752600124412,
+					41.94218046769122
+				]
+			}
+		},
+		{
+			"id": 88,
+			"type": "Feature",
+			"properties": {
+				"fid": 88,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.11 - Roma - Fiume Aniene 5",
+				"cod_pnt": "F4.11",
+				"codice_europeo": "IT12-F4_11",
+				"data_creazione": "2005/01/03 00:00:00+01",
+				"data_dismissione": "2016/12/14 00:00:00+01",
+				"unita_terr": "Fiume Aniene 5",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.668203835402127,
+					41.92904679832747
+				]
+			}
+		},
+		{
+			"id": 89,
+			"type": "Feature",
+			"properties": {
+				"fid": 89,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.13 - Anticoli Corrado - Fiume Aniene 3",
+				"cod_pnt": "F4.13",
+				"codice_europeo": "IT12-F4_13",
+				"data_creazione": "2005/01/07 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Aniene 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Anticoli Corrado",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.990258411370628,
+					42.02206108923382
+				]
+			}
+		},
+		{
+			"id": 90,
+			"type": "Feature",
+			"properties": {
+				"fid": 90,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.14 - Subiaco - Fiume Aniene 3",
+				"cod_pnt": "F4.14",
+				"codice_europeo": "IT12-F4_14",
+				"data_creazione": "2005/01/10 00:00:00+01",
+				"data_dismissione": "2015/12/15 00:00:00+01",
+				"unita_terr": "Fiume Aniene 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Subiaco",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.089773606172859,
+					41.92590407865044
+				]
+			}
+		},
+		{
+			"id": 91,
+			"type": "Feature",
+			"properties": {
+				"fid": 91,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.15 - Colleferro - Fiume Sacco 2",
+				"cod_pnt": "F4.15",
+				"codice_europeo": "IT12-F4_15",
+				"data_creazione": "2005/01/11 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Sacco 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Colleferro",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.97884721684918,
+					41.75943500913747
+				]
+			}
+		},
+		{
+			"id": 92,
+			"type": "Feature",
+			"properties": {
+				"fid": 92,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.16 - Colleferro - Fosso Savo (Centogocce) 2",
+				"cod_pnt": "F4.16",
+				"codice_europeo": "IT12-F4_16",
+				"data_creazione": "2005/01/11 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Savo (Centogocce) 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Colleferro",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.974107701537975,
+					41.76212225311403
+				]
+			}
+		},
+		{
+			"id": 93,
+			"type": "Feature",
+			"properties": {
+				"fid": 93,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.17 - Montelibretti - Fosso Corese 3",
+				"cod_pnt": "F4.17",
+				"codice_europeo": "IT12-F4_17",
+				"data_creazione": "2005/01/19 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Corese 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Montelibretti",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.646076571998954,
+					42.15300555113964
+				]
+			}
+		},
+		{
+			"id": 94,
+			"type": "Feature",
+			"properties": {
+				"fid": 94,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.18 - Roma - Fosso Galeria 2",
+				"cod_pnt": "F4.18",
+				"codice_europeo": "IT12-F4_18",
+				"data_creazione": "2005/01/20 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Galeria 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.335103517146582,
+					41.83960844055322
+				]
+			}
+		},
+		{
+			"id": 95,
+			"type": "Feature",
+			"properties": {
+				"fid": 95,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.19 - Roma - Fosso Malafede 2",
+				"cod_pnt": "F4.19",
+				"codice_europeo": "IT12-F4_19",
+				"data_creazione": "2005/01/03 00:00:00+01",
+				"data_dismissione": "2013/08/07 00:00:00+02",
+				"unita_terr": "Fosso Malafede 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.398734930905516,
+					41.79389523118419
+				]
+			}
+		},
+		{
+			"id": 96,
+			"type": "Feature",
+			"properties": {
+				"fid": 96,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.20 - TOLFA - Fiume Mignone 2",
+				"cod_pnt": "F4.20",
+				"codice_europeo": "IT12-F4_20",
+				"data_creazione": "2005/01/18 00:00:00+01",
+				"data_dismissione": "2012/02/28 00:00:00+01",
+				"unita_terr": "Fiume Mignone 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tolfa",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.019828633156229,
+					42.142254519119358
+				]
+			}
+		},
+		{
+			"id": 97,
+			"type": "Feature",
+			"properties": {
+				"fid": 97,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.21 - Tolfa - Fiume Mignone 2",
+				"cod_pnt": "F4.21",
+				"codice_europeo": "IT12-F4_21",
+				"data_creazione": "2005/01/18 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Mignone 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tolfa",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.010155843600082,
+					42.15348802378357
+				]
+			}
+		},
+		{
+			"id": 98,
+			"type": "Feature",
+			"properties": {
+				"fid": 98,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.22 - Ladispoli - Fosso Vaccina 2",
+				"cod_pnt": "F4.22",
+				"codice_europeo": "IT12-F4_22",
+				"data_creazione": "2005/01/19 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Vaccina 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ladispoli",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.072950893290962,
+					41.95178449747029
+				]
+			}
+		},
+		{
+			"id": 99,
+			"type": "Feature",
+			"properties": {
+				"fid": 99,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.23 - Fiumicino - Fiume Arrone 2",
+				"cod_pnt": "F4.23",
+				"codice_europeo": "IT12-F4_23",
+				"data_creazione": "2005/01/24 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Arrone 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Fiumicino",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.215193780854147,
+					41.87661829385978
+				]
+			}
+		},
+		{
+			"id": 100,
+			"type": "Feature",
+			"properties": {
+				"fid": 100,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.24 - Roma - Fiume Arrone 2",
+				"cod_pnt": "F4.24",
+				"codice_europeo": "IT12-F4_24",
+				"data_creazione": "2005/01/24 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Arrone 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.312633485240945,
+					42.038271742218928
+				]
+			}
+		},
+		{
+			"id": 101,
+			"type": "Feature",
+			"properties": {
+				"fid": 101,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.25 - Ardea - Fosso Incastri (Rio Grande) 2",
+				"cod_pnt": "F4.25",
+				"codice_europeo": "IT12-F4_25",
+				"data_creazione": "2005/01/20 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Incastri (Rio Grande) 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ardea",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.519878034200019,
+					41.59233839615138
+				]
+			}
+		},
+		{
+			"id": 102,
+			"type": "Feature",
+			"properties": {
+				"fid": 102,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.31 - Fiumicino - Fosso Tre Denari 2",
+				"cod_pnt": "F4.31",
+				"codice_europeo": "IT12-F4_31",
+				"data_creazione": "2005/01/19 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Tre Denari 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Fiumicino",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.201261880870274,
+					41.9137198287121
+				]
+			}
+		},
+		{
+			"id": 103,
+			"type": "Feature",
+			"properties": {
+				"fid": 103,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.62 - ROMA, Vitinia - Fiume Tevere 6",
+				"cod_pnt": "F4.62",
+				"codice_europeo": "IT12-F4_62",
+				"data_creazione": "2017/05/26 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Tevere 5",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.395251821940546,
+					41.79875800249896
+				]
+			}
+		},
+		{
+			"id": 104,
+			"type": "Feature",
+			"properties": {
+				"fid": 104,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.63 - ROMA, Circolo Flaminio - Fiume Tevere 4",
+				"cod_pnt": "F4.63",
+				"codice_europeo": "IT12-F4_63",
+				"data_creazione": "2017/06/13 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Tevere 4",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.48864784694256,
+					41.95604715455898
+				]
+			}
+		},
+		{
+			"id": 105,
+			"type": "Feature",
+			"properties": {
+				"fid": 105,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.64 - ROMA, Fiume Aniene 5",
+				"cod_pnt": "F4.64",
+				"codice_europeo": "IT12-F4_64",
+				"data_creazione": "2017/06/13 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Aniene 5",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.532545326098884,
+					41.93367984336337
+				]
+			}
+		},
+		{
+			"id": 106,
+			"type": "Feature",
+			"properties": {
+				"fid": 106,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.65 - CERVETERI - Fosso Sanguinara 1",
+				"cod_pnt": "F4.65",
+				"codice_europeo": "IT12-F4_65",
+				"data_creazione": "2017/05/31 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Sanguinara 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Cerveteri",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.097458057890418,
+					41.96027437895225
+				]
+			}
+		},
+		{
+			"id": 107,
+			"type": "Feature",
+			"properties": {
+				"fid": 107,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.66 - SANTA MARINELLA - Rio Fiume 1",
+				"cod_pnt": "F4.66",
+				"codice_europeo": "IT12-F4_66",
+				"data_creazione": "2017/05/26 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Rio Fiume 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Santa Marinella",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.941727574050852,
+					42.058392091683
+				]
+			}
+		},
+		{
+			"id": 108,
+			"type": "Feature",
+			"properties": {
+				"fid": 108,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.67 - POMEZIA - Rio torto 1",
+				"cod_pnt": "F4.67",
+				"codice_europeo": "IT12-F4_67",
+				"data_creazione": null,
+				"data_dismissione": null,
+				"unita_terr": "Rio Torto 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Pomezia",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.53802565652723,
+					41.6705776957963
+				]
+			}
+		},
+		{
+			"id": 109,
+			"type": "Feature",
+			"properties": {
+				"fid": 109,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.68 - VICOVARO - Torrente fiumicino 1",
+				"cod_pnt": "F4.68",
+				"codice_europeo": "IT12-F4_68",
+				"data_creazione": "2017/06/07 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Fiumicino 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Vicovaro",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.925341100036555,
+					42.01139589179833
+				]
+			}
+		},
+		{
+			"id": 110,
+			"type": "Feature",
+			"properties": {
+				"fid": 110,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.69 - FIUMICINO - Fosso delle cadute 2",
+				"cod_pnt": "F4.69",
+				"codice_europeo": "IT12-F4_69",
+				"data_creazione": "2017/05/29 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fosso delle Cadute 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Fiumicino",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.179189921109787,
+					41.92550234348894
+				]
+			}
+		},
+		{
+			"id": 111,
+			"type": "Feature",
+			"properties": {
+				"fid": 111,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.70 - Monterotondo - Fiume Tevere 3",
+				"cod_pnt": "F4.70",
+				"codice_europeo": "IT12-F4_70",
+				"data_creazione": "2013/01/24 00:00:00+01",
+				"data_dismissione": "2016/12/21 00:00:00+01",
+				"unita_terr": "Fiume Tevere 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Monterotondo",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.602323986910357,
+					42.086690020031188
+				]
+			}
+		},
+		{
+			"id": 112,
+			"type": "Feature",
+			"properties": {
+				"fid": 112,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.71 - Filettino - Fiume Aniene 1",
+				"cod_pnt": "F4.71",
+				"codice_europeo": "IT12-F4_71",
+				"data_creazione": "2005/03/03 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Aniene 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Filettino",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.294808462589528,
+					41.87477069124447
+				]
+			}
+		},
+		{
+			"id": 113,
+			"type": "Feature",
+			"properties": {
+				"fid": 113,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.72 - Jenne - Fiume Aniene 2",
+				"cod_pnt": "F4.72",
+				"codice_europeo": "IT12-F4_72",
+				"data_creazione": "2012/03/29 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Aniene 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Jenne",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.199699863586109,
+					41.861626544351249
+				]
+			}
+		},
+		{
+			"id": 114,
+			"type": "Feature",
+			"properties": {
+				"fid": 114,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.74 - Tivoli - Fiume Aniene 4",
+				"cod_pnt": "F4.74",
+				"codice_europeo": "IT12-F4_74",
+				"data_creazione": "2005/07/01 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Aniene 4",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tivoli",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.761950963896228,
+					41.954899542533279
+				]
+			}
+		},
+		{
+			"id": 115,
+			"type": "Feature",
+			"properties": {
+				"fid": 115,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.75 - Olevano Romano - Fiume Sacco 1",
+				"cod_pnt": "F4.75",
+				"codice_europeo": "IT12-F4_75",
+				"data_creazione": "2012/03/21 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Sacco 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Olevano Romano",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.01184288561006,
+					41.83560431837531
+				]
+			}
+		},
+		{
+			"id": 116,
+			"type": "Feature",
+			"properties": {
+				"fid": 116,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.76 - Segni - Fiume Sacco 3",
+				"cod_pnt": "F4.76",
+				"codice_europeo": "IT12-F4_76",
+				"data_creazione": "2013/01/15 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Sacco 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Segni",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.042513594415887,
+					41.73085252868971
+				]
+			}
+		},
+		{
+			"id": 117,
+			"type": "Feature",
+			"properties": {
+				"fid": 117,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.77 - Anagni - Fiume Sacco 4",
+				"cod_pnt": "F4.77",
+				"codice_europeo": "IT12-F4_77",
+				"data_creazione": "2013/01/28 00:00:00+01",
+				"data_dismissione": "2016/12/27 00:00:00+01",
+				"unita_terr": "Fiume Sacco 4",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Anagni",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.091324007534312,
+					41.711689016434487
+				]
+			}
+		},
+		{
+			"id": 118,
+			"type": "Feature",
+			"properties": {
+				"fid": 118,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.78 - Palestrina - Fosso Savo (Centogocce) 1",
+				"cod_pnt": "F4.78",
+				"codice_europeo": "IT12-F4_78",
+				"data_creazione": "2014/02/06 00:00:00+01",
+				"data_dismissione": "2014/02/06 00:00:00+01",
+				"unita_terr": "Fosso Savo (Centogocce) 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Palestrina",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.907482101647773,
+					41.829475977806357
+				]
+			}
+		},
+		{
+			"id": 119,
+			"type": "Feature",
+			"properties": {
+				"fid": 119,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.79 - Roma - Fosso Galeria 1",
+				"cod_pnt": "F4.79",
+				"codice_europeo": "IT12-F4_79",
+				"data_creazione": "2013/01/23 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Galeria 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.331424332996433,
+					42.00896878351848
+				]
+			}
+		},
+		{
+			"id": 120,
+			"type": "Feature",
+			"properties": {
+				"fid": 120,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.80 - Roma - Fosso Malafede 1",
+				"cod_pnt": "F4.80",
+				"codice_europeo": "IT12-F4_80",
+				"data_creazione": "2013/01/17 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Malafede 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.505256860132614,
+					41.73623585907654
+				]
+			}
+		},
+		{
+			"id": 121,
+			"type": "Feature",
+			"properties": {
+				"fid": 121,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.81 - Fiumicino - Fosso Tre Denari 1",
+				"cod_pnt": "F4.81",
+				"codice_europeo": "IT12-F4_81",
+				"data_creazione": null,
+				"data_dismissione": null,
+				"unita_terr": "Fosso Tre Denari 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Fiumicino",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.236564994968142,
+					41.939091058282908
+				]
+			}
+		},
+		{
+			"id": 122,
+			"type": "Feature",
+			"properties": {
+				"fid": 122,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.82 - Roviano - Fosso Bagnatore 1",
+				"cod_pnt": "F4.82",
+				"codice_europeo": "IT12-F4_82",
+				"data_creazione": "2013/01/10 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Bagnatore 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roviano",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.008204279716887,
+					42.0149711260083
+				]
+			}
+		},
+		{
+			"id": 123,
+			"type": "Feature",
+			"properties": {
+				"fid": 123,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.83 - Roma - Fosso della Torraccia 2",
+				"cod_pnt": "F4.83",
+				"codice_europeo": "IT12-F4_83",
+				"data_creazione": "2012/03/13 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso della Torraccia 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.496026371784663,
+					41.999879327781609
+				]
+			}
+		},
+		{
+			"id": 124,
+			"type": "Feature",
+			"properties": {
+				"fid": 124,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.84 - Roma - Fosso dell'Osa 1",
+				"cod_pnt": "F4.84",
+				"codice_europeo": "IT12-F4_84",
+				"data_creazione": "2013/01/17 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso dell'Osa 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.686030588368189,
+					41.90709185319308
+				]
+			}
+		},
+		{
+			"id": 125,
+			"type": "Feature",
+			"properties": {
+				"fid": 125,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.85 - Fiano Romano - Fosso di Leprignano 1",
+				"cod_pnt": "F4.85",
+				"codice_europeo": "IT12-F4_85",
+				"data_creazione": "2013/01/21 00:00:00+01",
+				"data_dismissione": "2015/12/11 00:00:00+01",
+				"unita_terr": "Fosso di Leprignano 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Fiano Romano",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.554563980569816,
+					42.14078802623565
+				]
+			}
+		},
+		{
+			"id": 126,
+			"type": "Feature",
+			"properties": {
+				"fid": 126,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.86 - Capena - Fosso di Leprignano 2",
+				"cod_pnt": "F4.86",
+				"codice_europeo": "IT12-F4_86",
+				"data_creazione": "2013/01/21 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso di Leprignano 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Capena",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.59853820953944,
+					42.11609645525476
+				]
+			}
+		},
+		{
+			"id": 127,
+			"type": "Feature",
+			"properties": {
+				"fid": 127,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.87 - San Gregorio da Sassola - Fosso di S.Vittorino 2",
+				"cod_pnt": "F4.87",
+				"codice_europeo": "IT12-F4_87",
+				"data_creazione": "2012/03/23 00:00:00+01",
+				"data_dismissione": "2015/12/03 00:00:00+01",
+				"unita_terr": "Fosso di S.Vittorino 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "San Gregorio da Sassola",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.812813996781732,
+					41.90116393091113
+				]
+			}
+		},
+		{
+			"id": 128,
+			"type": "Feature",
+			"properties": {
+				"fid": 128,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.88 - Roma - Fosso di S.Vittorino 3",
+				"cod_pnt": "F4.88",
+				"codice_europeo": "IT12-F4_88",
+				"data_creazione": "2012/03/30 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fosso di S.Vittorino 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.766860884832039,
+					41.922757101191809
+				]
+			}
+		},
+		{
+			"id": 129,
+			"type": "Feature",
+			"properties": {
+				"fid": 129,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.89 - Tolfa - Fosso Lenta 2",
+				"cod_pnt": "F4.89",
+				"codice_europeo": "IT12-F4_89",
+				"data_creazione": "2012/03/22 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Lenta 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tolfa",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.01819824454317,
+					42.142001952493817
+				]
+			}
+		},
+		{
+			"id": 130,
+			"type": "Feature",
+			"properties": {
+				"fid": 130,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.90 - Roma - Fosso Passerano 2",
+				"cod_pnt": "F4.90",
+				"codice_europeo": "IT12-F4_90",
+				"data_creazione": "2012/03/23 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Passerano 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.003539716620255,
+					42.150288512245669
+				]
+			}
+		},
+		{
+			"id": 131,
+			"type": "Feature",
+			"properties": {
+				"fid": 131,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.91 - Tolfa - Fosso Verginese 1",
+				"cod_pnt": "F4.91",
+				"codice_europeo": "IT12-F4_91",
+				"data_creazione": "2012/03/22 00:00:00+01",
+				"data_dismissione": "2016/06/23 00:00:00+02",
+				"unita_terr": "Fosso Verginese 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tolfa",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.925205650294748,
+					42.14041083715213
+				]
+			}
+		},
+		{
+			"id": 132,
+			"type": "Feature",
+			"properties": {
+				"fid": 132,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.92 - Tolfa - Fosso Verginese 2",
+				"cod_pnt": "F4.92",
+				"codice_europeo": "IT12-F4_92",
+				"data_creazione": "2012/04/27 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Verginese 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tolfa",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.007687198987837,
+					42.1521061796772
+				]
+			}
+		},
+		{
+			"id": 133,
+			"type": "Feature",
+			"properties": {
+				"fid": 133,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.93 - Ardea - Rio Torto 2",
+				"cod_pnt": "F4.93",
+				"codice_europeo": "IT12-F4_93",
+				"data_creazione": "2013/01/29 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Rio Torto 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ardea",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.4952108234159,
+					41.6166502525018
+				]
+			}
+		},
+		{
+			"id": 134,
+			"type": "Feature",
+			"properties": {
+				"fid": 134,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.94 - Sacrofano - Rio Valchetta (Cremera) 1",
+				"cod_pnt": "F4.94",
+				"codice_europeo": "IT12-F4_94",
+				"data_creazione": "2013/01/15 00:00:00+01",
+				"data_dismissione": "2015/06/17 00:00:00+02",
+				"unita_terr": "Rio Valchetta (Cremera) 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Sacrofano",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.418035037009148,
+					42.11216897055342
+				]
+			}
+		},
+		{
+			"id": 135,
+			"type": "Feature",
+			"properties": {
+				"fid": 135,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.95 - Formello - Rio Valchetta (Cremera) 2",
+				"cod_pnt": "F4.95",
+				"codice_europeo": "IT12-F4_95",
+				"data_creazione": "2013/04/10 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Rio Valchetta (Cremera) 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Formello",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.411970318473165,
+					42.01308468973353
+				]
+			}
+		},
+		{
+			"id": 136,
+			"type": "Feature",
+			"properties": {
+				"fid": 136,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.96 - Roma - Rio Valchetta (Cremera) 3",
+				"cod_pnt": "F4.96",
+				"codice_europeo": "IT12-F4_96",
+				"data_creazione": "2013/01/15 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Rio Valchetta (Cremera) 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Roma",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.454022814736853,
+					41.99753643951124
+				]
+			}
+		},
+		{
+			"id": 137,
+			"type": "Feature",
+			"properties": {
+				"fid": 137,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.97 - Vallepietra - Torrente Simbrivio 1",
+				"cod_pnt": "F4.97",
+				"codice_europeo": "IT12-F4_97",
+				"data_creazione": "2012/03/27 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Simbrivio 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Vallepietra",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.228079295107941,
+					41.92804700952915
+				]
+			}
+		},
+		{
+			"id": 138,
+			"type": "Feature",
+			"properties": {
+				"fid": 138,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.98 - Trevi nel Lazio - Torrente Simbrivio 2",
+				"cod_pnt": "F4.98",
+				"codice_europeo": "IT12-F4_98",
+				"data_creazione": "2012/03/27 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Simbrivio 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Trevi nel Lazio",
+				"provincia": "Frosinone",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					13.193232697518628,
+					41.86888274150848
+				]
+			}
+		},
+		{
+			"id": 139,
+			"type": "Feature",
+			"properties": {
+				"fid": 139,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F4.99 - Mazzano Romano - Torrente Treja 1",
+				"cod_pnt": "F4.99",
+				"codice_europeo": "IT12-F4_99",
+				"data_creazione": "2012/03/29 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Treja 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Mazzano Romano",
+				"provincia": "Roma",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.418170176988225,
+					42.209980876567019
+				]
+			}
+		},
+		{
+			"id": 140,
+			"type": "Feature",
+			"properties": {
+				"fid": 140,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.03 - Ischia di Castro - Fiume Fiora 1",
+				"cod_pnt": "F5.03",
+				"codice_europeo": "IT12-F5_03",
+				"data_creazione": "2005/02/01 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Fiora 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ischia di Castro",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.607457573227255,
+					42.52202741928335
+				]
+			}
+		},
+		{
+			"id": 141,
+			"type": "Feature",
+			"properties": {
+				"fid": 141,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.05 - Montalto di Castro - Fiume Fiora 2",
+				"cod_pnt": "F5.05",
+				"codice_europeo": "IT12-F5_05",
+				"data_creazione": "2005/02/01 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Fiora 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Montalto di Castro",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.599086491720925,
+					42.35397475267807
+				]
+			}
+		},
+		{
+			"id": 142,
+			"type": "Feature",
+			"properties": {
+				"fid": 142,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.08 - Montalto di Castro - Torrente Arrone 2",
+				"cod_pnt": "F5.08",
+				"codice_europeo": "IT12-F5_08",
+				"data_creazione": "2005/01/17 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Arrone 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Montalto di Castro",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.686933458629964,
+					42.34957099800578
+				]
+			}
+		},
+		{
+			"id": 143,
+			"type": "Feature",
+			"properties": {
+				"fid": 143,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.11 - Tuscania - Fiume Marta 3",
+				"cod_pnt": "F5.11",
+				"codice_europeo": "IT12-F5_11",
+				"data_creazione": "2005/01/10 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Marta 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tuscania",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.87794668410205,
+					42.39877317548801
+				]
+			}
+		},
+		{
+			"id": 144,
+			"type": "Feature",
+			"properties": {
+				"fid": 144,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.14 - Tarquinia - Fiume Marta 2",
+				"cod_pnt": "F5.14",
+				"codice_europeo": "IT12-F5_14",
+				"data_creazione": "2005/01/10 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Marta 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tarquinia",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.709260750943367,
+					42.242999548330868
+				]
+			}
+		},
+		{
+			"id": 145,
+			"type": "Feature",
+			"properties": {
+				"fid": 145,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.22 - Acquapendente - Fiume Paglia 2",
+				"cod_pnt": "F5.22",
+				"codice_europeo": "IT12-F5_22",
+				"data_creazione": "2005/01/24 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Paglia 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Acquapendente",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.86232437749028,
+					42.76240879221539
+				]
+			}
+		},
+		{
+			"id": 146,
+			"type": "Feature",
+			"properties": {
+				"fid": 146,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.26 - Bomarzo - Fiume Tevere 1",
+				"cod_pnt": "F5.26",
+				"codice_europeo": "IT12-F5_26",
+				"data_creazione": "2005/01/31 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Tevere 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Bomarzo",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.277629322649372,
+					42.50696125135473
+				]
+			}
+		},
+		{
+			"id": 147,
+			"type": "Feature",
+			"properties": {
+				"fid": 147,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.27 - Civita Castellana - Fiume Tevere 2",
+				"cod_pnt": "F5.27",
+				"codice_europeo": "IT12-F5_27",
+				"data_creazione": "2005/01/31 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Tevere 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Civita Castellana",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.460604533229669,
+					42.35022519798439
+				]
+			}
+		},
+		{
+			"id": 148,
+			"type": "Feature",
+			"properties": {
+				"fid": 148,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.36 - Marta - Fiume Marta 1",
+				"cod_pnt": "F5.36",
+				"codice_europeo": "IT12-F5_36",
+				"data_creazione": "2005/01/10 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Marta 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Marta",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.918934747017442,
+					42.51740041874246
+				]
+			}
+		},
+		{
+			"id": 149,
+			"type": "Feature",
+			"properties": {
+				"fid": 149,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.37 - Tarquinia - Fiume Mignone 3",
+				"cod_pnt": "F5.37",
+				"codice_europeo": "IT12-F5_37",
+				"data_creazione": "2005/01/18 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Mignone 3",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tarquinia",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.843150814385258,
+					42.21829690456224
+				]
+			}
+		},
+		{
+			"id": 150,
+			"type": "Feature",
+			"properties": {
+				"fid": 150,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.70 - Tuscania - Torrente Arrone 1",
+				"cod_pnt": "F5.70",
+				"codice_europeo": "IT12-F5_70",
+				"data_creazione": "2012/01/26 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Arrone 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Tuscania",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.801386325218969,
+					42.42728096020377
+				]
+			}
+		},
+		{
+			"id": 151,
+			"type": "Feature",
+			"properties": {
+				"fid": 151,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.71 - Proceno - Fiume Paglia 1",
+				"cod_pnt": "F5.71",
+				"codice_europeo": "IT12-F5_71",
+				"data_creazione": "2012/01/26 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Paglia 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Proceno",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.835202742533895,
+					42.781431608293868
+				]
+			}
+		},
+		{
+			"id": 152,
+			"type": "Feature",
+			"properties": {
+				"fid": 152,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.72 - Vejano - Fiume Mignone 1",
+				"cod_pnt": "F5.72",
+				"codice_europeo": "IT12-F5_72",
+				"data_creazione": "2005/01/18 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Mignone 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Vejano",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.093531328522975,
+					42.20866708719465
+				]
+			}
+		},
+		{
+			"id": 153,
+			"type": "Feature",
+			"properties": {
+				"fid": 153,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.73 - Ischia di Castro - Fiume Olpeta 2",
+				"cod_pnt": "F5.73",
+				"codice_europeo": "IT12-F5_73",
+				"data_creazione": "2013/02/27 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fiume Olpeta 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ischia di Castro",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.697005693240332,
+					42.55084951583088
+				]
+			}
+		},
+		{
+			"id": 154,
+			"type": "Feature",
+			"properties": {
+				"fid": 154,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.74 - Montalto di Castro - Fosso del Tafone 2",
+				"cod_pnt": "F5.74",
+				"codice_europeo": "IT12-F5_74",
+				"data_creazione": "2012/01/26 00:00:00+01",
+				"data_dismissione": "2013/03/26 00:00:00+01",
+				"unita_terr": "Fosso del Tafone 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Montalto di Castro",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.546014999531371,
+					42.39130197261165
+				]
+			}
+		},
+		{
+			"id": 155,
+			"type": "Feature",
+			"properties": {
+				"fid": 155,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.75 - Gallese - Fosso di Rustica 2",
+				"cod_pnt": "F5.75",
+				"codice_europeo": "IT12-F5_75",
+				"data_creazione": "2012/01/25 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso di Rustica 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Gallese",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.405405220031174,
+					42.37168178264598
+				]
+			}
+		},
+		{
+			"id": 156,
+			"type": "Feature",
+			"properties": {
+				"fid": 156,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.76 - Nepi - Fosso Rio Filetto 2",
+				"cod_pnt": "F5.76",
+				"codice_europeo": "IT12-F5_76",
+				"data_creazione": "2013/03/28 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Fosso Rio Filetto 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Nepi",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.3514618966262,
+					42.268399996472478
+				]
+			}
+		},
+		{
+			"id": 157,
+			"type": "Feature",
+			"properties": {
+				"fid": 157,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.77 - Ronciglione - Rio Vicano 1",
+				"cod_pnt": "F5.77",
+				"codice_europeo": "IT12-F5_77",
+				"data_creazione": "2012/01/25 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Rio Vicano 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Ronciglione",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.2555078579612,
+					42.26817131489589
+				]
+			}
+		},
+		{
+			"id": 158,
+			"type": "Feature",
+			"properties": {
+				"fid": 158,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.78 - Nepi - Rio Vicano 2",
+				"cod_pnt": "F5.78",
+				"codice_europeo": "IT12-F5_78",
+				"data_creazione": "2013/03/28 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Rio Vicano 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Nepi",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.335255284836356,
+					42.24939521029059
+				]
+			}
+		},
+		{
+			"id": 159,
+			"type": "Feature",
+			"properties": {
+				"fid": 159,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.79 - Vetralla - Torrente Biedano 2",
+				"cod_pnt": "F5.79",
+				"codice_europeo": "IT12-F5_79",
+				"data_creazione": "2012/01/25 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Biedano 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Vetralla",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.95981673963249,
+					42.29833952142274
+				]
+			}
+		},
+		{
+			"id": 160,
+			"type": "Feature",
+			"properties": {
+				"fid": 160,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.80 - Proceno - Torrente Stridolone 1",
+				"cod_pnt": "F5.80",
+				"codice_europeo": "IT12-F5_80",
+				"data_creazione": "2012/01/26 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Stridolone 1",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Proceno",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.825630188912977,
+					42.752046493011857
+				]
+			}
+		},
+		{
+			"id": 161,
+			"type": "Feature",
+			"properties": {
+				"fid": 161,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.81 - Monte Romano - Torrente Traponzo 2",
+				"cod_pnt": "F5.81",
+				"codice_europeo": "IT12-F5_81",
+				"data_creazione": "2012/03/29 00:00:00+02",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Traponzo 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Monte Romano",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					11.911400549734497,
+					42.36172179360286
+				]
+			}
+		},
+		{
+			"id": 162,
+			"type": "Feature",
+			"properties": {
+				"fid": 162,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.82 - Civita Castellana - Torrente Treja 2",
+				"cod_pnt": "F5.82",
+				"codice_europeo": "IT12-F5_82",
+				"data_creazione": "2012/01/25 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Treja 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Civita Castellana",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.445410380292288,
+					42.306923163720977
+				]
+			}
+		},
+		{
+			"id": 163,
+			"type": "Feature",
+			"properties": {
+				"fid": 163,
+				"rete_monit": "ALL1-F",
+				"rete_descr": "RETE DI  MONITORAGGIO ACQUE FLUVIALI (D.lgs 152/06, all.1)",
+				"tema": "ACQUA",
+				"nome_pnt": "F5.83 - Blera - Torrente Vesca 2",
+				"cod_pnt": "F5.83",
+				"codice_europeo": "IT12-F5_83",
+				"data_creazione": "2012/03/07 00:00:00+01",
+				"data_dismissione": null,
+				"unita_terr": "Torrente Vesca 2",
+				"ind_pnt": null,
+				"loc_pnt": null,
+				"comune": "Blera",
+				"provincia": "Viterbo",
+				"descpadre": null
+			},
+			"geometry": {
+				"type": "Point",
+				"coordinates": [
+					12.014533227280584,
+					42.22122484111098
+				]
+			}
+		}
+	]
+}
