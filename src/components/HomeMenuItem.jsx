@@ -3,16 +3,27 @@ import { Link } from 'react-router-dom'
 
 function HomeMenuItem({ menuItem }) {
     return (
-        <Link to={menuItem.path}>
-            <div className='w-full bg-gray-100 rounded-xl p-4'>
-                <div className='flex w-full justify-center my-4'>
-                    <img src={menuItem.image} alt={menuItem.title} className='rounded-xl object-cover object-center h-36' />
+        <Link to={menuItem.path} className="block h-full">
+            <div className='w-full h-full bg-white border border-slate-200 rounded-card shadow-card hover:shadow-card-hover hover:border-brand-400 transition-all duration-200 p-6 flex flex-col cursor-pointer'>
+                <div className='flex justify-center mb-4'>
+                    {menuItem.icon ? (
+                        <div className="w-16 h-16 flex items-center justify-center bg-brand-50 rounded-2xl text-brand-600 text-4xl">
+                            {menuItem.icon}
+                        </div>
+                    ) : (
+                        <div className='w-16 h-16 flex items-center justify-center bg-brand-50 rounded-2xl'>
+                            <img src={menuItem.image} alt={menuItem.title} className='w-10 h-10 object-contain' />
+                        </div>
+                    )}
                 </div>
-                <div className='flex items-center justify-center text-center my-2 h-16 align-middle'>
-                    <label className='text-xl font-bold'>{menuItem.title}</label>
+                <div className='text-center mb-2'>
+                    <span className='text-base font-semibold text-slate-900'>{menuItem.title}</span>
                 </div>
-                <div className=''>
-                    <label className='text-base font-light'>{menuItem.description}</label>
+                <div className='flex-1'>
+                    <p className='text-sm text-slate-500 text-center leading-relaxed'>{menuItem.description}</p>
+                </div>
+                <div className='mt-4 pt-3 border-t border-slate-100 text-center text-sm text-brand-600 font-medium'>
+                    →
                 </div>
             </div>
         </Link>

@@ -44,16 +44,16 @@ function Locations({ type = '' }) {
     const [selectedLocation, setSelectedLocation] = useState(null)
 
     const warningIcon = new Icon({
-        // iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
         iconUrl: window.location.origin + '/warning.png',
-        iconSize: [36, 31] // size of the icon
+        iconSize: [30, 26]
     });
 
     const createClusterCustomIcon = function (cluster) {
+        const count = cluster.getChildCount();
         return new divIcon({
-            html: `<span style="background-color: rgba(150, 181, 102, 1);height: 2em;width: 2em;color: #fff;display: flex;align-items: center;justify-content: center;border-radius: 50%;font-size: 1.2rem;box-shadow: 0 0 0px 5px #fff;">${cluster.getChildCount()}</span>`,
-            className: "custom-marker-cluster",
-            iconSize: point(33, 33, true)
+            html: `<div style="background:linear-gradient(135deg,#0EA5E9,#0284C7);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:3px solid rgba(255,255,255,0.95);box-shadow:0 2px 8px rgba(2,132,199,0.4);font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#fff;letter-spacing:-0.3px;">${count > 99 ? '99+' : count}</div>`,
+            className: '',
+            iconSize: point(36, 36, true)
         });
     };
 
@@ -242,7 +242,7 @@ function Locations({ type = '' }) {
     return (
 
         <Container>
-           {true && (<Accordion className="w-full mt-4">
+           {true && (<Accordion className="w-full mt-4 border border-slate-200 rounded-card shadow-card overflow-hidden">
                 <Accordion.Panel>
                     <Accordion.Title>{t('filtersTitle')}</Accordion.Title>
                     <Accordion.Content>
@@ -299,10 +299,10 @@ function Locations({ type = '' }) {
                                 {/* {console.log('When rendering: ' + isLoading)} */}
 
                                 {isLoading && (<div className='flex items-center justify-end w-full h-16 align-middle'>
-                                    <label className="text-right font-extrabold">Loading...</label>
+                                    <span className="text-right text-sm text-slate-500 animate-pulse">Loading...</span>
                                 </div>)}
                                 {!isLoading && (<div className='flex items-center justify-end w-full h-16 align-middle'>
-                                    <label className="text-right font-extrabold">{t('measuresResults') + ' ' + measureNumber + ' ' + t('locations')}</label>
+                                    <span className="text-right text-sm font-semibold text-brand-600">{t('measuresResults') + ' ' + measureNumber + ' ' + t('locations')}</span>
                                 </div>)}
 
                             </div>
@@ -317,13 +317,11 @@ function Locations({ type = '' }) {
 
             <div className='w-full mb-4 mt-4'>
 
-                <MapContainer className='h-[70vh] mr-8 sm:mr-0' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
-
-
+                <MapContainer className='h-[70vh] w-full rounded-card overflow-hidden shadow-card border border-slate-200' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
 
                     <TileLayer
-                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                        attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+                        url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
                     />
                     <ScaleControl imperial={false} position="bottomleft" />
                     <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon} showCoverageOnHover={false}>
@@ -338,21 +336,22 @@ function Locations({ type = '' }) {
                                         setSelectedLocation(await databaseService.getLocation(l.$id))
                                     },
                                 }}>
-                                    (<Popup>
-                                        <div className='w-[300px]'>
-                                            <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
-                                                <Link className='underline font-bold' to={`/location/${selectedLocation?.$id}`}>{selectedLocation?.name}</Link>
+                                    <Popup>
+                                        <div className='w-[310px]'>
+                                            <div className='bg-brand-800 text-white px-4 py-3'>
+                                                <h3 className='font-semibold text-sm'>
+                                                    <Link className='hover:underline' to={`/location/${selectedLocation?.$id}`}>{selectedLocation?.name}</Link>
+                                                </h3>
+                                                <p className='text-brand-200 text-xs mt-0.5'>
+                                                    {selectedLocation?.measures?.length ?? 0}{' '}
+                                                    {(selectedLocation?.measures?.length === 0 || selectedLocation?.measures?.length > 1) ? t('measuresLabel') : t('measureLabel')}
+                                                </p>
                                             </div>
-                                            <div className='w-full text-md text-right font-bold'>
-                                                {selectedLocation?.measures?.length + ' ' + ((selectedLocation?.measures?.length == 0 || selectedLocation?.measures?.length > 1) ? t('measuresLabel') : t('measureLabel'))}
-                                            </div>
-                                            <div>
-                                                <MeasureChart height={200} values={selectedLocation?.measures?.sort(function (a, b) {
-                                                    return new Date(a.datetime) - new Date(b.datetime);
-                                                })} />
+                                            <div className='bg-white p-2'>
+                                                <MeasureChart height={180} values={selectedLocation?.measures?.sort((a, b) => new Date(a.datetime) - new Date(b.datetime))} />
                                             </div>
                                         </div>
-                                    </Popup>)
+                                    </Popup>
                                     <Tooltip>{t(calculateWQILocation(l)[1])}</Tooltip>
                                 </Marker>
                             )
@@ -362,18 +361,18 @@ function Locations({ type = '' }) {
                             return (
                                 <Marker key={'r_' + r.$id} position={[r.latitude, r.longitude]} icon={warningIcon}>
                                     <Popup>
-                                        <div className='w-[300px]'>
-                                            <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
-                                                <Link className='underline font-bold' to={`/report/${r.$id}`}>{r.title}</Link>
+                                        <div className='w-[310px]'>
+                                            <div className='bg-amber-600 text-white px-4 py-3'>
+                                                <h3 className='font-semibold text-sm'>
+                                                    <Link className='hover:underline' to={`/report/${r.$id}`}>{r.title}</Link>
+                                                </h3>
+                                                <p className='text-amber-100 text-xs mt-0.5'>{formatDateTime(new Date(r.datetime))}</p>
                                             </div>
-                                            <div className='w-full text-md text-right font-bold '>
-                                                {formatDateTime(new Date(r.datetime))}
-                                            </div>
-                                            <div>
-                                                <p className='my-2 text-wrap text-justify' >{r.description}</p>
-                                            </div>
-                                            <div className='w-48 mx-auto'>
-                                                <img src={storageService.getPreviewImageUrl(r.imageId)} alt={r.title} className='rounded-lg w-48 object-fill' />
+                                            <div className='bg-white p-3'>
+                                                <p className='text-sm text-slate-600 leading-relaxed mb-2'>{r.description}</p>
+                                                {r.imageId && (
+                                                    <img src={storageService.getPreviewImageUrl(r.imageId)} alt={r.title} className='rounded-lg w-full object-cover max-h-36' />
+                                                )}
                                             </div>
                                         </div>
                                     </Popup>

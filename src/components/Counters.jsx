@@ -2,75 +2,53 @@ import React from 'react'
 import databaseService from '../appwrite/database'
 import { useTranslation } from 'react-i18next'
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
-import { useState } from 'react';
-import { Badge, Tooltip } from 'flowbite-react';
+import { useEffect, useState } from 'react';
 import { IoBeaker, IoWarning, IoLocationOutline } from "react-icons/io5";
-import { IconContext } from 'react-icons';
 
 function Counters() {
-    const userData = useSelector((state) => state.auth.userData);    
-    const { t, i18n } = useTranslation();
+    const userData = useSelector((state) => state.auth.userData);
+    const { t } = useTranslation();
 
     const [myMeasuresNumber, setMyMeasuresNumber] = useState(0)
     const [myLocationsNumber, setMyLocationsNumber] = useState(0)
     const [myReportsNumber, setMyReportsNumber] = useState(0)
 
     useEffect(() => {
-
         async function getAllNumbers() {
             const mm = await databaseService.getMeasuresByUserId(userData.$id, null, 100);
-            if (mm) {
-                setMyMeasuresNumber(mm.documents.length);
-            }           
+            if (mm) setMyMeasuresNumber(mm.documents.length);
 
             const ml = await databaseService.getLocationsByUserId(userData.$id);
-            if (ml) {
-                setMyLocationsNumber(ml.documents.length);
-            }
+            if (ml) setMyLocationsNumber(ml.documents.length);
 
             const r = await databaseService.getReportsByUserId(userData.$id);
-            if (r) {
-                setMyReportsNumber(r.documents.length);
-            }
-
+            if (r) setMyReportsNumber(r.documents.length);
         }
         getAllNumbers();
-    })
+    }, [userData.$id])
 
+    const stats = [
+        { count: myLocationsNumber, label: t('myLocations'), Icon: IoLocationOutline, href: '/mylocations' },
+        { count: myMeasuresNumber,  label: t('myMeasures'),  Icon: IoBeaker,           href: '/mymeasures' },
+        { count: myReportsNumber,   label: t('myReports'),   Icon: IoWarning,          href: '/myreports' },
+    ];
 
     return (
-
-        <div className='p-4 flex flex-wrap gap-2'>
-            <IconContext.Provider value={{ color: 'white', size: '20px' }}>               
-                <Tooltip content={t('myLocations')}>
-                    <Badge className='bg-casaleggio-rgba text-white' color='warning' href='/mylocations' size='sm'>
-                        <div className='text-center'>
-                            <IoLocationOutline />
-                            {myLocationsNumber}{myLocationsNumber > 99 ? '+' : ''}
-                        </div>
-                    </Badge>
-                </Tooltip>
-                <Tooltip content={t('myMeasures')}>
-                    <Badge className='bg-casaleggio-rgba text-white' color='warning' href='/mymeasures' size='sm'>
-                        <div className='text-center'>
-                            <IoBeaker />
-                            {myMeasuresNumber}{myMeasuresNumber > 99 ? '+' : ''}
-                        </div>
-                    </Badge>
-                </Tooltip>
-                <Tooltip content={t('myReports')}>
-                    <Badge className='bg-casaleggio-rgba text-white' color='warning' href='/myreports' size='sm'>
-
-                        <div className='text-center'>
-                            <IoWarning />
-                            {myReportsNumber}{myReportsNumber > 99 ? '+' : ''}
-                        </div>
-                    </Badge>
-                </Tooltip>
-            </IconContext.Provider>
+        <div className='grid grid-cols-3 gap-4'>
+            {stats.map(({ count, label, Icon, href }) => (
+                <a
+                    key={href}
+                    href={href}
+                    className="bg-white border border-slate-200 rounded-card shadow-card hover:shadow-card-hover transition-all duration-200 p-4 flex flex-col items-center text-center group"
+                >
+                    <div className="w-10 h-10 rounded-full bg-brand-50 flex items-center justify-center mb-3 group-hover:bg-brand-100 transition-colors">
+                        <Icon className="text-brand-600" size={20} />
+                    </div>
+                    <span className="text-3xl font-bold text-slate-900">{count > 99 ? '99+' : count}</span>
+                    <span className="text-xs text-slate-500 mt-1">{label}</span>
+                </a>
+            ))}
         </div>
-
     )
 }
 

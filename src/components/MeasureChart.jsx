@@ -1,22 +1,22 @@
 import React, { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, Label, CartesianGrid, ResponsiveContainer } from "recharts";
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid, ResponsiveContainer } from "recharts";
 import { formatDateTime } from "../utils/date";
 
-let inputLabels = [
-    { key: "electricalConductivity", color: "black" },
-    { key: "pH", color: "orange" },
-    { key: "temperature", color: "red" },
-    { key: "escherichiaColi", color: "pink" },
-    { key: "limeco", color: "green" },
-    { key: "nitrates", color: "gray" },
-    { key: "phosphates", color: "violet" },
-    { key: "dissolvedOxygen", color: "fuchsia" },
-    { key: "totalDissolvedSolids", color: "blue" },
-    { key: "salinity", color: "cyan" },
+const inputLabels = [
+    { key: "electricalConductivity", color: "#1E293B", unit: "μS/cm" },
+    { key: "pH",                     color: "#F59E0B", unit: "" },
+    { key: "temperature",            color: "#EF4444", unit: "°C" },
+    { key: "escherichiaColi",        color: "#EC4899", unit: "UFC/100mL" },
+    { key: "limeco",                 color: "#10B981", unit: "" },
+    { key: "nitrates",               color: "#94A3B8", unit: "mg/L" },
+    { key: "phosphates",             color: "#7C3AED", unit: "mg/L" },
+    { key: "dissolvedOxygen",        color: "#06B6D4", unit: "mg/L" },
+    { key: "totalDissolvedSolids",   color: "#3B82F6", unit: "ppm" },
+    { key: "salinity",               color: "#14B8A6", unit: "‰" },
 ];
 
-
+const defaultVisible = new Set(['limeco', 'pH', 'temperature', 'escherichiaColi']);
 
 const MeasureChart = ({ values, height = 400 }) => {
     const { t } = useTranslation();
@@ -24,7 +24,7 @@ const MeasureChart = ({ values, height = 400 }) => {
     const [lineProps, setLineProps] = useState(
         inputLabels.reduce(
             (a, { key }) => {
-                a[key] = false;
+                a[key] = !defaultVisible.has(key);
                 return a;
             },
             { hover: null }
@@ -36,13 +36,12 @@ const MeasureChart = ({ values, height = 400 }) => {
     };
 
     const handleLegendMouseEnter = (e) => {
-        // console.log(e.dataKey)      
         if (!lineProps[e.dataKey]) {
             setLineProps({ ...lineProps, hover: e.dataKey });
         }
     };
 
-    const handleLegendMouseLeave = (e) => {
+    const handleLegendMouseLeave = () => {
         setLineProps({ ...lineProps, hover: null });
     };
 
@@ -55,105 +54,78 @@ const MeasureChart = ({ values, height = 400 }) => {
     };
 
     function CustomTooltip({ payload, label, active }) {
-        if (active && payload[0] && payload[0].payload) {
+        if (active && payload && payload[0] && payload[0].payload) {
+            const data = payload[0].payload;
             return (
-                <div className="custom-tooltip bg-white border p-1">
-                    <p className="font-bold text-center">{`${formatDateTime(new Date(payload[0].payload.datetime))}`}</p>
-                    <div className="grid grid-cols-5 gap-1">
-
-                        <p className="bg-black text-white p-1 font-thin rounded-md">EC: {payload[0].payload.electricalConductivity ?? '-'} μS/cm</p>
-                        <p className="bg-orange-500 text-white p-1 font-thin rounded-md">pH: {payload[0].payload.pH ?? '-'}</p>
-                        <p className="bg-red-600 text-white p-1 font-thin rounded-md">Temp: {payload[0].payload.temperature ?? '-'} °C</p>
-                        <p className="bg-pink-500 text-white p-1 font-thin rounded-md">Esch.Coli: {payload[0].payload.escherichiaColi ?? '-'}</p>
-                        <p className="bg-green-500 text-white p-1 font-thin rounded-md">Limeco: {payload[0].payload.limeco ?? '-'}</p>
-                        <p className="bg-gray-500 text-white p-1 font-thin rounded-md">Nit.: {payload[0].payload.nitrates ?? '-'}</p>
-                        <p className="bg-violet-800 text-white p-1 font-thin rounded-md">Ph.: {payload[0].payload.phosphates ?? '-'}</p>
-                        <p className="bg-fuchsia-700 text-white p-1 font-thin rounded-md">Diss.Ox.: {payload[0].payload.dissolvedOxygen ?? '-'}</p>
-                        <p className="bg-blue-600 text-white p-1 font-thin rounded-md">TDS: {payload[0].payload.totalDissolvedSolids ?? '-'} ppm</p>
-                        <p className="bg-cyan-500 text-white p-1 font-thin rounded-md">Salinity: {payload[0].payload.salinity ?? '-'}</p>
-                    </div >
-                </div >
+                <div className="bg-white/95 border border-slate-200 rounded-xl shadow-lg p-3 text-xs max-w-[260px]">
+                    <p className="font-semibold text-slate-800 text-center mb-2 pb-2 border-b border-slate-100">
+                        {formatDateTime(new Date(data.datetime))}
+                    </p>
+                    <div className="grid grid-cols-2 gap-1.5">
+                        {inputLabels.map(({ key, color, unit }) => (
+                            data[key] != null && (
+                                <div key={key} className="flex items-center gap-1.5">
+                                    <span className="w-2 h-2 rounded-full shrink-0" style={{ backgroundColor: color }} />
+                                    <span className="text-slate-600 truncate">
+                                        {t(key)}: <span className="font-medium text-slate-900">{data[key]}{unit ? ` ${unit}` : ''}</span>
+                                    </span>
+                                </div>
+                            )
+                        ))}
+                    </div>
+                </div>
             );
         }
-
-        return null
+        return null;
     }
 
     return (
-        <ResponsiveContainer width="95%" height={height} className='mt-4'>
-            <LineChart data={values}
-                margin={{ top: 5, right: 10, bottom: 5, left: 20 }}>
-                <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-                <XAxis dataKey="datetime" tickFormatter={dateFormatter} />
-
-                {/* <Line type="monotone" dataKey="electricalConductivity" stroke="red" hide={lineProps['electricalConductivity'] === true} />
-                <Line type="monotone" dataKey="totalDissolvedSolids" stroke="blue" hide={lineProps['totalDissolvedSolids'] === true} />
-                <Line type="monotone" dataKey="pH" stroke="orange" hide={lineProps['pH'] === true} />
-                <Line type="monotone" dataKey="temperature" stroke="black" hide={lineProps['temperature'] === true} />
-                <Line type="monotone" dataKey="salinity" stroke="cyan" hide={lineProps['salinity'] === true} /> */}
-
-
-                {inputLabels.map((label, index) => (
-                    <Line type="monotone"
-                        name={t(label.key)}
-                        key={index}
-                        dataKey={label.key}
-                        stroke={label.color}
-                        hide={lineProps[label.key] === true}
-                        strokeOpacity={Number(
-                            lineProps.hover === label.key || !lineProps.hover ? 1 : 0.1
-                        )}
+        <div>
+            <ResponsiveContainer width="95%" height={height} className='mt-4'>
+                <LineChart data={values} margin={{ top: 5, right: 10, bottom: 5, left: 10 }}>
+                    <CartesianGrid stroke="#E2E8F0" strokeDasharray="3 3" />
+                    <XAxis
+                        dataKey="datetime"
+                        tickFormatter={dateFormatter}
+                        tick={{ fontSize: 11, fontFamily: 'Inter, sans-serif', fill: '#94A3B8' }}
+                        axisLine={{ stroke: '#E2E8F0' }}
+                        tickLine={false}
                     />
-                ))}
-
-
-                <Tooltip content={<CustomTooltip />} />
-                <Legend className="text-xs"
-                    onClick={selectLine}
-                    onMouseOver={handleLegendMouseEnter}
-                    onMouseOut={handleLegendMouseLeave}
-                />
-            </LineChart>
-
-
-            {/* <BarChart
-                width={600}
-                height={300}
-                data={values}
-                margin={{ top: 30, right: 30, left: 20, bottom: 5 }}
-            >
-                <XAxis dataKey={dataKey}>
-                    <Label value={oxLabel} position="insideBottomRight" dy={10} dx={20} />
-                </XAxis>
-                <YAxis type="number" domain={yLimit}>
-                    <Label
-                        value={oyLabel}
-                        position="left"
-                        angle={-90}
-                        dy={-20}
-                        dx={-10}
+                    <YAxis
+                        tick={{ fontSize: 11, fontFamily: 'Inter, sans-serif', fill: '#94A3B8' }}
+                        axisLine={false}
+                        tickLine={false}
+                        width={30}
                     />
-                </YAxis>
-                <Tooltip />
-                <Legend
-                    onClick={selectBar}
-                    onMouseOver={handleLegendMouseEnter}
-                    onMouseOut={handleLegendMouseLeave}
-                />
-                {labels.map((label, index) => (
-                    <Bar
-                        key={index}
-                        dataKey={label.key}
-                        fill={label.color}
-                        stackId={dataKey}
-                        hide={barProps[label.key] === true}
-                        fillOpacity={Number(
-                            barProps.hover === label.key || !barProps.hover ? 1 : 0.6
-                        )}
+
+                    {inputLabels.map((label, index) => (
+                        <Line
+                            type="monotone"
+                            name={t(label.key)}
+                            key={index}
+                            dataKey={label.key}
+                            stroke={label.color}
+                            strokeWidth={2}
+                            dot={false}
+                            activeDot={{ r: 4, strokeWidth: 0 }}
+                            hide={lineProps[label.key] === true}
+                            strokeOpacity={Number(
+                                lineProps.hover === label.key || !lineProps.hover ? 1 : 0.15
+                            )}
+                        />
+                    ))}
+
+                    <Tooltip content={<CustomTooltip />} />
+                    <Legend
+                        onClick={selectLine}
+                        onMouseOver={handleLegendMouseEnter}
+                        onMouseOut={handleLegendMouseLeave}
+                        wrapperStyle={{ fontSize: '11px', fontFamily: 'Inter, sans-serif' }}
                     />
-                ))}
-            </BarChart> */}
-        </ResponsiveContainer>
+                </LineChart>
+            </ResponsiveContainer>
+            <p className="text-xs text-slate-400 text-center mt-1">{t('chartClickLegend')}</p>
+        </div>
     );
 };
 
