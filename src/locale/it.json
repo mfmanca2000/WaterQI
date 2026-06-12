@@ -175,6 +175,11 @@
         "legendaTemperature": "È importante che non ci siano grandi variazioni nel tempo",
         "legendaLimeco": "L'indice LIMeco è l'indicatore di sintesi utilizzato dalle Arpa regionali italiane. È stato introdotto dal D.M. 260/2010 (che modifica le norme tecniche del D.Lgs. 152/2006), è un descrittore dello stato trofico del fiume, che considera quattro parametri: tre nutrienti (azoto ammoniacale, azoto nitrico, fosforo totale) e il livello di ossigeno disciolto espresso come percentuale di saturazione",
         "downloadDoc": "Scarica il documento",
-        "measuresInLocationTitle": "Misure in questo luogo"
+        "measuresInLocationTitle": "Misure in questo luogo",
+        "chartClickLegend": "Clicca sulla legenda per mostrare o nascondere i parametri",
+        "quickActions": "Azioni rapide",
+        "aboutProjectTitle": "Il Progetto",
+        "locationsLabel": "siti",
+        "reportsLabel": "segnalazioni"
     }
 }

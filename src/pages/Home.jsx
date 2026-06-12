@@ -1,13 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react'
 import databaseService from '../appwrite/database'
-import authService from '../appwrite/auth';
 import Container from '../components/Container';
 import HomeMenuItem from '../components/HomeMenuItem';
 import { useTranslation } from 'react-i18next'
 import Counters from '../components/Counters';
 import { useSelector } from 'react-redux';
-import { Button, Carousel, Label, Tooltip } from 'flowbite-react';
-import { MapContainer, Marker, Popup, TileLayer } from 'react-leaflet';
+import { MapContainer, Marker, Popup, TileLayer, Tooltip } from 'react-leaflet';
 import { conf } from '../conf/conf';
 import MarkerClusterGroup from 'react-leaflet-cluster';
 import { divIcon, Icon, point } from 'leaflet';
@@ -15,46 +13,41 @@ import { calculateWQILocation, getLocationIcon } from '../utils/wqi';
 import { Link } from 'react-router-dom';
 import MeasureChart from '../components/MeasureChart';
 import { formatDateTime } from '../utils/date';
+import { IoMapOutline, IoBeakerOutline, IoWarningOutline, IoSearchOutline, IoLocationOutline, IoBeaker, IoWarning } from 'react-icons/io5';
 
 const defaultLatitude = conf.defaultLatitude;
 const defaultLongitude = conf.defaultLongitude;
 
 function Home() {
-
   const userData = useSelector((state) => state.auth.userData);
   const [selectedLocation, setSelectedLocation] = useState(null)
   const [isLoading, setIsLoading] = useState(false)
-
   const { t } = useTranslation();
 
   const locations = useRef([]);
   const reports = useRef([]);
 
   const warningIcon = new Icon({
-    // iconUrl: "https://cdn-icons-png.flaticon.com/512/447/447031.png",
     iconUrl: window.location.origin + '/warning.png',
-    iconSize: [36, 31] // size of the icon
+    iconSize: [30, 26]
   });
 
   const createClusterCustomIcon = function (cluster) {
+    const count = cluster.getChildCount();
     return new divIcon({
-      html: `<span style="background-color: #56c6eb;height: 2em;width: 2em;color: #fff;display: flex;align-items: center;justify-content: center;border-radius: 50%;font-size: 1.2rem;box-shadow: 0 0 0px 5px #fff;">${cluster.getChildCount()}</span>`,
-      className: "custom-marker-cluster",
-      iconSize: point(33, 33, true)
+      html: `<div style="background:linear-gradient(135deg,#0EA5E9,#0284C7);width:36px;height:36px;display:flex;align-items:center;justify-content:center;border-radius:50%;border:3px solid rgba(255,255,255,0.95);box-shadow:0 2px 8px rgba(2,132,199,0.4);font-family:Inter,sans-serif;font-size:12px;font-weight:600;color:#fff;letter-spacing:-0.3px;">${count > 99 ? '99+' : count}</div>`,
+      className: '',
+      iconSize: point(36, 36, true)
     });
   };
 
   useEffect(() => {
-
     setIsLoading(true)
-
     databaseService.getAllLocations(null, '', 100000)
       .then((returnedLocations) => {
-
         if (returnedLocations) {
           locations.current = returnedLocations.documents;
         }
-
         databaseService.getAllReports(null, '', 100000)
           .then((returnedReports) => {
             if (returnedReports) {
@@ -62,200 +55,202 @@ function Home() {
               setIsLoading(false)
             }
           })
-
       })
   }, []);
 
+  const legendParams = [
+    { key: 'pH',                  color: '#F59E0B', descKey: 'legendaPH' },
+    { key: 'totalDissolvedSolids', color: '#3B82F6', descKey: 'legendaTotalDissolvedSolids' },
+    { key: 'nitrates',            color: '#94A3B8', descKey: 'legendaNitrates' },
+    { key: 'phosphates',          color: '#7C3AED', descKey: 'legendaPhosphates' },
+    { key: 'escherichiaColi',     color: '#EC4899', descKey: 'legendaEscherichiaColi' },
+    { key: 'dissolvedOxygen',     color: '#06B6D4', descKey: 'legendaDissolvedOxygen' },
+    { key: 'temperature',         color: '#EF4444', descKey: 'legendaTemperature' },
+    { key: 'limeco',              color: '#10B981', descKey: 'legendaLimeco' },
+  ];
 
-
-
-
-
-  const menuItems = [
-    {
-      title: `${t('menuItemAllMeasuresTitle')}`,
-      description: `${t('menuItemAllMeasuresDescription')}`,
-      path: '/locations',
-      image: '/map.png'
-    },
-    {
-      title: `${t('menuItemAddMeasureTitle')}`,
-      description: `${t('menuItemAddMeasureDescription')}`,
-      path: '/addMeasure',
-      image: '/measuring-cup.png'
-    },
-    {
-      title: `${t('menuItemAddReportTitle')}`,
-      description: `${t('menuItemAddReportDescription')}`,
-      path: '/addReport',
-      image: '/warningBig.png'
-    },
-    {
-      title: `${t('menuItemFindSensorTitle')}`,
-      description: `${t('menuItemFindSensorDescription')}`,
-      path: '',
-      image: '/sensors.png'
-    }
-  ]
-
-  //if (measures.length === 0) {
   if (!userData) {
     return (
+      <div className="bg-brand-50">
 
-
-
-      
-
-
-      <div className="relative bg-gradient-to-r from-casaleggio-rgba to-blue-600  text-white overflow-y-scroll">
-
-        <div className="absolute inset-0">
-          <img alt='Fiume' src="./fiume.jpg" className="object-cover object-center w-full h-full" />
-          <div className="absolute inset-0 bg-black opacity-50"></div>
-        </div>
-
-        <div className='mt-8'>
-          <MapContainer className='relative h-[60vh] lg:h-[70vh] m-2 lg:mx-8' center={[defaultLatitude, defaultLongitude]} zoom={conf.defaultZoomLevel}>
+        {/* Hero: full-width map */}
+        <div className="relative">
+          <MapContainer
+            className='h-[62vh] lg:h-[72vh] w-full'
+            center={[defaultLatitude, defaultLongitude]}
+            zoom={conf.defaultZoomLevel}
+          >
             <TileLayer
-              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-              url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+              attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>'
+              url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
             />
 
             <MarkerClusterGroup chunkedLoading iconCreateFunction={createClusterCustomIcon} showCoverageOnHover={false}>
-
-              {/* {console.log('Filter:' + JSON.stringify(filteredLocations.current))} */}
-
-              {locations?.current.map((l) => {
-                return (
-
-                  <Marker key={l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)} eventHandlers={{
-                    click: async (e) => {
-                      setSelectedLocation(await databaseService.getLocation(l.$id))
-                    },
-                  }}>
-                    (<Popup>
-                      <div className='w-[300px]'>
-                        <div className='w-full bg-casaleggio-rgba p-2 text-3xl font-bold'>
-                          <Label className='font-bold text-xl text-white'>{selectedLocation?.name}</Label>
-                        </div>
-                        <div className='w-full text-md text-right font-bold'>
-                          {selectedLocation?.measures?.length + ' ' + ((selectedLocation?.measures?.length == 0 || selectedLocation?.measures?.length > 1) ? t('measuresLabel') : t('measureLabel'))}
-                        </div>
-                        <div>
-                          <MeasureChart height={200} values={selectedLocation?.measures?.sort(function (a, b) {
-                            return new Date(a.datetime) - new Date(b.datetime);
-                          })} />
-                        </div>
+              {locations?.current.map((l) => (
+                <Marker key={l.$id} position={[l.latitude, l.longitude]} icon={getLocationIcon(l)} eventHandlers={{
+                  click: async () => {
+                    setSelectedLocation(await databaseService.getLocation(l.$id))
+                  },
+                }}>
+                  <Popup>
+                    <div className='w-[310px]'>
+                      <div className='bg-brand-800 text-white px-4 py-3'>
+                        <h3 className='font-semibold text-sm'>{selectedLocation?.name}</h3>
+                        <p className='text-brand-200 text-xs mt-0.5'>
+                          {selectedLocation?.measures?.length ?? 0}{' '}
+                          {(selectedLocation?.measures?.length === 0 || selectedLocation?.measures?.length > 1) ? t('measuresLabel') : t('measureLabel')}
+                        </p>
                       </div>
-                    </Popup>)
-                    {/* <Tooltip>{t(calculateWQILocation(l)[1])}</Tooltip> */}
-                  </Marker>
-                )
-              })}
-
-              {reports?.current.map((r) => {
-                return (
-                  <Marker key={'r_' + r.$id} position={[r.latitude, r.longitude]} icon={warningIcon}>
-                    <Popup>
-                      <div className='w-[300px]'>
-                        <div className='w-full bg-casaleggio-rgba p-2 text-xl font-bold'>
-                          <Link className='underline font-bold' to={`/report/${r.$id}`}>{r.title}</Link>
-                        </div>
-                        <div className='w-full text-md text-right font-bold '>
-                          {formatDateTime(new Date(r.datetime))}
-                        </div>
-                        <div>
-                          <p className='my-2 text-wrap text-justify' >{r.description}</p>
-                        </div>
-                        <div className='w-48 mx-auto'>
-                          <img src={storageService.getPreviewImageUrl(r.imageId)} alt={r.title} className='rounded-lg w-48 object-fill' />
-                        </div>
+                      <div className='bg-white p-2'>
+                        <MeasureChart height={180} values={selectedLocation?.measures?.sort((a, b) => new Date(a.datetime) - new Date(b.datetime))} />
                       </div>
-                    </Popup>
-                    <Tooltip>{r.title}</Tooltip>
-                  </Marker>
-                )
-              })}
+                    </div>
+                  </Popup>
+                </Marker>
+              ))}
+
+              {reports?.current.map((r) => (
+                <Marker key={'r_' + r.$id} position={[r.latitude, r.longitude]} icon={warningIcon}>
+                  <Popup>
+                    <div className='w-[310px]'>
+                      <div className='bg-water-amber text-white px-4 py-3'>
+                        <h3 className='font-semibold text-sm'><Link className='hover:underline' to={`/report/${r.$id}`}>{r.title}</Link></h3>
+                        <p className='text-amber-100 text-xs mt-0.5'>{formatDateTime(new Date(r.datetime))}</p>
+                      </div>
+                      <div className='bg-white p-3'>
+                        <p className='text-sm text-slate-600 leading-relaxed'>{r.description}</p>
+                      </div>
+                    </div>
+                  </Popup>
+                  <Tooltip>{r.title}</Tooltip>
+                </Marker>
+              ))}
             </MarkerClusterGroup>
           </MapContainer>
+
+          {/* Overlay bar at bottom of hero */}
+          <div className="absolute bottom-0 left-0 right-0 z-[400] bg-white/90 backdrop-blur-sm border-t border-brand-100 px-4 lg:px-8 py-3 flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              <span className="font-semibold text-brand-900 text-base hidden sm:block">Fiumi Puliti</span>
+              <div className="flex items-center gap-3 text-sm text-slate-600">
+                <span className="flex items-center gap-1">
+                  <IoLocationOutline className="text-brand-600" size={15} />
+                  <span className="font-medium text-slate-800">{locations.current.length}</span>
+                  <span className="hidden sm:inline text-slate-500">{t('locationsLabel') || 'siti'}</span>
+                </span>
+                <span className="flex items-center gap-1">
+                  <IoWarning className="text-water-amber" size={15} />
+                  <span className="font-medium text-slate-800">{reports.current.length}</span>
+                  <span className="hidden sm:inline text-slate-500">{t('reportsLabel') || 'segnalazioni'}</span>
+                </span>
+              </div>
+            </div>
+            <a
+              href="https://associazionegianrobertocasaleggio.s3.amazonaws.com/Fiumi+Puliti_WEB.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="bg-brand-600 hover:bg-brand-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors shadow-sm"
+            >
+              {t('downloadDoc')}
+            </a>
+          </div>
         </div>
 
-        <a href="https://associazionegianrobertocasaleggio.s3.amazonaws.com/Fiumi+Puliti_WEB.pdf" target="_blank">
-          <Button color="blue" className='mx-auto my-8'>{t('downloadDoc')}</Button>
-        </a>
+        {/* Content section */}
+        <div className="bg-white">
+          <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12">
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-10">
 
-        <div className='flex flex-col lg:flex-row w-full gap-8 justify-center'>
-          <div className="relative justify-center items-center text-sm text-justify w-full lg:w-1/2 lg:text-2xl lg:my-4 lg:ml-8">
-          
-            {/* <Carousel className='w-full p-4 overflow-auto' slideInterval={10000} indicators={true} pauseOnHover leftControl="&nbsp;" rightControl="&nbsp;"> */}
-              <p className='whitespace-pre-line p-2'>{t('homePageFirstParagraph')}</p>
-              <p className='whitespace-pre-line p-2'>{t('homePageSecondParagraph')}</p>
-              <p className='whitespace-pre-line p-2'>{t('homePageThirdParagraph')}</p>
-              <p className='whitespace-pre-line p-2'>{t('homePageFourthParagraph')}</p>
-              <p className='whitespace-pre-line p-2'>{t('homePageFifthParagraph')}</p>
+              {/* Left: intro text */}
+              <div>
+                <h2 className="text-2xl font-bold text-slate-900 mb-6">{t('aboutProjectTitle') || 'Il Progetto'}</h2>
+                <div className="space-y-4">
+                  <p className="text-slate-700 leading-relaxed text-base">{t('homePageFirstParagraph')}</p>
+                  <p className="text-slate-700 leading-relaxed text-base">{t('homePageSecondParagraph')}</p>
+                  <p className="text-slate-600 leading-relaxed text-sm">{t('homePageThirdParagraph')}</p>
+                </div>
+              </div>
 
-            {/* </Carousel> */}
-            
+              {/* Right: legend */}
+              <div className="bg-slate-50 border border-slate-200 rounded-card p-6 shadow-card">
+                <h2 className="text-xl font-bold text-slate-900 mb-5">Legenda</h2>
+                <div className="space-y-4">
+                  {legendParams.map(({ key, color, descKey }) => (
+                    <div key={key} className="flex items-start gap-3">
+                      <span
+                        className="w-3 h-3 rounded-full mt-1.5 shrink-0"
+                        style={{ backgroundColor: color }}
+                      />
+                      <div>
+                        <p className="font-semibold text-slate-800 text-sm">{t(key)}</p>
+                        <p className="text-slate-500 text-xs leading-relaxed mt-0.5">{t(descKey)}</p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
           </div>
-
-          
-
-          <div className='relative w-full mx-auto my-4 p-8 lg:mr-8 lg:w-1/2 bg-casaleggio-rgba rounded-[40px] text-white'>          
-            <h1 className='text-2xl font-bold text-center'>Legenda</h1>
-            <h1 className='text-orange-500 text-xl'>{t('pH')}</h1>
-            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaPH')}</p>
-            <h1 className='text-blue-600 text-xl'>{t('totalDissolvedSolids')}</h1>
-            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaTotalDissolvedSolids')}</p>
-            <h1 className='text-gray-500 text-xl'>{t('nitrates')}</h1>
-            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaNitrates')}</p>
-            <h1 className='text-violet-800 text-xl'>{t('phosphates')}</h1>
-            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaPhosphates')}</p>
-            <h1 className='text-pink-500 text-xl'>{t('escherichiaColi')}</h1>
-            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaEscherichiaColi')}</p>
-            <h1 className='text-fuchsia-700 text-xl'>{t('dissolvedOxygen')}</h1>
-            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaDissolvedOxygen')}</p>
-            <h1 className='text-red-600 text-xl'>{t('temperature')}</h1>
-            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaTemperature')}</p>
-            <h1 className='text-green-500 text-xl'>{t('limeco')}</h1>
-            <p className='whitespace-pre-line text-justify mx-auto my-4'>{t('legendaLimeco')}</p>
-          </div>
-
-        </div >
+        </div>
       </div>
     )
   } else {
+    const menuItems = [
+      {
+        title: `${t('menuItemAllMeasuresTitle')}`,
+        description: `${t('menuItemAllMeasuresDescription')}`,
+        path: '/locations',
+        icon: <IoMapOutline />,
+      },
+      {
+        title: `${t('menuItemAddMeasureTitle')}`,
+        description: `${t('menuItemAddMeasureDescription')}`,
+        path: '/addMeasure',
+        icon: <IoBeakerOutline />,
+      },
+      {
+        title: `${t('menuItemAddReportTitle')}`,
+        description: `${t('menuItemAddReportDescription')}`,
+        path: '/addReport',
+        icon: <IoWarningOutline />,
+      },
+      {
+        title: `${t('menuItemFindSensorTitle')}`,
+        description: `${t('menuItemFindSensorDescription')}`,
+        path: '',
+        icon: <IoSearchOutline />,
+      }
+    ];
+
     return (
-      <>
-        <div className='flex justify-center'>
-          <Counters />
-        </div>
-        <div className="flex flex-wrap text-lg justify-center">
-
-
-
+      <div>
+        {/* Welcome bar */}
+        <div className="bg-white border-b border-slate-100">
           <Container>
-            {t('homeWelcome')} <span className='font-extrabold'>{userData?.name}.<br /></span>
-            <p>{t('homeIntroText')}</p>
-
-            <div className='flex flex-wrap'>
-              {menuItems.map((m) => (
-                <div className='px-2 mt-4 lg:w-1/4 sm:w-1/2' key={m.title}>
-                  <HomeMenuItem menuItem={m} />
-                </div>
-              ))}
+            <div className="py-6">
+              <h1 className="text-2xl font-bold text-slate-900">
+                {t('homeWelcome')}, <span className="text-brand-600">{userData?.name}</span>
+              </h1>
+              <p className="text-slate-500 text-sm mt-1">{t('homeIntroText')}</p>
             </div>
           </Container>
-
-
-          <div className='text-gray-300 text-xs text-center w-full'>
-            <a href="https://www.flaticon.com/free-icons/measuring-cup" title="measuring cup icons">Measuring cup icons created by DinosoftLabs</a>{' '}
-            <a href="https://www.flaticon.com/free-icons/3" title="3 icons">3 icons created by Freepik</a>{' '}
-            <a href="https://www.flaticon.com/free-icons/location" title="location icons">Location icons created by Freepik</a>{' '}
-            <a href="https://www.flaticon.com/free-icons/history" title="history icons">History icons created by Freepik</a>{' '}
-            <a href="https://www.flaticon.com/free-icons/alert" title="alert icons">Alert icons created by Freepik - Flaticon</a>
-          </div>
         </div>
-      </>
+
+        <Container>
+          <div className="py-8">
+            {/* Stat cards */}
+            <Counters />
+
+            {/* Quick actions */}
+            <h2 className="text-lg font-semibold text-slate-800 mt-10 mb-4">{t('quickActions') || 'Azioni rapide'}</h2>
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4'>
+              {menuItems.map((m) => (
+                <HomeMenuItem key={m.title} menuItem={m} />
+              ))}
+            </div>
+          </div>
+        </Container>
+      </div>
     )
   }
 }
