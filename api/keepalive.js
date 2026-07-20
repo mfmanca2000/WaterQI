@@ -3,8 +3,8 @@ import { Client, Databases, Query } from "appwrite";
 // Public endpoint pinged by an external scheduler to keep the Appwrite
 // project active on the free tier (which pauses inactive projects).
 export default async function handler(req, res) {
-    if (req.method !== "GET") {
-        res.setHeader("Allow", "GET");
+    if (req.method !== "GET" && req.method !== "HEAD") {
+        res.setHeader("Allow", "GET, HEAD");
         return res.status(405).json({ status: "error", message: "Method not allowed" });
     }
 
@@ -21,6 +21,10 @@ export default async function handler(req, res) {
             [Query.limit(3), Query.select(["$id"])]
         );
 
+        if (req.method === "HEAD") {
+            return res.status(200).end();
+        }
+
         return res.status(200).json({
             status: "ok",
             timestamp: new Date().toISOString(),
@@ -28,6 +32,9 @@ export default async function handler(req, res) {
         });
     } catch (error) {
         console.log("--- keepalive endpoint error: " + error);
+        if (req.method === "HEAD") {
+            return res.status(502).end();
+        }
         return res.status(502).json({ status: "error", message: "Failed to reach Appwrite" });
     }
 }
